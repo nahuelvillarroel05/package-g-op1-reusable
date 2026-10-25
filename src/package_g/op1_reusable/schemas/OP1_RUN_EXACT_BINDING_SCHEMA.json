@@ -1,0 +1,344 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_RUN_EXACT_BINDING_SCHEMA.json",
+  "title": "OP1_RUN_EXACT_BINDING_SCHEMA",
+  "description": "Immutable exact operation binding manifest. Physical C2-equivalent RUNS require exact numeric loopback endpoint/ports plus Job, Channel-E and PktMon names; no wildcard/latest aliases.",
+  "type": "object",
+  "required": [
+    "operation_class",
+    "target_class",
+    "target_literal",
+    "port_map",
+    "resource_names",
+    "command_request_sha256",
+    "command_graph_sha256",
+    "entrypoint_sha256",
+    "wrapper_sha256",
+    "source_commit",
+    "source_tree",
+    "source_fingerprint_sha256",
+    "freeze_id",
+    "policy_ids",
+    "tool_ids"
+  ],
+  "properties": {
+    "operation_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_literal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "port_map": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 65535
+      }
+    },
+    "resource_names": {
+      "type": "object",
+      "properties": {
+        "job_object_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "channel_e_session_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pktmon_capture_name": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "command_graph_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "entrypoint_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "wrapper_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_commit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_tree": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_fingerprint_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "freeze_id": {
+      "type": "string",
+      "pattern": "^PG-FRZ-[0-9a-f]{32}$"
+    },
+    "policy_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-POL-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "tool_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-TOL-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "x-class-validation": "For QUALIFIED_LOOPBACK_NATIVE, target_literal must be exact numeric loopback; port_map must contain exact named host/client/TCP13/UDP14 ports, unique and owned; resource_names must contain exact Job, Channel-E and PktMon names. Other classes must define their own closed qualified profile before mint.",
+  "x-byte-validation": "RUN authority binds SHA-256 of exact UTF-8 manifest bytes. Verifier rehashes bytes and referenced command/entrypoint/wrapper/source/tool bytes immediately before claim; pathname or class alone is insufficient.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation_class": {
+            "const": "QUALIFIED_LOOPBACK_NATIVE"
+          }
+        },
+        "required": [
+          "operation_class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "target_literal": {
+            "const": "127.0.0.1"
+          },
+          "port_map": {
+            "type": "object",
+            "required": [
+              "host_http",
+              "client_http",
+              "TCP.H01",
+              "TCP.H04",
+              "TCP.N01-0",
+              "TCP.N04_TCP-0",
+              "TCP.N04_TCP-1",
+              "TCP.N04_TCP-2",
+              "TCP.N04_TCP-3",
+              "TCP.N04_TCP-4",
+              "TCP.N04_TCP-5",
+              "TCP.N04_TCP-6",
+              "TCP.N04_TCP-7",
+              "TCP.N04_TCP-8",
+              "TCP.N04_TCP-9",
+              "UDP.H02",
+              "UDP.H03",
+              "UDP.N02-0",
+              "UDP.N03-0",
+              "UDP.N04_UDP-0",
+              "UDP.N04_UDP-1",
+              "UDP.N04_UDP-2",
+              "UDP.N04_UDP-3",
+              "UDP.N04_UDP-4",
+              "UDP.N04_UDP-5",
+              "UDP.N04_UDP-6",
+              "UDP.N04_UDP-7",
+              "UDP.N04_UDP-8",
+              "UDP.N04_UDP-9"
+            ],
+            "properties": {
+              "host_http": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "client_http": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.H01": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.H04": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N01-0": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-0": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-1": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-2": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-3": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-4": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-5": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-6": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-7": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-8": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "TCP.N04_TCP-9": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.H02": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.H03": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N02-0": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N03-0": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-0": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-1": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-2": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-3": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-4": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-5": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-6": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-7": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-8": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "UDP.N04_UDP-9": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              }
+            },
+            "additionalProperties": false
+          },
+          "resource_names": {
+            "type": "object",
+            "required": [
+              "job_object_name",
+              "channel_e_session_name",
+              "pktmon_capture_name"
+            ],
+            "properties": {
+              "job_object_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "channel_e_session_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pktmon_capture_name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ],
+  "x-port-law": "For QUALIFIED_LOOPBACK_NATIVE, 29 named numeric ports (host/client plus frozen @2's 13 TCP and 14 UDP role names) are individually bound. Host/client ranges and uniqueness/ownership require qualified profile validation; no implicit aliases."
+}

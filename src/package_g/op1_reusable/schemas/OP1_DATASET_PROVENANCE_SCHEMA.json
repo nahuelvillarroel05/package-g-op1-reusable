@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_DATASET_PROVENANCE_SCHEMA.json",
+  "title": "OP1_DATASET_PROVENANCE_SCHEMA",
+  "description": "Compiler follows immutable evidence graph and pins exact source bytes, parser/normalization/label interpretation. Empty optional source categories mean truly inapplicable, never missing evidence. UNKNOWN clearance remains UNKNOWN.",
+  "type": "object",
+  "required": [
+    "dataset_id",
+    "dataset_version_id",
+    "source_snapshot_sha256",
+    "source_manifest_sha256",
+    "interpretation_schema_id",
+    "parser_sha256",
+    "normalization_config_sha256",
+    "transformation_ids",
+    "source_session_ids",
+    "source_run_ids",
+    "source_event_ids",
+    "source_evidence_ids",
+    "source_actor_ids",
+    "source_graph_root_sha256",
+    "closure_certificate_sha256",
+    "license_state",
+    "access_state",
+    "supervised_eligibility",
+    "split_manifest_sha256",
+    "source_snapshot_artifact_id",
+    "source_manifest_artifact_id",
+    "graph_root_artifact_id",
+    "closure_certificate_artifact_id",
+    "source_artifact_ids"
+  ],
+  "properties": {
+    "dataset_id": {
+      "type": "string",
+      "pattern": "^PG-DAT-[0-9a-f]{32}$"
+    },
+    "dataset_version_id": {
+      "type": "string",
+      "pattern": "^PG-DVER-[0-9a-f]{32}$"
+    },
+    "source_snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "interpretation_schema_id": {
+      "type": "string",
+      "pattern": "^PG-SCH-[0-9a-f]{32}$"
+    },
+    "parser_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "normalization_config_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "transformation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-TRF-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_session_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-SES-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_run_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-RUN-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_attempt_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-ATT-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "source_event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-EVT-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_finding_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-FND-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "source_decision_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-DEC-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "source_artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-ART-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-EVD-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_actor_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-ACT-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_report_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-RPT-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "source_review_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-REV-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "source_graph_root_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "closure_certificate_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "license_state": {
+      "enum": [
+        "CLEARED",
+        "RESTRICTED",
+        "UNKNOWN"
+      ]
+    },
+    "access_state": {
+      "enum": [
+        "AUTHORIZED",
+        "RESTRICTED",
+        "UNKNOWN"
+      ]
+    },
+    "supervised_eligibility": {
+      "enum": [
+        "ELIGIBLE",
+        "INELIGIBLE",
+        "UNKNOWN"
+      ]
+    },
+    "split_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_snapshot_artifact_id": {
+      "type": "string",
+      "pattern": "^PG-ART-[0-9a-f]{32}$"
+    },
+    "source_manifest_artifact_id": {
+      "type": "string",
+      "pattern": "^PG-ART-[0-9a-f]{32}$"
+    },
+    "graph_root_artifact_id": {
+      "type": "string",
+      "pattern": "^PG-ART-[0-9a-f]{32}$"
+    },
+    "closure_certificate_artifact_id": {
+      "type": "string",
+      "pattern": "^PG-ART-[0-9a-f]{32}$"
+    }
+  },
+  "additionalProperties": false,
+  "x-conditional-provenance": "ATTEMPT, FINDING, DECISION, ARTIFACT, REPORT and REVIEW references are mandatory when applicable to the example's causal source closure; absent only when proven inapplicable. Rejection if omitted despite applicability.",
+  "x-artifact-role-law": "Four artifact role IDs identify immutable raw source snapshot, source manifest, graph root commitment and closure certificate. Each role ID occurs in source_artifact_ids and resolves to exact bytes/digest matching its corresponding provenance digest. Reused ID allowed only if exact same committed artifact genuinely serves multiple roles."
+}

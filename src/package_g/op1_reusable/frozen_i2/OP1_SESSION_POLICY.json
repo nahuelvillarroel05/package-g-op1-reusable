@@ -1,0 +1,53 @@
+{
+  "schema": "package-g-op1-session-policy@1",
+  "mode": "DESIGN_ONLY_NOT_ISSUABLE",
+  "shared": {
+    "one_shot_run_claims": true,
+    "explicit_per_run_authorization": true,
+    "max_runs_counts": "Every atomically reserved RUN_ID, including blocked and failed RUNS",
+    "session_budget": "Atomically reserve SUM dimensions cumulatively, ACTIVE_COUNT for concurrent RUNS, and ACTIVE_SUM for simultaneous worst-case memory, per OP1_RESOURCE_BUDGET_SCHEMA. Unknown reservation is not refunded without authoritative proof.",
+    "expiry": "No new RUN admission/workload after expiry; bounded proven-owned teardown and read-only reconciliation require their own safety scope.",
+    "bindings": "Product/version/freeze/policy/owner/target/tool/network/mutation scope immutable for session lifetime.",
+    "revocation": "Stops future admissions at authoritative boundary; in-flight stop follows actuator/ownership contract and is not presumed instantaneous.",
+    "default": "DENY; UNKNOWN prestate, ownership, or authority blocks admission."
+  },
+  "profiles": {
+    "EXPERIMENTAL_REUSABLE": {
+      "purpose": [
+        "development",
+        "failure discovery",
+        "fault injection",
+        "controlled experiments",
+        "evidence generation"
+      ],
+      "proposed_max_runs_ceiling": 100,
+      "proposed_max_lifetime_hours": 24,
+      "allowed_operation_classes": [
+        "QUALIFIED_LOOPBACK_NATIVE",
+        "READ_ONLY_RECONCILIATION",
+        "CONTROLLED_FAULT_INJECTION"
+      ],
+      "fault_injection": "Named, bounded, explicitly authorized per RUN; preserve failures and raw bytes.",
+      "network_boundary": "loopback only by default; external network denied",
+      "mutation_boundary": "run-owned outputs/resources only",
+      "resource_rule": "Explicit numeric session and run ceilings required at mint."
+    },
+    "OPERATIONAL_REUSABLE": {
+      "purpose": [
+        "routine stable OP1 operations"
+      ],
+      "proposed_max_runs_ceiling": 20,
+      "proposed_max_lifetime_hours": 8,
+      "allowed_operation_classes": [
+        "QUALIFIED_LOOPBACK_NATIVE",
+        "READ_ONLY_RECONCILIATION"
+      ],
+      "fault_injection": "prohibited",
+      "network_boundary": "loopback only by default; external network denied",
+      "mutation_boundary": "run-owned outputs/resources only",
+      "prestate": "Fresh independent source/policy/host exclusivity/ownership observations immediately before every claim.",
+      "resource_rule": "Per-resource limits strictly no greater than experimental profile and exact numeric values required at mint."
+    }
+  },
+  "proposed_values_are_not_grants": true
+}

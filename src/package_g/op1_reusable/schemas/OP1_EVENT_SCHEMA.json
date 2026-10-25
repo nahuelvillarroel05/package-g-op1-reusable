@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_EVENT_SCHEMA.json",
+  "title": "OP1_EVENT_SCHEMA",
+  "description": "Append-only causal event. All references resolve to records committed before this event. ACTION/OBSERVATION events precede the evidence they cause; later PUBLICATION/RESOLUTION events reference produced evidence/findings/decisions. No bidirectional same-record commit.",
+  "type": "object",
+  "required": [
+    "identity",
+    "event_id",
+    "event_kind",
+    "session_id",
+    "actor_id",
+    "occurred_at_utc",
+    "committed_sequence",
+    "parent_ids",
+    "caused_by_ids",
+    "payload_sha256",
+    "produced_artifact_ids",
+    "produced_finding_ids",
+    "resolved_finding_ids",
+    "triggered_decision_ids",
+    "evidence_ids",
+    "writer_authentication_ref",
+    "event_role"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^PG-EVT-[0-9a-f]{32}$"
+    },
+    "event_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^PG-SES-[0-9a-f]{32}$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^PG-RUN-[0-9a-f]{32}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^PG-ATT-[0-9a-f]{32}$"
+    },
+    "actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "tool_invocation_id": {
+      "type": "string",
+      "pattern": "^PG-TINV-[0-9a-f]{32}$"
+    },
+    "occurred_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "committed_sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "parent_ids": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "entity_type",
+          "entity_id"
+        ],
+        "properties": {
+          "entity_type": {
+            "enum": [
+              "PROJECT",
+              "PRODUCT",
+              "LINEAGE",
+              "VERSION",
+              "FREEZE",
+              "SESSION",
+              "RUN",
+              "ATTEMPT",
+              "AUTHORITY",
+              "CLAIM",
+              "NAMESPACE",
+              "OPERATION",
+              "EVENT",
+              "ACTOR",
+              "MODEL",
+              "TOOL",
+              "TOOL_INVOCATION",
+              "RESOURCE",
+              "POLICY",
+              "SCHEMA",
+              "ARTIFACT",
+              "EVIDENCE",
+              "FINDING",
+              "ERROR",
+              "DECISION",
+              "AUDIT",
+              "DELEGATION",
+              "TASK",
+              "REPORT",
+              "REVIEW",
+              "DATASET",
+              "DATASET_VERSION",
+              "DATASET_EXAMPLE",
+              "TRANSFORMATION"
+            ]
+          },
+          "entity_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "caused_by_ids": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "entity_type",
+          "entity_id"
+        ],
+        "properties": {
+          "entity_type": {
+            "enum": [
+              "PROJECT",
+              "PRODUCT",
+              "LINEAGE",
+              "VERSION",
+              "FREEZE",
+              "SESSION",
+              "RUN",
+              "ATTEMPT",
+              "AUTHORITY",
+              "CLAIM",
+              "NAMESPACE",
+              "OPERATION",
+              "EVENT",
+              "ACTOR",
+              "MODEL",
+              "TOOL",
+              "TOOL_INVOCATION",
+              "RESOURCE",
+              "POLICY",
+              "SCHEMA",
+              "ARTIFACT",
+              "EVIDENCE",
+              "FINDING",
+              "ERROR",
+              "DECISION",
+              "AUDIT",
+              "DELEGATION",
+              "TASK",
+              "REPORT",
+              "REVIEW",
+              "DATASET",
+              "DATASET_VERSION",
+              "DATASET_EXAMPLE",
+              "TRANSFORMATION"
+            ]
+          },
+          "entity_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "payload_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "produced_artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-ART-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "produced_finding_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-FND-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "resolved_finding_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-FND-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "triggered_decision_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-DEC-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-EVD-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "writer_authentication_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_role": {
+      "enum": [
+        "ROOT",
+        "ACTION",
+        "OBSERVATION",
+        "PUBLICATION",
+        "RESOLUTION",
+        "TERMINAL"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "x-publication-order": "Commit ACTION event first with produced arrays empty. Commit EVIDENCE/ARTIFACT/FINDING/DECISION after it, each referencing prior cause. Commit separate PUBLICATION or RESOLUTION event listing already committed produced IDs. An event never lists future/uncommitted objects.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event_role": {
+            "enum": [
+              "ROOT",
+              "ACTION",
+              "OBSERVATION"
+            ]
+          }
+        },
+        "required": [
+          "event_role"
+        ]
+      },
+      "then": {
+        "properties": {
+          "produced_artifact_ids": {
+            "maxItems": 0
+          },
+          "produced_finding_ids": {
+            "maxItems": 0
+          },
+          "resolved_finding_ids": {
+            "maxItems": 0
+          },
+          "triggered_decision_ids": {
+            "maxItems": 0
+          },
+          "evidence_ids": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

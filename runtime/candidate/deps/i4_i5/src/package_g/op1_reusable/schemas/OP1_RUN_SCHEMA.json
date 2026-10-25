@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_RUN_SCHEMA.json",
+  "title": "OP1_RUN_SCHEMA",
+  "description": "Immutable RUN admission record. Terminal closure is appended separately; optional terminal fields describe an immutable closure snapshot.",
+  "type": "object",
+  "required": [
+    "identity",
+    "run_id",
+    "session_id",
+    "run_authority_id",
+    "operation_id",
+    "namespace_id",
+    "claim_id",
+    "claim_slot",
+    "attempt_ids",
+    "source_freeze_id",
+    "policy_ids",
+    "target_resource_ids",
+    "authorized_command_sha256",
+    "budget_reservation_event_id",
+    "opened_at_utc"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^PG-RUN-[0-9a-f]{32}$"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^PG-SES-[0-9a-f]{32}$"
+    },
+    "run_authority_id": {
+      "type": "string",
+      "pattern": "^PG-AUTH-[0-9a-f]{32}$"
+    },
+    "operation_id": {
+      "type": "string",
+      "pattern": "^PG-OP-[0-9a-f]{32}$"
+    },
+    "namespace_id": {
+      "type": "string",
+      "pattern": "^PG-NS-[0-9a-f]{32}$"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^PG-CLM-[0-9a-f]{32}$"
+    },
+    "claim_slot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attempt_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-ATT-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source_freeze_id": {
+      "type": "string",
+      "pattern": "^PG-FRZ-[0-9a-f]{32}$"
+    },
+    "policy_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-POL-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "target_resource_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-RES-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "authorized_command_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "budget_reservation_event_id": {
+      "type": "string",
+      "pattern": "^PG-EVT-[0-9a-f]{32}$"
+    },
+    "opened_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "terminal_state": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED_PRESTATE",
+        "CONSUMED_FAILED",
+        "AMBIGUOUS_CONSUMPTION",
+        "TIMEOUT",
+        "CRASHED",
+        "INCOMPLETE_EVIDENCE",
+        "ABORTED_OWNER",
+        "REJECTED_AUTHORITY",
+        "UNKNOWN"
+      ]
+    },
+    "terminal_event_id": {
+      "type": "string",
+      "pattern": "^PG-EVT-[0-9a-f]{32}$"
+    },
+    "closed_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    }
+  },
+  "additionalProperties": false,
+  "x-run-law": "Each execution gets a fresh RUN_ID; each attempt a fresh ATTEMPT_ID. Exactly one claim slot per RUN. Consumed/ambiguous/terminal RUN cannot be reset, resumed, or executed again. Fresh later work needs RUN_ID, CLAIM_ID, ATTEMPT_ID, NAMESPACE_ID and explicit authority.",
+  "x-consistency": "All repeated top-level IDs equal their identity envelope IDs and resolve in immutable registry; enforce across-document uniqueness and scope."
+}

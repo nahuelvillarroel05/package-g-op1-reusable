@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_RUN_CLAIM_SCHEMA.json",
+  "title": "OP1_RUN_CLAIM_SCHEMA",
+  "description": "One immutable claim per fixed RUN slot. A design schema does not create a claim.",
+  "type": "object",
+  "required": [
+    "identity",
+    "claim_id",
+    "run_id",
+    "session_id",
+    "run_authority_id",
+    "claim_slot",
+    "claim_operation_id",
+    "claimer_actor_id",
+    "namespace_id",
+    "authorization_exact_sha256",
+    "created_at_utc",
+    "durable_readback_sha256",
+    "reservation_event_id",
+    "state"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^PG-CLM-[0-9a-f]{32}$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^PG-RUN-[0-9a-f]{32}$"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^PG-SES-[0-9a-f]{32}$"
+    },
+    "run_authority_id": {
+      "type": "string",
+      "pattern": "^PG-AUTH-[0-9a-f]{32}$"
+    },
+    "claim_slot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_operation_id": {
+      "type": "string",
+      "pattern": "^PG-OP-[0-9a-f]{32}$"
+    },
+    "claimer_actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "namespace_id": {
+      "type": "string",
+      "pattern": "^PG-NS-[0-9a-f]{32}$"
+    },
+    "authorization_exact_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "durable_readback_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "reservation_event_id": {
+      "type": "string",
+      "pattern": "^PG-EVT-[0-9a-f]{32}$"
+    },
+    "state": {
+      "enum": [
+        "CONSUMED",
+        "AMBIGUOUS_CONSUMPTION"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,35 @@
+{
+  "authority_rule": "Report/review output is evidence subject to separate validator/owner decision; a model or deterministic tool cannot mint session/run authority by writing a report.",
+  "human_model_rule": "HUMAN producer/reviewer omits MODEL_ID; model producer/reviewer requires exact MODEL_ID. Unknown version blocks exact model attribution, not retention of raw report.",
+  "immutability": "All task/delegation/report/review/tool records append-only; correction is linked new record, no removal of rejected output.",
+  "mode": "DESIGN_ONLY",
+  "phase": "OP1_REUSABLE_ARCHITECTURE_IMPLEMENTATION_DESIGN",
+  "project": "PACKAGE-G",
+  "record_flow": [
+    "Register immutable human/model/tool identity, exact version/config and digest.",
+    "Commit TASK with actor and operation scope.",
+    "Commit DELEGATION with delegator/delegate/model/scope when a model subagent is used.",
+    "Store raw REPORT bytes and digest before parse; preserve rejected/incorrect reports.",
+    "Commit REVIEW and DECISION with reviewer identity, evidence, outcome and rationale.",
+    "For deterministic TOOL_INVOCATION, bind input digest and PRESENT output digest or distinct NO_OUTPUT/UNKNOWN state."
+  ],
+  "registered_model_families": [
+    "GPT-6 Sol",
+    "GPT-6 Luna",
+    "GPT Astra",
+    "future model with exact registered version/config"
+  ],
+  "schema": "package-g-op1-model-subagent-provenance-implementation@1",
+  "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+  "source_freeze_sha256": "bbe63ee96d03712109da9f48f966a6b9c470c050092871cce3e330118ed89465",
+  "tracked_ids": [
+    "TASK_ID",
+    "DELEGATION_ID",
+    "REPORT_ID",
+    "REVIEW_ID",
+    "ACTOR_ID",
+    "MODEL_ID",
+    "TOOL_ID",
+    "TOOL_INVOCATION_ID"
+  ]
+}

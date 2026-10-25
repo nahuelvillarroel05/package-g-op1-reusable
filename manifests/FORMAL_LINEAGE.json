@@ -1,0 +1,69 @@
+{
+  "scope": "Historical formal lineage identities; original private freezes/evidence not bundled; new snapshot is engineering only",
+  "I7_STATUS": "INCOMPLETE",
+  "phases": [
+    {
+      "phase": "I0",
+      "formal_history_status": "FROZEN_HISTORICALLY",
+      "implementation_commit": "e3614c88ce1b954959e4145869f8f17de86e2c21",
+      "implementation_tree": "d2448fdbeebe33026175699d397cd057bde42878",
+      "freeze_sha256": "b24eba65f2bfec1579054b1f78882f20833d8b38c5a8e2eea8467bb83654b254",
+      "expected_sha256_match": true,
+      "evidence_id": "EV-b24eba65f2bfec15"
+    },
+    {
+      "phase": "I1",
+      "formal_history_status": "OP1_REUSABLE_IMPLEMENTATION_I1_APPEND_ONLY_EVIDENCE_FROZEN_READY_FOR_I2",
+      "implementation_commit": "ddbca2017d5daa9b30fbee41345ef6cc667d33bf",
+      "implementation_tree": "37d643691166e4502bcd5652c81577a1f832471a",
+      "freeze_sha256": "39703c42c723764e72a63bf1ad015d9b6d1a899b31d1745315b5def484692c9d",
+      "expected_sha256_match": true,
+      "evidence_id": "EV-39703c42c723764e"
+    },
+    {
+      "phase": "I2",
+      "formal_history_status": "FORMALIZATION_COMPLETE_PER_FREEZE",
+      "implementation_commit": "686cc00c54a29a0e67ac1442f497866538cbaf6d",
+      "implementation_tree": "7c66dce999f5d195b58e462e8a2a354e74548759",
+      "freeze_sha256": "c8d18a15c8e46a3574c7be2758a51dc14ba209ea204079cea51c2934ebfab2a9",
+      "expected_sha256_match": "NO_EXPECTED_HASH_IN_REFERENCED_STATE",
+      "evidence_id": "EV-c8d18a15c8e46a35"
+    },
+    {
+      "phase": "I3",
+      "formal_history_status": "OP1_REUSABLE_IMPLEMENTATION_I3_FROZEN_READY_FOR_I4",
+      "implementation_commit": "255f285dc462e94557e48338a4efe946b83cd23e",
+      "implementation_tree": "c04174514cfcf254aa986b0cd950753840dac756",
+      "freeze_sha256": "ac8122fd5d0f5f0d7c8cef69da97eba386d18e32644fd3c2b7d60430c0d93e98",
+      "expected_sha256_match": true,
+      "evidence_id": "EV-ac8122fd5d0f5f0d"
+    },
+    {
+      "phase": "I4",
+      "formal_history_status": "FORMALLY_FROZEN",
+      "implementation_commit": "76b6d8fa05a4f2f633a46a2af6113f95cfaa6579",
+      "implementation_tree": "6c45b520c9fe5345d20ce281188daa6a69c2b7cd",
+      "freeze_sha256": "ed3c0dcf1c93c798c6bebf74df11a9e7b6f0924d5b942669f5ec253f8220f6bb",
+      "expected_sha256_match": true,
+      "evidence_id": "EV-ed3c0dcf1c93c798"
+    },
+    {
+      "phase": "I5",
+      "formal_history_status": "FORMALLY_FROZEN",
+      "implementation_commit": "07a711022a4273b24dfd0f14c287ed6624b5312f",
+      "implementation_tree": "3bc2b8311a96ede01ea25500843ac37962c7b8cb",
+      "freeze_sha256": "cf45516b03b64e678135d0ed7b77f49234db76625627e8c4e6bd43ebfb1ed2c8",
+      "expected_sha256_match": true,
+      "evidence_id": "EV-cf45516b03b64e67"
+    },
+    {
+      "phase": "I6",
+      "formal_history_status": "FORMALLY_FROZEN",
+      "implementation_commit": "296193cce64c1c5b1234be7fe723eacbbc070be3",
+      "implementation_tree": "26a1c120e5e5432d9d89ae757b1bda0e335943ad",
+      "freeze_sha256": "357f6c43003184d18a1aef0cc4270ec4c66869a2ecb0b45861de8c489e4a9bfd",
+      "expected_sha256_match": true,
+      "evidence_id": "EV-357f6c43003184d1"
+    }
+  ]
+}

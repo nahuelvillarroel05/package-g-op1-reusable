@@ -1,0 +1,133 @@
+{
+  "admission_protocol": "Before CREATED is committed, preliminary session/run authority checks and one serialized budget reservation produce budget_reservation_event_id. The immutable RUN admission record cites it. Invalid proposals before reservation are audit rejections, not admitted RUNs. A later exact rehash/preclaim authority failure closes the admitted RUN as REJECTED_AUTHORITY; its reservation remains accounted.",
+  "attempt_rule": "One execution-bearing attempt per RUN. Additional ATTEMPT_IDs may represent non-execution observation/reconciliation only under a closed schema and cannot create a second launch.",
+  "claim_rule": "At most one authorized launch, no exactly-once external effect guarantee. Lost ack retrieves same committed claim for read-only inspection, never replays launch.",
+  "fresh_per_run": [
+    "RUN_ID",
+    "RUN_AUTHORITY_ID",
+    "CLAIM_ID",
+    "NAMESPACE_ID",
+    "at least one ATTEMPT_ID"
+  ],
+  "initial": "CREATED",
+  "mode": "DESIGN_ONLY",
+  "next_run_rule": "A later RUN requires new RUN_ID, CLAIM_ID, ATTEMPT_ID, NAMESPACE_ID and independently issued RUN_AUTHORITY_ID; failed RUN remains addressable.",
+  "phase": "OP1_REUSABLE_ARCHITECTURE_IMPLEMENTATION_DESIGN",
+  "project": "PACKAGE-G",
+  "schema": "package-g-op1-run-state-machine@1",
+  "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+  "source_freeze_sha256": "bbe63ee96d03712109da9f48f966a6b9c470c050092871cce3e330118ed89465",
+  "states": [
+    "CREATED",
+    "PRESTATE",
+    "CLAIMED",
+    "EXECUTING",
+    "PASS",
+    "FAIL",
+    "BLOCKED_PRESTATE",
+    "CONSUMED_FAILED",
+    "AMBIGUOUS_CONSUMPTION",
+    "TIMEOUT",
+    "CRASHED",
+    "INCOMPLETE_EVIDENCE",
+    "ABORTED_OWNER",
+    "REJECTED_AUTHORITY",
+    "UNKNOWN"
+  ],
+  "terminal_law": "Append one terminal state and graph closure to a RUN; immutable admission and terminal records never rewritten. Later reconciliation is a distinct appended observation/decision. Terminal or consumed RUN cannot execute again.",
+  "terminal_states": [
+    "PASS",
+    "FAIL",
+    "BLOCKED_PRESTATE",
+    "CONSUMED_FAILED",
+    "AMBIGUOUS_CONSUMPTION",
+    "TIMEOUT",
+    "CRASHED",
+    "INCOMPLETE_EVIDENCE",
+    "ABORTED_OWNER",
+    "REJECTED_AUTHORITY",
+    "UNKNOWN"
+  ],
+  "transitions": [
+    {
+      "from": "CREATED",
+      "guard": "Immutable RUN admission already cites committed atomic budget reservation event; fresh IDs and separate RUN authority preliminarily validated.",
+      "to": "PRESTATE"
+    },
+    {
+      "from": "CREATED",
+      "guard": "authority absent, invalid, expired or exact binding mismatch; no claim/dispatch",
+      "to": "REJECTED_AUTHORITY"
+    },
+    {
+      "from": "PRESTATE",
+      "guard": "prestate/ownership/exclusivity unknown or failed; append terminal closure without launch",
+      "to": "BLOCKED_PRESTATE"
+    },
+    {
+      "from": "PRESTATE",
+      "guard": "Fresh exact authority/source rehash and prestate pass; claim transaction verifies prior reservation, inserts unique claim slot with audit event, and durable readback precedes launch; no second budget debit.",
+      "to": "CLAIMED"
+    },
+    {
+      "from": "PRESTATE",
+      "guard": "claim commit uncertain; no dispatch until authoritative resolution; never replacement claim",
+      "to": "AMBIGUOUS_CONSUMPTION"
+    },
+    {
+      "from": "CLAIMED",
+      "guard": "unique launch intent durably committed and owned worker dispatch acknowledged",
+      "to": "EXECUTING"
+    },
+    {
+      "from": "CLAIMED",
+      "guard": "failure before proven dispatch after durable claim; operation NOT_PROVEN",
+      "to": "CONSUMED_FAILED"
+    },
+    {
+      "from": "CLAIMED",
+      "guard": "dispatch/inner native claim uncertain; no retry",
+      "to": "AMBIGUOUS_CONSUMPTION"
+    },
+    {
+      "from": "EXECUTING",
+      "guard": "result and complete raw evidence/graph/closure verified",
+      "to": "PASS"
+    },
+    {
+      "from": "EXECUTING",
+      "guard": "failure result and complete evidence/closure verified",
+      "to": "FAIL"
+    },
+    {
+      "from": "EXECUTING",
+      "guard": "deadline exceeded; effect/ownership classification retained and complete closure",
+      "to": "TIMEOUT"
+    },
+    {
+      "from": "EXECUTING",
+      "guard": "worker/process crashed; raw partial evidence retained and complete classification closure",
+      "to": "CRASHED"
+    },
+    {
+      "from": "CLAIMED|EXECUTING",
+      "guard": "required manifest or graph closure absent/unverifiable; claim remains consumed",
+      "to": "INCOMPLETE_EVIDENCE"
+    },
+    {
+      "from": "CREATED|PRESTATE|CLAIMED|EXECUTING",
+      "guard": "explicit owner abort with disposition and preservation",
+      "to": "ABORTED_OWNER"
+    },
+    {
+      "from": "CLAIMED|EXECUTING",
+      "guard": "effect cannot be classified; never coerce to FAIL or zero",
+      "to": "UNKNOWN"
+    }
+  ],
+  "user_shorthand_mapping": {
+    "AMBIGUOUS": "AMBIGUOUS_CONSUMPTION",
+    "BLOCKED": "BLOCKED_PRESTATE",
+    "INCOMPLETE": "INCOMPLETE_EVIDENCE"
+  }
+}

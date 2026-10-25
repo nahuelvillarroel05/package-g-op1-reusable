@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_RUN_AUTHORITY_SCHEMA.json",
+  "title": "OP1_RUN_AUTHORITY_SCHEMA",
+  "description": "Prospective per-RUN immutable authorization. Binds exact content-addressed target/port/resource/command graph manifest and closed typed budget in addition to session, claim, attempt and namespace. This schema does not issue authority.",
+  "type": "object",
+  "required": [
+    "identity",
+    "authority_id",
+    "session_id",
+    "run_id",
+    "claim_id",
+    "attempt_id",
+    "namespace_id",
+    "operation_id",
+    "owner_actor_id",
+    "issuer_actor_id",
+    "issued_at_utc",
+    "expires_at_utc",
+    "session_authority_sha256",
+    "freeze_manifest_sha256",
+    "policy_manifest_sha256",
+    "command_sha256",
+    "operation_class",
+    "target_class",
+    "resource_ceilings",
+    "proof_sha256",
+    "one_shot",
+    "exact_binding_manifest_sha256",
+    "exact_binding_manifest_relative_path",
+    "exact_binding_manifest"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "authority_id": {
+      "type": "string",
+      "pattern": "^PG-AUTH-[0-9a-f]{32}$"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^PG-SES-[0-9a-f]{32}$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^PG-RUN-[0-9a-f]{32}$"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^PG-CLM-[0-9a-f]{32}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^PG-ATT-[0-9a-f]{32}$"
+    },
+    "namespace_id": {
+      "type": "string",
+      "pattern": "^PG-NS-[0-9a-f]{32}$"
+    },
+    "operation_id": {
+      "type": "string",
+      "pattern": "^PG-OP-[0-9a-f]{32}$"
+    },
+    "owner_actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "issuer_actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "issued_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "expires_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "session_authority_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "freeze_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "policy_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "command_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "operation_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resource_ceilings": {
+      "$ref": "OP1_RESOURCE_BUDGET_SCHEMA.json"
+    },
+    "proof_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "one_shot": {
+      "const": true
+    },
+    "exact_binding_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "exact_binding_manifest_relative_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exact_binding_manifest": {
+      "$ref": "OP1_RUN_EXACT_BINDING_SCHEMA.json"
+    }
+  },
+  "additionalProperties": false,
+  "x-law": "RUN authority cannot be derived from session validity or copied between RUNS; issuer/owner attestation and exact bytes must be validated before claim.",
+  "x-exact-binding-law": "Read exact_binding_manifest_relative_path through immutable safe handle, validate against OP1_RUN_EXACT_BINDING_SCHEMA, compare byte SHA-256 and all referenced bytes with authority/freeze/policy/session immediately before claim. target_class and command_sha256 alone are insufficient. The inline exact_binding_manifest value must be byte-equivalent under canonical encoding to the separately stored exact manifest; mismatch rejects before claim."
+}

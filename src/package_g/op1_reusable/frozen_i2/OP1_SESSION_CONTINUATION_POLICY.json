@@ -1,0 +1,37 @@
+{
+  "schema": "package-g-op1-session-continuation-policy@1",
+  "decision_point": "After every terminal RUN and before next RUN admission",
+  "may_continue_if_all": [
+    "session unexpired and not revoked",
+    "reserved run count and all cumulative/concurrent budgets within bounds",
+    "product/version/freeze/source/policy/tool bindings unchanged",
+    "failed RUN immutable and terminal",
+    "claim and subordinate intents classified; no replay",
+    "all owned resources proven stopped or safely isolated",
+    "evidence store and session ledger healthy",
+    "no foreign ownership mutation or host exclusivity compromise"
+  ],
+  "eligible_run_outcomes": [
+    "expected application failure",
+    "bounded timeout with proven cleanup",
+    "negative/adversarial result",
+    "safe prestate block",
+    "run-level evidence failure before mutation"
+  ],
+  "quarantine_or_terminate": {
+    "expiry": "TERMINATE",
+    "max_runs": "TERMINATE",
+    "explicit_revoke": "TERMINATE",
+    "owner_termination": "TERMINATE",
+    "protected_source_mismatch": "QUARANTINE",
+    "session_policy_mismatch": "QUARANTINE",
+    "foreign_ownership_mutation": "QUARANTINE",
+    "evidence_store_corruption": "QUARANTINE",
+    "host_exclusivity_compromise": "QUARANTINE",
+    "unexplained_historical_mutation": "QUARANTINE",
+    "authority_integrity_failure": "QUARANTINE",
+    "session_invariant_violation": "QUARANTINE"
+  },
+  "uncertainty": "If run claim/effect ambiguous, close RUN permanently. SESSION continues only after independent proof uncertainty cannot contaminate session/host/budgets; otherwise quarantine.",
+  "next_run": "Fresh RUN_ID, CLAIM_ID, ATTEMPT_ID, NAMESPACE_ID and explicit run authority; never reuse/reset consumed slot."
+}

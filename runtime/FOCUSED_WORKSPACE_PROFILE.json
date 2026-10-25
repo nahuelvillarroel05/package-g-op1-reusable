@@ -1,0 +1,12 @@
+{
+  "authority": "local synthetic Engineering only; no native, formal, training, release, or promotion",
+  "campaign_children": "campaigns",
+  "document_selection": "UNAVAILABLE_PRIVATE_SELECTION.json",
+  "document_selection_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "immutable_source": "candidate runtime closure pinned by composition and copy manifests",
+  "profile_id": "OP1-PUBLIC-ENGINEERING-20261025T172832Z",
+  "prospective_source_copy_manifest": "PROSPECTIVE_SOURCE_COPY_MANIFEST.json",
+  "schema": "i7.focused.workspace-profile.v1",
+  "source_copy_manifest": "SOURCE_COPY_MANIFEST.json",
+  "source_copy_manifest_sha256": "0d56b655d576832c85da034775794b6cddae9b6d935ee72944858ba1e30f7954"
+}

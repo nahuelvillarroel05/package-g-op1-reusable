@@ -1,0 +1,75 @@
+{
+  "authority_rule": "Session validity permits consideration of a RUN, never implicit execution authority.",
+  "budget_rule": "Every atomically reserved RUN_ID counts, including blocked/failed. SUM cumulative; ACTIVE_COUNT concurrency; ACTIVE_SUM memory. Unknown consumption not refunded.",
+  "initial": "CREATED",
+  "mode": "DESIGN_ONLY",
+  "phase": "OP1_REUSABLE_ARCHITECTURE_IMPLEMENTATION_DESIGN",
+  "profiles": {
+    "EXPERIMENTAL_REUSABLE": {
+      "fault_injection": "only when separately authorized per RUN",
+      "network": "loopback by default",
+      "proposed_max_lifetime_hours": 24,
+      "proposed_max_runs_ceiling": 100,
+      "purpose": "controlled development, failure discovery and bounded named fault injection"
+    },
+    "OPERATIONAL_REUSABLE": {
+      "fault_injection": "prohibited",
+      "network": "loopback by default",
+      "proposed_max_lifetime_hours": 8,
+      "proposed_max_runs_ceiling": 20,
+      "purpose": "routine qualified native operations",
+      "resource_limit": "per-resource ceiling <= experimental"
+    }
+  },
+  "project": "PACKAGE-G",
+  "proposed_values_are_not_grants": true,
+  "revocation_rule": "Blocks future admission at authoritative boundary; in-flight stop requires separately proven actuator and ownership semantics.",
+  "run_failure_rule": "FAIL, safe prestate block, bounded timeout with proven cleanup or negative result does not by itself terminate session. Ambiguous run permits continuation only after independent isolation proof; otherwise QUARANTINED.",
+  "schema": "package-g-op1-session-state-machine@1",
+  "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+  "source_freeze_sha256": "bbe63ee96d03712109da9f48f966a6b9c470c050092871cce3e330118ed89465",
+  "states": [
+    "CREATED",
+    "ACTIVE",
+    "TERMINATED",
+    "EXPIRED",
+    "QUARANTINED"
+  ],
+  "terminal_states": [
+    "TERMINATED",
+    "EXPIRED",
+    "QUARANTINED"
+  ],
+  "transitions": [
+    {
+      "from": "CREATED",
+      "guard": "issuer-authenticated session authority; exact immutable bindings, numeric budgets, source/freeze/policy and owner verified; qualified store healthy",
+      "to": "ACTIVE"
+    },
+    {
+      "from": "CREATED",
+      "guard": "authority integrity or bound source/policy mismatch",
+      "to": "QUARANTINED"
+    },
+    {
+      "from": "ACTIVE",
+      "guard": "after each terminal RUN, continuation check proves unchanged bindings, budget, owner/resource cleanup, healthy evidence/claim store and no foreign mutation; next RUN has fresh IDs and authority",
+      "to": "ACTIVE"
+    },
+    {
+      "from": "ACTIVE",
+      "guard": "session lifetime reached; no new admission",
+      "to": "EXPIRED"
+    },
+    {
+      "from": "ACTIVE",
+      "guard": "max_runs consumed, explicit revoke, or owner termination",
+      "to": "TERMINATED"
+    },
+    {
+      "from": "ACTIVE",
+      "guard": "session-level invariant violated, claim/effect uncertainty contaminates host/session, evidence corruption, foreign ownership, protected source/policy mutation or host exclusivity compromise",
+      "to": "QUARANTINED"
+    }
+  ]
+}

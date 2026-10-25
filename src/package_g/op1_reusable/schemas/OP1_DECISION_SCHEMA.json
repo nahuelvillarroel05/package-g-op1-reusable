@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_DECISION_SCHEMA.json",
+  "title": "OP1_DECISION_SCHEMA",
+  "description": "Append a decision/resolution event referencing original finding. Never edit observation.",
+  "type": "object",
+  "required": [
+    "identity",
+    "decision_id",
+    "decider_actor_id",
+    "subject_ids",
+    "outcome",
+    "rationale",
+    "evidence_ids",
+    "decided_at_utc",
+    "resolves_finding_ids"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^PG-DEC-[0-9a-f]{32}$"
+    },
+    "decider_actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "subject_ids": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "entity_type",
+          "entity_id"
+        ],
+        "properties": {
+          "entity_type": {
+            "enum": [
+              "PROJECT",
+              "PRODUCT",
+              "LINEAGE",
+              "VERSION",
+              "FREEZE",
+              "SESSION",
+              "RUN",
+              "ATTEMPT",
+              "AUTHORITY",
+              "CLAIM",
+              "NAMESPACE",
+              "OPERATION",
+              "EVENT",
+              "ACTOR",
+              "MODEL",
+              "TOOL",
+              "TOOL_INVOCATION",
+              "RESOURCE",
+              "POLICY",
+              "SCHEMA",
+              "ARTIFACT",
+              "EVIDENCE",
+              "FINDING",
+              "ERROR",
+              "DECISION",
+              "AUDIT",
+              "DELEGATION",
+              "TASK",
+              "REPORT",
+              "REVIEW",
+              "DATASET",
+              "DATASET_VERSION",
+              "DATASET_EXAMPLE",
+              "TRANSFORMATION"
+            ]
+          },
+          "entity_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "outcome": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-EVD-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "decided_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "resolves_finding_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-FND-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}

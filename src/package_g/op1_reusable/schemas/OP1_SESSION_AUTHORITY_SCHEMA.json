@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_SESSION_AUTHORITY_SCHEMA.json",
+  "title": "OP1_SESSION_AUTHORITY_SCHEMA",
+  "description": "Prospective immutable bounded session authority. Schema is not a grant. Verify trusted issuer, issue<expiry, exact freeze/policy/tool digests, actor and scope before RUN admission.",
+  "type": "object",
+  "required": [
+    "identity",
+    "session_id",
+    "authority_id",
+    "issuer_actor_id",
+    "owner_actor_id",
+    "product_id",
+    "lineage_id",
+    "version_id",
+    "freeze_id",
+    "freeze_manifest_sha256",
+    "profile",
+    "allowed_operation_classes",
+    "policy_bindings",
+    "target_class",
+    "resource_ceilings",
+    "max_runs",
+    "issued_at_utc",
+    "expires_at_utc",
+    "evidence_root",
+    "allowed_tool_ids",
+    "network_boundary",
+    "mutation_boundary",
+    "authority_proof_sha256",
+    "run_authorization_required"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^PG-SES-[0-9a-f]{32}$"
+    },
+    "authority_id": {
+      "type": "string",
+      "pattern": "^PG-AUTH-[0-9a-f]{32}$"
+    },
+    "issuer_actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "owner_actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "product_id": {
+      "type": "string",
+      "pattern": "^PG-PROD-[0-9a-f]{32}$"
+    },
+    "lineage_id": {
+      "type": "string",
+      "pattern": "^PG-LIN-[0-9a-f]{32}$"
+    },
+    "version_id": {
+      "type": "string",
+      "pattern": "^PG-VER-[0-9a-f]{32}$"
+    },
+    "freeze_id": {
+      "type": "string",
+      "pattern": "^PG-FRZ-[0-9a-f]{32}$"
+    },
+    "freeze_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "profile": {
+      "enum": [
+        "EXPERIMENTAL_REUSABLE",
+        "OPERATIONAL_REUSABLE"
+      ]
+    },
+    "allowed_operation_classes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "policy_bindings": {
+      "type": "array",
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "urn:package-g:op1:reusable:policy-binding:1.0.0",
+        "title": "policy_binding",
+        "description": "Exact policy bytes.",
+        "type": "object",
+        "required": [
+          "policy_id",
+          "sha256"
+        ],
+        "properties": {
+          "policy_id": {
+            "type": "string",
+            "pattern": "^PG-POL-[0-9a-f]{32}$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "target_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resource_ceilings": {
+      "$ref": "OP1_RESOURCE_BUDGET_SCHEMA.json"
+    },
+    "max_runs": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "issued_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "expires_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "evidence_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "allowed_tool_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-TOL-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "network_boundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mutation_boundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority_proof_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "run_authorization_required": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

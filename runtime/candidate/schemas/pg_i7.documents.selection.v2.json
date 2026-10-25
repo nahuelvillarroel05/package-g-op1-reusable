@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pg_i7.documents.selection.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "selection_id",
+    "policy_id",
+    "policy_version",
+    "policy_manifest_sha256",
+    "authorization_status",
+    "source_root",
+    "limits",
+    "documents",
+    "selection_commitment_sha256"
+  ],
+  "properties": {
+    "schema": {"const": "pg_i7.documents.selection.v2"},
+    "selection_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
+    "policy_id": {"enum": ["engineering", "package-fixtures"]},
+    "policy_version": {"const": "1"},
+    "policy_manifest_sha256": {"const": "e410e527d1764e3b05ce71f6f686b86db4577c1b3cb92d93ff5b4ac6596a16e4"},
+    "authorization_status": {"const": "DECLARED_REQUIRES_INDEPENDENT_POLICY_CHECK"},
+    "source_root": {"type": "string", "minLength": 1},
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_documents", "max_document_bytes", "max_total_document_bytes", "max_input_bytes", "max_values", "min_value", "max_value"],
+      "properties": {
+        "max_documents": {"const": 64},
+        "max_document_bytes": {"const": 16777216},
+        "max_total_document_bytes": {"const": 67108864},
+        "max_input_bytes": {"const": 16384},
+        "max_values": {"const": 64},
+        "min_value": {"const": -2147483648},
+        "max_value": {"const": 2147483647}
+      }
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path_id", "relative_path", "path", "bytes", "sha256", "file_identity", "document"],
+        "properties": {
+          "path_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "relative_path": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "bytes": {"type": "integer", "minimum": 0, "maximum": 16777216},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "file_identity": {"type": "array", "prefixItems": [{"type": "integer", "minimum": 0}, {"type": "integer", "minimum": 0}], "minItems": 2, "maxItems": 2},
+          "document": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path_id", "kind", "status", "byte_count"],
+            "properties": {
+              "path_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "kind": {"type": "string"},
+              "status": {"const": "HASHED"},
+              "byte_count": {"type": "integer", "minimum": 0, "maximum": 16777216}
+            }
+          }
+        }
+      }
+    },
+    "selection_commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

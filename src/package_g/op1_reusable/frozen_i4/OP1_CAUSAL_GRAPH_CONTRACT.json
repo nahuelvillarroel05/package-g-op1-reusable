@@ -1,0 +1,88 @@
+{
+  "schema": "package-g-op1-causal-graph-contract@1",
+  "nodes": [
+    "PROJECT",
+    "PRODUCT",
+    "LINEAGE",
+    "VERSION",
+    "FREEZE",
+    "SESSION",
+    "RUN",
+    "ATTEMPT",
+    "AUTHORITY",
+    "CLAIM",
+    "NAMESPACE",
+    "OPERATION",
+    "EVENT",
+    "ACTOR",
+    "MODEL",
+    "TOOL",
+    "TOOL_INVOCATION",
+    "RESOURCE",
+    "POLICY",
+    "SCHEMA",
+    "ARTIFACT",
+    "EVIDENCE",
+    "FINDING",
+    "ERROR",
+    "DECISION",
+    "AUDIT",
+    "DELEGATION",
+    "TASK",
+    "REPORT",
+    "REVIEW",
+    "DATASET",
+    "DATASET_VERSION",
+    "DATASET_EXAMPLE",
+    "TRANSFORMATION"
+  ],
+  "edges": [
+    "parent_ids",
+    "caused_by_ids",
+    "produced_artifact_ids",
+    "produced_finding_ids",
+    "resolved_finding_ids",
+    "triggered_decision_ids",
+    "supersedes_id"
+  ],
+  "validation": [
+    "Every typed reference resolves uniquely to an already committed immutable record; only publication/resolution events list produced objects, after those objects commit.",
+    "Reject self-edge, cycle, forged parent, wrong type, dangling reference or unauthorized cross-session/RUN link",
+    "Cross-run repair requires explicit DECISION and retains failed RUN",
+    "Exclusive claim and budget transitions serialized; nonexclusive evidence siblings may be concurrent",
+    "Causal order follows committed sequence and parent commitment, never UTC alone",
+    "Writer authentication, payload digest, parent commitments and externally trusted checkpoint/root required for tamper and truncation detection",
+    "Closure certificate binds terminal event, graph frontier, expected manifest and completeness checks; missing closure means INCOMPLETE_EVIDENCE"
+  ],
+  "example": {
+    "failed_run": "RUN-0041",
+    "timeout_event": "EVENT timeout",
+    "finding": "FINDING-0081",
+    "decision": "DECISION-0022",
+    "later_run": "RUN-0042",
+    "later_result": "PASS",
+    "law": "RUN-0041 remains immutable and addressable"
+  },
+  "truth_boundary": "Intent proves intent, not effect. Result needs supporting observations. DAG alone does not prove completeness or truth.",
+  "commit_protocol": [
+    "Commit ACTION/OBSERVATION event with backward causal parents only and empty produced/evidence lists.",
+    "Commit EVIDENCE, ARTIFACT, FINDING or DECISION record referencing prior causing event.",
+    "Commit separate PUBLICATION/RESOLUTION event with produced IDs and evidence IDs now pointing backward to committed records.",
+    "Commit terminal closure only after graph frontier and manifest verified."
+  ],
+  "edge_semantics": {
+    "causal_back_edges": [
+      "parent_ids",
+      "caused_by_ids",
+      "event_id"
+    ],
+    "publication_back_references": [
+      "produced_artifact_ids",
+      "produced_finding_ids",
+      "resolved_finding_ids",
+      "triggered_decision_ids",
+      "evidence_ids"
+    ],
+    "derived_forward_view": "Search/index may project from cause to produced records but is rebuildable and never authoritative."
+  }
+}

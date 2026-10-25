@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_EVIDENCE_SCHEMA.json",
+  "title": "OP1_EVIDENCE_SCHEMA",
+  "description": "RUN/ATTEMPT-scoped evidence with prior causing EVENT_ID, exact relative path, length, SHA-256, actor and conditional tool attribution. No session-only EVIDENCE variant: reserve a RUN and ATTEMPT before gathering prestate. Derived records reference raw evidence and never overwrite it.",
+  "type": "object",
+  "required": [
+    "identity",
+    "evidence_id",
+    "run_id",
+    "event_id",
+    "actor_id",
+    "relative_path",
+    "byte_length",
+    "sha256",
+    "producer",
+    "created_at_utc",
+    "evidence_class",
+    "derivation_class",
+    "attempt_id"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^PG-EVD-[0-9a-f]{32}$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^PG-RUN-[0-9a-f]{32}$"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^PG-EVT-[0-9a-f]{32}$"
+    },
+    "actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "tool_id": {
+      "type": "string",
+      "pattern": "^PG-TOL-[0-9a-f]{32}$"
+    },
+    "tool_invocation_id": {
+      "type": "string",
+      "pattern": "^PG-TINV-[0-9a-f]{32}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\.\\.)(?!.*\\\\).+$"
+    },
+    "byte_length": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "producer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "evidence_class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "derivation_class": {
+      "enum": [
+        "RAW_IMMUTABLE",
+        "DERIVED_IMMUTABLE"
+      ]
+    },
+    "source_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-EVD-[0-9a-f]{32}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^PG-ART-[0-9a-f]{32}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^PG-ATT-[0-9a-f]{32}$"
+    }
+  },
+  "additionalProperties": false,
+  "x-path-law": "Normalize and resolve path within canonical evidence root; reject reparse/symlink escape and duplicate path even if same hash; create-new only.",
+  "x-attribution-law": "Path RUN_ID and ATTEMPT_ID segments must equal schema fields and envelope. Tool ID plus invocation ID mandatory when tool produced bytes; direct actor observation records producer without tool."
+}

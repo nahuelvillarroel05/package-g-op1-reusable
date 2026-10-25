@@ -1,0 +1,11 @@
+Package-G OP1 Reusable — engineering reference snapshot
+
+SPDX-License-Identifier: Apache-2.0
+
+This snapshot contains Owner-authorized Package-G project source selected from its reusable implementation and I7 engineering lineage. Original historical source versions and new public derivative modifications are separately identified by manifests. No new copyright holder, human authorship or contribution date is asserted here.
+
+Modified public files carry notices; unchanged byte-pinned project sources are covered by .reuse/dep5. External dependencies are not bundled and retain their original licenses. No model weights, third-party SDK source or protected operational evidence is included.
+
+The selected historical core contains 104 exact Git-blob files and one original Windows CRLF runtime materialization of i2_synthetic_executor.py. Its source text is unchanged; the exported bytes match the SHA-256 already required by the original frozen I2 isolation profile. The manifest preserves both Git-blob and runtime-byte identities. No frozen hash check was relaxed.
+
+This NOTICE is informational and does not change the Apache License 2.0 terms.

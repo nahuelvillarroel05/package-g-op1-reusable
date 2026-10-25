@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Package-G OP1 Reusable
+Source: Owner-authorized engineering snapshot
+
+Files: *
+Copyright: NOASSERTION
+License: Apache-2.0
+Comment: No new copyright attribution is invented. Original source identities and modifications are preserved in manifests; external dependencies are installed separately.

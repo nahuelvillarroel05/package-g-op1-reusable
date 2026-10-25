@@ -1,0 +1,1718 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_IDENTITY_ENVELOPE_SCHEMA.json",
+  "title": "OP1_IDENTITY_ENVELOPE_SCHEMA",
+  "description": "Immutable record envelope; status is an appended observation. content_sha256 identifies canonical payload bytes excluding this field, not the full record or any authority.",
+  "type": "object",
+  "required": [
+    "entity_id",
+    "entity_type",
+    "schema_id",
+    "schema_version",
+    "actor_id",
+    "created_at_utc",
+    "status"
+  ],
+  "properties": {
+    "entity_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entity_type": {
+      "enum": [
+        "PROJECT",
+        "PRODUCT",
+        "LINEAGE",
+        "VERSION",
+        "FREEZE",
+        "SESSION",
+        "RUN",
+        "ATTEMPT",
+        "AUTHORITY",
+        "CLAIM",
+        "NAMESPACE",
+        "OPERATION",
+        "EVENT",
+        "ACTOR",
+        "MODEL",
+        "TOOL",
+        "TOOL_INVOCATION",
+        "RESOURCE",
+        "POLICY",
+        "SCHEMA",
+        "ARTIFACT",
+        "EVIDENCE",
+        "FINDING",
+        "ERROR",
+        "DECISION",
+        "AUDIT",
+        "DELEGATION",
+        "TASK",
+        "REPORT",
+        "REVIEW",
+        "DATASET",
+        "DATASET_VERSION",
+        "DATASET_EXAMPLE",
+        "TRANSFORMATION"
+      ]
+    },
+    "schema_id": {
+      "type": "string",
+      "pattern": "^PG-SCH-[0-9a-f]{32}$"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^PG-PROJ-[0-9a-f]{32}$"
+    },
+    "product_id": {
+      "type": "string",
+      "pattern": "^PG-PROD-[0-9a-f]{32}$"
+    },
+    "lineage_id": {
+      "type": "string",
+      "pattern": "^PG-LIN-[0-9a-f]{32}$"
+    },
+    "version_id": {
+      "type": "string",
+      "pattern": "^PG-VER-[0-9a-f]{32}$"
+    },
+    "freeze_id": {
+      "type": "string",
+      "pattern": "^PG-FRZ-[0-9a-f]{32}$"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^PG-SES-[0-9a-f]{32}$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^PG-RUN-[0-9a-f]{32}$"
+    },
+    "parent_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id_ref"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "caused_by_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id_ref"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "supersedes_id": {
+      "$ref": "#/$defs/id_ref"
+    },
+    "actor_id": {
+      "type": "string",
+      "pattern": "^PG-ACT-[0-9a-f]{32}$"
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id_ref": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "typed_id_reference",
+      "description": "Must resolve to exactly one immutable registry entity of declared type.",
+      "type": "object",
+      "required": [
+        "entity_type",
+        "entity_id"
+      ],
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "PROJECT",
+            "PRODUCT",
+            "LINEAGE",
+            "VERSION",
+            "FREEZE",
+            "SESSION",
+            "RUN",
+            "ATTEMPT",
+            "AUTHORITY",
+            "CLAIM",
+            "NAMESPACE",
+            "OPERATION",
+            "EVENT",
+            "ACTOR",
+            "MODEL",
+            "TOOL",
+            "TOOL_INVOCATION",
+            "RESOURCE",
+            "POLICY",
+            "SCHEMA",
+            "ARTIFACT",
+            "EVIDENCE",
+            "FINDING",
+            "ERROR",
+            "DECISION",
+            "AUDIT",
+            "DELEGATION",
+            "TASK",
+            "REPORT",
+            "REVIEW",
+            "DATASET",
+            "DATASET_VERSION",
+            "DATASET_EXAMPLE",
+            "TRANSFORMATION"
+          ]
+        },
+        "entity_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "PROJECT"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-PROJ-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "PRODUCT"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-PROD-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "LINEAGE"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-LIN-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "VERSION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-VER-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "FREEZE"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-FRZ-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "SESSION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-SES-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "RUN"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-RUN-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "ATTEMPT"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-ATT-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "AUTHORITY"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-AUTH-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "CLAIM"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-CLM-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "NAMESPACE"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-NS-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "OPERATION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-OP-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "EVENT"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-EVT-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "ACTOR"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-ACT-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "MODEL"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-MOD-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "TOOL"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-TOL-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "TOOL_INVOCATION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-TINV-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "RESOURCE"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-RES-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "POLICY"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-POL-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "SCHEMA"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-SCH-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "ARTIFACT"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-ART-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "EVIDENCE"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-EVD-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "FINDING"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-FND-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "ERROR"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-ERR-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "DECISION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-DEC-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "AUDIT"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-AUD-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "DELEGATION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-DEL-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "TASK"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-TSK-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "REPORT"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-RPT-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "REVIEW"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-REV-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "DATASET"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-DAT-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "DATASET_VERSION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-DVER-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "DATASET_EXAMPLE"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-DEX-[0-9a-f]{32}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "entity_type": {
+                "const": "TRANSFORMATION"
+              }
+            },
+            "required": [
+              "entity_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "pattern": "^PG-TRF-[0-9a-f]{32}$"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "PROJECT"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-PROJ-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "PRODUCT"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-PROD-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "LINEAGE"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-LIN-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "VERSION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-VER-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "FREEZE"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-FRZ-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id",
+          "version_id",
+          "content_sha256"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "SESSION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-SES-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id",
+          "version_id",
+          "freeze_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "RUN"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-RUN-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id",
+          "version_id",
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "ATTEMPT"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-ATT-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id",
+          "version_id",
+          "session_id",
+          "run_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "AUTHORITY"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-AUTH-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "CLAIM"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-CLM-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id",
+          "version_id",
+          "session_id",
+          "run_id",
+          "content_sha256"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "NAMESPACE"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-NS-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "OPERATION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-OP-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "EVENT"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-EVT-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id",
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "ACTOR"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-ACT-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "MODEL"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-MOD-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "TOOL"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-TOL-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "TOOL_INVOCATION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-TINV-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "RESOURCE"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-RES-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "POLICY"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-POL-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "SCHEMA"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-SCH-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "ARTIFACT"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-ART-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "EVIDENCE"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-EVD-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "lineage_id",
+          "session_id",
+          "run_id",
+          "content_sha256"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "FINDING"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-FND-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "ERROR"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-ERR-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "DECISION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-DEC-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "AUDIT"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-AUD-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "DELEGATION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-DEL-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "TASK"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-TSK-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "REPORT"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-RPT-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "REVIEW"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-REV-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "DATASET"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-DAT-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "DATASET_VERSION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-DVER-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "content_sha256"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "DATASET_EXAMPLE"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-DEX-[0-9a-f]{32}$"
+          }
+        },
+        "required": [
+          "project_id",
+          "product_id",
+          "content_sha256"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "TRANSFORMATION"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "pattern": "^PG-TRF-[0-9a-f]{32}$"
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "x-identity-law": {
+    "canonical_format": "PG-<TYPE_PREFIX>-<32 lowercase CSPRNG hex digits>",
+    "type_prefixes": {
+      "PROJECT": "PROJ",
+      "PRODUCT": "PROD",
+      "LINEAGE": "LIN",
+      "VERSION": "VER",
+      "FREEZE": "FRZ",
+      "SESSION": "SES",
+      "RUN": "RUN",
+      "ATTEMPT": "ATT",
+      "AUTHORITY": "AUTH",
+      "CLAIM": "CLM",
+      "NAMESPACE": "NS",
+      "OPERATION": "OP",
+      "EVENT": "EVT",
+      "ACTOR": "ACT",
+      "MODEL": "MOD",
+      "TOOL": "TOL",
+      "TOOL_INVOCATION": "TINV",
+      "RESOURCE": "RES",
+      "POLICY": "POL",
+      "SCHEMA": "SCH",
+      "ARTIFACT": "ART",
+      "EVIDENCE": "EVD",
+      "FINDING": "FND",
+      "ERROR": "ERR",
+      "DECISION": "DEC",
+      "AUDIT": "AUD",
+      "DELEGATION": "DEL",
+      "TASK": "TSK",
+      "REPORT": "RPT",
+      "REVIEW": "REV",
+      "DATASET": "DAT",
+      "DATASET_VERSION": "DVER",
+      "DATASET_EXAMPLE": "DEX",
+      "TRANSFORMATION": "TRF"
+    },
+    "generation": "128 cryptographically random bits, exclusive registry insert, collision is a hard error",
+    "logical_identity": "entity_id remains stable across appended observations",
+    "version_identity": "VERSION_ID or DATASET_VERSION_ID changes for a new immutable snapshot or interpretation; version number is a separate label",
+    "byte_identity": "SHA-256 of exact bytes; byte identity may coincide for distinct logical objects",
+    "invariant": "logical identity != version identity != byte identity",
+    "reference_validation": "Resolve type and ID in immutable registry; reject dangling, conflicting, wrong-type, cross-boundary refs. ID syntax never grants authority.",
+    "legacy": "Historical @2 IDs and aliases remain exact bytes; no rewrite."
+  },
+  "x-presence": {
+    "hierarchy": "Root PROJECT has no self project_id; require only applicable hierarchy fields per entity type. Absent means inapplicable, not UNKNOWN.",
+    "optional_fields": [
+      "parent_ids",
+      "caused_by_ids",
+      "supersedes_id",
+      "content_sha256",
+      "hierarchy fields not required for entity type"
+    ],
+    "run_scoped": "EVENT has run_id only when about a RUN; ATTEMPT, CLAIM and EVIDENCE always bind a RUN."
+  },
+  "x-cross-record-validation": {
+    "mandatory": true,
+    "scope": "Every entity schema, envelope, nested reference and registry lookup",
+    "rules": [
+      "Top-level <entity_type>_id equals identity.entity_id and identity.entity_type is the exact expected type",
+      "Repeated project/product/lineage/version/session/run IDs equal envelope values and resolve in immutable registry",
+      "Every typed parent/caused_by/supersedes reference resolves to exactly one permitted prior committed entity and correct type",
+      "No ID may denote two records; collision, wrong type, missing reference or inconsistent hierarchy is a hard reject"
+    ],
+    "implementation_note": "Cross-field equality and global uniqueness are semantic registry checks in addition to JSON Schema shape validation."
+  }
+}

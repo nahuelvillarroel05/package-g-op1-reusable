@@ -1,0 +1,33 @@
+{
+  "checkpoint_design": "A distinct owner-controlled signer attests (log sequence, graph root, terminal closure hash); independently stored immutable checkpoint survives writer-store rollback. Reject missing, stale or invalid signature before claim or dataset compilation.",
+  "closure": "Certificate binds terminal EVENT_ID, graph frontier/root, expected evidence manifest and completeness. Missing or corrupt closure -> INCOMPLETE_EVIDENCE.",
+  "commit_protocol": [
+    "Validate and commit action/observation EVENT with backward parents and empty produced lists.",
+    "Commit raw/derived EVIDENCE, ARTIFACT, FINDING or DECISION citing prior causing event.",
+    "Commit separate PUBLICATION/RESOLUTION EVENT referencing already committed produced objects.",
+    "Commit terminal graph closure after expected manifest/frontier and checkpoint verification."
+  ],
+  "derived_views": "Forward traversals and search indexes rebuild from authoritative log; no view mutates committed graph.",
+  "durability": "Authenticated append with payload SHA-256, previous/parent commitments, monotone sequence and externally trusted graph root checkpoint; detect deletion, reorder, truncation and rollback.",
+  "edge_types": [
+    "parent_ids",
+    "caused_by_ids",
+    "event_id",
+    "produced_artifact_ids",
+    "produced_finding_ids",
+    "resolved_finding_ids",
+    "triggered_decision_ids",
+    "evidence_ids",
+    "supersedes_id"
+  ],
+  "mode": "DESIGN_ONLY",
+  "node_types": "All 34 frozen typed registry entities",
+  "ordering": "Committed sequence and parent commitment define causality. UTC timestamps are observations only.",
+  "phase": "OP1_REUSABLE_ARCHITECTURE_IMPLEMENTATION_DESIGN",
+  "project": "PACKAGE-G",
+  "schema": "package-g-op1-causal-graph-implementation@1",
+  "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+  "source_freeze_sha256": "bbe63ee96d03712109da9f48f966a6b9c470c050092871cce3e330118ed89465",
+  "truth_boundary": "Intent is not effect; observed result requires supporting raw evidence. DAG/hash alone proves neither truth nor completeness.",
+  "validation": "Resolve every typed reference uniquely to earlier immutable committed record; require allowed type/scope, exact parent hierarchy and authenticated writer. Reject self-edge, cycle, wrong/dangling reference, forged parent, retroactive mutation or unauthorized cross-session/RUN link. Cross-RUN repair requires explicit DECISION edge and keeps failed RUN."
+}

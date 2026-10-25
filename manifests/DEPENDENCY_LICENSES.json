@@ -1,0 +1,2620 @@
+{
+  "schema": "op1.public-source.third-party-license-audit.v1",
+  "created_utc": "2026-10-25T17:46:21.020973+00:00",
+  "reviewer_requested": "GPT-6.1 Sol XHigh independent technical review",
+  "effective_provider_identity": "UNKNOWN_NOT_EXPOSED",
+  "status": "PASS_FOR_DECLARED_SOURCE_ONLY_PUBLICATION_SCOPE",
+  "scope": {
+    "runtime_locked_packages": 29,
+    "test_only_packages": 6,
+    "exact_versions_verified": 35,
+    "actual_license_notice_author_files_read_and_hashed": 56,
+    "runtime_metadata_cross_environment_match": "29/29 campaign and publication environments",
+    "source_tree": "First-party Package-G code and new publication files only; external dependency package code, wheels, environments, models and runtime binary artifacts are excluded.",
+    "first_party_deps_directory": "runtime/candidate/deps contains tracked Package-G project sources, not an installed site-packages copy.",
+    "first_party_authorization": "Current Owner instruction authorizes Apache-2.0 publication of owned project code; private source provenance map retains exact origins. No conflicting third-party notice was observed in inspected first-party source files.",
+    "ownership_claim_limit": "This evidence review does not manufacture copyright records or independently certify exclusive title."
+  },
+  "runtime_lock": {
+    "path": "mcp/INSTALL_FREEZE.txt",
+    "bytes": 559,
+    "sha256": "5ed1f1dffd2f9622f0ffdd104a2bc9fbf1e5fbf8d075486a05fadb30a77bc9d2"
+  },
+  "test_version_basis": "Exact installed versions supplied for the publication test environment and independently measured here; six test-only package versions appear in their rows.",
+  "method": [
+    "Read installed distribution METADATA with importlib.metadata; imported no dependency runtime code to collect licenses.",
+    "Read every declared License-File, all matching installed license/notice files, and included author files; record path, byte length and SHA-256.",
+    "Review actual grant/condition/disclaimer text against the metadata expression; retain multi-license exceptions rather than collapsing them to a package classifier.",
+    "Cross-check all 29 runtime metadata and license evidence identities between historical campaign environment and new publication environment.",
+    "No dependency code, wheel, environment or executable is redistributed by this source-only snapshot."
+  ],
+  "findings": [
+    {
+      "id": "LICENSE-001",
+      "severity": "SCOPE_NOTE",
+      "status": "DISCLOSED",
+      "package": "pywin32==312",
+      "finding": "Legacy PSF metadata understates the installed multi-license component notices; adodbapi includes LGPL2.1 text and other components retain BSD-style, MIT, Scintilla and Python terms.",
+      "disposition": "Preserve the exact per-component observations here. Do not claim that the external pywin32 distribution is Apache-only or entirely PSF. Its code is not vendored."
+    },
+    {
+      "id": "LICENSE-002",
+      "severity": "SCOPE_NOTE",
+      "status": "DISCLOSED",
+      "package": "colorama==0.4.6",
+      "finding": "No SPDX expression in metadata; actual LICENSE.txt supplies the three BSD conditions.",
+      "disposition": "Observed BSD-3-Clause classification is bound to the actual license file hash, not invented metadata."
+    }
+  ],
+  "blocking_findings_in_current_scope": [],
+  "unresolved_scope_limits": [
+    "No all-components relicensing or binary/wheel redistribution opinion is issued. Bundling third-party packages later requires retaining and satisfying their exact component terms.",
+    "pywin32 adodbapi only-versus-or-later grant and ISAPI standalone license expression are not inferred from the installed notice texts; these external components are not distributed by this snapshot.",
+    "This audit identifies actual installed versions and license texts, not package-index authenticity, supply-chain security, or an offline installation guarantee."
+  ],
+  "checks": [
+    {
+      "package": "annotated-types",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "anyio",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "attrs",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "cffi",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "click",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "cryptography",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "h11",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "httpcore2",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "httpx2",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "idna",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "jsonschema",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "jsonschema-specifications",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "mcp",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "mcp-types",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "opentelemetry-api",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "pycparser",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "pydantic",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "pydantic_core",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "PyJWT",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "python-multipart",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "pywin32",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "referencing",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "rpds-py",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "sse-starlette",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "starlette",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "truststore",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "typing-inspection",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "typing_extensions",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "uvicorn",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "pytest",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "colorama",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "iniconfig",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "packaging",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "pluggy",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    },
+    {
+      "package": "pygments",
+      "exact_version": "PASS",
+      "metadata_and_actual_license_texts": "PASS"
+    }
+  ],
+  "packages": [
+    {
+      "name": "annotated-types",
+      "dependency_scope": "runtime",
+      "locked_version": "0.8.0",
+      "observed_name": "annotated-types",
+      "observed_version": "0.8.0",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "annotated_types-0.8.0.dist-info/METADATA",
+          "bytes": 15009,
+          "sha256": "614985b278f601b8ef863f82783b991cc3ada4b89f592eb71c7c48c5f2ef2298"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "annotated_types-0.8.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "annotated_types-0.8.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1083,
+          "sha256": "fe1049884b1a0d9342901e88e07f32925d24b3121d9972b6a6805fb9824b095d",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2022 the contributors",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "anyio",
+      "dependency_scope": "runtime",
+      "locked_version": "4.15.1",
+      "observed_name": "anyio",
+      "observed_version": "4.15.1",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "anyio-4.15.1.dist-info/METADATA",
+          "bytes": 4733,
+          "sha256": "043aecb571af7189e8a6c528f5d8e32545f1b2cdfaaf761d51e6d5b67ea3ca81"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "anyio-4.15.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "anyio-4.15.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1081,
+          "sha256": "5361ac9dc58f2ef5fd2e9b09c68297c17f04950909bbc8023bdb82eacf22c2b0",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2018 Alex Gr\u00f6nholm",
+            "The above copyright notice and this permission notice shall be included in all",
+            "COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "attrs",
+      "dependency_scope": "runtime",
+      "locked_version": "26.1.0",
+      "observed_name": "attrs",
+      "observed_version": "26.1.0",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "attrs-26.1.0.dist-info/METADATA",
+          "bytes": 8754,
+          "sha256": "4cd40e690f23bf37cbcad34efd6758e062df1df07c86833f7e3ce95bf1fa38cc"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "attrs-26.1.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "attrs-26.1.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1109,
+          "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2015 Hynek Schlawack and the attrs contributors",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "cffi",
+      "dependency_scope": "runtime",
+      "locked_version": "2.1.1",
+      "observed_name": "cffi",
+      "observed_version": "2.1.1",
+      "exact_version_match": true,
+      "license_expression": "MIT-0",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "cffi-2.1.1.dist-info/METADATA",
+          "bytes": 2594,
+          "sha256": "67b6a7595df7ede2195016a05d285faa7d362a8f57c238984edb8bb674b5770d"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "cffi-2.1.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "cffi-2.1.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1123,
+          "sha256": "5ba24ddc57067f9249add644c3afc41a5d6dc37e23433ef759d95df370b0af63",
+          "first_nonempty_line": "Except when otherwise stated (look for LICENSE files in directories or",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "click",
+      "dependency_scope": "runtime",
+      "locked_version": "8.5.0",
+      "observed_name": "click",
+      "observed_version": "8.5.0",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "click-8.5.0.dist-info/METADATA",
+          "bytes": 2567,
+          "sha256": "e87bce0bd194de70dfb8e708e0a6b0483009f25611804eaf87bfeb63e6c20501"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.txt",
+          "matching_evidence": [
+            "click-8.5.0.dist-info/licenses/LICENSE.txt"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "click-8.5.0.dist-info/licenses/LICENSE.txt",
+          "status": "READ",
+          "bytes": 1475,
+          "sha256": "9a8ad106a394e853bfe21f42f4e72d592819a22805d991b5f3275029292b658d",
+          "first_nonempty_line": "Copyright 2014 Pallets",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright 2014 Pallets",
+            "1.  Redistributions of source code must retain the above copyright",
+            "2.  Redistributions in binary form must reproduce the above copyright",
+            "3.  Neither the name of the copyright holder nor the names of its",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS",
+            "PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "cryptography",
+      "dependency_scope": "runtime",
+      "locked_version": "50.0.2",
+      "observed_name": "cryptography",
+      "observed_version": "50.0.2",
+      "exact_version_match": true,
+      "license_expression": "Apache-2.0 OR BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "cryptography-50.0.2.dist-info/METADATA",
+          "bytes": 4394,
+          "sha256": "047cfc71226409de4318b360aef15c63a2adf609731e3dcf7fe932f14ea042ee"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "cryptography-50.0.2.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "LICENSE.APACHE",
+          "matching_evidence": [
+            "cryptography-50.0.2.dist-info/licenses/LICENSE.APACHE"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "LICENSE.BSD",
+          "matching_evidence": [
+            "cryptography-50.0.2.dist-info/licenses/LICENSE.BSD"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "cryptography-50.0.2.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 197,
+          "sha256": "3e0c7c091a948b82533ba98fd7cbb40432d6f1a9acbf85f5922d2f99a93ae6bb",
+          "first_nonempty_line": "This software is made available under the terms of *either* of the licenses",
+          "contains_permission_grant": false,
+          "license_references": [
+            "BSD"
+          ],
+          "copyright_lines": []
+        },
+        {
+          "path": "cryptography-50.0.2.dist-info/licenses/LICENSE.APACHE",
+          "status": "READ",
+          "bytes": 11360,
+          "sha256": "aac73b3148f6d1d7111dbca32099f68d26c644c6813ae1e4f05f6579aa2663fe",
+          "first_nonempty_line": "Apache License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "Apache License"
+          ],
+          "copyright_lines": [
+            "\"Licensor\" shall mean the copyright owner or entity authorized by",
+            "the copyright owner that is granting the License.",
+            "copyright notice that is included in or attached to the work",
+            "submitted to Licensor for inclusion in the Work by the copyright owner",
+            "the copyright owner. For the purposes of this definition, \"submitted\"",
+            "designated in writing by the copyright owner as \"Not a Contribution.\"",
+            "2. Grant of Copyright License. Subject to the terms and conditions of",
+            "copyright license to reproduce, prepare Derivative Works of,",
+            "that You distribute, all copyright, patent, trademark, and",
+            "You may add Your own copyright statement to Your modifications and",
+            "same \"printed page\" as the copyright notice for easier",
+            "Copyright [yyyy] [name of copyright owner]"
+          ]
+        },
+        {
+          "path": "cryptography-50.0.2.dist-info/licenses/LICENSE.BSD",
+          "status": "READ",
+          "bytes": 1532,
+          "sha256": "602c4c7482de6479dd2e9793cda275e5e63d773dacd1eca689232ab7008fb4fb",
+          "first_nonempty_line": "Copyright (c) Individual contributors.",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) Individual contributors.",
+            "1. Redistributions of source code must retain the above copyright notice,",
+            "2. Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "h11",
+      "dependency_scope": "runtime",
+      "locked_version": "0.16.0",
+      "observed_name": "h11",
+      "observed_version": "0.16.0",
+      "exact_version_match": true,
+      "license_expression": null,
+      "legacy_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "h11-0.16.0.dist-info/METADATA",
+          "bytes": 8348,
+          "sha256": "28f326098ac09fcba79b8f180f96087c841fe2456215cb7b872a9c7d5cd19d64"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.txt",
+          "matching_evidence": [
+            "h11-0.16.0.dist-info/licenses/LICENSE.txt"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "h11-0.16.0.dist-info/licenses/LICENSE.txt",
+          "status": "READ",
+          "bytes": 1124,
+          "sha256": "37db5bb85926db28a427a25867f10b1232003aea1be69ccb851138adb8e6f361",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2016 Nathaniel J. Smith <[contact omitted from public metadata]> and other contributors",
+            "The above copyright notice and this permission notice shall be",
+            "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "httpcore2",
+      "dependency_scope": "runtime",
+      "locked_version": "2.16.0",
+      "observed_name": "httpcore2",
+      "observed_version": "2.16.0",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "httpcore2-2.16.0.dist-info/METADATA",
+          "bytes": 27552,
+          "sha256": "c073bd68b2bd543fbc2bab3763b42ed1e70666536d32c1bf39ef2764fd50b0a4"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.md",
+          "matching_evidence": [
+            "httpcore2-2.16.0.dist-info/licenses/LICENSE.md"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "httpcore2-2.16.0.dist-info/licenses/LICENSE.md",
+          "status": "READ",
+          "bytes": 1599,
+          "sha256": "c4df125c807b0613501e943a5c92496dd11d2c16604ce396097a8dde396304d9",
+          "first_nonempty_line": "Copyright \u00a9 2026 to present Pydantic Services Inc. and individual contributors.",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright \u00a9 2026 to present Pydantic Services Inc. and individual contributors.",
+            "Copyright \u00a9 2020, [Encode OSS Ltd](https://www.encode.io/).",
+            "* Redistributions of source code must retain the above copyright notice, this",
+            "* Redistributions in binary form must reproduce the above copyright notice,",
+            "* Neither the name of the copyright holder nor the names of its",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "httpx2",
+      "dependency_scope": "runtime",
+      "locked_version": "2.16.0",
+      "observed_name": "httpx2",
+      "observed_version": "2.16.0",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "httpx2-2.16.0.dist-info/METADATA",
+          "bytes": 10019,
+          "sha256": "192f20046200ff50911a7278c21dfbee1e1a4c6fa7943227afe9231d28defc3f"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.md",
+          "matching_evidence": [
+            "httpx2-2.16.0.dist-info/licenses/LICENSE.md"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "httpx2-2.16.0.dist-info/licenses/LICENSE.md",
+          "status": "READ",
+          "bytes": 1589,
+          "sha256": "7e7d6dbaf7fe160d39fd6e84fd02c33cab96bcbea34d36998d545bceb4a19c30",
+          "first_nonempty_line": "Copyright \u00a9 2026 to present Pydantic Services Inc. and individual contributors.",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright \u00a9 2026 to present Pydantic Services Inc. and individual contributors.",
+            "Copyright \u00a9 2019, [Encode OSS Ltd](https://www.encode.io/).",
+            "* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.",
+            "* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.",
+            "* Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "idna",
+      "dependency_scope": "runtime",
+      "locked_version": "3.20",
+      "observed_name": "idna",
+      "observed_version": "3.20",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "idna-3.20.dist-info/METADATA",
+          "bytes": 7207,
+          "sha256": "dbd8c14c1e4ca1e0c9824a6dbc7cbbf78884f38eb52d91148cd3025f671e4b85"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.md",
+          "matching_evidence": [
+            "idna-3.20.dist-info/licenses/LICENSE.md"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "idna-3.20.dist-info/licenses/LICENSE.md",
+          "status": "READ",
+          "bytes": 1541,
+          "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
+          "first_nonempty_line": "BSD 3-Clause License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "BSD"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2013-2026, Kim Davies and contributors.",
+            "1. Redistributions of source code must retain the above copyright",
+            "2. Redistributions in binary form must reproduce the above copyright",
+            "3. Neither the name of the copyright holder nor the names of its",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS",
+            "A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "jsonschema",
+      "dependency_scope": "runtime",
+      "locked_version": "4.26.0",
+      "observed_name": "jsonschema",
+      "observed_version": "4.26.0",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "jsonschema-4.26.0.dist-info/METADATA",
+          "bytes": 7592,
+          "sha256": "05b189866ca98a96da3934bf6b83687ced3ff85325273b77e16b705f6d8b26d2"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "COPYING",
+          "matching_evidence": [
+            "jsonschema-4.26.0.dist-info/licenses/COPYING"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "jsonschema-4.26.0.dist-info/licenses/COPYING",
+          "status": "READ",
+          "bytes": 1057,
+          "sha256": "4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439",
+          "first_nonempty_line": "Copyright (c) 2013 Julian Berman",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 2013 Julian Berman",
+            "The above copyright notice and this permission notice shall be included in",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "jsonschema-specifications",
+      "dependency_scope": "runtime",
+      "locked_version": "2025.9.1",
+      "observed_name": "jsonschema-specifications",
+      "observed_version": "2025.9.1",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "jsonschema_specifications-2025.9.1.dist-info/METADATA",
+          "bytes": 2907,
+          "sha256": "35abd41757f32b4ea24756920ded47b70173d77cbc052a5a6d3ab583b2e8d89d"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "COPYING",
+          "matching_evidence": [
+            "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING",
+          "status": "READ",
+          "bytes": 1057,
+          "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
+          "first_nonempty_line": "Copyright (c) 2022 Julian Berman",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 2022 Julian Berman",
+            "The above copyright notice and this permission notice shall be included in",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "mcp",
+      "dependency_scope": "runtime",
+      "locked_version": "2.3.0",
+      "observed_name": "mcp",
+      "observed_version": "2.3.0",
+      "exact_version_match": true,
+      "license_expression": null,
+      "legacy_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "mcp-2.3.0.dist-info/METADATA",
+          "bytes": 6632,
+          "sha256": "a94577513a4fa0cb639c279c1ad6f4d49650872d45f2f4ab9bb2d9c2a505d457"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "mcp-2.3.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "mcp-2.3.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1071,
+          "sha256": "5e13dbbc1d120fc2a03cecde7c91424ae2d7de11b63d58ded2f4431e261ee50d",
+          "first_nonempty_line": "MIT License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2024 Anthropic, PBC",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "mcp-types",
+      "dependency_scope": "runtime",
+      "locked_version": "2.3.0",
+      "observed_name": "mcp-types",
+      "observed_version": "2.3.0",
+      "exact_version_match": true,
+      "license_expression": null,
+      "legacy_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "mcp_types-2.3.0.dist-info/METADATA",
+          "bytes": 1914,
+          "sha256": "eb973e8b7f53d52ab1df9d1f18854ffa84f074f6052e310089e2655961c48ca9"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "mcp_types-2.3.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "mcp_types-2.3.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1071,
+          "sha256": "5e13dbbc1d120fc2a03cecde7c91424ae2d7de11b63d58ded2f4431e261ee50d",
+          "first_nonempty_line": "MIT License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2024 Anthropic, PBC",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "opentelemetry-api",
+      "dependency_scope": "runtime",
+      "locked_version": "1.45.1",
+      "observed_name": "opentelemetry-api",
+      "observed_version": "1.45.1",
+      "exact_version_match": true,
+      "license_expression": "Apache-2.0",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "opentelemetry_api-1.45.1.dist-info/METADATA",
+          "bytes": 1411,
+          "sha256": "5bc71e90cb421be92a43bf5ad5b0f25dccfa2a24ddceaa2877779879962a4c9e"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "opentelemetry_api-1.45.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "opentelemetry_api-1.45.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "first_nonempty_line": "Apache License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "Apache License"
+          ],
+          "copyright_lines": [
+            "\"Licensor\" shall mean the copyright owner or entity authorized by",
+            "the copyright owner that is granting the License.",
+            "copyright notice that is included in or attached to the work",
+            "submitted to Licensor for inclusion in the Work by the copyright owner",
+            "the copyright owner. For the purposes of this definition, \"submitted\"",
+            "designated in writing by the copyright owner as \"Not a Contribution.\"",
+            "2. Grant of Copyright License. Subject to the terms and conditions of",
+            "copyright license to reproduce, prepare Derivative Works of,",
+            "that You distribute, all copyright, patent, trademark, and",
+            "You may add Your own copyright statement to Your modifications and",
+            "same \"printed page\" as the copyright notice for easier",
+            "Copyright [yyyy] [name of copyright owner]"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "pycparser",
+      "dependency_scope": "runtime",
+      "locked_version": "3.12",
+      "observed_name": "pycparser",
+      "observed_version": "3.12",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "pycparser-3.12.dist-info/METADATA",
+          "bytes": 9709,
+          "sha256": "ad8db5fe2b0e0a3b0e8419fe5041b80be92470a40b06bd9c1462a0a8bb637c92"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "pycparser-3.12.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "pycparser-3.12.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1543,
+          "sha256": "0a9e78156ae8b96caf1b4f11ac2df424b83de29736f9e757630548a6272fdf90",
+          "first_nonempty_line": "pycparser -- A C parser in Python",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 2008-2027, Eli Bendersky",
+            "* Redistributions of source code must retain the above copyright notice, this",
+            "* Redistributions in binary form must reproduce the above copyright notice,",
+            "* Neither the name of the copyright holder nor the names of its contributors may",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "pydantic",
+      "dependency_scope": "runtime",
+      "locked_version": "2.14.1",
+      "observed_name": "pydantic",
+      "observed_version": "2.14.1",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "pydantic-2.14.1.dist-info/METADATA",
+          "bytes": 133006,
+          "sha256": "4d4c8e8d5e6a27d5208f0d7949f25628e6747133034969d4d1399b1ad5394036"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "pydantic-2.14.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "pydantic-2.14.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1129,
+          "sha256": "a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2017 to present Pydantic Services Inc. and individual contributors.",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "pydantic_core",
+      "dependency_scope": "runtime",
+      "locked_version": "2.50.1",
+      "observed_name": "pydantic_core",
+      "observed_version": "2.50.1",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "pydantic_core-2.50.1.dist-info/METADATA",
+          "bytes": 6650,
+          "sha256": "790c40c25f95db9b18e1d4b5ae75979ce6027b15d6f924c042553252ff43328f"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "pydantic_core-2.50.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "pydantic_core-2.50.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1101,
+          "sha256": "fbe7f615f18d135c07000e5a86325db27f42c7729699ef166ac1f7a3f4586bf4",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2022 Samuel Colvin",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "PyJWT",
+      "dependency_scope": "runtime",
+      "locked_version": "2.15.1",
+      "observed_name": "PyJWT",
+      "observed_version": "2.15.1",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "pyjwt-2.15.1.dist-info/METADATA",
+          "bytes": 3500,
+          "sha256": "1ea0c9f139b8c928276b3628af165955f6f764491448a6ad8f103cdcbb382da3"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "pyjwt-2.15.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "AUTHORS.rst",
+          "matching_evidence": [
+            "pyjwt-2.15.1.dist-info/licenses/AUTHORS.rst"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "pyjwt-2.15.1.dist-info/licenses/AUTHORS.rst",
+          "status": "READ",
+          "bytes": 322,
+          "sha256": "925ce43461029eedbf558ec0b7cf7fc4b045def5120ebb97937c70814071cf07",
+          "first_nonempty_line": "Authors",
+          "contains_permission_grant": false,
+          "license_references": [],
+          "copyright_lines": []
+        },
+        {
+          "path": "pyjwt-2.15.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1085,
+          "sha256": "797a7a20231d4c433e9f1911db1731d06b5828b98f499819a034f7c0f56f5ce5",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2015-2022 Jos\u00e9 Padilla",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "python-multipart",
+      "dependency_scope": "runtime",
+      "locked_version": "0.0.32",
+      "observed_name": "python-multipart",
+      "observed_version": "0.0.32",
+      "exact_version_match": true,
+      "license_expression": "Apache-2.0",
+      "legacy_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "python_multipart-0.0.32.dist-info/METADATA",
+          "bytes": 2131,
+          "sha256": "e9d399d7dea5eddf0e4d24b5c24687a82e7e50bf2c2b30f8f8a06a64d887dd86"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.txt",
+          "matching_evidence": [
+            "python_multipart-0.0.32.dist-info/licenses/LICENSE.txt"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "python_multipart-0.0.32.dist-info/licenses/LICENSE.txt",
+          "status": "READ",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "first_nonempty_line": "Apache License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "Apache License"
+          ],
+          "copyright_lines": [
+            "\"Licensor\" shall mean the copyright owner or entity authorized by",
+            "the copyright owner that is granting the License.",
+            "copyright notice that is included in or attached to the work",
+            "submitted to Licensor for inclusion in the Work by the copyright owner",
+            "the copyright owner. For the purposes of this definition, \"submitted\"",
+            "designated in writing by the copyright owner as \"Not a Contribution.\"",
+            "2. Grant of Copyright License. Subject to the terms and conditions of",
+            "copyright license to reproduce, prepare Derivative Works of,",
+            "that You distribute, all copyright, patent, trademark, and",
+            "You may add Your own copyright statement to Your modifications and",
+            "same \"printed page\" as the copyright notice for easier",
+            "Copyright [yyyy] [name of copyright owner]"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "pywin32",
+      "dependency_scope": "runtime",
+      "locked_version": "312",
+      "observed_name": "pywin32",
+      "observed_version": "312",
+      "exact_version_match": true,
+      "license_expression": null,
+      "legacy_license": "PSF",
+      "license_classifiers": [
+        "License :: OSI Approved :: Python Software Foundation License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "pywin32-312.dist-info/METADATA",
+          "bytes": 11168,
+          "sha256": "77f53e90408dd3bdcf5f73a20d6548504313dee2ad34f8b3794b2202583a84b1"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "adodbapi/license.txt",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/adodbapi/license.txt"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "com/License.txt",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/com/License.txt"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "pythonwin/License.txt",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/pythonwin/License.txt"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "pythonwin/Scintilla/License.txt",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/pythonwin/Scintilla/License.txt"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "pythonwin/pywin/idle/LICENSE.txt",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/pythonwin/pywin/idle/LICENSE.txt"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "win32/License.txt",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/win32/License.txt"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "com/win32comext/mapi/src/MAPIStubLibrary/LICENSE",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/com/win32comext/mapi/src/MAPIStubLibrary/LICENSE"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "isapi/README.txt",
+          "matching_evidence": [
+            "pywin32-312.dist-info/licenses/isapi/README.txt"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "adodbapi/license.txt",
+          "status": "READ",
+          "bytes": 26925,
+          "sha256": "5ea2f23c7f00c3006bacf267183e816d8d4b6dc95ea57a4ddb0ff81de6d8719e",
+          "first_nonempty_line": "GNU LESSER GENERAL PUBLIC LICENSE",
+          "contains_permission_grant": true,
+          "license_references": [
+            "GNU General Public License",
+            "GNU LESSER GENERAL PUBLIC LICENSE",
+            "Lesser GPL"
+          ],
+          "copyright_lines": [
+            "Copyright (C) 1991, 1999 Free Software Foundation, Inc.",
+            "We protect your rights with a two-step method: (1) we copyright the",
+            "program which contains a notice placed by the copyright holder or",
+            "copyright law: that is to say, a work containing the Library or a",
+            "appropriate copyright notice and disclaimer of warranty; keep intact",
+            "during execution displays copyright notices, you must include the",
+            "copyright notice for the Library among them, as well as a reference",
+            "certain countries either by patents or by copyrighted interfaces, the",
+            "original copyright holder who places the Library under this License may add",
+            "copyrighted by the Free Software Foundation, write to the Free",
+            "EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR",
+            "WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY"
+          ]
+        },
+        {
+          "path": "pythonwin/License.txt",
+          "status": "READ",
+          "bytes": 1541,
+          "sha256": "a74d826efb242db087b850348e20abbfd591b51e2081f2048735290913872924",
+          "first_nonempty_line": "Unless stated in the specific source file, this work is",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 1994-2008, Mark Hammond",
+            "Redistributions of source code must retain the above copyright notice,",
+            "Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS"
+          ]
+        },
+        {
+          "path": "pythonwin/pywin/idle/LICENSE.txt",
+          "status": "READ",
+          "bytes": 12540,
+          "sha256": "a0fa1e7b8a4230055685e796548ac084a6c0eea395294574093bba72efd9191b",
+          "first_nonempty_line": "A. HISTORY OF THE SOFTWARE",
+          "contains_permission_grant": true,
+          "license_references": [
+            "GNU General Public License",
+            "Python Software Foundation"
+          ],
+          "copyright_lines": [
+            "License Agreement and PSF's notice of copyright, i.e., \"Copyright (c)",
+            "License Agreement and CNRI's notice of copyright, i.e., \"Copyright (c)",
+            "limitation the federal copyright law, and, to the extent such",
+            "Copyright (c) 1991 - 1995, Stichting Mathematisch Centrum Amsterdam,",
+            "provided that the above copyright notice appear in all copies and that",
+            "both that copyright notice and this permission notice appear in"
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/adodbapi/license.txt",
+          "status": "READ",
+          "bytes": 26925,
+          "sha256": "5ea2f23c7f00c3006bacf267183e816d8d4b6dc95ea57a4ddb0ff81de6d8719e",
+          "first_nonempty_line": "GNU LESSER GENERAL PUBLIC LICENSE",
+          "contains_permission_grant": true,
+          "license_references": [
+            "GNU General Public License",
+            "GNU LESSER GENERAL PUBLIC LICENSE",
+            "Lesser GPL"
+          ],
+          "copyright_lines": [
+            "Copyright (C) 1991, 1999 Free Software Foundation, Inc.",
+            "We protect your rights with a two-step method: (1) we copyright the",
+            "program which contains a notice placed by the copyright holder or",
+            "copyright law: that is to say, a work containing the Library or a",
+            "appropriate copyright notice and disclaimer of warranty; keep intact",
+            "during execution displays copyright notices, you must include the",
+            "copyright notice for the Library among them, as well as a reference",
+            "certain countries either by patents or by copyrighted interfaces, the",
+            "original copyright holder who places the Library under this License may add",
+            "copyrighted by the Free Software Foundation, write to the Free",
+            "EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR",
+            "WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY"
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/com/License.txt",
+          "status": "READ",
+          "bytes": 1570,
+          "sha256": "fad39c18fc3825fa278db1c86fd52cf88d7c525b3c2fbf7817fa383cbae4d423",
+          "first_nonempty_line": "Unless stated in the specific source file, this work is",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 1996-2008, Greg Stein and Mark Hammond.",
+            "Redistributions of source code must retain the above copyright notice,",
+            "Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS"
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/com/win32comext/mapi/src/MAPIStubLibrary/LICENSE",
+          "status": "READ",
+          "bytes": 1087,
+          "sha256": "1c4cf44d2fb8bf2d10214d6da80cc9e05502824cc4460f35be4c7bcb4cde53da",
+          "first_nonempty_line": "MIT License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2018 Microsoft",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/isapi/README.txt",
+          "status": "READ",
+          "bytes": 330,
+          "sha256": "41383bcc95edb8138d37077ae54bfdcbd2a3b77bf745a8529a9c161146e22303",
+          "first_nonempty_line": "A Python ISAPI extension.  Contributed by Phillip Frantz, and is",
+          "contains_permission_grant": false,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright 2002-2003 by Blackdog Software Pty Ltd."
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/pythonwin/License.txt",
+          "status": "READ",
+          "bytes": 1541,
+          "sha256": "a74d826efb242db087b850348e20abbfd591b51e2081f2048735290913872924",
+          "first_nonempty_line": "Unless stated in the specific source file, this work is",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 1994-2008, Mark Hammond",
+            "Redistributions of source code must retain the above copyright notice,",
+            "Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS"
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/pythonwin/Scintilla/License.txt",
+          "status": "READ",
+          "bytes": 873,
+          "sha256": "57ec79bbeab4fd1cf7460a7ad450d2ab01471810459aeae9e75e4c66b472095f",
+          "first_nonempty_line": "License for Scintilla and SciTE",
+          "contains_permission_grant": true,
+          "license_references": [
+            "Scintilla",
+            "scintilla"
+          ],
+          "copyright_lines": [
+            "Copyright 1998-2003 by Neil Hodgson <[contact omitted from public metadata]>",
+            "provided that the above copyright notice appear in all copies and that",
+            "both that copyright notice and this permission notice appear in"
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/pythonwin/pywin/idle/LICENSE.txt",
+          "status": "READ",
+          "bytes": 12540,
+          "sha256": "a0fa1e7b8a4230055685e796548ac084a6c0eea395294574093bba72efd9191b",
+          "first_nonempty_line": "A. HISTORY OF THE SOFTWARE",
+          "contains_permission_grant": true,
+          "license_references": [
+            "GNU General Public License",
+            "Python Software Foundation"
+          ],
+          "copyright_lines": [
+            "License Agreement and PSF's notice of copyright, i.e., \"Copyright (c)",
+            "License Agreement and CNRI's notice of copyright, i.e., \"Copyright (c)",
+            "limitation the federal copyright law, and, to the extent such",
+            "Copyright (c) 1991 - 1995, Stichting Mathematisch Centrum Amsterdam,",
+            "provided that the above copyright notice appear in all copies and that",
+            "both that copyright notice and this permission notice appear in"
+          ]
+        },
+        {
+          "path": "pywin32-312.dist-info/licenses/win32/License.txt",
+          "status": "READ",
+          "bytes": 1541,
+          "sha256": "a74d826efb242db087b850348e20abbfd591b51e2081f2048735290913872924",
+          "first_nonempty_line": "Unless stated in the specific source file, this work is",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 1994-2008, Mark Hammond",
+            "Redistributions of source code must retain the above copyright notice,",
+            "Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS"
+          ]
+        },
+        {
+          "path": "win32/License.txt",
+          "status": "READ",
+          "bytes": 1541,
+          "sha256": "a74d826efb242db087b850348e20abbfd591b51e2081f2048735290913872924",
+          "first_nonempty_line": "Unless stated in the specific source file, this work is",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 1994-2008, Mark Hammond",
+            "Redistributions of source code must retain the above copyright notice,",
+            "Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS"
+          ]
+        },
+        {
+          "path": "win32com/License.txt",
+          "status": "READ",
+          "bytes": 1570,
+          "sha256": "fad39c18fc3825fa278db1c86fd52cf88d7c525b3c2fbf7817fa383cbae4d423",
+          "first_nonempty_line": "Unless stated in the specific source file, this work is",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 1996-2008, Greg Stein and Mark Hammond.",
+            "Redistributions of source code must retain the above copyright notice,",
+            "Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS"
+          ]
+        },
+        {
+          "path": "win32comext/License.txt",
+          "status": "READ",
+          "bytes": 1570,
+          "sha256": "fad39c18fc3825fa278db1c86fd52cf88d7c525b3c2fbf7817fa383cbae4d423",
+          "first_nonempty_line": "Unless stated in the specific source file, this work is",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 1996-2008, Greg Stein and Mark Hammond.",
+            "Redistributions of source code must retain the above copyright notice,",
+            "Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS"
+          ]
+        },
+        {
+          "path": "win32comext/mapi/NOTICE.md",
+          "status": "READ",
+          "bytes": 476,
+          "sha256": "dedf997c8f5568a0e0aff57d009f501226ea30c401323d67912b6a8f8735a825",
+          "first_nonempty_line": "# Licensing",
+          "contains_permission_grant": false,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": []
+        }
+      ],
+      "observed_text_classification": "MULTIPLE_COMPONENT_TERMS",
+      "classification_basis": "Legacy metadata PSF is insufficient to label the entire distribution. Exact component license texts and notices were reviewed.",
+      "component_terms": [
+        {
+          "component": "adodbapi",
+          "observed_term": "LGPL version 2.1 license text",
+          "notice": "pywin32-312.dist-info/licenses/adodbapi/license.txt",
+          "limit": "The notice alone does not determine an only versus or-later software grant; no adodbapi code is distributed here."
+        },
+        {
+          "component": "win32/com/pythonwin",
+          "observed_term": "BSD-style source/binary redistribution and no-endorsement terms",
+          "notice": "pywin32-312.dist-info/licenses/win32/License.txt"
+        },
+        {
+          "component": "MAPIStubLibrary",
+          "observed_term": "MIT",
+          "notice": "pywin32-312.dist-info/licenses/com/win32comext/mapi/src/MAPIStubLibrary/LICENSE"
+        },
+        {
+          "component": "Scintilla/SciTE",
+          "observed_term": "Named permissive license retaining copyright and permission notice",
+          "notice": "pywin32-312.dist-info/licenses/pythonwin/Scintilla/License.txt"
+        },
+        {
+          "component": "idle",
+          "observed_term": "PSF agreement for Python 2.2 and included historical Python license texts",
+          "notice": "pywin32-312.dist-info/licenses/pythonwin/pywin/idle/LICENSE.txt"
+        },
+        {
+          "component": "isapi",
+          "observed_term": "Copyright notice in included README; retain exact upstream notice alongside package metadata",
+          "notice": "pywin32-312.dist-info/licenses/isapi/README.txt",
+          "limit": "No standalone license expression is inferred from this README."
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "referencing",
+      "dependency_scope": "runtime",
+      "locked_version": "0.37.0",
+      "observed_name": "referencing",
+      "observed_version": "0.37.0",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "referencing-0.37.0.dist-info/METADATA",
+          "bytes": 2845,
+          "sha256": "c93b00e6ab1524fd60848376604c189a114374776475c25a31d57be47b29de6a"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "COPYING",
+          "matching_evidence": [
+            "referencing-0.37.0.dist-info/licenses/COPYING"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "referencing-0.37.0.dist-info/licenses/COPYING",
+          "status": "READ",
+          "bytes": 1057,
+          "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
+          "first_nonempty_line": "Copyright (c) 2022 Julian Berman",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 2022 Julian Berman",
+            "The above copyright notice and this permission notice shall be included in",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "rpds-py",
+      "dependency_scope": "runtime",
+      "locked_version": "0.30.0",
+      "observed_name": "rpds-py",
+      "observed_version": "0.30.0",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "rpds_py-0.30.0.dist-info/METADATA",
+          "bytes": 4213,
+          "sha256": "4feecc3485b91b6f8494965109cc65d8e15efd372a85ab76f44f320ca736b841"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "rpds_py-0.30.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "rpds_py-0.30.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1076,
+          "sha256": "8bcb72c82ea8ae74802293c41d93ad7d51434001b0ae45a603a5af0f507aee0a",
+          "first_nonempty_line": "Copyright (c) 2023 Julian Berman",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 2023 Julian Berman",
+            "The above copyright notice and this permission notice shall be included in",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "sse-starlette",
+      "dependency_scope": "runtime",
+      "locked_version": "3.5.1",
+      "observed_name": "sse-starlette",
+      "observed_version": "3.5.1",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "sse_starlette-3.5.1.dist-info/METADATA",
+          "bytes": 15653,
+          "sha256": "f212aaff8c6f4e0bfa69de5fcb87b1a323ea5e0e3332a7b730f12adb8cc627db"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "sse_starlette-3.5.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "AUTHORS",
+          "matching_evidence": [
+            "sse_starlette-3.5.1.dist-info/licenses/AUTHORS"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "sse_starlette-3.5.1.dist-info/licenses/AUTHORS",
+          "status": "READ",
+          "bytes": 395,
+          "sha256": "c2ff63d2ecf128bbda8ab1b2016830a5da124202fbb97168685bb9946aed3f1a",
+          "first_nonempty_line": "sysid <[contact omitted from public metadata]>",
+          "contains_permission_grant": false,
+          "license_references": [],
+          "copyright_lines": []
+        },
+        {
+          "path": "sse_starlette-3.5.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1511,
+          "sha256": "80af6bfccbebd2c14d4aab96695cab9950e177190cc80f5ef819e99996883e8e",
+          "first_nonempty_line": "Copyright \u00a9 2020, [sysid](https://sysid.github.io/).",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright \u00a9 2020, [sysid](https://sysid.github.io/).",
+            "* Redistributions of source code must retain the above copyright notice, this",
+            "* Redistributions in binary form must reproduce the above copyright notice,",
+            "* Neither the name of the copyright holder nor the names of its",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "starlette",
+      "dependency_scope": "runtime",
+      "locked_version": "1.10.0",
+      "observed_name": "starlette",
+      "observed_version": "1.10.0",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "starlette-1.10.0.dist-info/METADATA",
+          "bytes": 6560,
+          "sha256": "82f72dde2c5c3c55d45d9461adce5e30973481f7f3e10b59e497bbc5b8abf598"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.md",
+          "matching_evidence": [
+            "starlette-1.10.0.dist-info/licenses/LICENSE.md"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "starlette-1.10.0.dist-info/licenses/LICENSE.md",
+          "status": "READ",
+          "bytes": 1518,
+          "sha256": "dcb95677a02240243187e964f941847d19b17821cf99e5afae684fab328c19bf",
+          "first_nonempty_line": "Copyright \u00a9 2018, [Encode OSS Ltd](https://www.encode.io/).",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright \u00a9 2018, [Encode OSS Ltd](https://www.encode.io/).",
+            "* Redistributions of source code must retain the above copyright notice, this",
+            "* Redistributions in binary form must reproduce the above copyright notice,",
+            "* Neither the name of the copyright holder nor the names of its",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "truststore",
+      "dependency_scope": "runtime",
+      "locked_version": "0.10.5",
+      "observed_name": "truststore",
+      "observed_version": "0.10.5",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "truststore-0.10.5.dist-info/METADATA",
+          "bytes": 4515,
+          "sha256": "1fd496f290853214e630d96f7163d2dd916f84ebe634b58aa827d6853e8f8610"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "truststore-0.10.5.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "truststore-0.10.5.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1086,
+          "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2022 Seth Michael Larson",
+            "The above copyright notice and this permission notice shall be included in",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "typing-inspection",
+      "dependency_scope": "runtime",
+      "locked_version": "0.4.4",
+      "observed_name": "typing-inspection",
+      "observed_version": "0.4.4",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "typing_inspection-0.4.4.dist-info/METADATA",
+          "bytes": 2554,
+          "sha256": "bad3d9e6342ef6750cf5128ec942327b8bebdce0b6e4d6f67cb15b27ae5118da"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "typing_inspection-0.4.4.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "typing_inspection-0.4.4.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1090,
+          "sha256": "804b59b25f2c31bd278f9202a19ae49a3945aa2664387e2d0a128c7cacc61ec3",
+          "first_nonempty_line": "MIT License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) Pydantic Services Inc. 2025 to present",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "typing_extensions",
+      "dependency_scope": "runtime",
+      "locked_version": "4.16.0",
+      "observed_name": "typing_extensions",
+      "observed_version": "4.16.0",
+      "exact_version_match": true,
+      "license_expression": "PSF-2.0",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "typing_extensions-4.16.0.dist-info/METADATA",
+          "bytes": 3310,
+          "sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "typing_extensions-4.16.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 13936,
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+          "first_nonempty_line": "A. HISTORY OF THE SOFTWARE",
+          "contains_permission_grant": true,
+          "license_references": [
+            "BSD",
+            "GNU General Public License",
+            "PYTHON SOFTWARE FOUNDATION",
+            "Python Software Foundation"
+          ],
+          "copyright_lines": [
+            "provided, however, that PSF's License Agreement and PSF's notice of copyright,",
+            "i.e., \"Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,",
+            "License Agreement and CNRI's notice of copyright, i.e., \"Copyright (c)",
+            "limitation the federal copyright law, and, to the extent such",
+            "Copyright (c) 1991 - 1995, Stichting Mathematisch Centrum Amsterdam,",
+            "provided that the above copyright notice appear in all copies and that",
+            "both that copyright notice and this permission notice appear in"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "uvicorn",
+      "dependency_scope": "runtime",
+      "locked_version": "0.54.0",
+      "observed_name": "uvicorn",
+      "observed_version": "0.54.0",
+      "exact_version_match": true,
+      "license_expression": "BSD-3-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "uvicorn-0.54.0.dist-info/METADATA",
+          "bytes": 6607,
+          "sha256": "9399e5ddda3d26e842d6fb5420c38b0857aac568d53badbdc224b3a21339efa8"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.md",
+          "matching_evidence": [
+            "uvicorn-0.54.0.dist-info/licenses/LICENSE.md"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "uvicorn-0.54.0.dist-info/licenses/LICENSE.md",
+          "status": "READ",
+          "bytes": 1526,
+          "sha256": "efe1acf3e62fb99c288b0ec73e5a773b7268ef4320fe757ea994214e4b63c371",
+          "first_nonempty_line": "Copyright \u00a9 2017-present, [Encode OSS Ltd](https://www.encode.io/).",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright \u00a9 2017-present, [Encode OSS Ltd](https://www.encode.io/).",
+            "* Redistributions of source code must retain the above copyright notice, this",
+            "* Redistributions in binary form must reproduce the above copyright notice,",
+            "* Neither the name of the copyright holder nor the names of its",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "pytest",
+      "dependency_scope": "test_only",
+      "locked_version": "9.0.3",
+      "observed_name": "pytest",
+      "observed_version": "9.0.3",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "pytest-9.0.3.dist-info/METADATA",
+          "bytes": 7556,
+          "sha256": "c3966f28791686477bae35e518736d4cbea5b626d3a79011215854e2bc670207"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "pytest-9.0.3.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "pytest-9.0.3.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1091,
+          "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2004 Holger Krekel and others",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "colorama",
+      "dependency_scope": "test_only",
+      "locked_version": "0.4.6",
+      "observed_name": "colorama",
+      "observed_version": "0.4.6",
+      "exact_version_match": true,
+      "license_expression": null,
+      "legacy_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "colorama-0.4.6.dist-info/METADATA",
+          "bytes": 17158,
+          "sha256": "7baed29eb50c3b29bdb33ff84e3177bf1bc05784f7685ecdcaa4471c7dd810cc"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE.txt",
+          "matching_evidence": [
+            "colorama-0.4.6.dist-info/licenses/LICENSE.txt"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "colorama-0.4.6.dist-info/licenses/LICENSE.txt",
+          "status": "READ",
+          "bytes": 1491,
+          "sha256": "cac35c02686e5d04a5a7140bfb3b36e73aed496656e891102e428886d7930318",
+          "first_nonempty_line": "Copyright (c) 2010 Jonathan Hartley",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 2010 Jonathan Hartley",
+            "* Redistributions of source code must retain the above copyright notice, this",
+            "* Redistributions in binary form must reproduce the above copyright notice,",
+            "* Neither the name of the copyright holders, nor those of its contributors",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE"
+          ]
+        }
+      ],
+      "observed_text_classification": "BSD-3-Clause",
+      "classification_basis": "Actual LICENSE.txt has source-retention, binary-retention, and no-endorsement conditions; package metadata has BSD classifier only.",
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "iniconfig",
+      "dependency_scope": "test_only",
+      "locked_version": "2.3.1",
+      "observed_name": "iniconfig",
+      "observed_version": "2.3.1",
+      "exact_version_match": true,
+      "license_expression": "MIT",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "iniconfig-2.3.1.dist-info/METADATA",
+          "bytes": 2826,
+          "sha256": "47c2c35d936f5c649d8074c6464719a42966a67b5cebad01e3e5784cf090cfb6"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "iniconfig-2.3.1.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "iniconfig-2.3.1.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1098,
+          "sha256": "3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2010 - 2023 Holger Krekel and others",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "packaging",
+      "dependency_scope": "test_only",
+      "locked_version": "26.3",
+      "observed_name": "packaging",
+      "observed_version": "26.3",
+      "exact_version_match": true,
+      "license_expression": "Apache-2.0 OR BSD-2-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "packaging-26.3.dist-info/METADATA",
+          "bytes": 3544,
+          "sha256": "70fdb89fc4d4a9a043bf7372b8972bcc883fddff34ab55e9cf80d73875384763"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "packaging-26.3.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "LICENSE.APACHE",
+          "matching_evidence": [
+            "packaging-26.3.dist-info/licenses/LICENSE.APACHE"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "LICENSE.BSD",
+          "matching_evidence": [
+            "packaging-26.3.dist-info/licenses/LICENSE.BSD"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "packaging-26.3.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 197,
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+          "first_nonempty_line": "This software is made available under the terms of *either* of the licenses",
+          "contains_permission_grant": false,
+          "license_references": [
+            "BSD"
+          ],
+          "copyright_lines": []
+        },
+        {
+          "path": "packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+          "status": "READ",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "first_nonempty_line": "Apache License",
+          "contains_permission_grant": true,
+          "license_references": [
+            "Apache License"
+          ],
+          "copyright_lines": [
+            "\"Licensor\" shall mean the copyright owner or entity authorized by",
+            "the copyright owner that is granting the License.",
+            "copyright notice that is included in or attached to the work",
+            "submitted to Licensor for inclusion in the Work by the copyright owner",
+            "the copyright owner. For the purposes of this definition, \"submitted\"",
+            "designated in writing by the copyright owner as \"Not a Contribution.\"",
+            "2. Grant of Copyright License. Subject to the terms and conditions of",
+            "copyright license to reproduce, prepare Derivative Works of,",
+            "that You distribute, all copyright, patent, trademark, and",
+            "You may add Your own copyright statement to Your modifications and"
+          ]
+        },
+        {
+          "path": "packaging-26.3.dist-info/licenses/LICENSE.BSD",
+          "status": "READ",
+          "bytes": 1344,
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+          "first_nonempty_line": "Copyright (c) Donald Stufft and individual contributors.",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) Donald Stufft and individual contributors.",
+            "1. Redistributions of source code must retain the above copyright notice,",
+            "2. Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND",
+            "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "pluggy",
+      "dependency_scope": "test_only",
+      "locked_version": "1.7.0",
+      "observed_name": "pluggy",
+      "observed_version": "1.7.0",
+      "exact_version_match": true,
+      "license_expression": null,
+      "legacy_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "metadata_evidence": [
+        {
+          "path": "pluggy-1.7.0.dist-info/METADATA",
+          "bytes": 4966,
+          "sha256": "20ac8237e37f1d6e7e75500cd663015177ba80c1a1a595ff6bae18a539ff8a2c"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "pluggy-1.7.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "pluggy-1.7.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1110,
+          "sha256": "d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606",
+          "first_nonempty_line": "The MIT License (MIT)",
+          "contains_permission_grant": true,
+          "license_references": [
+            "MIT License"
+          ],
+          "copyright_lines": [
+            "Copyright (c) 2015 holger krekel (rather uses bitbucket/hpk42)",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    },
+    {
+      "name": "pygments",
+      "dependency_scope": "test_only",
+      "locked_version": "2.21.0",
+      "observed_name": "Pygments",
+      "observed_version": "2.21.0",
+      "exact_version_match": true,
+      "license_expression": "BSD-2-Clause",
+      "legacy_license": null,
+      "license_classifiers": [],
+      "metadata_evidence": [
+        {
+          "path": "pygments-2.21.0.dist-info/METADATA",
+          "bytes": 2527,
+          "sha256": "1dde075570136774c706bf0009183a793fe0ee262e4a5590cc6eff8453eedd43"
+        }
+      ],
+      "declared_license_files": [
+        {
+          "declared": "AUTHORS",
+          "matching_evidence": [
+            "pygments-2.21.0.dist-info/licenses/AUTHORS"
+          ],
+          "status": "READ"
+        },
+        {
+          "declared": "LICENSE",
+          "matching_evidence": [
+            "pygments-2.21.0.dist-info/licenses/LICENSE"
+          ],
+          "status": "READ"
+        }
+      ],
+      "license_file_evidence": [
+        {
+          "path": "pygments-2.21.0.dist-info/licenses/AUTHORS",
+          "status": "READ",
+          "bytes": 11048,
+          "sha256": "71a83872ad82f57be692cf827e048e2cd51d45169cfa1ea3f28706d97a872c0f",
+          "first_nonempty_line": "Pygments is written and maintained by Georg Brandl <[contact omitted from public metadata]>.",
+          "contains_permission_grant": false,
+          "license_references": [],
+          "copyright_lines": []
+        },
+        {
+          "path": "pygments-2.21.0.dist-info/licenses/LICENSE",
+          "status": "READ",
+          "bytes": 1331,
+          "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
+          "first_nonempty_line": "Copyright (c) 2006-2022 by the respective authors (see AUTHORS file).",
+          "contains_permission_grant": true,
+          "license_references": [],
+          "copyright_lines": [
+            "Copyright (c) 2006-2022 by the respective authors (see AUTHORS file).",
+            "* Redistributions of source code must retain the above copyright",
+            "* Redistributions in binary form must reproduce the above copyright",
+            "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS",
+            "A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT"
+          ]
+        }
+      ],
+      "license_text_consistency": "PASS",
+      "dependency_code_vendored_in_public_tree": false,
+      "distribution_treatment": "External installed dependency; upstream license remains applicable; not relicensed by Package-G Apache-2.0."
+    }
+  ],
+  "runtime_cross_environment_identity": [
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "anyio",
+      "version": "4.15.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.2",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "httpcore2",
+      "version": "2.16.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "httpx2",
+      "version": "2.16.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "mcp",
+      "version": "2.3.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "mcp-types",
+      "version": "2.3.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "pycparser",
+      "version": "3.12",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.50.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "PyJWT",
+      "version": "2.15.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.32",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "pywin32",
+      "version": "312",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "rpds-py",
+      "version": "0.30.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "sse-starlette",
+      "version": "3.5.1",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "starlette",
+      "version": "1.10.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "truststore",
+      "version": "0.10.5",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "metadata_identity_match": true,
+      "license_file_identity_match": true
+    }
+  ],
+  "raw_text_evidence": {
+    "local_review_file": "LICENSE_TEXTS_REVIEWED_PUBLICATION.json",
+    "bytes": 220045,
+    "sha256": "338291eb78c62043c43963742afcaaba5d06e562648fd285cafd9733fa712720"
+  },
+  "authority_effect": "NONE; I7 remains INCOMPLETE/ENGINEERING_IN_PROGRESS_NOT_QUALIFIED",
+  "public_sanitization": "Contact email strings omitted from metadata excerpts only. Exact reviewed report/license evidence remains private; dependency license expressions, file hashes and attribution names retained. No dependency license file was modified or redistributed."
+}

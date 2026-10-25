@@ -1,0 +1,23 @@
+{
+  "schema": "package-g-op1-run-claim-policy@1",
+  "mode": "DESIGN_ONLY",
+  "fixed_slot": "One canonical claim slot keyed by RUN_ID; unique CLAIM_ID; exclusive create-new through a qualified authoritative store; never replace/delete/reset.",
+  "linearization": "One serialized authority-bearing claim commit with durable audit event in the same transaction or authoritative committed log. File mirror is derived unless separately qualified as authority.",
+  "before_commit": "Only healthy authoritative inspection proving no commit may classify unconsumed. A terminal preclaim RUN remains closed; later work gets a fresh RUN.",
+  "uncertain_commit": "AMBIGUOUS_CONSUMPTION; block execution/replay. Absence on unhealthy/lagging store is not proof.",
+  "after_commit": "RUN consumed even if operation never starts. Lost acknowledgement may retrieve existing claim ID, never replacement execution.",
+  "intent_effect_result": "Separate durable intent per mutating action; unknown external effect remains UNKNOWN. Missing result never implies zero or retry.",
+  "crash_windows": {
+    "before_contact": "Inspect authoritative state; same RUN claimable only if nonterminal and proven unclaimed.",
+    "request_sent_response_lost": "Inspect same claim operation identity; block until resolved.",
+    "durable_claim_ack_lost": "Consumed; read-only retrieval only.",
+    "claim_write_uncertain": "AMBIGUOUS_CONSUMPTION; no execution.",
+    "after_claim_before_intent": "Consumed; operation NOT_PROVEN.",
+    "after_intent_or_start": "Consumed; preserve observed or UNKNOWN effects.",
+    "during_evidence_closure": "Consumed; INCOMPLETE_EVIDENCE; read-only reconciliation only."
+  },
+  "fencing": "Actuator-enforced fencing at every action if stale workers can overlap. Otherwise no replacement while ownership/process state uncertain.",
+  "claim_consumed_closes_run": true,
+  "claim_consumed_does_not_automatically_terminate_session": true,
+  "historical_at2": "No reinterpretation/reset of frozen @2 fixed lineage claim. Prospective only."
+}

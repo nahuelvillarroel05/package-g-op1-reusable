@@ -1,0 +1,609 @@
+{
+  "schema": "i7.local-composition.v1",
+  "composition_id": "OP1-PUBLIC-ENGINEERING-20261025T172832Z",
+  "authority_limit": "I7 INCOMPLETE; no operational qualification",
+  "components": [
+    {
+      "workspace_path": "DEPENDENCY_MANIFEST.json",
+      "sha256": "19c4596b17c5b1ef3b1e113389df998ee2f3a048c7c963f352ac1a795ac0304c",
+      "source_sha256": "d6ebc0ee431f435ca920c01a972b864ff86dde35b9b469a7847a9ce976457ed9",
+      "source_path": "source-e4338a8bfc6e31ae",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "context_engine.py",
+      "sha256": "1fdbf50fe56e82ec86e96dff3039a0bf5d8cfbddc217d9f2d928b7a62bd62568",
+      "source_sha256": "1fdbf50fe56e82ec86e96dff3039a0bf5d8cfbddc217d9f2d928b7a62bd62568",
+      "source_path": "source-a85077cf2c21540e",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Autonomous-20261014T045957Z/accounting_manifest.py",
+      "sha256": "83920750b366b7b3eb0b559dc97ae3a6f01a06bb825bbb21a7e5fcc0ac3b1f1e",
+      "source_sha256": "83920750b366b7b3eb0b559dc97ae3a6f01a06bb825bbb21a7e5fcc0ac3b1f1e",
+      "source_path": "source-4fe6207269d1edad",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Autonomous-20261014T045957Z/binding/operational_bindings.py",
+      "sha256": "7dca812b5ed23a84b4b003d36e4dd05cb3a3632b5be18f2fd23448f3d59dcfd3",
+      "source_sha256": "7dca812b5ed23a84b4b003d36e4dd05cb3a3632b5be18f2fd23448f3d59dcfd3",
+      "source_path": "source-3aae39df72caff9f",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Autonomous-20261014T045957Z/junit/junit_accounting.py",
+      "sha256": "2bf47661862178752eb43da9da3aa9d6d4d712a0e4c38981c2778e02eff3c835",
+      "source_sha256": "2bf47661862178752eb43da9da3aa9d6d4d712a0e4c38981c2778e02eff3c835",
+      "source_path": "source-6e049672748f76fd",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Autonomous-20261014T045957Z/mechanical/process_receipts.py",
+      "sha256": "b754f0ca23f23332961600148736bce66372a0b7e3782b241efc2289bcb0abe1",
+      "source_sha256": "b754f0ca23f23332961600148736bce66372a0b7e3782b241efc2289bcb0abe1",
+      "source_path": "source-968780c1793c960f",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Autonomous-20261014T045957Z/mechanical/synthetic_probe.py",
+      "sha256": "f20226d81cae9793189cd6a7731eed7c8d090d32d5a7de6a17d488c375048684",
+      "source_sha256": "f20226d81cae9793189cd6a7731eed7c8d090d32d5a7de6a17d488c375048684",
+      "source_path": "source-4a6b54b046ee2d2e",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Autonomous-20261014T045957Z/security/receipt_registry.py",
+      "sha256": "10f43eb17e9b3df94d666125268709661a7a8a3b4653057f64150019b7c18724",
+      "source_sha256": "10f43eb17e9b3df94d666125268709661a7a8a3b4653057f64150019b7c18724",
+      "source_path": "source-1decc239815341eb",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Autonomous-20261014T045957Z/synthetic_pipeline.py",
+      "sha256": "c55a7064b4ddb44fc9b06279517a56cb0a9ae6fd9be39f51dd05cb02e324b2ab",
+      "source_sha256": "c55a7064b4ddb44fc9b06279517a56cb0a9ae6fd9be39f51dd05cb02e324b2ab",
+      "source_path": "source-2b5723c582d61e80",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Integration-20261014T1430Z/durable_registry.py",
+      "sha256": "da256b77ebd5058f14ff93748edb2641c728dcadb8e920562fb235e1b4cf7dbd",
+      "source_sha256": "da256b77ebd5058f14ff93748edb2641c728dcadb8e920562fb235e1b4cf7dbd",
+      "source_path": "source-8fac750bd723cd69",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Integration-20261014T1430Z/integration.py",
+      "sha256": "56e44d13a98c4941293a7e0ddfb8edcf94e2b2ecda32180b36f0ffc0788ae9a2",
+      "source_sha256": "56e44d13a98c4941293a7e0ddfb8edcf94e2b2ecda32180b36f0ffc0788ae9a2",
+      "source_path": "source-8bb2350a15d6061c",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Integration-20261014T1430Z/loader.py",
+      "sha256": "475ff6906b2a3739e6d893618e27e28df0b03dbfb742b36ef1200c8b865e4e1e",
+      "source_sha256": "475ff6906b2a3739e6d893618e27e28df0b03dbfb742b36ef1200c8b865e4e1e",
+      "source_path": "source-a836c59d9b0c7f07",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Prospective-Campaign-20261014T184957Z/admission.py",
+      "sha256": "f5d5faa66a5e9e749fbe90d740154ecef1c1c57dd4613dbf710958d382fdce01",
+      "source_sha256": "f5d5faa66a5e9e749fbe90d740154ecef1c1c57dd4613dbf710958d382fdce01",
+      "source_path": "source-7f489c3ef7b634d3",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/Engineering/I7-Prospective-Campaign-20261014T184957Z/admission_v2.py",
+      "sha256": "0ba1656e078accc59cb4d258579ce010398aeabb882fc61cd47d751bbbbc6008",
+      "source_sha256": "0ba1656e078accc59cb4d258579ce010398aeabb882fc61cd47d751bbbbc6008",
+      "source_path": "source-821ed8f038aaa2e0",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/I4_I5_DEPENDENCY_MANIFEST.json",
+      "sha256": "b6754616f2c7c2fdfd3b67b66076d31371667d60a2c413e9012aba7f2b371523",
+      "source_sha256": "c0c894851187eecd7163b088756052766bf9ca51116e799148b2e6d69ff3539c",
+      "source_path": "source-18ef8dd2d02f0cde",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/source_snapshots/frozen_i4_i5/i4_graph.py",
+      "sha256": "df1be33dcc85fefced28275808429cd9b6a39b0344e3521644300d0f3d3e2db3",
+      "source_sha256": "df1be33dcc85fefced28275808429cd9b6a39b0344e3521644300d0f3d3e2db3",
+      "source_path": "source-48e768b877c3cb0a",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/source_snapshots/frozen_i4_i5/i5_provenance.py",
+      "sha256": "0e3e105925848182ff7b7e59aba3057e9647082f8f058797a07224d96eb6212b",
+      "source_sha256": "0e3e105925848182ff7b7e59aba3057e9647082f8f058797a07224d96eb6212b",
+      "source_path": "source-5afb668f58c25f82",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/__init__.py",
+      "sha256": "f2829dd76351c82fa096de7e1a349774621c48e564ddaad7c2f2abcf471f147d",
+      "source_sha256": "f2829dd76351c82fa096de7e1a349774621c48e564ddaad7c2f2abcf471f147d",
+      "source_path": "source-d7e47b1d77ec6623",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/generic_base/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "source-b24edc2d4d2b9932",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/generic_base/capability_profile.py",
+      "sha256": "b5428fa5d2540ba35eb02a8644162439fb6f52591c093d4fc40f21ebf6aa2241",
+      "source_sha256": "b5428fa5d2540ba35eb02a8644162439fb6f52591c093d4fc40f21ebf6aa2241",
+      "source_path": "source-006acab464d345c0",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/generic_base/generic_base.py",
+      "sha256": "d6168bc6c89eae4710f5328f6cc7a3a8fb6df52c519eab066d8bafcbb18b76f2",
+      "source_sha256": "d6168bc6c89eae4710f5328f6cc7a3a8fb6df52c519eab066d8bafcbb18b76f2",
+      "source_path": "source-38d6a6c74bb5545b",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/__init__.py",
+      "sha256": "eb6cc226d45cc5b37b58dfcaf44c4dbc37cdc159334adb52f7eec83368e913ab",
+      "source_sha256": "eb6cc226d45cc5b37b58dfcaf44c4dbc37cdc159334adb52f7eec83368e913ab",
+      "source_path": "source-d907acfe587abc98",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/frozen_i2/OP1_RUN_STATE_MACHINE.json",
+      "sha256": "21d9f625ce5d4a533692d2934317f6f32594b6bf59bd63665e8a8cc76b388b06",
+      "source_sha256": "21d9f625ce5d4a533692d2934317f6f32594b6bf59bd63665e8a8cc76b388b06",
+      "source_path": "source-7dc23f725cad7662",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/frozen_i4/OP1_CAUSAL_GRAPH_CONTRACT.json",
+      "sha256": "212347222febaf09471ac827176dfb97d0f9b6d271b7e3195ffb19a8ec2ad892",
+      "source_sha256": "212347222febaf09471ac827176dfb97d0f9b6d271b7e3195ffb19a8ec2ad892",
+      "source_path": "source-28de8c1d1eeba504",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/frozen_i4/OP1_CAUSAL_GRAPH_IMPLEMENTATION.json",
+      "sha256": "92250ad91000b7242ea863acbd44451e11c7beda367ef8f1d06940d47507fda9",
+      "source_sha256": "92250ad91000b7242ea863acbd44451e11c7beda367ef8f1d06940d47507fda9",
+      "source_path": "source-ad68cba1ea50ad3f",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/frozen_i5/OP1_MODEL_SUBAGENT_PROVENANCE_IMPLEMENTATION.json",
+      "sha256": "5391f9de0ef9151b073c7ed7219680150dfb2e6091fc5eb4cd2f906b3fcd3815",
+      "source_sha256": "5391f9de0ef9151b073c7ed7219680150dfb2e6091fc5eb4cd2f906b3fcd3815",
+      "source_path": "source-603bc2708b86a2e9",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/i4_graph.py",
+      "sha256": "df1be33dcc85fefced28275808429cd9b6a39b0344e3521644300d0f3d3e2db3",
+      "source_sha256": "df1be33dcc85fefced28275808429cd9b6a39b0344e3521644300d0f3d3e2db3",
+      "source_path": "source-a3c095b79164e5dd",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/i5_provenance.py",
+      "sha256": "0e3e105925848182ff7b7e59aba3057e9647082f8f058797a07224d96eb6212b",
+      "source_sha256": "0e3e105925848182ff7b7e59aba3057e9647082f8f058797a07224d96eb6212b",
+      "source_path": "source-85d2c4ed7f9ac33f",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/identity.py",
+      "sha256": "3eea63be583f8e8064f1da1f2f68bfc1db432eccf370e758b6d40bb0f729173d",
+      "source_sha256": "3eea63be583f8e8064f1da1f2f68bfc1db432eccf370e758b6d40bb0f729173d",
+      "source_path": "source-04eac1b991e0ce20",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/registry.py",
+      "sha256": "f83a1ac4eec17d7fedf575eb3d330950a0441463489ed0f3544b8496d7f1a78f",
+      "source_sha256": "f83a1ac4eec17d7fedf575eb3d330950a0441463489ed0f3544b8496d7f1a78f",
+      "source_path": "source-752541124f7974e1",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schema_registry.py",
+      "sha256": "05cbcef8bf178c6d6a3a6feed86281646abb10e737d9fe16d021457ee198b507",
+      "source_sha256": "05cbcef8bf178c6d6a3a6feed86281646abb10e737d9fe16d021457ee198b507",
+      "source_path": "source-4d0621efb1919400",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schema_registry_manifest.json",
+      "sha256": "53586c1b5156738bf0e86dce4b23684dd04175e9218ae0f6ac9c855812c42a8d",
+      "source_sha256": "53586c1b5156738bf0e86dce4b23684dd04175e9218ae0f6ac9c855812c42a8d",
+      "source_path": "source-b9fbfc0fd2434efd",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_ACTOR_MODEL_TOOL_PROVENANCE_SCHEMA.json",
+      "sha256": "e0359b233eeb7e2bd80e5fc0c0db1e1dd872e40bf6e8d41aabd69f46c22bf9fd",
+      "source_sha256": "e0359b233eeb7e2bd80e5fc0c0db1e1dd872e40bf6e8d41aabd69f46c22bf9fd",
+      "source_path": "source-d31d77e1ff977165",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_DATASET_EXAMPLE_SCHEMA.json",
+      "sha256": "70e014f2774218c3305bb2e577069a5a8d4f99fb51c0dff2a12fb10b41f8ddaa",
+      "source_sha256": "70e014f2774218c3305bb2e577069a5a8d4f99fb51c0dff2a12fb10b41f8ddaa",
+      "source_path": "source-e111e1c7a5476d3c",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_DATASET_PROVENANCE_SCHEMA.json",
+      "sha256": "11eac619ad416e52768614bb2278bd12536ade5e663c7427694b5af4ecfd5059",
+      "source_sha256": "11eac619ad416e52768614bb2278bd12536ade5e663c7427694b5af4ecfd5059",
+      "source_path": "source-76440a9d18e12b1a",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_DECISION_SCHEMA.json",
+      "sha256": "710ab46485f7dc7cb7d24e4088ea1ffe0962030e71df299153cf3c1ae7aa3134",
+      "source_sha256": "710ab46485f7dc7cb7d24e4088ea1ffe0962030e71df299153cf3c1ae7aa3134",
+      "source_path": "source-d743d9fb33727264",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_ERROR_SCHEMA.json",
+      "sha256": "15ef9df0cd9bba0ace5df56afb11655eb0d8e1c7a973ec5363f6adac6e6af103",
+      "source_sha256": "15ef9df0cd9bba0ace5df56afb11655eb0d8e1c7a973ec5363f6adac6e6af103",
+      "source_path": "source-20420fc1dcf0d742",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_EVENT_SCHEMA.json",
+      "sha256": "a0ebf9eced67dd77a195b5077183d7e61ff11e1cc5dbf0ac0a48f32f9ba6da89",
+      "source_sha256": "a0ebf9eced67dd77a195b5077183d7e61ff11e1cc5dbf0ac0a48f32f9ba6da89",
+      "source_path": "source-dffe028ce19b073a",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_EVIDENCE_SCHEMA.json",
+      "sha256": "c57d3323e088d19b906a5836e478f7b353342b9a75f07ca55e303e62766a4d4f",
+      "source_sha256": "c57d3323e088d19b906a5836e478f7b353342b9a75f07ca55e303e62766a4d4f",
+      "source_path": "source-055e9154be0b7a92",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_FINDING_SCHEMA.json",
+      "sha256": "21c758edf543b19b2d1650485be1cc673abf2142105900f885348fe04d228f01",
+      "source_sha256": "21c758edf543b19b2d1650485be1cc673abf2142105900f885348fe04d228f01",
+      "source_path": "source-bac2b754cc5d82c2",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_IDENTITY_ENVELOPE_SCHEMA.json",
+      "sha256": "8f9888551d035d81f6d085eb6589a90ebffb868760869dcafcc0c5805b0e0b45",
+      "source_sha256": "8f9888551d035d81f6d085eb6589a90ebffb868760869dcafcc0c5805b0e0b45",
+      "source_path": "source-392dcc111f5a0a0e",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_RESOURCE_BUDGET_SCHEMA.json",
+      "sha256": "f8ac9ed167f5a29d7f02747705a61a30a7ce5fa3e5c7f751a1c0f6e0a7ecf135",
+      "source_sha256": "f8ac9ed167f5a29d7f02747705a61a30a7ce5fa3e5c7f751a1c0f6e0a7ecf135",
+      "source_path": "source-636002a728400ec3",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_RUN_AUTHORITY_SCHEMA.json",
+      "sha256": "e748fbe69eb19ff83c7113a9d77e2d11916916ba5ae835dfdb82443b73ca9180",
+      "source_sha256": "e748fbe69eb19ff83c7113a9d77e2d11916916ba5ae835dfdb82443b73ca9180",
+      "source_path": "source-8894062146e28c39",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_RUN_CLAIM_SCHEMA.json",
+      "sha256": "1a619def4fdec0da6f13657b9445db15fb494a864b2b66c58074147909c31736",
+      "source_sha256": "1a619def4fdec0da6f13657b9445db15fb494a864b2b66c58074147909c31736",
+      "source_path": "source-25552f89e45cdca4",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_RUN_EXACT_BINDING_SCHEMA.json",
+      "sha256": "cfdd8c313a90c62316eb38eca1e0cf73893d5d9fbfef6a4e89f3ad39b984b144",
+      "source_sha256": "cfdd8c313a90c62316eb38eca1e0cf73893d5d9fbfef6a4e89f3ad39b984b144",
+      "source_path": "source-1a21f469a0b1c40c",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_RUN_SCHEMA.json",
+      "sha256": "1eb443f7dcfd5a889d758b22869df1b954a09b7f395fd46507b240b5b5036d53",
+      "source_sha256": "1eb443f7dcfd5a889d758b22869df1b954a09b7f395fd46507b240b5b5036d53",
+      "source_path": "source-321dbe56cee12264",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/op1_reusable/schemas/OP1_SESSION_AUTHORITY_SCHEMA.json",
+      "sha256": "e5e5283a9eb8443cbb96b15afebea12c3102aa6b1d3eb11f5f1e89a9f00fee27",
+      "source_sha256": "e5e5283a9eb8443cbb96b15afebea12c3102aa6b1d3eb11f5f1e89a9f00fee27",
+      "source_path": "source-4267173da8b20d01",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/policies/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "source-e2d16f5c54f2dd98",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/policies/path_policy.py",
+      "sha256": "ffebbc4755dad920443d86f290a36f76ca71da1483d0b8300f9747fcdcd2076b",
+      "source_sha256": "ffebbc4755dad920443d86f290a36f76ca71da1483d0b8300f9747fcdcd2076b",
+      "source_path": "source-1689f0f183fe9f7d",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "deps/i4_i5/src/package_g/policies/security_policy.py",
+      "sha256": "e881aff8cc81c4d44dafb55bd390c1b8a8ac854223ec471d1a192028568e8230",
+      "source_sha256": "e881aff8cc81c4d44dafb55bd390c1b8a8ac854223ec471d1a192028568e8230",
+      "source_path": "source-2bb8ab88ae078ec9",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "document_graph_sidecar.py",
+      "sha256": "1ecc7f0e0462e4c46415858721e9bc5ccb39403baae99cf211915fef1be824df",
+      "source_sha256": "1ecc7f0e0462e4c46415858721e9bc5ccb39403baae99cf211915fef1be824df",
+      "source_path": "source-1dbd6547359eee07",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "documents_policy.py",
+      "sha256": "5f27a5900f4a29b5102c0f95cc576856ca764e23a050c9a17f6b9b2a7ed95070",
+      "source_sha256": "9468fb6bac472b35e553b4401d928caf463d3464c93db0c0c908ce2bd6fe783f",
+      "source_path": "source-cf76f3c6b79224cf",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "documents_policy_manifest.json",
+      "sha256": "d2ceab5e3ec67c26da186862a7537b01f04669a6338e87b75800adf54fae66d0",
+      "source_sha256": "e410e527d1764e3b05ce71f6f686b86db4577c1b3cb92d93ff5b4ac6596a16e4",
+      "source_path": "source-630f574deec1a4a7",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/CONFIG.json",
+      "sha256": "598f326e9c7a354d0f6a0f9e5ee557f1aa74470035f03e8da930eecd1c62fd60",
+      "source_sha256": "598f326e9c7a354d0f6a0f9e5ee557f1aa74470035f03e8da930eecd1c62fd60",
+      "source_path": "source-f9a1aa4db84cd857",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/bounded_adapter.py",
+      "sha256": "5933c89e05d50cd98eff22fc44ffcc5a79cb9671fc4c9e3b71ceefda6578f676",
+      "source_sha256": "5933c89e05d50cd98eff22fc44ffcc5a79cb9671fc4c9e3b71ceefda6578f676",
+      "source_path": "source-ca10777f475c1bf7",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/consumer_structured.py",
+      "sha256": "fd0edc43d48db733f2fff81075f450fadb9fc814ccb2733acd73a8784d42015d",
+      "source_sha256": "fd0edc43d48db733f2fff81075f450fadb9fc814ccb2733acd73a8784d42015d",
+      "source_path": "source-3c617c5a82579a66",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/engine.py",
+      "sha256": "c26069b8a0daef6d9ee54a8bfb27cbdafcd8778dab6746e458f680ec94608de1",
+      "source_sha256": "c26069b8a0daef6d9ee54a8bfb27cbdafcd8778dab6746e458f680ec94608de1",
+      "source_path": "source-be8e8b776aa2c193",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/provider_structured.py",
+      "sha256": "c820d428af8b4c8b22fadcbe6adbc52052528cfbe960bfec42e70f46822c927d",
+      "source_sha256": "c820d428af8b4c8b22fadcbe6adbc52052528cfbe960bfec42e70f46822c927d",
+      "source_path": "source-de365e9c59923475",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/reusable_api_v2.py",
+      "sha256": "3b2de25f4f3e2031e4669d64a7932c2192e09269c8be156f1246e2e7487e2e4d",
+      "source_sha256": "3b2de25f4f3e2031e4669d64a7932c2192e09269c8be156f1246e2e7487e2e4d",
+      "source_path": "source-997d62f7f5bc31cc",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/runtime.py",
+      "sha256": "4ee07bd8e8c9a812372f38b0a7e3396f510fbbe36f37305ea6c2ffc689229567",
+      "source_sha256": "4ee07bd8e8c9a812372f38b0a7e3396f510fbbe36f37305ea6c2ffc689229567",
+      "source_path": "source-a427a767a607a03f",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engine/worker.py",
+      "sha256": "8b0c20c5cbbb5f06892c5ace3eaf929ec72c9c7238ed3bf7842f2ecf6361c2b7",
+      "source_sha256": "8b0c20c5cbbb5f06892c5ace3eaf929ec72c9c7238ed3bf7842f2ecf6361c2b7",
+      "source_path": "source-2818b5f25bf93dad",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engineering_corpus.py",
+      "sha256": "03801e91ab83aaf7ebc2137dca6de3ddc67a13c5729cbf78c866d75ee2de41dd",
+      "source_sha256": "2e5f0ea397a9ad5181eb09016999788eb6472d0abfb361fa133bf54f9710d630",
+      "source_path": "source-c57aa721191ac020",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engineering_recovery.py",
+      "sha256": "401cae77332ad4418f4b5eafdcc66ab1a385ff1bd5bdb8fb175eaf283eba0430",
+      "source_sha256": "aa21c589277b6ebca999cabec2d008b46ec13b0bbf3015ad85dfefbfd70cf58f",
+      "source_path": "source-c8e16750173d1e7d",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "engineering_verification.py",
+      "sha256": "e19b58a524e1dbf1dae49eb59d7c015b899b064d9651286629bef272cf648b0f",
+      "source_sha256": "a4980953abc01c59d199979fe346bd340705f8fcf05d1852ccd52cefa0aa7a3f",
+      "source_path": "source-db4b4ae2048a3548",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "evidence_sidecar.py",
+      "sha256": "c3476aa42a115439145e88b1fd2eec33e433f21dd8ac460710c2e9993c4eaf87",
+      "source_sha256": "c69b9b17214d529852b69a67d5620d6a42241826a959047440aa341464ed50ab",
+      "source_path": "source-7bdefdaec592f646",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "fixtures/Engineering/sample.json",
+      "sha256": "c1a895835a27ec43af6d64e68cff19e233e30a77c8e3ee3d16c112541866a7d2",
+      "source_sha256": "c1a895835a27ec43af6d64e68cff19e233e30a77c8e3ee3d16c112541866a7d2",
+      "source_path": "source-1c5332da89953a84",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "fixtures/Engineering/sample.md",
+      "sha256": "d9594b526cb4df07a565a0d4c6f43b351cfc8e83d1fd0a17fa69e956310332a7",
+      "source_sha256": "d9594b526cb4df07a565a0d4c6f43b351cfc8e83d1fd0a17fa69e956310332a7",
+      "source_path": "source-712dedf81399d84a",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "i7_api.py",
+      "sha256": "29f53c8eb3686b62eeac76b68ced104d7d0ea567ca8e52f59110cbcd3c253276",
+      "source_sha256": "29f53c8eb3686b62eeac76b68ced104d7d0ea567ca8e52f59110cbcd3c253276",
+      "source_path": "source-768d175c3b8c8f05",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "pg_i7.py",
+      "sha256": "1430bc510fe0022a7b4a6ed8d4fd2342d1d943421b88641472f63bad7a39a077",
+      "source_sha256": "3e9d7c350934954c1fdcc4c5f1423e28faae0a92fb2edb2cc926197c7c6e1307",
+      "source_path": "source-2728f9f43db04a43",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "prospective_adapter.py",
+      "sha256": "01ffad95d1021cc5830b79e70cd5400da027c0b3a920a3d9e4e3c052e33ef204",
+      "source_sha256": "01ffad95d1021cc5830b79e70cd5400da027c0b3a920a3d9e4e3c052e33ef204",
+      "source_path": "source-d7e640dbfccc1086",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "readonly_recovery.py",
+      "sha256": "11fbaf5a0ac9c3d1ed8576cadfa014f2c0965b58c408230a9952bf88fda95e15",
+      "source_sha256": "11fbaf5a0ac9c3d1ed8576cadfa014f2c0965b58c408230a9952bf88fda95e15",
+      "source_path": "source-0c63baca25d8f6d7",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "schemas/pg_i7.documents.selection.v2.json",
+      "sha256": "070790e086d57293ad730a854d3ba07a1e2d8be1f9cfb3bf1176a0311340c68a",
+      "source_sha256": "070790e086d57293ad730a854d3ba07a1e2d8be1f9cfb3bf1176a0311340c68a",
+      "source_path": "source-2fd1f346978f7352",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "summarize_corpus.py",
+      "sha256": "4468331378992f99ee40cb81fdfe8df11800c1bdea7173205d5689bc1a856ce0",
+      "source_sha256": "f70542cb86cc3c9d326994877ce812ce481088a4e11ba442824b4380f243e45f",
+      "source_path": "source-c0fa4ce3b15abaf6",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "supplemental004/engineering_corpus.py",
+      "sha256": "8881eda76ac7d20367cbb4455ca2ad39c0ad78b6079ba8f4f08613a807c71eba",
+      "source_sha256": "d0923e2613e472a29a22feccd10b4df346f5ade46f43cc6179e41100e92c784e",
+      "source_path": "source-6b121a9c97fce569",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    },
+    {
+      "workspace_path": "supplemental004/supplemental_repair.py",
+      "sha256": "5efa596bc2d5aae6de391e3ff8f96ecc40252e401ce9009995bc48fbcfb7c09c",
+      "source_sha256": "d21fc0693ee7ef4a204fbb7fc4140831911cafd1c7e6c65f63e3922894b918e4",
+      "source_path": "source-4fea2a44ff208b62",
+      "role": "public_engineering_component",
+      "runtime_pin": true
+    }
+  ],
+  "dependency_manifest": "DEPENDENCY_MANIFEST.json",
+  "public_derivative": true
+}

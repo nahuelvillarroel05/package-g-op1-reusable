@@ -1,0 +1,44 @@
+﻿{
+  "schema": "pg_i7.provider-registry.v1",
+  "authority": "LOCAL_SYNTHETIC_ENGINEERING_ONLY",
+  "providers": {
+    "safe.synthetic.totals.v1": {
+      "input_schema": "pg_i7.input.v1",
+      "output_schema": "engineering.totals.v1",
+      "role": "existing bounded local totals engine provider",
+      "limits": {"max_input_bytes": 16384, "max_values": 64, "min_value": -2147483648, "max_value": 2147483647}
+    },
+    "safe.documents.metadata.v1": {
+      "selection_schema": "i7.focused.real-document-selection.v1",
+      "selection_sha256": "52b8149a18415acf7d63fc389e994537981bbfc2ceb4d533f8610ddf74362f59",
+      "selection_count": 8,
+      "output_schema": "i7.engineering.document-scan@1",
+      "role": "preserved exact-eight compatibility provider"
+    },
+    "safe.documents.metadata.v2": {
+      "selection_schema": "pg_i7.documents.selection.v2",
+      "selection_policy_manifest": "candidate/documents_policy_manifest.json",
+      "selection_policy_version": "1",
+      "allowed_policy_ids": ["engineering", "package-fixtures"],
+      "output_schema": "i7.engineering.document-scan.v2",
+      "read_mode": "bounded per-file streaming hash; metadata only; no content parsing or disclosure",
+      "snapshot_consistency": "PER_FILE_STABLE_READS_ONLY",
+      "cross_document_snapshot_claim": "NOT_ASSERTED",
+      "selection_manifest_authorizes_roots": false,
+      "role": "generalized metadata provider"
+    }
+  },
+  "pipeline": {
+    "selection_schema_v1_provider": "safe.documents.metadata.v1",
+    "selection_schema_v2_provider": "safe.documents.metadata.v2",
+    "totals_provider": "safe.synthetic.totals.v1",
+    "stage_b_limits": {"max_input_bytes": 16384, "max_values": 64, "min_value": -2147483648, "max_value": 2147483647},
+    "document_limits": {"max_documents": 64, "max_document_bytes": 16777216, "max_total_document_bytes": 67108864}
+  },
+  "selection_operations": {
+    "inspect": "read-only policy disclosure",
+    "prepare": "bounded source hashing and fresh manifest creation; no provider execution",
+    "validate": "independent policy and current source commitment check; no provider execution"
+  },
+  "prohibited_authority": ["native", "formal", "training", "release", "promotion"]
+}

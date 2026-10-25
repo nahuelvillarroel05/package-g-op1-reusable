@@ -1,0 +1,17 @@
+{
+  "manifest_source_root_authority": false,
+  "policies": [
+    {
+      "authority": "DISABLED_PUBLIC_EXPORT",
+      "policy_id": "engineering",
+      "root": "private-source-deb411175cfefa5d"
+    },
+    {
+      "authority": "FIXED_LITERAL_CODE_POLICY",
+      "policy_id": "package-fixtures",
+      "root": "FOCUSED_ROOT/candidate/fixtures/Engineering"
+    }
+  ],
+  "policy_version": "1",
+  "schema": "pg_i7.documents.policy.v1"
+}

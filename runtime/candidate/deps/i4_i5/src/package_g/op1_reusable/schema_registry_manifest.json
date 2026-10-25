@@ -1,0 +1,147 @@
+{
+  "artifact_id": "PG-ART-219ec1acf69cdc03aead4138c2ed601c",
+  "entries": [
+    {
+      "document_id": "OP1_ACTOR_MODEL_TOOL_PROVENANCE_SCHEMA.json",
+      "relative_path": "schemas/OP1_ACTOR_MODEL_TOOL_PROVENANCE_SCHEMA.json",
+      "schema_id": "PG-SCH-91af21b7eda9f10dfe5aadefec8129c4",
+      "sha256": "e0359b233eeb7e2bd80e5fc0c0db1e1dd872e40bf6e8d41aabd69f46c22bf9fd",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_DATASET_EXAMPLE_SCHEMA.json",
+      "relative_path": "schemas/OP1_DATASET_EXAMPLE_SCHEMA.json",
+      "schema_id": "PG-SCH-9b14fe63ce99bda432ec0331b8dbbc10",
+      "sha256": "70e014f2774218c3305bb2e577069a5a8d4f99fb51c0dff2a12fb10b41f8ddaa",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_DATASET_PROVENANCE_SCHEMA.json",
+      "relative_path": "schemas/OP1_DATASET_PROVENANCE_SCHEMA.json",
+      "schema_id": "PG-SCH-db6ddc065a0bf635a9b99bbf37ebe906",
+      "sha256": "11eac619ad416e52768614bb2278bd12536ade5e663c7427694b5af4ecfd5059",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_DECISION_SCHEMA.json",
+      "relative_path": "schemas/OP1_DECISION_SCHEMA.json",
+      "schema_id": "PG-SCH-e72d103a384ddf57c9915150677d4378",
+      "sha256": "710ab46485f7dc7cb7d24e4088ea1ffe0962030e71df299153cf3c1ae7aa3134",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_ERROR_SCHEMA.json",
+      "relative_path": "schemas/OP1_ERROR_SCHEMA.json",
+      "schema_id": "PG-SCH-0674bc31adcca7c0e62a578715eab409",
+      "sha256": "15ef9df0cd9bba0ace5df56afb11655eb0d8e1c7a973ec5363f6adac6e6af103",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_EVENT_SCHEMA.json",
+      "relative_path": "schemas/OP1_EVENT_SCHEMA.json",
+      "schema_id": "PG-SCH-c8e73072cba78ea0797c847e6c326aa7",
+      "sha256": "a0ebf9eced67dd77a195b5077183d7e61ff11e1cc5dbf0ac0a48f32f9ba6da89",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_EVIDENCE_SCHEMA.json",
+      "relative_path": "schemas/OP1_EVIDENCE_SCHEMA.json",
+      "schema_id": "PG-SCH-684f8981442089de9b758cf0f3dc5462",
+      "sha256": "c57d3323e088d19b906a5836e478f7b353342b9a75f07ca55e303e62766a4d4f",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_FINDING_SCHEMA.json",
+      "relative_path": "schemas/OP1_FINDING_SCHEMA.json",
+      "schema_id": "PG-SCH-852730d81a29946e55a5c67a2c97ee5c",
+      "sha256": "21c758edf543b19b2d1650485be1cc673abf2142105900f885348fe04d228f01",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_IDENTITY_ENVELOPE_SCHEMA.json",
+      "relative_path": "schemas/OP1_IDENTITY_ENVELOPE_SCHEMA.json",
+      "schema_id": "PG-SCH-abc1f678c694f88a873d667496cc7d9c",
+      "sha256": "8f9888551d035d81f6d085eb6589a90ebffb868760869dcafcc0c5805b0e0b45",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_RESOURCE_BUDGET_SCHEMA.json",
+      "relative_path": "schemas/OP1_RESOURCE_BUDGET_SCHEMA.json",
+      "schema_id": "PG-SCH-f6b64f5015307b6b167e34e77a2b8f5d",
+      "sha256": "f8ac9ed167f5a29d7f02747705a61a30a7ce5fa3e5c7f751a1c0f6e0a7ecf135",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_RUN_AUTHORITY_SCHEMA.json",
+      "relative_path": "schemas/OP1_RUN_AUTHORITY_SCHEMA.json",
+      "schema_id": "PG-SCH-75c9d13773c6811fd2be356d78c81335",
+      "sha256": "e748fbe69eb19ff83c7113a9d77e2d11916916ba5ae835dfdb82443b73ca9180",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_RUN_CLAIM_SCHEMA.json",
+      "relative_path": "schemas/OP1_RUN_CLAIM_SCHEMA.json",
+      "schema_id": "PG-SCH-823a98bb829f93aad2873471531f0685",
+      "sha256": "1a619def4fdec0da6f13657b9445db15fb494a864b2b66c58074147909c31736",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_RUN_EXACT_BINDING_SCHEMA.json",
+      "relative_path": "schemas/OP1_RUN_EXACT_BINDING_SCHEMA.json",
+      "schema_id": "PG-SCH-d429599d3cb431536c860535772de8eb",
+      "sha256": "cfdd8c313a90c62316eb38eca1e0cf73893d5d9fbfef6a4e89f3ad39b984b144",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_RUN_SCHEMA.json",
+      "relative_path": "schemas/OP1_RUN_SCHEMA.json",
+      "schema_id": "PG-SCH-7352954b106a1a2f3d5b131a8062a7fc",
+      "sha256": "1eb443f7dcfd5a889d758b22869df1b954a09b7f395fd46507b240b5b5036d53",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    },
+    {
+      "document_id": "OP1_SESSION_AUTHORITY_SCHEMA.json",
+      "relative_path": "schemas/OP1_SESSION_AUTHORITY_SCHEMA.json",
+      "schema_id": "PG-SCH-214126e8d750637d227c54cc0cab6b6f",
+      "sha256": "e5e5283a9eb8443cbb96b15afebea12c3102aa6b1d3eb11f5f1e89a9f00fee27",
+      "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+      "status": "FROZEN",
+      "version": "1.0.0"
+    }
+  ],
+  "entry_count": 15,
+  "lookup_rule": "Exact SCHEMA_ID and version only; unknown or wrong digest reject; no latest fallback",
+  "manifest_order": "relative_path ascending UTF-8 code point order",
+  "runtime_authority_created": false,
+  "schema": "package-g-op1-i0-schema-registry@1",
+  "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+  "source_freeze_sha256": "bbe63ee96d03712109da9f48f966a6b9c470c050092871cce3e330118ed89465"
+}

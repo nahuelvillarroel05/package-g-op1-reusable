@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+runtime/campaigns/
+MCP_API_TIMINGS*.jsonl
+.env
+.env.*
+*.pem
+*.key

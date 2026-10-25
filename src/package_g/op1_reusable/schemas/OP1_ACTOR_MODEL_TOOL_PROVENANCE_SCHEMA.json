@@ -1,0 +1,385 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_ACTOR_MODEL_TOOL_PROVENANCE_SCHEMA.json",
+  "title": "OP1_ACTOR_MODEL_TOOL_PROVENANCE_SCHEMA",
+  "oneOf": [
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "task_provenance",
+      "description": "Immutable attribution record.",
+      "type": "object",
+      "required": [
+        "identity",
+        "task_id",
+        "actor_id",
+        "operation_id",
+        "status"
+      ],
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "pattern": "^PG-TSK-[0-9a-f]{32}$"
+        },
+        "actor_id": {
+          "type": "string",
+          "pattern": "^PG-ACT-[0-9a-f]{32}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "pattern": "^PG-OP-[0-9a-f]{32}$"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+        }
+      },
+      "additionalProperties": false,
+      "x-cross-field-law": "Envelope entity_type and entity_id equal this record's leading *_id; enforced by mandatory identity registry validator."
+    },
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "delegation_provenance",
+      "description": "Immutable attribution record.",
+      "type": "object",
+      "required": [
+        "identity",
+        "delegation_id",
+        "task_id",
+        "delegator_actor_id",
+        "delegate_actor_id",
+        "model_id",
+        "scope"
+      ],
+      "properties": {
+        "delegation_id": {
+          "type": "string",
+          "pattern": "^PG-DEL-[0-9a-f]{32}$"
+        },
+        "task_id": {
+          "type": "string",
+          "pattern": "^PG-TSK-[0-9a-f]{32}$"
+        },
+        "delegator_actor_id": {
+          "type": "string",
+          "pattern": "^PG-ACT-[0-9a-f]{32}$"
+        },
+        "delegate_actor_id": {
+          "type": "string",
+          "pattern": "^PG-ACT-[0-9a-f]{32}$"
+        },
+        "model_id": {
+          "type": "string",
+          "pattern": "^PG-MOD-[0-9a-f]{32}$"
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "identity": {
+          "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+        }
+      },
+      "additionalProperties": false,
+      "x-cross-field-law": "Envelope entity_type and entity_id equal this record's leading *_id; enforced by mandatory identity registry validator."
+    },
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "report_provenance",
+      "description": "Immutable attribution record.",
+      "type": "object",
+      "required": [
+        "identity",
+        "report_id",
+        "task_id",
+        "actor_id",
+        "content_sha256",
+        "status",
+        "producer_kind"
+      ],
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "pattern": "^PG-RPT-[0-9a-f]{32}$"
+        },
+        "task_id": {
+          "type": "string",
+          "pattern": "^PG-TSK-[0-9a-f]{32}$"
+        },
+        "actor_id": {
+          "type": "string",
+          "pattern": "^PG-ACT-[0-9a-f]{32}$"
+        },
+        "model_id": {
+          "type": "string",
+          "pattern": "^PG-MOD-[0-9a-f]{32}$"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+        },
+        "producer_kind": {
+          "enum": [
+            "HUMAN",
+            "MODEL"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "x-cross-field-law": "Envelope entity_type and entity_id equal this record's leading *_id; enforced by mandatory identity registry validator.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "producer_kind": {
+                "const": "MODEL"
+              }
+            },
+            "required": [
+              "producer_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "model_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "producer_kind": {
+                "const": "HUMAN"
+              }
+            },
+            "required": [
+              "producer_kind"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "model_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "review_provenance",
+      "description": "Immutable attribution record.",
+      "type": "object",
+      "required": [
+        "identity",
+        "review_id",
+        "report_id",
+        "reviewer_actor_id",
+        "decision_id",
+        "outcome",
+        "reviewed_at_utc",
+        "reviewer_kind"
+      ],
+      "properties": {
+        "review_id": {
+          "type": "string",
+          "pattern": "^PG-REV-[0-9a-f]{32}$"
+        },
+        "report_id": {
+          "type": "string",
+          "pattern": "^PG-RPT-[0-9a-f]{32}$"
+        },
+        "reviewer_actor_id": {
+          "type": "string",
+          "pattern": "^PG-ACT-[0-9a-f]{32}$"
+        },
+        "reviewer_model_id": {
+          "type": "string",
+          "pattern": "^PG-MOD-[0-9a-f]{32}$"
+        },
+        "decision_id": {
+          "type": "string",
+          "pattern": "^PG-DEC-[0-9a-f]{32}$"
+        },
+        "outcome": {
+          "enum": [
+            "ACCEPTED",
+            "REJECTED",
+            "PARTIAL",
+            "UNKNOWN"
+          ]
+        },
+        "reviewed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "identity": {
+          "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+        },
+        "reviewer_kind": {
+          "enum": [
+            "HUMAN",
+            "MODEL"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "x-cross-field-law": "Envelope entity_type and entity_id equal this record's leading *_id; enforced by mandatory identity registry validator.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "reviewer_kind": {
+                "const": "MODEL"
+              }
+            },
+            "required": [
+              "reviewer_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "reviewer_model_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "reviewer_kind": {
+                "const": "HUMAN"
+              }
+            },
+            "required": [
+              "reviewer_kind"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "reviewer_model_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "tool_invocation_provenance",
+      "description": "Immutable attribution record.",
+      "type": "object",
+      "required": [
+        "identity",
+        "tool_invocation_id",
+        "tool_id",
+        "actor_id",
+        "operation_id",
+        "input_sha256",
+        "status",
+        "output_state"
+      ],
+      "properties": {
+        "tool_invocation_id": {
+          "type": "string",
+          "pattern": "^PG-TINV-[0-9a-f]{32}$"
+        },
+        "tool_id": {
+          "type": "string",
+          "pattern": "^PG-TOL-[0-9a-f]{32}$"
+        },
+        "actor_id": {
+          "type": "string",
+          "pattern": "^PG-ACT-[0-9a-f]{32}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "pattern": "^PG-OP-[0-9a-f]{32}$"
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "output_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+        },
+        "output_state": {
+          "enum": [
+            "PRESENT",
+            "NO_OUTPUT",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "x-cross-field-law": "Envelope entity_type and entity_id equal this record's leading *_id; enforced by mandatory identity registry validator.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "output_state": {
+                "const": "PRESENT"
+              }
+            },
+            "required": [
+              "output_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "output_sha256"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "output_state": {
+                "enum": [
+                  "NO_OUTPUT",
+                  "UNKNOWN"
+                ]
+              }
+            },
+            "required": [
+              "output_state"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "output_sha256"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "x-law": "All human and model TASK/DELEGATION/REPORT/REVIEW records are immutable, including rejected/incorrect reports. HUMAN records omit MODEL_ID; MODEL records require exact MODEL_ID. Tool output PRESENT has digest; NO_OUTPUT and UNKNOWN are distinct and do not invent a digest.",
+  "x-registration": "ACTOR, MODEL and TOOL registry records each have identity envelope, stable subject/version information and immutable exact artifact or configuration digest; missing model/tool version is UNKNOWN and blocks attribution claim."
+}

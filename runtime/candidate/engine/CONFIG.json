@@ -1,0 +1,20 @@
+{
+  "CAMPAIGN_ID": "I7-LOCAL-COMPOSITION-20261023T183823Z-a40cb3ca",
+  "integration_root": "../deps/Engineering/I7-Integration-20261014T1430Z",
+  "prospective_root": "../deps/Engineering/I7-Prospective-Campaign-20261014T184957Z",
+  "authority_scope": "USER_AUTHORIZED_LOCAL_ENGINEERING_ONLY_NO_OPERATIONAL_ORIGINALS",
+  "baseline_pins": {
+    "../deps/Engineering/I7-Autonomous-20261014T045957Z/junit/junit_accounting.py": "2bf47661862178752eb43da9da3aa9d6d4d712a0e4c38981c2778e02eff3c835",
+    "../deps/Engineering/I7-Autonomous-20261014T045957Z/mechanical/process_receipts.py": "b754f0ca23f23332961600148736bce66372a0b7e3782b241efc2289bcb0abe1",
+    "../deps/Engineering/I7-Autonomous-20261014T045957Z/mechanical/synthetic_probe.py": "f20226d81cae9793189cd6a7731eed7c8d090d32d5a7de6a17d488c375048684",
+    "../deps/Engineering/I7-Autonomous-20261014T045957Z/binding/operational_bindings.py": "7dca812b5ed23a84b4b003d36e4dd05cb3a3632b5be18f2fd23448f3d59dcfd3",
+    "../deps/Engineering/I7-Autonomous-20261014T045957Z/accounting_manifest.py": "83920750b366b7b3eb0b559dc97ae3a6f01a06bb825bbb21a7e5fcc0ac3b1f1e",
+    "../deps/Engineering/I7-Autonomous-20261014T045957Z/security/receipt_registry.py": "10f43eb17e9b3df94d666125268709661a7a8a3b4653057f64150019b7c18724",
+    "../deps/Engineering/I7-Autonomous-20261014T045957Z/synthetic_pipeline.py": "c55a7064b4ddb44fc9b06279517a56cb0a9ae6fd9be39f51dd05cb02e324b2ab",
+    "../deps/Engineering/I7-Integration-20261014T1430Z/loader.py": "475ff6906b2a3739e6d893618e27e28df0b03dbfb742b36ef1200c8b865e4e1e",
+    "../deps/Engineering/I7-Integration-20261014T1430Z/integration.py": "56e44d13a98c4941293a7e0ddfb8edcf94e2b2ecda32180b36f0ffc0788ae9a2",
+    "../deps/Engineering/I7-Integration-20261014T1430Z/durable_registry.py": "da256b77ebd5058f14ff93748edb2641c728dcadb8e920562fb235e1b4cf7dbd",
+    "../deps/Engineering/I7-Prospective-Campaign-20261014T184957Z/admission.py": "f5d5faa66a5e9e749fbe90d740154ecef1c1c57dd4613dbf710958d382fdce01",
+    "../deps/Engineering/I7-Prospective-Campaign-20261014T184957Z/admission_v2.py": "0ba1656e078accc59cb4d258579ce010398aeabb882fc61cd47d751bbbbc6008"
+  }
+}

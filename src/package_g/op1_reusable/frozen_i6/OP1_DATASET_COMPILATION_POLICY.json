@@ -1,0 +1,56 @@
+{
+  "schema": "package-g-op1-dataset-compilation-policy@1",
+  "source_of_truth": "append-only structured evidence graph",
+  "pipeline": [
+    "verify source graph/closure and exact raw bytes",
+    "resolve complete typed provenance",
+    "verify permissions and training eligibility independently",
+    "pin transformation code/config/seed/order and interpretation",
+    "derive example and multi-label annotations",
+    "enforce split/group and duplicate constraints",
+    "emit immutable dataset version and examples"
+  ],
+  "reject_if": [
+    "missing/deleted/corrupt source evidence",
+    "unresolvable causal path",
+    "missing required attempt/finding/decision/artifact where applicable",
+    "ambiguous label basis",
+    "duplicate semantic key within version",
+    "split leakage or mutable alias",
+    "UNKNOWN or restricted permission for requested training use"
+  ],
+  "duplicate_key": "dataset_version_id + task_kind + recomputed source_set_sha256 + transformation_id; canonical tuple bytes prevent equivalent-set reorder bypass",
+  "split_group": "Causally connected runs/repairs and shared evidence stay in one partition; HOLDOUT remains separately governed.",
+  "traceability": "Compiler emits complete source-ID closure and verifies each original evidence byte hash before accepting example.",
+  "authority": "Dataset design grants no training, protected data access or promotion.",
+  "labels": [
+    "SUCCESSFUL_EXECUTION",
+    "FAILED_EXECUTION",
+    "CORRECT_PRESTATE_BLOCK",
+    "UNSAFE_ACTION_REJECTED",
+    "TIMEOUT",
+    "CRASH",
+    "AMBIGUOUS_OWNERSHIP",
+    "EVIDENCE_INSUFFICIENCY",
+    "SUCCESSFUL_REPAIR",
+    "UNSUCCESSFUL_REPAIR",
+    "FINDING_DISCOVERY",
+    "FINDING_RESOLUTION",
+    "MODEL_CORRECT",
+    "MODEL_INCORRECT",
+    "SUBAGENT_CORRECT",
+    "SUBAGENT_INCORRECT",
+    "SUPERVISOR_ACCEPTED",
+    "SUPERVISOR_REJECTED",
+    "POLICY_VIOLATION",
+    "SAFE_ABORT"
+  ],
+  "source_set_canonicalization": {
+    "tuple": "(entity_type, entity_id, committed_record_sha256) for every distinct immutable registry record in the complete source closure",
+    "sort": "Ascending Unicode code point order on entity_type, then entity_id, then committed_record_sha256; all fields restricted to ASCII canonical forms",
+    "encoding": "UTF-8, each tuple as entity_type TAB entity_id TAB lowercase_sha256 LF, final LF required, no BOM; duplicate tuple rejected",
+    "digest": "SHA-256 over resulting exact bytes; empty source set invalid",
+    "inclusion": "Take the transitive closure of prior-committed IDs in provenance source_*_ids arrays and the four mandatory source artifact role IDs. Include exactly one tuple per distinct registry entity. These artifacts are source snapshot, source manifest, source graph root commitment and source closure certificate, all committed before dataset compilation. Exclude output DATASET_VERSION_ID, DATASET_EXAMPLE_ID and compilation TRANSFORMATION_ID; bind those separately in the example and duplicate key. No synthetic tuples or mutable path aliases.",
+    "validation": "Resolve every source ID in the immutable registry, verify exact record bytes and committed_record_sha256, verify four prior source artifact roles against declared raw-byte digests, reject absent/cyclic/inconsistent closure, then recompute source_set_sha256. Caller-supplied digest is never trusted."
+  }
+}

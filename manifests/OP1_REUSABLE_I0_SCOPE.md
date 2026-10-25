@@ -1,0 +1,9 @@
+# OP1 reusable implementation I0 scope
+
+This worktree implements only typed identity generation, the 15 frozen Draft 2020-12 schema loaders, and an in-memory identity registry for synthetic tests. Its records and registration receipts do not issue session or run authority, claim execution, or prove durable evidence. I1 must replace the in-memory ledger with a qualified append-only durable store before any operational admission.
+
+The registry checks explicit hierarchy fields against prior immutable identities. `parent_ids` and `caused_by_ids` are typed causal back references. I0 accepts only registered, same-scope references; cross-run repair links remain unadmitted until the later causal graph validator checks the required decision chain.
+
+I0 permits `supersedes_id` only for ARTIFACT, FINDING, ERROR, DECISION, REPORT, and REVIEW corrections, to a prior registered record of the same type and identical applicable hierarchy scope. This is a bounded implementation policy, not an exhaustive frozen correction matrix. SESSION, RUN, ATTEMPT, AUTHORITY, CLAIM, and NAMESPACE identities cannot be superseded. Every correction receives a new ID and registration receipt; prior bytes remain addressable.
+
+Schema validation enforces the exact copied frozen shapes. Frozen `x-*` semantic annotations for later session, run, evidence, graph, budget, and dataset phases remain preserved in schema bytes. They do not become operational authority through I0 validation alone. The phase uses the frozen change-impact `TARGETED_REGRESSION` tier and does not require the 30/30 + 27/27 native qualification while protected runtime bytes stay identical.An invalid first ACTOR registration leaves that in-memory registry blocked. I0 does not infer an auditor from an unregistered ID; external review must retain the failed synthetic fixture before using a distinct registry. No authority is available from the blocked instance.

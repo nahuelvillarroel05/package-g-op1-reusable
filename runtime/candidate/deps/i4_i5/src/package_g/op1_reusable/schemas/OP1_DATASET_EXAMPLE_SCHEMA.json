@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_DATASET_EXAMPLE_SCHEMA.json",
+  "title": "OP1_DATASET_EXAMPLE_SCHEMA",
+  "description": "Training examples are derived from evidence, never primary evidence. Reject if original source bytes, graph path, transform, label basis, split or permission cannot be reconstructed.",
+  "type": "object",
+  "required": [
+    "identity",
+    "dataset_example_id",
+    "dataset_version_id",
+    "transformation_id",
+    "provenance",
+    "task_kind",
+    "labels",
+    "label_evidence_ids",
+    "example_content_sha256",
+    "source_set_sha256",
+    "split",
+    "compilation_status",
+    "label_support"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "dataset_example_id": {
+      "type": "string",
+      "pattern": "^PG-DEX-[0-9a-f]{32}$"
+    },
+    "dataset_version_id": {
+      "type": "string",
+      "pattern": "^PG-DVER-[0-9a-f]{32}$"
+    },
+    "transformation_id": {
+      "type": "string",
+      "pattern": "^PG-TRF-[0-9a-f]{32}$"
+    },
+    "provenance": {
+      "$ref": "OP1_DATASET_PROVENANCE_SCHEMA.json"
+    },
+    "task_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "SUCCESSFUL_EXECUTION",
+          "FAILED_EXECUTION",
+          "CORRECT_PRESTATE_BLOCK",
+          "UNSAFE_ACTION_REJECTED",
+          "TIMEOUT",
+          "CRASH",
+          "AMBIGUOUS_OWNERSHIP",
+          "EVIDENCE_INSUFFICIENCY",
+          "SUCCESSFUL_REPAIR",
+          "UNSUCCESSFUL_REPAIR",
+          "FINDING_DISCOVERY",
+          "FINDING_RESOLUTION",
+          "MODEL_CORRECT",
+          "MODEL_INCORRECT",
+          "SUBAGENT_CORRECT",
+          "SUBAGENT_INCORRECT",
+          "SUPERVISOR_ACCEPTED",
+          "SUPERVISOR_REJECTED",
+          "POLICY_VIOLATION",
+          "SAFE_ABORT"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "label_evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-EVD-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "example_content_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_set_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "split": {
+      "enum": [
+        "TRAIN",
+        "VALIDATION",
+        "TEST",
+        "HOLDOUT",
+        "UNASSIGNED"
+      ]
+    },
+    "compilation_status": {
+      "enum": [
+        "ACCEPTED",
+        "REJECTED_PROVENANCE",
+        "REJECTED_AUTHORITY",
+        "REJECTED_DUPLICATE"
+      ]
+    },
+    "label_support": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "evidence_ids",
+          "decision_basis_sha256"
+        ],
+        "properties": {
+          "label": {
+            "enum": [
+              "SUCCESSFUL_EXECUTION",
+              "FAILED_EXECUTION",
+              "CORRECT_PRESTATE_BLOCK",
+              "UNSAFE_ACTION_REJECTED",
+              "TIMEOUT",
+              "CRASH",
+              "AMBIGUOUS_OWNERSHIP",
+              "EVIDENCE_INSUFFICIENCY",
+              "SUCCESSFUL_REPAIR",
+              "UNSUCCESSFUL_REPAIR",
+              "FINDING_DISCOVERY",
+              "FINDING_RESOLUTION",
+              "MODEL_CORRECT",
+              "MODEL_INCORRECT",
+              "SUBAGENT_CORRECT",
+              "SUBAGENT_INCORRECT",
+              "SUPERVISOR_ACCEPTED",
+              "SUPERVISOR_REJECTED",
+              "POLICY_VIOLATION",
+              "SAFE_ABORT"
+            ]
+          },
+          "evidence_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^PG-EVD-[0-9a-f]{32}$"
+            }
+          },
+          "decision_basis_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "x-label-consistency": "Set of label_support.label equals labels exactly. label_evidence_ids equals union of all label_support.evidence_ids. Each label has independent immutable evidence and decision basis; reject unsupported or contradictory labels.",
+  "x-source-set-canonicalization": {
+    "tuple": "(entity_type, entity_id, committed_record_sha256) for every distinct immutable registry record in the complete source closure",
+    "sort": "Ascending Unicode code point order on entity_type, then entity_id, then committed_record_sha256; all fields restricted to ASCII canonical forms",
+    "encoding": "UTF-8, each tuple as entity_type TAB entity_id TAB lowercase_sha256 LF, final LF required, no BOM; duplicate tuple rejected",
+    "digest": "SHA-256 over resulting exact bytes; empty source set invalid",
+    "inclusion": "Take the transitive closure of prior-committed IDs in provenance source_*_ids arrays and the four mandatory source artifact role IDs. Include exactly one tuple per distinct registry entity. These artifacts are source snapshot, source manifest, source graph root commitment and source closure certificate, all committed before dataset compilation. Exclude output DATASET_VERSION_ID, DATASET_EXAMPLE_ID and compilation TRANSFORMATION_ID; bind those separately in the example and duplicate key. No synthetic tuples or mutable path aliases.",
+    "validation": "Resolve every source ID in the immutable registry, verify exact record bytes and committed_record_sha256, verify four prior source artifact roles against declared raw-byte digests, reject absent/cyclic/inconsistent closure, then recompute source_set_sha256. Caller-supplied digest is never trusted."
+  }
+}

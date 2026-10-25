@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_ERROR_SCHEMA.json",
+  "title": "OP1_ERROR_SCHEMA",
+  "description": "Stable error ID, raw error bytes remain evidence; interpretation appended separately.",
+  "type": "object",
+  "required": [
+    "identity",
+    "error_id",
+    "event_id",
+    "code",
+    "stage",
+    "message",
+    "evidence_ids",
+    "classification"
+  ],
+  "properties": {
+    "identity": {
+      "$ref": "OP1_IDENTITY_ENVELOPE_SCHEMA.json"
+    },
+    "error_id": {
+      "type": "string",
+      "pattern": "^PG-ERR-[0-9a-f]{32}$"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^PG-EVT-[0-9a-f]{32}$"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-EVD-[0-9a-f]{32}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "classification": {
+      "enum": [
+        "KNOWN",
+        "UNKNOWN"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

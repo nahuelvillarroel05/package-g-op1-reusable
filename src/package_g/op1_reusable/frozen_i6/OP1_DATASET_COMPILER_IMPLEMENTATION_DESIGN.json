@@ -1,0 +1,54 @@
+{
+  "authority": "Compilation creates no training permission, protected data access, HOLDOUT release, model evaluation, promotion or runtime execution.",
+  "deterministic_rebuild": "Same immutable source snapshot plus pinned parser/config/transform/seed/order produces byte-identical content and source-set digest; read-only rebuild checks existing version by ID/digest. New snapshot or interpretation requires fresh DATASET_VERSION_ID and examples. Never silently regenerate an existing ID.",
+  "duplicate_key": "dataset_version_id + task_kind + recomputed source_set_sha256 + transformation_id",
+  "example_bindings": [
+    "DATASET_EXAMPLE_ID",
+    "DATASET_VERSION_ID",
+    "TRANSFORMATION_ID",
+    "source_set_sha256",
+    "example_content_sha256",
+    "complete source ID arrays",
+    "four source artifact role IDs and byte digests",
+    "task_kind",
+    "split",
+    "labels",
+    "label_support with evidence/decision basis"
+  ],
+  "labels": "Use only frozen OP1_DATASET_COMPILATION_POLICY.json label enum; each label has independent immutable support and exact union of label_evidence_ids.",
+  "mode": "DESIGN_ONLY",
+  "phase": "OP1_REUSABLE_ARCHITECTURE_IMPLEMENTATION_DESIGN",
+  "pipeline": [
+    "Select sealed immutable source graph and exact source snapshot/manifest/graph-root/closure artifacts.",
+    "Verify each typed ID and byte hash through registry; recompute full transitive source closure.",
+    "Apply independent license, access, supervised eligibility and training-use checks; UNKNOWN blocks requested training-use dataset.",
+    "Pin parser SHA-256, normalization config SHA-256, transformation ID/code/config/seed/order and interpretation schema.",
+    "Derive examples and labels with per-label evidence/decision basis; reject ambiguous or contradictory support.",
+    "Group causally connected RUNs/repairs and shared evidence in one split; enforce protected HOLDOUT boundary.",
+    "Reject duplicate semantic key and mutable source alias; create-new immutable dataset version and example records."
+  ],
+  "project": "PACKAGE-G",
+  "redaction_boundary": "Public release is a separate derived dataset version with pinned deterministic redaction transformation and review decision. Private raw evidence stays private; emit only permitted derived fields and hash-bound source IDs as allowed by disclosure policy. Restricted/UNKNOWN access blocks export. Redaction cannot remove internal provenance closure.",
+  "reject": [
+    "missing/deleted/corrupt source",
+    "unresolvable causal path",
+    "missing applicable attempt/finding/decision/artifact/report/review",
+    "ambiguous label",
+    "duplicate semantic key",
+    "split leakage",
+    "mutable alias",
+    "UNKNOWN/restricted permission for requested training use"
+  ],
+  "schema": "package-g-op1-dataset-compiler-implementation-design@1",
+  "source_freeze_id": "PG-FRZ-e55f2e60890261eb8452d9168f776552",
+  "source_freeze_sha256": "bbe63ee96d03712109da9f48f966a6b9c470c050092871cce3e330118ed89465",
+  "source_of_truth": "Qualified append-only evidence graph and raw bytes, never mutable latest/index views.",
+  "source_set_canonicalization": {
+    "digest": "SHA-256 exact canonical tuple bytes",
+    "encoding": "UTF-8 type TAB ID TAB lowercase-sha256 LF for each tuple; final LF; no BOM; empty set and duplicates invalid",
+    "exclude": "Output DATASET_VERSION_ID, DATASET_EXAMPLE_ID and compilation TRANSFORMATION_ID; bind each separately",
+    "include": "Transitive closure of source_*_ids and four mandatory prior committed artifact roles: source snapshot, manifest, graph root commitment, closure certificate",
+    "sort": "ASCII-restricted fields in Unicode code point order on type, ID, SHA-256",
+    "tuple": "(entity_type, entity_id, committed_record_sha256) per distinct immutable registry entity in complete source closure"
+  }
+}

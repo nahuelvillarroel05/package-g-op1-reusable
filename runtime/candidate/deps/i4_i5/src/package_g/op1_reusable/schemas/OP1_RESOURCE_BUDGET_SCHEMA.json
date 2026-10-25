@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "OP1_RESOURCE_BUDGET_SCHEMA.json",
+  "title": "OP1_RESOURCE_BUDGET_SCHEMA",
+  "description": "Closed typed resource budget. A session and each RUN authority bind all dimensions. Zero means prohibited, not unbounded.",
+  "type": "object",
+  "required": [
+    "http_transactions",
+    "tcp_calibrations",
+    "udp_calibrations",
+    "pktmon_starts",
+    "channel_e_starts",
+    "job_starts",
+    "output_bytes",
+    "cpu_ms",
+    "elapsed_ms",
+    "memory_peak_bytes",
+    "max_concurrent_runs"
+  ],
+  "properties": {
+    "http_transactions": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "count; SUM across admitted RUNS"
+    },
+    "tcp_calibrations": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "count; SUM across admitted RUNS"
+    },
+    "udp_calibrations": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "count; SUM across admitted RUNS"
+    },
+    "pktmon_starts": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "count; SUM across admitted RUNS"
+    },
+    "channel_e_starts": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "count; SUM across admitted RUNS"
+    },
+    "job_starts": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "count; SUM across admitted RUNS"
+    },
+    "output_bytes": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "byte; SUM across admitted RUNS"
+    },
+    "cpu_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "millisecond; SUM across admitted RUNS"
+    },
+    "elapsed_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "millisecond; SUM across admitted RUNS"
+    },
+    "memory_peak_bytes": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "byte; sum worst-case memory peaks reserved by concurrently active RUNS, release only after proven cleanup"
+    },
+    "max_concurrent_runs": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "count; number of concurrently active RUN reservations"
+    }
+  },
+  "additionalProperties": false,
+  "x-dimensions": {
+    "http_transactions": {
+      "unit": "count",
+      "aggregation": "SUM"
+    },
+    "tcp_calibrations": {
+      "unit": "count",
+      "aggregation": "SUM"
+    },
+    "udp_calibrations": {
+      "unit": "count",
+      "aggregation": "SUM"
+    },
+    "pktmon_starts": {
+      "unit": "count",
+      "aggregation": "SUM"
+    },
+    "channel_e_starts": {
+      "unit": "count",
+      "aggregation": "SUM"
+    },
+    "job_starts": {
+      "unit": "count",
+      "aggregation": "SUM"
+    },
+    "output_bytes": {
+      "unit": "byte",
+      "aggregation": "SUM"
+    },
+    "cpu_ms": {
+      "unit": "millisecond",
+      "aggregation": "SUM"
+    },
+    "elapsed_ms": {
+      "unit": "millisecond",
+      "aggregation": "SUM"
+    },
+    "memory_peak_bytes": {
+      "unit": "byte",
+      "aggregation": "ACTIVE_SUM"
+    },
+    "max_concurrent_runs": {
+      "unit": "count",
+      "aggregation": "ACTIVE_COUNT"
+    }
+  },
+  "x-reservation-law": "One serialized session ledger reserves each RUN's worst-case SUM dimensions cumulatively, max_concurrent_runs as ACTIVE_COUNT (+1 per newly active RUN), and memory_peak_bytes as ACTIVE_SUM (sum reserved per-RUN peaks while active). Reject if any projected total exceeds session ceiling. Release active reservations only after proven owned cleanup and durable closure; uncertain consumption is not refunded. Per-RUN bound cannot exceed session ceiling in any dimension.",
+  "x-time-law": "Session expiry and RUN deadline independently cap elapsed_ms. No new action after either expires."
+}
