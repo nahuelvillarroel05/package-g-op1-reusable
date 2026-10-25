@@ -9,7 +9,7 @@
   "FORMAL_I7": "NOT_COMPLETED",
   "OPERATIONAL_QUALIFICATION": "NOT_ACHIEVED",
   "self_exclusion": "This manifest excludes its own file; the outer Git commit/tree binds it without circular hashing.",
-  "member_count": 227,
+  "member_count": 226,
   "files": [
     {
       "path": ".gitattributes",
@@ -37,11 +37,6 @@
       "sha256": "b9e4787f8bd60b5d622fef9a4bb1b30416d3c5046a9dd06cf859f2b37dd8beaa"
     },
     {
-      "path": "CODEX_FOR_OSS_APPLICATION.md",
-      "bytes": 5302,
-      "sha256": "19e75bc02b319e9ca5eee142399fd06dd50a6858c53f8c002b1ed959d578b540"
-    },
-    {
       "path": "CONTRIBUTING.md",
       "bytes": 3601,
       "sha256": "14fba04c0d31c50010ef4733d51cea3b4dfe2aa133cc2eb4241af6ca1ff20add"
@@ -58,8 +53,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7296,
-      "sha256": "6e151e43a8814ef5271d92437c2b64b40302e758fb22e7e1beb58b8951f1779c"
+      "bytes": 7168,
+      "sha256": "d7c8992479a6686930a3e0fcdf6726d850ad934ba05f7bf4d5027e69037522ea"
     },
     {
       "path": "SECURITY.md",

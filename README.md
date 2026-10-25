@@ -81,7 +81,7 @@ This repository does not establish operational qualification, independent custod
 
 ## Contribute
 
-See [CONTRIBUTING](CONTRIBUTING.md) for a clean-checkout test workflow, evidence rules and PR expectations. [The roadmap](docs/ROADMAP.md) records unresolved obligations; a public CI pass does not close original gates. Public maintenance does not claim external adoption or production readiness. [The Codex for Open Source application draft](CODEX_FOR_OSS_APPLICATION.md) is prepared for Owner review and manual submission.
+See [CONTRIBUTING](CONTRIBUTING.md) for a clean-checkout test workflow, evidence rules and PR expectations. [The roadmap](docs/ROADMAP.md) records unresolved obligations; a public CI pass does not close original gates. Public maintenance does not claim external adoption or production readiness.
 
 ## License
 
