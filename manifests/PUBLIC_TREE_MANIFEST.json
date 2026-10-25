@@ -18,8 +18,8 @@
     },
     {
       "path": ".github/workflows/public-ci.yml",
-      "bytes": 2733,
-      "sha256": "83ff013743d669d4ad14657629f1766888e0b45920e76f44326d76c39fb746a4"
+      "bytes": 3054,
+      "sha256": "a5316be016ee0ae6b7bd9e3e75d4fc67aa274943f50ae359e539565ec248f7f0"
     },
     {
       "path": ".gitignore",
@@ -58,8 +58,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6854,
-      "sha256": "9263c987db4ab9f33e6ab4e68b1a2ba92210e1c3413a13fe3df97a91b1f7a365"
+      "bytes": 7296,
+      "sha256": "6e151e43a8814ef5271d92437c2b64b40302e758fb22e7e1beb58b8951f1779c"
     },
     {
       "path": "SECURITY.md",
@@ -103,13 +103,13 @@
     },
     {
       "path": "docs/PUBLIC_DEMO.md",
-      "bytes": 3675,
-      "sha256": "f052aef1503e256cbeec7db98265ac1d2118d04d8bd9b72e61d053552b8776ab"
+      "bytes": 4375,
+      "sha256": "f7175bb63046979b16da0742983f9668f1040b341f422800e29fc8aafb132c06"
     },
     {
       "path": "docs/PUBLIC_MAINTENANCE_AUDIT.md",
-      "bytes": 4509,
-      "sha256": "e1435d1b9e9ee90691369fce8607cd0bca0c9946f2b3371cd03f3b490655ecd2"
+      "bytes": 5003,
+      "sha256": "e2ed7e2294afbebb5f8e54c055bbb54f21cb5acc2bedaf691590d90d76838da7"
     },
     {
       "path": "docs/PUBLIC_VALIDATION.md",

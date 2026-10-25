@@ -41,9 +41,12 @@ Use Python 3.14 (publication checks used 3.14.4) on Windows. The runtime include
 ```powershell
 py -3.14 -m venv .venv
 .venv\Scripts\python.exe -m pip install -r mcp/INSTALL_FREEZE.txt -r tests/requirements.txt
+.venv\Scripts\python.exe -I -c "import site; from pathlib import Path; Path(site.getusersitepackages()).mkdir(parents=True, exist_ok=True)"
 .venv\Scripts\python.exe -B runtime/candidate/pg_i7.py --help
 .venv\Scripts\python.exe -B runtime/candidate/pg_i7.py demo --workspace-dir demo-001 --data-digest --causal-data --provenance --provenance-mode prospective --json
 ```
+
+The user-site directory preparation above is an inherited environment prerequisite, including in an isolated venv; it creates the Python-derived directory if missing and installs nothing there. CI additionally checks that JSON Schema loads from the venv. See the [full setup](docs/PUBLIC_DEMO.md).
 
 The demo creates a new bound workspace beneath `runtime/campaigns`. A relative `--workspace-dir` is resolved beneath that directory; supply an ID such as `demo-001`, without repeating `campaigns/`. Some inherited CLI-help examples describe the original private distribution; use the tested commands here for this public selection. Producer workspaces are single-use; use fresh IDs. Use the exact `run_dir` returned by a run for verify/query/recover, in the same workspace. Do not retry a producer after an ambiguous response; recover its existing evidence.
 

@@ -8,9 +8,12 @@ Use Windows and Python 3.14. Start in a fresh disposable checkout with a short p
 py -3.14 -m venv .venv
 .venv\Scripts\python.exe -m pip install -r mcp/INSTALL_FREEZE.txt -r tests/requirements.txt
 .venv\Scripts\python.exe -m pip check
+.venv\Scripts\python.exe -I -c "import site, sys, jsonschema; from pathlib import Path; assert Path(jsonschema.__file__).resolve().is_relative_to(Path(sys.prefix).resolve()); p = Path(site.getusersitepackages()); p.mkdir(parents=True, exist_ok=True); print(p)"
 .venv\Scripts\python.exe -B tools/verify_public_tree.py
 .venv\Scripts\python.exe -B tests/smoke_stdio.py
 ```
+
+The preparation command checks that JSON Schema loads from the isolated venv and creates the Python-derived user-site directory if missing, without installing anything there. The frozen runtime unconditionally validates that directory before enabling I4/I5 evidence; `-I` does not remove this existence check. An absent directory yields `PATH_NOT_FOUND`. This prerequisite does not waive engine path checks or change the original source.
 
 The script is both the public demonstration and the integration check used by CI. It connects a real SDK client to `pg_i7_mcp.server`, initializes one fresh workspace, and performs these operations:
 
