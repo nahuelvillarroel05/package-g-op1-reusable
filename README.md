@@ -24,7 +24,7 @@ ORIGINAL_MCP_CAMPAIGN_GLOBAL_TARGET=NOT_ACHIEVED
 
 Package-G is experimental infrastructure for controlled execution, verifiable evidence, causality, provenance and AI-agent consumption. OP1 Reusable is its reusable implementation track.
 
-This engineering snapshot includes real source for the selected reusable core, a lightweight local I7 runtime, fixed provider registry, Python API and CLI, Evidence Engine, Context Engine v0.1, I4-NEXT/I5-NEXT adapters, a ten-tool stdio MCP server, an independent Ornith MCP client, and synthetic tests/fixtures. Exact included files are listed in `manifests/PUBLIC_TREE_MANIFEST.json`. Original Windows operational helpers and protected evidence stay private; see the selected-core manifest and limitations.
+This engineering snapshot includes real source for the selected reusable core, a lightweight local I7 runtime, fixed provider registry, Python API and CLI, Evidence Engine, Context Engine v0.1, I4-NEXT/I5-NEXT adapters, a ten-tool stdio MCP server, an independent MCP client for local models served by llama.cpp, and synthetic tests/fixtures. Exact included files are listed in `manifests/PUBLIC_TREE_MANIFEST.json`. Original Windows operational helpers and protected evidence stay private; see the selected-core manifest and limitations.
 
 ## Run the public synthetic path
 
@@ -54,7 +54,13 @@ Run smoke tests in a disposable fresh checkout; they create local evidence and p
 .venv\Scripts\python.exe -B -m pg_i7_mcp.server --workspace-id public-mcp-001 --initialize-workspace
 ```
 
-Attach to an existing workspace by omitting initialization. A client must perform the MCP handshake; standard input/output carries the protocol. No GGUF or model server is required for Package-G's basic functions. The independent client source is supplied for inspection; no Ornith execution is requested by these instructions.
+Attach to an existing workspace by omitting initialization. A client must perform the MCP handshake; standard input/output carries the protocol. No GGUF or model server is required for Package-G's basic functions. The independent client is available at `agent_clients/llama_cpp_mcp_agent.py`. Inspect its options with:
+
+```powershell
+.venv\Scripts\python.exe -B agent_clients/llama_cpp_mcp_agent.py --help
+```
+
+It uses llama.cpp's OpenAI-compatible chat API and context/tokenization endpoints. Supply `--model` with your server's model identifier. The historical default `ornith15-35b-local` is retained for behavior compatibility; the client is not exclusive to Ornith. No model download, server startup or model inference is needed for `--help` or the synthetic tests. Historical Ornith results and FAIL records remain unchanged.
 
 ## Evidence and remaining work
 
