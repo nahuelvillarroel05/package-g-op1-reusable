@@ -18,8 +18,8 @@
     },
     {
       "path": ".github/workflows/public-ci.yml",
-      "bytes": 2331,
-      "sha256": "c41c04603262b04167f3e60e8a9bfa8cd49a7db1c03a45fb573719d6a9af7fec"
+      "bytes": 2733,
+      "sha256": "83ff013743d669d4ad14657629f1766888e0b45920e76f44326d76c39fb746a4"
     },
     {
       "path": ".gitignore",
@@ -108,8 +108,8 @@
     },
     {
       "path": "docs/PUBLIC_MAINTENANCE_AUDIT.md",
-      "bytes": 3750,
-      "sha256": "3eca2a27f433035db0cd36a227af903ad3330254d759b4d7b776b2270041daff"
+      "bytes": 4509,
+      "sha256": "e1435d1b9e9ee90691369fce8607cd0bca0c9946f2b3371cd03f3b490655ecd2"
     },
     {
       "path": "docs/PUBLIC_VALIDATION.md",

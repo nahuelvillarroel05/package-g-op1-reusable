@@ -22,6 +22,13 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.14'
+      - name: Create isolated environment
+        run: |
+          python -m venv .venv
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Join-Path $env:GITHUB_WORKSPACE '.venv\Scripts' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Confirm isolated interpreter
+        run: python -c "import sys; assert sys.prefix != sys.base_prefix; print(sys.version)"
       - name: Install pinned public dependencies
         run: python -m pip install -r mcp/INSTALL_FREEZE.txt -r tests/requirements.txt
       - name: Dependency consistency

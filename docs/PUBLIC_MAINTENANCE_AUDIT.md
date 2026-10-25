@@ -18,6 +18,8 @@ The selected I0/I1/I2 full suite is run by public CI; use the actual commit-boun
 
 The new workflow uses public checkout/dependencies, Windows/Python 3.14, minimal read permissions, immutable action pins and no repository secrets. Fork PRs do not use a privileged `pull_request_target` context. Generated local workspaces, venvs and timing logs are excluded from publication. Release assets must not include private evidence, models or local workspaces.
 
+The initial hosted push/PR runs for `68b6506` failed at the CLI demo because global Python 3.14.9 exposed a nonexistent user-site path (`PATH_NOT_FOUND`). Earlier dependency, integrity, import and focused-test steps passed; later pipeline/core stages were not reached. [The failed push run](https://github.com/nahuelvillarroel05/package-g-op1-reusable/actions/runs/40236171069) and [failed PR run](https://github.com/nahuelvillarroel05/package-g-op1-reusable/actions/runs/40236171571) remain public. The workflow was corrected to create a venv and assert that the isolated interpreter is selected, matching the documented local setup. No engine path guard, dependency pin or test assertion was relaxed. Success must be established by subsequent hosted runs.
+
 The application remains a manual Owner submission. Its three bounded answers contain 416, 424 and 430 characters. Repository adoption is reported without invented users or activity. [Issue #2](https://github.com/nahuelvillarroel05/package-g-op1-reusable/issues/2) records a concrete dependency-boundary task derived from the existing public portability/SDK limitations; it does not authorize new engine work.
 
 ```text
