@@ -9,12 +9,17 @@
   "FORMAL_I7": "NOT_COMPLETED",
   "OPERATIONAL_QUALIFICATION": "NOT_ACHIEVED",
   "self_exclusion": "This manifest excludes its own file; the outer Git commit/tree binds it without circular hashing.",
-  "member_count": 220,
+  "member_count": 227,
   "files": [
     {
       "path": ".gitattributes",
       "bytes": 9,
       "sha256": "8b9c3028d6467ff3be7c793141927841d70f47f52d0590677438f488ca154992"
+    },
+    {
+      "path": ".github/workflows/public-ci.yml",
+      "bytes": 2331,
+      "sha256": "c41c04603262b04167f3e60e8a9bfa8cd49a7db1c03a45fb573719d6a9af7fec"
     },
     {
       "path": ".gitignore",
@@ -32,9 +37,39 @@
       "sha256": "b9e4787f8bd60b5d622fef9a4bb1b30416d3c5046a9dd06cf859f2b37dd8beaa"
     },
     {
+      "path": "CODEX_FOR_OSS_APPLICATION.md",
+      "bytes": 5302,
+      "sha256": "19e75bc02b319e9ca5eee142399fd06dd50a6858c53f8c002b1ed959d578b540"
+    },
+    {
       "path": "CONTRIBUTING.md",
-      "bytes": 574,
-      "sha256": "5f88cb375b81044e5472641f2da2dd96dba9d0cc0b54e004451cebf324a18342"
+      "bytes": 3601,
+      "sha256": "14fba04c0d31c50010ef4733d51cea3b4dfe2aa133cc2eb4241af6ca1ff20add"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "NOTICE",
+      "bytes": 1161,
+      "sha256": "7ed69a7037e1cb04ef7f0252bb14fbe7d5da371ea5079b02f42e20fb4d1e91e9"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6854,
+      "sha256": "9263c987db4ab9f33e6ab4e68b1a2ba92210e1c3413a13fe3df97a91b1f7a365"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 789,
+      "sha256": "1788688ce5d4c9afaab3e3bea9b574da2ee59672079b5ecfd35d0b56571610b3"
+    },
+    {
+      "path": "agent_clients/llama_cpp_mcp_agent.py",
+      "bytes": 47823,
+      "sha256": "f097ff6979f9e8a2881761d9973b61d4ff924e357dab25ea535ec5407d317fbe"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -67,6 +102,21 @@
       "sha256": "cbc5f04236d47fbbe599153bc6ab735b82bb3eb406b3936f167260065b070e81"
     },
     {
+      "path": "docs/PUBLIC_DEMO.md",
+      "bytes": 3675,
+      "sha256": "f052aef1503e256cbeec7db98265ac1d2118d04d8bd9b72e61d053552b8776ab"
+    },
+    {
+      "path": "docs/PUBLIC_MAINTENANCE_AUDIT.md",
+      "bytes": 3750,
+      "sha256": "3eca2a27f433035db0cd36a227af903ad3330254d759b4d7b776b2270041daff"
+    },
+    {
+      "path": "docs/PUBLIC_VALIDATION.md",
+      "bytes": 3721,
+      "sha256": "b8e6100286b13390110df1a39280077d366ae6549a7773ca9bfb4e7df3dde86a"
+    },
+    {
       "path": "docs/ROADMAP.md",
       "bytes": 904,
       "sha256": "ff13268332413a8048b963528d536da18255a094b6d6ccc8044363237e71c0c8"
@@ -85,11 +135,6 @@
       "path": "examples/api_synthetic_pipeline.py",
       "bytes": 1922,
       "sha256": "5f9f75f4785d36f8a5b141540de87a387b1f7e25478c21a3fcea361e4626af45"
-    },
-    {
-      "path": "LICENSE",
-      "bytes": 11358,
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "path": "manifests/DEPENDENCY_LICENSES.json",
@@ -137,16 +182,6 @@
       "sha256": "5ed1f1dffd2f9622f0ffdd104a2bc9fbf1e5fbf8d075486a05fadb30a77bc9d2"
     },
     {
-      "path": "NOTICE",
-      "bytes": 1161,
-      "sha256": "7ed69a7037e1cb04ef7f0252bb14fbe7d5da371ea5079b02f42e20fb4d1e91e9"
-    },
-    {
-      "path": "agent_clients/llama_cpp_mcp_agent.py",
-      "bytes": 47823,
-      "sha256": "f097ff6979f9e8a2881761d9973b61d4ff924e357dab25ea535ec5407d317fbe"
-    },
-    {
       "path": "pg_i7_mcp/__init__.py",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -157,19 +192,39 @@
       "sha256": "9660ce6cb5087b842002994f50b247995630d126e43e38684f6386eaff3974ca"
     },
     {
-      "path": "README.md",
-      "bytes": 5166,
-      "sha256": "69ed5e96262de118e5912d654a2b12c2ee449f5a03a3ae0b8a6c68c38f7dcb05"
+      "path": "runtime/FOCUSED_WORKSPACE_PROFILE.json",
+      "bytes": 748,
+      "sha256": "3709ed8f3409f2252925bfca1fad6f9d0f653a170081893a5dac0c76138cc457"
     },
     {
-      "path": "runtime/candidate/context_engine.py",
-      "bytes": 25861,
-      "sha256": "1fdbf50fe56e82ec86e96dff3039a0bf5d8cfbddc217d9f2d928b7a62bd62568"
+      "path": "runtime/PROSPECTIVE_SOURCE_COPY_MANIFEST.json",
+      "bytes": 15373,
+      "sha256": "aa25512d1762f8264b1b5f4a9df0180ef1f85cb2ee16bb929d03acec7cc6cf23"
+    },
+    {
+      "path": "runtime/PROVIDER_REGISTRY.json",
+      "bytes": 2222,
+      "sha256": "64e53bfc91b5db645e33979ced1c2ea7bae2827857ede11ca562864b52191b1e"
+    },
+    {
+      "path": "runtime/SOURCE_COPY_MANIFEST.json",
+      "bytes": 13116,
+      "sha256": "0d56b655d576832c85da034775794b6cddae9b6d935ee72944858ba1e30f7954"
     },
     {
       "path": "runtime/candidate/DEPENDENCY_MANIFEST.json",
       "bytes": 24041,
       "sha256": "19c4596b17c5b1ef3b1e113389df998ee2f3a048c7c963f352ac1a795ac0304c"
+    },
+    {
+      "path": "runtime/candidate/I7_LOCAL_COMPOSITION_MANIFEST.json",
+      "bytes": 29882,
+      "sha256": "9c646891e3f1187b097ce0aaab83d4cc2d63568913f69e4f9f81615ae9339295"
+    },
+    {
+      "path": "runtime/candidate/context_engine.py",
+      "bytes": 25861,
+      "sha256": "1fdbf50fe56e82ec86e96dff3039a0bf5d8cfbddc217d9f2d928b7a62bd62568"
     },
     {
       "path": "runtime/candidate/deps/Engineering/I7-Autonomous-20261014T045957Z/accounting_manifest.py",
@@ -427,14 +482,14 @@
       "sha256": "d2ceab5e3ec67c26da186862a7537b01f04669a6338e87b75800adf54fae66d0"
     },
     {
-      "path": "runtime/candidate/engine/bounded_adapter.py",
-      "bytes": 9686,
-      "sha256": "5933c89e05d50cd98eff22fc44ffcc5a79cb9671fc4c9e3b71ceefda6578f676"
-    },
-    {
       "path": "runtime/candidate/engine/CONFIG.json",
       "bytes": 2160,
       "sha256": "598f326e9c7a354d0f6a0f9e5ee557f1aa74470035f03e8da930eecd1c62fd60"
+    },
+    {
+      "path": "runtime/candidate/engine/bounded_adapter.py",
+      "bytes": 9686,
+      "sha256": "5933c89e05d50cd98eff22fc44ffcc5a79cb9671fc4c9e3b71ceefda6578f676"
     },
     {
       "path": "runtime/candidate/engine/consumer_structured.py",
@@ -502,11 +557,6 @@
       "sha256": "29f53c8eb3686b62eeac76b68ced104d7d0ea567ca8e52f59110cbcd3c253276"
     },
     {
-      "path": "runtime/candidate/I7_LOCAL_COMPOSITION_MANIFEST.json",
-      "bytes": 29882,
-      "sha256": "9c646891e3f1187b097ce0aaab83d4cc2d63568913f69e4f9f81615ae9339295"
-    },
-    {
       "path": "runtime/candidate/pg_i7.py",
       "bytes": 149751,
       "sha256": "1430bc510fe0022a7b4a6ed8d4fd2342d1d943421b88641472f63bad7a39a077"
@@ -542,34 +592,14 @@
       "sha256": "5efa596bc2d5aae6de391e3ff8f96ecc40252e401ce9009995bc48fbcfb7c09c"
     },
     {
-      "path": "runtime/FOCUSED_WORKSPACE_PROFILE.json",
-      "bytes": 748,
-      "sha256": "3709ed8f3409f2252925bfca1fad6f9d0f653a170081893a5dac0c76138cc457"
-    },
-    {
-      "path": "runtime/PROSPECTIVE_SOURCE_COPY_MANIFEST.json",
-      "bytes": 15373,
-      "sha256": "aa25512d1762f8264b1b5f4a9df0180ef1f85cb2ee16bb929d03acec7cc6cf23"
-    },
-    {
-      "path": "runtime/PROVIDER_REGISTRY.json",
-      "bytes": 2222,
-      "sha256": "64e53bfc91b5db645e33979ced1c2ea7bae2827857ede11ca562864b52191b1e"
-    },
-    {
-      "path": "runtime/SOURCE_COPY_MANIFEST.json",
-      "bytes": 13116,
-      "sha256": "0d56b655d576832c85da034775794b6cddae9b6d935ee72944858ba1e30f7954"
-    },
-    {
-      "path": "SECURITY.md",
-      "bytes": 789,
-      "sha256": "1788688ce5d4c9afaab3e3bea9b574da2ee59672079b5ecfd35d0b56571610b3"
-    },
-    {
       "path": "src/package_g/__init__.py",
       "bytes": 164,
       "sha256": "f2829dd76351c82fa096de7e1a349774621c48e564ddaad7c2f2abcf471f147d"
+    },
+    {
+      "path": "src/package_g/generic_base/README.md",
+      "bytes": 549,
+      "sha256": "3c7e4ebd2e545023837fcaa900ed809270fc253731ec2eaf1d790c7a27cd65fc"
     },
     {
       "path": "src/package_g/generic_base/__init__.py",
@@ -590,11 +620,6 @@
       "path": "src/package_g/generic_base/model_adapter_contract.py",
       "bytes": 1080,
       "sha256": "c618a8104c0f31cab1efbd69219f177d13bdd0eef536d61b588dcbdff5d7338d"
-    },
-    {
-      "path": "src/package_g/generic_base/README.md",
-      "bytes": 549,
-      "sha256": "3c7e4ebd2e545023837fcaa900ed809270fc253731ec2eaf1d790c7a27cd65fc"
     },
     {
       "path": "src/package_g/generic_base/schemas.py",
@@ -867,6 +892,11 @@
       "sha256": "20f7194b2a4685435f512f74e3f0fdb712247aa7542664e582646023a01b592f"
     },
     {
+      "path": "src/package_g/policies/README.md",
+      "bytes": 545,
+      "sha256": "f4448fbde097165f34b347c940d3350f1fa738da6bd27725f226827301a5849c"
+    },
+    {
       "path": "src/package_g/policies/__init__.py",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -875,11 +905,6 @@
       "path": "src/package_g/policies/path_policy.py",
       "bytes": 1008,
       "sha256": "ffebbc4755dad920443d86f290a36f76ca71da1483d0b8300f9747fcdcd2076b"
-    },
-    {
-      "path": "src/package_g/policies/README.md",
-      "bytes": 545,
-      "sha256": "f4448fbde097165f34b347c940d3350f1fa738da6bd27725f226827301a5849c"
     },
     {
       "path": "src/package_g/policies/security_policy.py",
@@ -898,8 +923,8 @@
     },
     {
       "path": "tests/smoke_stdio.py",
-      "bytes": 6251,
-      "sha256": "c6a4116105b0e9f3a20490dddd414f829216d994e9f3eafe16cebe7ea16e86b7"
+      "bytes": 8607,
+      "sha256": "0cfbde35622679a5deb205d132e4cc33ce56ec671155191772ccb61d0395f522"
     },
     {
       "path": "tests/support/op1_reusable_i1_publish_worker.py",
@@ -912,9 +937,19 @@
       "sha256": "2bfa680f69c872b11dcc0ebf59963e46228b14cc322a37d28c46b28a7ba47202"
     },
     {
+      "path": "tests/test_llama_cpp_mcp_agent.py",
+      "bytes": 956,
+      "sha256": "b21322432bb5c6b5e8d3a9a4140b1e4580ee1c3e6b884d3d72b8fd76f2010b76"
+    },
+    {
       "path": "tests/test_public_boundaries.py",
       "bytes": 2435,
       "sha256": "7820384334acc362d81728a76746124121d2df933847460a35a94630441ed583"
+    },
+    {
+      "path": "tests/test_public_tree_verifier.py",
+      "bytes": 1890,
+      "sha256": "399804bdc96aff28d9d57d2ad25171a83a9d3c79eaf893d49eb32b0e111a0645"
     },
     {
       "path": "tests/test_run_ref_boundaries.py",
@@ -1107,9 +1142,9 @@
       "sha256": "5966e7bdaa05fd5c55564b52d3d3e9763eef3db6c931adb554a9c97f04c380bf"
     },
     {
-      "path": "tests/test_llama_cpp_mcp_agent.py",
-      "bytes": 956,
-      "sha256": "b21322432bb5c6b5e8d3a9a4140b1e4580ee1c3e6b884d3d72b8fd76f2010b76"
+      "path": "tools/verify_public_tree.py",
+      "bytes": 2152,
+      "sha256": "59d455962fb7f990a784bf651b6d4310198f57da4c07c111ab9c18b9e92dde09"
     }
   ],
   "derivative_of_commit": "7cab0ed7213712e8b41c4bf0ddb9d669511d8137"
