@@ -1,0 +1,159 @@
+{
+  "after": {
+    "docs/swebench-claim-audit/ADAPTER_GENERALIZATION_BASELINE.md": {
+      "bytes": 7320,
+      "sha256": "9c5d657583b521f6ac3cc6cbbe6a33a33830cbd613b19f82a4fb0a871f194881"
+    },
+    "docs/swebench-claim-audit/GENERALIZED_ENGINE.md": {
+      "bytes": 6847,
+      "sha256": "5482e72333544aedc3996bb9f994156a6f4e26a30ec5036171e6fd2632fad695"
+    },
+    "runtime/candidate/swebench_claim_audit/bind_campaign.py": {
+      "bytes": 9952,
+      "sha256": "7283557c7cdbff3aeff2a810c93edb4c691fa5ed33a657876e11051ad7b379a0"
+    },
+    "runtime/candidate/swebench_claim_audit/campaign.py": {
+      "bytes": 11535,
+      "sha256": "0f98a9bdab3860f7ec050c9d87145c5a0ef9d2123c520d53b22164a743bbf8a4"
+    },
+    "runtime/candidate/swebench_claim_audit/generalized.py": {
+      "bytes": 43118,
+      "sha256": "8c6eb8e7777a0a348bcc6f1b6dfd6443f893828ff54c7407c4a5f2e35a8ebfb4"
+    },
+    "runtime/candidate/swebench_claim_audit/generalized_bridge.py": {
+      "bytes": 37894,
+      "sha256": "e212d84f7b6cbca13f5e3095b3ee3b60a66b28a904e67530f873db8fea52adad"
+    },
+    "runtime/candidate/swebench_claim_audit/prepare_plan.py": {
+      "bytes": 6840,
+      "sha256": "2fb978acdcdd7f84f644dd7daf98b5c9c598a26055e63041f330b4be6625ef92"
+    },
+    "tests/test_swebench_campaign.py": {
+      "bytes": 7940,
+      "sha256": "20c814b4705353cde4de298777a79eca6e38bf26dcc8c7216958d39df4c28fd1"
+    },
+    "tests/test_swebench_generalized.py": {
+      "bytes": 19811,
+      "sha256": "d74d5ce2bed415dbd7d190d064032016387b19691ea93f8572d83da0c1b80411"
+    },
+    "tests/test_swebench_generalized_bridge.py": {
+      "bytes": 11555,
+      "sha256": "ca777d7c93d0d6d61b7b05fcec61cf25073ffcfae8a6cd6b6ec41f90b9fce9a3"
+    },
+    "tools/claim-audit/README.md": {
+      "bytes": 1834,
+      "sha256": "8486135ad5144cd9e827b58de2e2d82d42d39ded7e3cd9b41d3e3a87d5261bd6"
+    },
+    "tools/claim-audit/correct_splits.py": {
+      "bytes": 11920,
+      "sha256": "6ac4cf6f16875fe4843ad3c0a116b34727cc820a2f763ed71cc8ac131589c44e"
+    },
+    "tools/claim-audit/finalize_data_inventory.py": {
+      "bytes": 13686,
+      "sha256": "a5398b7a86ef95037189d19fc55e832cbe4c35b9b4ce7c9b9dd9c150afcedf9b"
+    },
+    "tools/claim-audit/freeze_input_listing.py": {
+      "bytes": 2427,
+      "sha256": "d31323f3ca1063ea5ecc8bc1a154cccd1789126b8773da8c9faea187b19c7e1f"
+    },
+    "tools/claim-audit/regrade_all.py": {
+      "bytes": 19290,
+      "sha256": "3959a8c07d649a60b352df43242a6e2da1aae44de57a9316fedacb86be48ce34"
+    }
+  },
+  "auditor_scripts": {
+    "audit_a_probes.py": "7cce90ce8d97157d4bcc309e7622a943f9f483c9cdbf2d293fa735f25466bcfe",
+    "run_audit_a.py": "619851b645e1153e9d528be3d331b448910ecb5f5a01b4f6e6b0f37055c637b6"
+  },
+  "before": {
+    "docs/swebench-claim-audit/ADAPTER_GENERALIZATION_BASELINE.md": {
+      "bytes": 7320,
+      "sha256": "9c5d657583b521f6ac3cc6cbbe6a33a33830cbd613b19f82a4fb0a871f194881"
+    },
+    "docs/swebench-claim-audit/GENERALIZED_ENGINE.md": {
+      "bytes": 6847,
+      "sha256": "5482e72333544aedc3996bb9f994156a6f4e26a30ec5036171e6fd2632fad695"
+    },
+    "runtime/candidate/swebench_claim_audit/bind_campaign.py": {
+      "bytes": 9952,
+      "sha256": "7283557c7cdbff3aeff2a810c93edb4c691fa5ed33a657876e11051ad7b379a0"
+    },
+    "runtime/candidate/swebench_claim_audit/campaign.py": {
+      "bytes": 11535,
+      "sha256": "0f98a9bdab3860f7ec050c9d87145c5a0ef9d2123c520d53b22164a743bbf8a4"
+    },
+    "runtime/candidate/swebench_claim_audit/generalized.py": {
+      "bytes": 43118,
+      "sha256": "8c6eb8e7777a0a348bcc6f1b6dfd6443f893828ff54c7407c4a5f2e35a8ebfb4"
+    },
+    "runtime/candidate/swebench_claim_audit/generalized_bridge.py": {
+      "bytes": 37894,
+      "sha256": "e212d84f7b6cbca13f5e3095b3ee3b60a66b28a904e67530f873db8fea52adad"
+    },
+    "runtime/candidate/swebench_claim_audit/prepare_plan.py": {
+      "bytes": 6840,
+      "sha256": "2fb978acdcdd7f84f644dd7daf98b5c9c598a26055e63041f330b4be6625ef92"
+    },
+    "tests/test_swebench_campaign.py": {
+      "bytes": 7940,
+      "sha256": "20c814b4705353cde4de298777a79eca6e38bf26dcc8c7216958d39df4c28fd1"
+    },
+    "tests/test_swebench_generalized.py": {
+      "bytes": 19811,
+      "sha256": "d74d5ce2bed415dbd7d190d064032016387b19691ea93f8572d83da0c1b80411"
+    },
+    "tests/test_swebench_generalized_bridge.py": {
+      "bytes": 11555,
+      "sha256": "ca777d7c93d0d6d61b7b05fcec61cf25073ffcfae8a6cd6b6ec41f90b9fce9a3"
+    },
+    "tools/claim-audit/README.md": {
+      "bytes": 1834,
+      "sha256": "8486135ad5144cd9e827b58de2e2d82d42d39ded7e3cd9b41d3e3a87d5261bd6"
+    },
+    "tools/claim-audit/correct_splits.py": {
+      "bytes": 11920,
+      "sha256": "6ac4cf6f16875fe4843ad3c0a116b34727cc820a2f763ed71cc8ac131589c44e"
+    },
+    "tools/claim-audit/finalize_data_inventory.py": {
+      "bytes": 13686,
+      "sha256": "a5398b7a86ef95037189d19fc55e832cbe4c35b9b4ce7c9b9dd9c150afcedf9b"
+    },
+    "tools/claim-audit/freeze_input_listing.py": {
+      "bytes": 2427,
+      "sha256": "d31323f3ca1063ea5ecc8bc1a154cccd1789126b8773da8c9faea187b19c7e1f"
+    },
+    "tools/claim-audit/regrade_all.py": {
+      "bytes": 19290,
+      "sha256": "3959a8c07d649a60b352df43242a6e2da1aae44de57a9316fedacb86be48ce34"
+    }
+  },
+  "candidate_modified_by_auditor": false,
+  "candidate_stable_during_verification": true,
+  "command": [
+    "C:\\Python314\\python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_swebench_claim_audit.py",
+    "tests/test_swebench_generalized.py",
+    "tests/test_swebench_generalized_bridge.py",
+    "tests/test_swebench_campaign.py",
+    "<PRIVATE_ENGINEERING_WORKSPACE>\\audit\\audit_a_probes.py",
+    "--basetemp",
+    "<PRIVATE_ENGINEERING_WORKSPACE>\\audit\\pytest-final-010",
+    "-q"
+  ],
+  "ended_utc": "2026-10-28T15:55:44.409586+00:00",
+  "exit_code": 0,
+  "head": "47ef38455f44f91379f610e71fd1489d61526fdc",
+  "held_out_outcomes_read": false,
+  "log_path": "<PRIVATE_ENGINEERING_WORKSPACE>\\audit\\final-010.txt",
+  "log_sha256": "29eef3af3c874127a44c0ebc8e8417075aa9904a5fd61a04174c3a28298cc51c",
+  "mode": "REVIEW_ONLY",
+  "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "schema": "pgop1.run001.audit-a-verification.v1",
+  "started_utc": "2026-10-28T15:55:37.536196+00:00",
+  "tracked_diff": "A\tdocs/swebench-claim-audit/ADAPTER_GENERALIZATION_BASELINE.md\nA\tdocs/swebench-claim-audit/GENERALIZED_ENGINE.md\nA\truntime/candidate/swebench_claim_audit/bind_campaign.py\nA\truntime/candidate/swebench_claim_audit/campaign.py\nA\truntime/candidate/swebench_claim_audit/generalized.py\nA\truntime/candidate/swebench_claim_audit/generalized_bridge.py\nA\truntime/candidate/swebench_claim_audit/prepare_plan.py\nA\ttests/test_swebench_campaign.py\nA\ttests/test_swebench_generalized.py\nA\ttests/test_swebench_generalized_bridge.py\nA\ttools/claim-audit/README.md\nA\ttools/claim-audit/correct_splits.py\nA\ttools/claim-audit/finalize_data_inventory.py\nA\ttools/claim-audit/freeze_input_listing.py\nA\ttools/claim-audit/regrade_all.py\n"
+}

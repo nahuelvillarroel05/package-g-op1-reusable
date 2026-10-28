@@ -1,0 +1,15 @@
+{
+  "additional_rules": [
+    "For logs/trajs the inherited source provenance treats the complete local collection as one shared historical source submission. Exact model/submission revision remains UNKNOWN. No trajectory from this shared collection is an independent submission holdout.",
+    "Preserve repository-level deterministic buckets as exploratory partitions only. If a bucket would otherwise be HELDOUT, label it REPOSITORY_HELDOUT_SHARED_SUBMISSION_NOT_INDEPENDENT; do not use it to claim independent generalization.",
+    "Keep the twelve historical instance IDs HISTORICAL_DEVELOPMENT_CASES. Additional trajectories in those six historical repositories remain NEW_DEVELOPMENT_ALLOW_HISTORICAL_PROVENANCE.",
+    "Create separate catalog-only public experiment splits by submission directory. These are not independent claim-language evaluations because no independent claim-language reference is identified and no transcript content is inspected.",
+    "The source submission identifier for logs/trajs is not exposed by paths and stays UNKNOWN; LOCAL_LOGS_TRAJS_COLLECTION is a grouping label only."
+  ],
+  "basis": "Path inventory plus inherited source-level provenance message from the orchestrating agent; no files in logs/trajs or chat-transcripts were opened.",
+  "frozen_at_utc": "2026-10-28T15:36:42.307041+00:00",
+  "heldout_text_inspected": false,
+  "parent_protocol_sha256": "bff7f99d9c3d07a467e858ce6ca954988d592fc9e140461466d953fdd0a227b2",
+  "protocol_id": "PGOP1_RUN_001_PRE_RESULT_INSPECTION_SPLIT_V1_ADDENDUM",
+  "schema_version": "1.0"
+}

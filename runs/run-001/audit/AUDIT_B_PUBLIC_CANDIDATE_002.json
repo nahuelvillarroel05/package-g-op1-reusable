@@ -1,0 +1,48 @@
+{
+  "bad_public_pins": [],
+  "candidate_bytes": 52662112,
+  "candidate_file_count": 209,
+  "checks": {
+    "public_audit_result_closure": true,
+    "public_content_record_derivations": true,
+    "public_content_record_identities": true,
+    "public_derivatives_match_local_outputs": true,
+    "public_file_result_closure": true,
+    "public_index_exact_hashes_and_sizes": true,
+    "public_index_membership": true,
+    "public_index_stable_during_audit": true,
+    "public_index_unique_paths": true,
+    "public_no_raw_body_fields_or_private_path_credential_patterns": true,
+    "public_object_index_closure": true,
+    "public_safe_file_paths": true,
+    "source_index_all_frozen_ids": true,
+    "source_index_exact_commitments": true,
+    "source_index_safe_relative_paths": true,
+    "source_rights_unknown_withheld": true
+  },
+  "claim_occurrences": 351,
+  "content_record_failures": [],
+  "content_record_identities": 77807,
+  "created_utc": "2026-10-28T16:20:57.764441+00:00",
+  "derivative_failures": [],
+  "indexed_file_count": 208,
+  "mode": "READ_ONLY",
+  "privacy_hits": [],
+  "public_index_sha256": "f53df73c904c0144bf482fedb53d7fe717f62c9470c2cb39e5d7f3a63ea0c59d",
+  "reviewed_nonpersonal_layout_literals": [
+    {
+      "assessment": "DOCUMENTED_NONPERSONAL_FORENSIC_LAYOUT",
+      "category": "ABSOLUTE_WINDOWS_PATH",
+      "file": "audit/audit_a_probes.py"
+    },
+    {
+      "assessment": "NONPERSONAL_PYTHON_EXECUTABLE_PATH",
+      "category": "ABSOLUTE_WINDOWS_PATH",
+      "file": "audit/final-010.json",
+      "pointer": "/command/0"
+    }
+  ],
+  "scanner_attempt_note": "Attempt001 overmatched URL schemes as drive letters; the negative-lookbehind correction removed those false positives. No public candidate byte changed.",
+  "schema": "pgop1.run001.audit-b-public-candidate.v1",
+  "status": "PUBLIC_CANDIDATE_VERIFICATION_PASS"
+}

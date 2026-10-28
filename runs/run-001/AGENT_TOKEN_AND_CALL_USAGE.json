@@ -1,0 +1,81 @@
+{
+  "schema": "pgop1.agent-usage.v1",
+  "requested_orchestrator": {
+    "model": "Sol 6.1",
+    "effort": "medium"
+  },
+  "effective_orchestrator_model": "gpt-6.1-sol",
+  "delegations": [
+    {
+      "task": "data_engineering",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "medium",
+      "role": "Luna A"
+    },
+    {
+      "task": "adapter_engineering",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "medium",
+      "role": "Luna B"
+    },
+    {
+      "task": "engine_integration",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "medium",
+      "role": "Luna C"
+    },
+    {
+      "task": "verification",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "medium",
+      "role": "Luna D"
+    },
+    {
+      "task": "technical_auditor",
+      "requested_model": "gpt-6.1-sol",
+      "requested_effort": "xhigh",
+      "role": "Audit A/B"
+    },
+    {
+      "task": "regrade_discrepancy_analysis",
+      "requested_model": "gpt-6-astra",
+      "requested_effort": "high",
+      "role": "Bounded exceptional encoding-discrepancy analysis"
+    }
+  ],
+  "effective_worker_identities": "Requested tool arguments observed; runtime attestation unavailable in root session; agent tokens/cost UNKNOWN",
+  "tokens": null,
+  "cost": null,
+  "tokens_cost_reason": "NOT_EXPOSED",
+  "tool_calls": "Session transcript is authoritative; final extract pending",
+  "started_utc": "2026-10-28T15:27:30.833525+00:00",
+  "effective_orchestrator_models_observed": [
+    "gpt-6.1-sol"
+  ],
+  "effective_orchestrator_efforts_observed": [
+    "medium"
+  ],
+  "root_session_tool_calls": {
+    "exec": 100,
+    "spawn_agent": 6,
+    "send_message": 35,
+    "followup_task": 6
+  },
+  "root_token_usage": {
+    "input_tokens": 29648214,
+    "cached_input_tokens": 29430912,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 94258,
+    "reasoning_output_tokens": 36468,
+    "total_tokens": 29742472
+  },
+  "measurement_scope": "Root-session provider counters at stated snapshot; nested calls and worker usage not inferred; later publication/handoff calls excluded",
+  "execution_unit_operations": 4068,
+  "context_batches_bound_and_recovered": 163,
+  "official_grades_native": 258,
+  "official_grades_utf8": 258,
+  "raw_third_party_source_bodies_published": 0,
+  "effective_orchestrator_effort": "medium",
+  "root_identity_evidence": "Own session turn_context metadata; worker identities only requested arguments are observed",
+  "usage_observed_utc": "2026-10-28T16:17:25.125Z"
+}

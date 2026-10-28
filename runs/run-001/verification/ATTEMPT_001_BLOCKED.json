@@ -1,0 +1,22 @@
+{
+  "attempt_id": "RUN001-ATTEMPT-001",
+  "campaign_error": "CAMPAIGN_CODE_CHANGED",
+  "campaign_units_processed": 0,
+  "cause": "Late additive normalized claim_id interface repair changed candidate after freeze. Exact hash and clean-tree gates refused execution.",
+  "claim_audits_executed": 0,
+  "code_commit": "47ef38455f44f91379f610e71fd1489d61526fdc",
+  "code_freeze": "CODE_FREEZE.json",
+  "heldout_outcomes_opened": false,
+  "logs": [
+    "FINAL_EXECUTION_001.txt",
+    "FINAL_REGRADE_001.txt",
+    "POST_FREEZE_PROPOSED_DIFF.patch"
+  ],
+  "observed_utc": "2026-10-28T15:55:34.998079+00:00",
+  "official_regrade_cases_executed": 0,
+  "plan": "FINAL_PLAN.json",
+  "regrade_error": "repository is not clean at code-freeze validation",
+  "repair": "Preserve initial commit, manifest, plan, proposed diff and logs; independently retest composed interface and create a prospective repair commit before next freeze.",
+  "schema": "pgop1.run001.execution-attempt.v1",
+  "status": "BLOCKED_BEFORE_AUDIT_OR_REGRADE"
+}

@@ -1,0 +1,176 @@
+{
+  "checks": {
+    "every_identified_claim_audited_once_by_identity": true,
+    "level_b_code_identity": true,
+    "level_b_freeze_identity": true,
+    "level_b_started_terminal_identity": true,
+    "level_b_terminal_once": true,
+    "main_attempts_have_matching_starts": true,
+    "main_binding": true,
+    "main_no_active_writer": true,
+    "main_sources_disjoint_from_previous_plans": true,
+    "main_units_complete_once": true,
+    "result_commitments_and_bindings": true,
+    "validation_reference_attempts_have_matching_starts": true,
+    "validation_reference_binding": true,
+    "validation_reference_no_active_writer": true,
+    "validation_reference_sources_disjoint_from_previous_plans": true,
+    "validation_reference_units_complete_once": true
+  },
+  "claim_metric_note": "Stable source occurrence IDs; these are not independent semantic labels or benchmark solves.",
+  "created_utc": "2026-10-28T16:06:42.348139+00:00",
+  "failures": [],
+  "level_b": {
+    "agreement_denominator": 247,
+    "agreements": 193,
+    "archive_regrade_contingency": [
+      {
+        "archived": "True",
+        "count": 140,
+        "regrade": "True"
+      },
+      {
+        "archived": "False",
+        "count": 53,
+        "regrade": "False"
+      },
+      {
+        "archived": "True",
+        "count": 54,
+        "regrade": "False"
+      }
+    ],
+    "completed": 247,
+    "completed_resolved": {
+      "False": 107,
+      "True": 140
+    },
+    "disagreements": 54,
+    "discrepancy_instance_ids": [
+      "babel__babel-13928",
+      "babel__babel-14532",
+      "babel__babel-16130",
+      "briannesbitt__carbon-2665",
+      "briannesbitt__carbon-2752",
+      "briannesbitt__carbon-2762",
+      "briannesbitt__carbon-2813",
+      "briannesbitt__carbon-3098",
+      "briannesbitt__carbon-3103",
+      "facebook__docusaurus-9897",
+      "immutable-js__immutable-js-2006",
+      "laravel__framework-46234",
+      "laravel__framework-48573",
+      "laravel__framework-48636",
+      "laravel__framework-51195",
+      "laravel__framework-51890",
+      "laravel__framework-52451",
+      "laravel__framework-52680",
+      "laravel__framework-52684",
+      "laravel__framework-52866",
+      "laravel__framework-53206",
+      "laravel__framework-53696",
+      "laravel__framework-53914",
+      "laravel__framework-53949",
+      "php-cs-fixer__php-cs-fixer-8064",
+      "php-cs-fixer__php-cs-fixer-8075",
+      "php-cs-fixer__php-cs-fixer-8256",
+      "php-cs-fixer__php-cs-fixer-8331",
+      "php-cs-fixer__php-cs-fixer-8367",
+      "phpoffice__phpspreadsheet-3463",
+      "phpoffice__phpspreadsheet-3903",
+      "phpoffice__phpspreadsheet-3940",
+      "phpoffice__phpspreadsheet-4114",
+      "phpoffice__phpspreadsheet-4186",
+      "phpoffice__phpspreadsheet-4214",
+      "phpoffice__phpspreadsheet-4313",
+      "preactjs__preact-2757",
+      "preactjs__preact-2896",
+      "preactjs__preact-2927",
+      "preactjs__preact-3010",
+      "preactjs__preact-3062",
+      "preactjs__preact-3345",
+      "preactjs__preact-3454",
+      "preactjs__preact-3562",
+      "preactjs__preact-3567",
+      "preactjs__preact-3689",
+      "preactjs__preact-3739",
+      "preactjs__preact-3763",
+      "preactjs__preact-4152",
+      "preactjs__preact-4182",
+      "preactjs__preact-4245",
+      "preactjs__preact-4316",
+      "preactjs__preact-4436",
+      "redis__redis-11631"
+    ],
+    "error_types": {
+      "UnicodeDecodeError": 11
+    },
+    "events_sha256": "ce7cae0f079081fcc2ba9539026fed8ed4ae916e75cc1996d4d32694510fb874",
+    "failed": 11,
+    "fresh_patch_execution_level_c": "NOT_PERFORMED",
+    "manifest_sha256": "6a63b313a8c40a618a6b163472c5491d9637b9003613249a777d581fc3f8029a",
+    "started": 258,
+    "terminal": 258
+  },
+  "mode": "READ_ONLY",
+  "plans": {
+    "main": {
+      "audit_requests": 266,
+      "audit_verdict_counts": {
+        "INSUFFICIENT_EVIDENCE": 264,
+        "INTEGRITY_FAILURE": 2
+      },
+      "claim_predicate_counts": {
+        "ISSUE_RESOLVED": 116,
+        "TASK_COMPLETED": 235
+      },
+      "claim_verdict_counts": {
+        "INSUFFICIENT_EVIDENCE": 351
+      },
+      "completed_units": 3167,
+      "file_reason_counts": {
+        "DUPLICATE_INSTANCE_ID": 1,
+        "MALFORMED_EVALUATOR_SUMMARY": 10,
+        "UNSUPPORTED_FORMAT": 1215,
+        "UNSUPPORTED_PATCH_SHAPE": 203,
+        "UNSUPPORTED_YAML_SHAPE": 326,
+        "WRONG_INSTANCE_BINDING": 2
+      },
+      "file_status_counts": {
+        "ERROR": 13,
+        "SUPPORTED": 1144,
+        "UNSUPPORTED": 1744
+      },
+      "journal_sha256": "bdad29876b85444d113b63646bfa7abaec77f463b004b88aea81c5b99394b671",
+      "plan_binding_sha256": "f98a18b30a8ec150f552c32c54b64af70a00e8cd4601f1231b61ec062fb496bc",
+      "plan_file_sha256": "19eaca08e4bed60ab6d0d5476e055b756dd48ccde3e052422cc7501ef44de555",
+      "source_files": 2901,
+      "started_units": 3167
+    },
+    "validation_reference": {
+      "audit_requests": 0,
+      "audit_verdict_counts": {},
+      "claim_predicate_counts": {},
+      "claim_verdict_counts": {},
+      "completed_units": 901,
+      "file_reason_counts": {
+        "UNSUPPORTED_FORMAT": 301
+      },
+      "file_status_counts": {
+        "SUPPORTED": 600,
+        "UNSUPPORTED": 301
+      },
+      "journal_sha256": "bb41b25fd19ac72852d662694f958aa59ab2c5faa57ef961e0b06693a3de7e79",
+      "plan_binding_sha256": "b957a732689d6fbc43a3937075224ddd96a46387edee81f01becf3ea5e6f75f2",
+      "plan_file_sha256": "d542e64dc9c4b4130b7c5027fc8ba6e7826a040b246ebd75575b1df00becd09f",
+      "source_files": 901,
+      "started_units": 901
+    }
+  },
+  "schema": "pgop1.run001.audit-b-result-reconciliation.v1",
+  "status": "RESULT_RECONCILIATION_PASS_WITH_DECLARED_ERRORS",
+  "unique_claim_occurrences_audited": 351,
+  "unique_claim_occurrences_identified": 351,
+  "unique_evaluator_run_instance_keys": 77578,
+  "unique_source_files_processed": 3802
+}

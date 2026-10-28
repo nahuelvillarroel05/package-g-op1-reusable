@@ -1,0 +1,146 @@
+{
+  "audit_a_verification": "audit/final-010.json",
+  "branch": "feat/pgop1-run-001",
+  "code_sha256": {
+    "docs/swebench-claim-audit/ADAPTER_GENERALIZATION_BASELINE.md": "9c5d657583b521f6ac3cc6cbbe6a33a33830cbd613b19f82a4fb0a871f194881",
+    "docs/swebench-claim-audit/GENERALIZED_ENGINE.md": "5482e72333544aedc3996bb9f994156a6f4e26a30ec5036171e6fd2632fad695",
+    "docs/swebench-claim-audit/LIMITATIONS.md": "71fe11e47e8a983a5c1d0d3b36a7e7e77b1ee5da92bab86105ba8d53c310bb24",
+    "docs/swebench-claim-audit/METHODOLOGY.md": "fc3c8ee989545b33d1e132322ed586d15e6ba57dac4e3a5d534b1e0204e9b60b",
+    "docs/swebench-claim-audit/README.md": "b944f5fb0d3388b9db44ae2a5821fe5388e7029832933073d8b1a30435319eaa",
+    "docs/swebench-claim-audit/REPRODUCIBILITY.md": "531cbc0e2dcd98fff9ece52dc6709a7886fc83444a9b9bbdf169e3922ff3232c",
+    "docs/swebench-claim-audit/V2_CONTINUITY.md": "353ad3fababf92c8dffea575bd491137d10a0c1b16ed8181c850625064c331b2",
+    "runtime/candidate/context_engine.py": "1fdbf50fe56e82ec86e96dff3039a0bf5d8cfbddc217d9f2d928b7a62bd62568",
+    "runtime/candidate/swebench_claim_audit/__init__.py": "efa387fc375975ecf5b20247169cfe1c560f310928ffbb561b22d3de2c35122d",
+    "runtime/candidate/swebench_claim_audit/adapter.py": "3b5246772237a813f86bdd9bab4ab9fb5edd4fabe979dfdcca1dae8b42a2a307",
+    "runtime/candidate/swebench_claim_audit/bind_campaign.py": "7283557c7cdbff3aeff2a810c93edb4c691fa5ed33a657876e11051ad7b379a0",
+    "runtime/candidate/swebench_claim_audit/campaign.py": "0f98a9bdab3860f7ec050c9d87145c5a0ef9d2123c520d53b22164a743bbf8a4",
+    "runtime/candidate/swebench_claim_audit/engine_bridge.py": "5f1122f1bfa1d3c57306f5373411fcc7ae5b14310c4af2edf4befa4d4b1df41d",
+    "runtime/candidate/swebench_claim_audit/generalized.py": "8c6eb8e7777a0a348bcc6f1b6dfd6443f893828ff54c7407c4a5f2e35a8ebfb4",
+    "runtime/candidate/swebench_claim_audit/generalized_bridge.py": "e212d84f7b6cbca13f5e3095b3ee3b60a66b28a904e67530f873db8fea52adad",
+    "runtime/candidate/swebench_claim_audit/prepare_plan.py": "2fb978acdcdd7f84f644dd7daf98b5c9c598a26055e63041f330b4be6625ef92",
+    "tests/test_swebench_campaign.py": "20c814b4705353cde4de298777a79eca6e38bf26dcc8c7216958d39df4c28fd1",
+    "tests/test_swebench_claim_audit.py": "aac6b90ff361b387d7f2a7002070178a1cee62625275c48d936fcebd7a134892",
+    "tests/test_swebench_generalized.py": "d74d5ce2bed415dbd7d190d064032016387b19691ea93f8572d83da0c1b80411",
+    "tests/test_swebench_generalized_bridge.py": "ca777d7c93d0d6d61b7b05fcec61cf25073ffcfae8a6cd6b6ec41f90b9fce9a3",
+    "tools/claim-audit/README.md": "8486135ad5144cd9e827b58de2e2d82d42d39ded7e3cd9b41d3e3a87d5261bd6",
+    "tools/claim-audit/correct_splits.py": "6ac4cf6f16875fe4843ad3c0a116b34727cc820a2f763ed71cc8ac131589c44e",
+    "tools/claim-audit/finalize_data_inventory.py": "a5398b7a86ef95037189d19fc55e832cbe4c35b9b4ce7c9b9dd9c150afcedf9b",
+    "tools/claim-audit/freeze_input_listing.py": "d31323f3ca1063ea5ecc8bc1a154cccd1789126b8773da8c9faea187b19c7e1f",
+    "tools/claim-audit/regrade_all.py": "3959a8c07d649a60b352df43242a6e2da1aae44de57a9316fedacb86be48ce34"
+  },
+  "commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "files": [
+    {
+      "path": "docs/swebench-claim-audit/ADAPTER_GENERALIZATION_BASELINE.md",
+      "sha256": "9c5d657583b521f6ac3cc6cbbe6a33a33830cbd613b19f82a4fb0a871f194881"
+    },
+    {
+      "path": "docs/swebench-claim-audit/GENERALIZED_ENGINE.md",
+      "sha256": "5482e72333544aedc3996bb9f994156a6f4e26a30ec5036171e6fd2632fad695"
+    },
+    {
+      "path": "docs/swebench-claim-audit/LIMITATIONS.md",
+      "sha256": "71fe11e47e8a983a5c1d0d3b36a7e7e77b1ee5da92bab86105ba8d53c310bb24"
+    },
+    {
+      "path": "docs/swebench-claim-audit/METHODOLOGY.md",
+      "sha256": "fc3c8ee989545b33d1e132322ed586d15e6ba57dac4e3a5d534b1e0204e9b60b"
+    },
+    {
+      "path": "docs/swebench-claim-audit/README.md",
+      "sha256": "b944f5fb0d3388b9db44ae2a5821fe5388e7029832933073d8b1a30435319eaa"
+    },
+    {
+      "path": "docs/swebench-claim-audit/REPRODUCIBILITY.md",
+      "sha256": "531cbc0e2dcd98fff9ece52dc6709a7886fc83444a9b9bbdf169e3922ff3232c"
+    },
+    {
+      "path": "docs/swebench-claim-audit/V2_CONTINUITY.md",
+      "sha256": "353ad3fababf92c8dffea575bd491137d10a0c1b16ed8181c850625064c331b2"
+    },
+    {
+      "path": "runtime/candidate/context_engine.py",
+      "sha256": "1fdbf50fe56e82ec86e96dff3039a0bf5d8cfbddc217d9f2d928b7a62bd62568"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/__init__.py",
+      "sha256": "efa387fc375975ecf5b20247169cfe1c560f310928ffbb561b22d3de2c35122d"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/adapter.py",
+      "sha256": "3b5246772237a813f86bdd9bab4ab9fb5edd4fabe979dfdcca1dae8b42a2a307"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/bind_campaign.py",
+      "sha256": "7283557c7cdbff3aeff2a810c93edb4c691fa5ed33a657876e11051ad7b379a0"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/campaign.py",
+      "sha256": "0f98a9bdab3860f7ec050c9d87145c5a0ef9d2123c520d53b22164a743bbf8a4"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/engine_bridge.py",
+      "sha256": "5f1122f1bfa1d3c57306f5373411fcc7ae5b14310c4af2edf4befa4d4b1df41d"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/generalized.py",
+      "sha256": "8c6eb8e7777a0a348bcc6f1b6dfd6443f893828ff54c7407c4a5f2e35a8ebfb4"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/generalized_bridge.py",
+      "sha256": "e212d84f7b6cbca13f5e3095b3ee3b60a66b28a904e67530f873db8fea52adad"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/prepare_plan.py",
+      "sha256": "2fb978acdcdd7f84f644dd7daf98b5c9c598a26055e63041f330b4be6625ef92"
+    },
+    {
+      "path": "tests/test_swebench_campaign.py",
+      "sha256": "20c814b4705353cde4de298777a79eca6e38bf26dcc8c7216958d39df4c28fd1"
+    },
+    {
+      "path": "tests/test_swebench_claim_audit.py",
+      "sha256": "aac6b90ff361b387d7f2a7002070178a1cee62625275c48d936fcebd7a134892"
+    },
+    {
+      "path": "tests/test_swebench_generalized.py",
+      "sha256": "d74d5ce2bed415dbd7d190d064032016387b19691ea93f8572d83da0c1b80411"
+    },
+    {
+      "path": "tests/test_swebench_generalized_bridge.py",
+      "sha256": "ca777d7c93d0d6d61b7b05fcec61cf25073ffcfae8a6cd6b6ec41f90b9fce9a3"
+    },
+    {
+      "path": "tools/claim-audit/README.md",
+      "sha256": "8486135ad5144cd9e827b58de2e2d82d42d39ded7e3cd9b41d3e3a87d5261bd6"
+    },
+    {
+      "path": "tools/claim-audit/correct_splits.py",
+      "sha256": "6ac4cf6f16875fe4843ad3c0a116b34727cc820a2f763ed71cc8ac131589c44e"
+    },
+    {
+      "path": "tools/claim-audit/finalize_data_inventory.py",
+      "sha256": "a5398b7a86ef95037189d19fc55e832cbe4c35b9b4ce7c9b9dd9c150afcedf9b"
+    },
+    {
+      "path": "tools/claim-audit/freeze_input_listing.py",
+      "sha256": "d31323f3ca1063ea5ecc8bc1a154cccd1789126b8773da8c9faea187b19c7e1f"
+    },
+    {
+      "path": "tools/claim-audit/regrade_all.py",
+      "sha256": "3959a8c07d649a60b352df43242a6e2da1aae44de57a9316fedacb86be48ce34"
+    }
+  ],
+  "frozen_utc": "2026-10-28T15:57:16.285768+00:00",
+  "schema": "pgop1.run001.code-freeze.v1",
+  "status": "FROZEN",
+  "supersedes": "CODE_FREEZE.json",
+  "tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+  "validation": {
+    "focused_and_adversarial": 136,
+    "line_endings": "Repository .gitattributes uses * -text. Reference copies preserve CRLF; git diff --check passes with cr-at-eol.",
+    "public_boundaries": "PASS",
+    "run_ref_boundaries": "NOT_RUN_MISSING_MCP_SERVER_DEPENDENCY"
+  },
+  "working_tree_clean": true
+}

@@ -1,0 +1,9 @@
+{
+  "original_paths": "PRIVATE_ONLY",
+  "original_third_party_bodies": "NOT_REDISTRIBUTED",
+  "source_authentication": "NOT_PROVEN",
+  "source_manifest": "SOURCE_MANIFEST.json",
+  "source_revisions": "Only independently verified values in source manifest are claimed",
+  "upstream_commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "upstream_selected_source_files": 16
+}

@@ -1,0 +1,10 @@
+{
+  "bytes": 830354973,
+  "files": 25580,
+  "files_hashed": 25580,
+  "hash_errors": 0,
+  "inaccessible_directories": 25,
+  "private_inventory_sha256": "6ff897fb78cd6622a2fc76d8b04a2ef810fa2b4aee178d1b0520d69fe8f81e94",
+  "size_mtime_drift": 0,
+  "source_manifest": "SOURCE_MANIFEST.json"
+}

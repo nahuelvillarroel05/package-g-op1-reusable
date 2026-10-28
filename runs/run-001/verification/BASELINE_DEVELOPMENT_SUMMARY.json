@@ -1,0 +1,18 @@
+{
+  "cases": 59,
+  "reason_codes": {
+    "AMBIGUOUS_AGENT_CLAIM": 11,
+    "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS": 1,
+    "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS": 7,
+    "EVIDENCE_MISSING": 3,
+    "NO_EXPLICIT_COMPLETION_CLAIM": 37
+  },
+  "scope": "Historical fixed adapter on new dev IDs only; no independent accuracy reference; completion vs benchmark-resolution conflation remains baseline limitation",
+  "selection_sha256": "bd086878d5685422e50b90796c59b2e381f29145675088fc90cd074bb31de5ea",
+  "verdicts": {
+    "CONTRADICTED": 1,
+    "INSUFFICIENT_EVIDENCE": 40,
+    "SUPPORTED": 7,
+    "VERIFICATION_ERROR": 11
+  }
+}

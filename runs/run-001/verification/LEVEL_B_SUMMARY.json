@@ -1,0 +1,15 @@
+{
+  "cases": 258,
+  "classifier_accuracy_reference": false,
+  "comparison_denominator": 247,
+  "completed": 247,
+  "discrepancies": 54,
+  "errors_are_not_negative_results": true,
+  "failed": 11,
+  "failure_type": "PYTHON_TEST_LOG_CHAR_MAP_DECODE_ERROR",
+  "fresh_patch_execution_level_C": "NOT_PERFORMED",
+  "level": "B",
+  "matches": 193,
+  "method": "Pinned unmodified official _grade function on locally SHA-bound archived logs, patch text and dataset rows; not exact CLI; no patch/test execution",
+  "protocol": "WINDOWS_NATIVE_ATTEMPT_002_PRESERVED"
+}

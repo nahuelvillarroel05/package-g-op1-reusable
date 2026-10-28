@@ -1,0 +1,559 @@
+{
+  "schema": "pgop1.run001.level-b-discrepancy-analysis.v1",
+  "status": "BOUNDED_ANALYSIS_COMPLETED_WITH_LIMITS",
+  "observed_utc": "2026-10-28T16:06:47.797681+00:00",
+  "campaign": "PGOP1 RUN-001",
+  "code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "upstream_commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "sampling_rule": "Before log-byte inspection: first mismatching instance in each of the first two lexicographically ordered mismatch repositories; first lexicographic matching true case and first matching false case; first two lexicographic terminal decode errors. Six cases total. Diagnostic purposive sample, not representative accuracy estimation.",
+  "scope": {
+    "cases_inspected": 6,
+    "official_parser_invocations": 0,
+    "grade_invocations": 0,
+    "new_evaluations": 0,
+    "patch_or_test_execution": 0,
+    "source_edits": 0,
+    "model_operations": 0,
+    "docker_operations": 0
+  },
+  "current_interpreter_observation": {
+    "version": "3.11.9 (main, Aug 14 2024, 04:18:20) [MSC v.1929 64 bit (AMD64)]",
+    "utf8_mode": 0,
+    "locale_encoding": "cp1252",
+    "preferred_encoding": "cp1252",
+    "same_executable_as_attempt_002": true,
+    "limit": "Current observation, not a retroactive capture of attempt-002 locale or environment."
+  },
+  "artifact_sha256": {
+    "input_inventory": "6ff897fb78cd6622a2fc76d8b04a2ef810fa2b4aee178d1b0520d69fe8f81e94",
+    "upstream_verification": "ffbb0f169c08c066b0ae91405e7cce842229205af0c8505c46aff2794e5935f4",
+    "attempt_002_events": "ce7cae0f079081fcc2ba9539026fed8ed4ae916e75cc1996d4d32694510fb874",
+    "attempt_002_manifest": "6a63b313a8c40a618a6b163472c5491d9637b9003613249a777d581fc3f8029a",
+    "existing_public_case_results": "134ce8887d4cefa522bcb52b7320f6c8915db2028fb490648d6bddee68966de8",
+    "existing_private_summary": "b715bbcdf2866b697b5fd445e395ba5862a0092a27b415a20a2055d79c228f4b",
+    "frozen_regrade_wrapper": "3959a8c07d649a60b352df43242a6e2da1aae44de57a9316fedacb86be48ce34"
+  },
+  "dataset_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+  "pinned_source_hashes_rechecked": [
+    {
+      "upstream_relative_path": "swebench/submit/package.py",
+      "sha256": "83423d149c51d01a9eb526ac4bc2f9418b2428528cd24d5f6d9998f3d77dcc85",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/cli/cli.py",
+      "sha256": "799a456591af132521bf2bd8fdf33e1de335cfec069efd1d35837d6bd92121c5",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/cli/submit.py",
+      "sha256": "4c4e70f7080d1b921feec18ddfccb0675a1078b29cce1b2e997e164046a738e8",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/submit/verify.py",
+      "sha256": "d07cb693ae59cbc70102b019878b2e6a79698ef1bc31c0aa344f8cb34f397ff0",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/cli/_datasets.py",
+      "sha256": "87e7e7ada83f8d2fd012b232df14bcde2960c13404140bc0f2d1fe46fd6afa02",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/grading.py",
+      "sha256": "a095273010175001a6779e365b3b77abb8657c7ac2e4f80b4bc360faa6f09483",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/utils.py",
+      "sha256": "c22f38fdd4ffd34301da7f837b82926cf261d81ca0387d92dd2990b393517c79",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/types.py",
+      "sha256": "558b6e7193306c304f9847a8a83dcab6a03ee333f6d51e61152e8821f89e0725",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/constants/__init__.py",
+      "sha256": "8895ab5313d874349c4b07bd223bb9eb00acaee377b432e67cc7ad840341e79b",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/log_parsers/__init__.py",
+      "sha256": "2227a8696ce43a4266dccfa434374afaff43df6bd0b1769f431f5efe76500c14",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/log_parsers/javascript.py",
+      "sha256": "87e907b21b54b08b84a4819fa8b7214f7df5f4eb93be586dfea1d5cd2245eb1a",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/log_parsers/php.py",
+      "sha256": "869f5a8654c73f7f75a6ddd441f3068566a30bb5a0b6d242769cb0b715a14c1d",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/log_parsers/ruby.py",
+      "sha256": "3328c72a360fc518473382dfcf8117172ed8cbb89b7838b4c0801e5fe6547bcf",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/log_parsers/c.py",
+      "sha256": "861a34ce7e596fd5d155ac15bf88acdc495ce12da13a8ae8bbdf8b07edee5e00",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/log_parsers/go.py",
+      "sha256": "b604f1e26ddbffad22a14ec012e0235046f006abe43c88a01b13fba3f144f731",
+      "matches_pinned_manifest": true
+    },
+    {
+      "upstream_relative_path": "swebench/harness/log_parsers/java.py",
+      "sha256": "427b4c1e8361c1ca11461d34ec977356f3550fdc2328a78b9be394bcc5da0bdb",
+      "matches_pinned_manifest": true
+    }
+  ],
+  "preserved_existing_counts": {
+    "scope_cases": 258,
+    "completed": 247,
+    "terminal_errors": 11,
+    "matches": 193,
+    "mismatches": 54,
+    "all_mismatch_directions": "regrade_false_report_true"
+  },
+  "findings": [
+    {
+      "id": "LB-ENC-001",
+      "classification": "PROVEN_STATIC_MECHANISM_CONDITIONAL_ON_CP1252",
+      "claim": "For both sampled mismatches, valid UTF-8 log status symbols disappear under CP1252 decoding. The exact pinned row selects a parser whose every result branch requires one of these missing symbols. Thus CP1252 necessarily supplies an empty status map; both rows use pass_and_fail and have nonempty FAIL_TO_PASS, making resolved=true unattainable on that path.",
+      "references": [
+        "swebench/submit/package.py:264-287",
+        "swebench/harness/grading.py:84-109",
+        "swebench/harness/grading.py:125-158",
+        "swebench/harness/grading.py:204-243",
+        "swebench/harness/grading.py:291-325",
+        "swebench/harness/grading.py:363-394",
+        "swebench/harness/log_parsers/javascript.py:627-652",
+        "swebench/harness/log_parsers/php.py:6-36",
+        "swebench/harness/utils.py:251-272"
+      ],
+      "limit": "This is static causal sufficiency for false under CP1252, not a UTF-8 grade or proof that encoding was the sole historical cause. No parser or grader was invoked."
+    },
+    {
+      "id": "LB-ENC-002",
+      "classification": "PROVEN_BYTE_LEVEL_FAILURE_MATCH_IN_TWO_CASES",
+      "claim": "Both sampled terminal errors have valid UTF-8 bytes but fail CP1252 decoding at the exact byte and offset already recorded in attempt-002.",
+      "limit": "Two directly inspected errors; remaining nine retain their existing evidence and were not newly opened."
+    },
+    {
+      "id": "LB-ENC-003",
+      "classification": "PROVEN_ASCII_CONTROLS",
+      "claim": "Both sampled matching logs contain only ASCII; UTF-8 and CP1252 decode to identical strings.",
+      "limit": "Encoding equality does not validate archived grades or establish general correctness."
+    },
+    {
+      "id": "LB-ENC-004",
+      "classification": "SUPPORTED_HISTORICAL_CAUSE_INFERENCE_NOT_UNIVERSAL_PROOF",
+      "claim": "The unqualified open(log_fp), current same-interpreter CP1252 default, exact sampled decode failures and marker loss together strongly support host-dependent text decoding as a cause of at least the sampled negative regrades.",
+      "limit": "Attempt-002 did not capture its effective text codec. No UTF-8 counterfactual was graded. No unique or universal explanation is asserted for all 54 discrepancies."
+    }
+  ],
+  "cases": [
+    {
+      "instance_id": "babel__babel-13928",
+      "sample_stratum": "mismatch",
+      "source_files": {
+        "test_log_gzip": {
+          "source_id": "SRC-c7420db6acbfe2c432bb",
+          "sha256": "f5e754adf4773483a2960667e1b0838ca7a44263baae00442db5bea176895dcc",
+          "bytes": 61597,
+          "inventory_and_case_record_hash_match": true
+        },
+        "patch": {
+          "source_id": "SRC-3974d89bf5b18e90142c",
+          "sha256": "40cb9205efd0762931591f471e5fad26fcddfb7897492e6264449203d43fefc2",
+          "bytes": 726,
+          "inventory_and_case_record_hash_match": true
+        },
+        "report": {
+          "source_id": "SRC-dcacfb342df23088e7f1",
+          "sha256": "5fd1fd21c3d2d0d97046607bb49493d11dbc1aefe2aa7df757189281dbd8a1f5",
+          "bytes": 20979,
+          "inventory_and_case_record_hash_match": true
+        }
+      },
+      "decompressed_log_sha256": "3bf37b27b461cff32784b9c10eda730d9f70ae6d843b9020310b127c95b1631e",
+      "decompressed_bytes": 679620,
+      "existing_outcome": {
+        "archived_report_resolved": true,
+        "matches_archived_report": false,
+        "regraded_resolved": false,
+        "terminal_error_code": null
+      },
+      "frozen_row_metadata": {
+        "repo": "babel/babel",
+        "log_parser": "parse_log_jest",
+        "eval_type": "pass_and_fail",
+        "FAIL_TO_PASS_count": 2,
+        "PASS_TO_PASS_count": 247
+      },
+      "decoding_observations": {
+        "utf-8": {
+          "decode_ok": true,
+          "non_ascii_characters": 10626,
+          "marker_counts": {
+            "U+2713": 498,
+            "U+2714": 10,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 10118
+          }
+        },
+        "cp1252": {
+          "decode_ok": true,
+          "non_ascii_characters": 31878,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 0,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        }
+      },
+      "decoded_text_equal": false
+    },
+    {
+      "instance_id": "briannesbitt__carbon-2665",
+      "sample_stratum": "mismatch",
+      "source_files": {
+        "test_log_gzip": {
+          "source_id": "SRC-827a68c9f46db0624a39",
+          "sha256": "ad2bf777b79ef5b641a478aa9803d2069924d00b3823769c80be11e9e95505f7",
+          "bytes": 1478,
+          "inventory_and_case_record_hash_match": true
+        },
+        "patch": {
+          "source_id": "SRC-b728619065fa2cd7281b",
+          "sha256": "fce460351cbd653322f01b3af3576aa838dbedd7e18b5eed01acc8136b3f6401",
+          "bytes": 1871,
+          "inventory_and_case_record_hash_match": true
+        },
+        "report": {
+          "source_id": "SRC-1c346083217389d27162",
+          "sha256": "d0e37f7234446dde80c3bc7d03aca2b5814e0301c0340e68755958c22eb35424",
+          "bytes": 1260,
+          "inventory_and_case_record_hash_match": true
+        }
+      },
+      "decompressed_log_sha256": "392371079af8916af4b1caf6ba550b17093f2e31d5d6e35a7f2cc26ed93a915f",
+      "decompressed_bytes": 3650,
+      "existing_outcome": {
+        "archived_report_resolved": true,
+        "matches_archived_report": false,
+        "regraded_resolved": false,
+        "terminal_error_code": null
+      },
+      "frozen_row_metadata": {
+        "repo": "briannesbitt/carbon",
+        "log_parser": "parse_log_phpunit",
+        "eval_type": "pass_and_fail",
+        "FAIL_TO_PASS_count": 1,
+        "PASS_TO_PASS_count": 10
+      },
+      "decoding_observations": {
+        "utf-8": {
+          "decode_ok": true,
+          "non_ascii_characters": 11,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 11,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        },
+        "cp1252": {
+          "decode_ok": true,
+          "non_ascii_characters": 33,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 0,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        }
+      },
+      "decoded_text_equal": false
+    },
+    {
+      "instance_id": "apache__druid-13704",
+      "sample_stratum": "match_true",
+      "source_files": {
+        "test_log_gzip": {
+          "source_id": "SRC-625620364d02858f2874",
+          "sha256": "a154ca3687efea87ac340efba321b51331635ad3a5fe622786d14a2ea3bcbf6a",
+          "bytes": 8043,
+          "inventory_and_case_record_hash_match": true
+        },
+        "patch": {
+          "source_id": "SRC-9dbf00b265b14da789e7",
+          "sha256": "d6828760fec7e85695b8381092ca3a299163bcaf8d26b9a4089f4edd6a29a24a",
+          "bytes": 1296,
+          "inventory_and_case_record_hash_match": true
+        },
+        "report": {
+          "source_id": "SRC-b1515858e95de83a56e1",
+          "sha256": "fb2d9aa6369a8d10b541a8f196890c2871005058ab2265a9846cd1a76792774d",
+          "bytes": 998,
+          "inventory_and_case_record_hash_match": true
+        }
+      },
+      "decompressed_log_sha256": "c13182a0c605bd56a6373bb81b26790ff7d4f251054cb7fe59ab1c264421baa7",
+      "decompressed_bytes": 50073,
+      "existing_outcome": {
+        "archived_report_resolved": true,
+        "matches_archived_report": true,
+        "regraded_resolved": true,
+        "terminal_error_code": null
+      },
+      "frozen_row_metadata": {
+        "repo": "apache/druid",
+        "log_parser": "parse_log_maven",
+        "eval_type": "pass_and_fail",
+        "FAIL_TO_PASS_count": 1,
+        "PASS_TO_PASS_count": 2
+      },
+      "decoding_observations": {
+        "utf-8": {
+          "decode_ok": true,
+          "non_ascii_characters": 0,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 0,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        },
+        "cp1252": {
+          "decode_ok": true,
+          "non_ascii_characters": 0,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 0,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        }
+      },
+      "decoded_text_equal": true
+    },
+    {
+      "instance_id": "apache__druid-14092",
+      "sample_stratum": "match_false",
+      "source_files": {
+        "test_log_gzip": {
+          "source_id": "SRC-ebee08e1ae96f0b5c652",
+          "sha256": "626abd17567528679cbe27f6c83445829a28ee026f3f2cfe175736a8aad2b614",
+          "bytes": 9585,
+          "inventory_and_case_record_hash_match": true
+        },
+        "patch": {
+          "source_id": "SRC-45e32c7c218b85cf2e82",
+          "sha256": "9e8643ae3c0c94ca216949638d5c06d9a8441c51f33e2241d696dce782288ceb",
+          "bytes": 7530,
+          "inventory_and_case_record_hash_match": true
+        },
+        "report": {
+          "source_id": "SRC-5ee7c75f5fd2317e0b07",
+          "sha256": "6c0eff98f59f4cd49452b8272588de75bdc2d8054101855bf03cdfeeb8b5bf79",
+          "bytes": 908,
+          "inventory_and_case_record_hash_match": true
+        }
+      },
+      "decompressed_log_sha256": "d3dd26ef647e76f17b92acfea370d5109c2aac7712047dde3e8b35c048daa888",
+      "decompressed_bytes": 74403,
+      "existing_outcome": {
+        "archived_report_resolved": false,
+        "matches_archived_report": true,
+        "regraded_resolved": false,
+        "terminal_error_code": null
+      },
+      "frozen_row_metadata": {
+        "repo": "apache/druid",
+        "log_parser": "parse_log_maven",
+        "eval_type": "pass_and_fail",
+        "FAIL_TO_PASS_count": 1,
+        "PASS_TO_PASS_count": 1
+      },
+      "decoding_observations": {
+        "utf-8": {
+          "decode_ok": true,
+          "non_ascii_characters": 0,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 0,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        },
+        "cp1252": {
+          "decode_ok": true,
+          "non_ascii_characters": 0,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 0,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        }
+      },
+      "decoded_text_equal": true
+    },
+    {
+      "instance_id": "astral-sh__ruff-15309",
+      "sample_stratum": "decode_error",
+      "source_files": {
+        "test_log_gzip": {
+          "source_id": "SRC-45b58af5bc6cd675a50b",
+          "sha256": "272b0fc980b0ca3fcf74085e8f296883ef5fa6f1ffbf927f70697a896b5d1900",
+          "bytes": 4404,
+          "inventory_and_case_record_hash_match": true
+        },
+        "patch": {
+          "source_id": "SRC-e53075710dfd3e870a5f",
+          "sha256": "a9f74d680810c60adb82449ff7ec2c0603ada1b08890ad1b1216034b6b8148fc",
+          "bytes": 3754,
+          "inventory_and_case_record_hash_match": true
+        },
+        "report": {
+          "source_id": "SRC-27e416d26bcabedda8d5",
+          "sha256": "794d106ea98a2874a50256c27090a09a8cd6adb3ae22b7dc553aa9e0c510c9b7",
+          "bytes": 1299,
+          "inventory_and_case_record_hash_match": true
+        }
+      },
+      "decompressed_log_sha256": "fc2bf45a2416c9d9a7deff61139916a1329b7f974d712366165937e5f15c4046",
+      "decompressed_bytes": 16114,
+      "existing_outcome": {
+        "archived_report_resolved": false,
+        "matches_archived_report": null,
+        "regraded_resolved": null,
+        "terminal_error_code": "PYTHON_TEST_LOG_CHAR_MAP_DECODE_ERROR"
+      },
+      "frozen_row_metadata": {
+        "repo": "astral-sh/ruff",
+        "log_parser": "parse_log_cargo",
+        "eval_type": "pass_and_fail",
+        "FAIL_TO_PASS_count": 1,
+        "PASS_TO_PASS_count": 4
+      },
+      "decoding_observations": {
+        "utf-8": {
+          "decode_ok": true,
+          "non_ascii_characters": 315,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 0,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        },
+        "cp1252": {
+          "decode_ok": false,
+          "decoder": "charmap",
+          "error_start": 13334,
+          "error_end": 13335,
+          "error_byte_hex": "81"
+        }
+      },
+      "decoder_failure_matches_archived_offset_and_byte": true
+    },
+    {
+      "instance_id": "briannesbitt__carbon-2981",
+      "sample_stratum": "decode_error",
+      "source_files": {
+        "test_log_gzip": {
+          "source_id": "SRC-3fe9f5503943f9f878aa",
+          "sha256": "864c9fc8408dca380d704e8aa77f11beadc6c41052285efe6d28bca983f45634",
+          "bytes": 4653,
+          "inventory_and_case_record_hash_match": true
+        },
+        "patch": {
+          "source_id": "SRC-4fd12edda69d418ce4c7",
+          "sha256": "a87f18a2954de11cdf6c53284a73eba0a21d7033faa4ea3d066670fe8fb65399",
+          "bytes": 2303,
+          "inventory_and_case_record_hash_match": true
+        },
+        "report": {
+          "source_id": "SRC-107e75e2ac3b119e5c01",
+          "sha256": "3552f2d0304804a573059be4f832803d2dfb812646397fa9cfa5c166a53cc023",
+          "bytes": 2671,
+          "inventory_and_case_record_hash_match": true
+        }
+      },
+      "decompressed_log_sha256": "d12bd691b351eac4c9871d0d25ec0a25abab3d6434b8bc33ca85b94a3000146c",
+      "decompressed_bytes": 16054,
+      "existing_outcome": {
+        "archived_report_resolved": true,
+        "matches_archived_report": null,
+        "regraded_resolved": null,
+        "terminal_error_code": "PYTHON_TEST_LOG_CHAR_MAP_DECODE_ERROR"
+      },
+      "frozen_row_metadata": {
+        "repo": "briannesbitt/carbon",
+        "log_parser": "parse_log_phpunit",
+        "eval_type": "pass_and_fail",
+        "FAIL_TO_PASS_count": 1,
+        "PASS_TO_PASS_count": 29
+      },
+      "decoding_observations": {
+        "utf-8": {
+          "decode_ok": true,
+          "non_ascii_characters": 281,
+          "marker_counts": {
+            "U+2713": 0,
+            "U+2714": 30,
+            "U+2715": 0,
+            "U+2718": 0,
+            "U+21A9": 0,
+            "U+25CB": 0
+          }
+        },
+        "cp1252": {
+          "decode_ok": false,
+          "decoder": "charmap",
+          "error_start": 999,
+          "error_end": 1000,
+          "error_byte_hex": "8f"
+        }
+      },
+      "decoder_failure_matches_archived_offset_and_byte": true
+    }
+  ],
+  "authority_and_limits": [
+    "All 54 discrepancies and 11 terminal errors remain unchanged; no retries were performed.",
+    "No claim of benchmark ground truth, false positives, accuracy, Level C fresh execution or operational qualification.",
+    "The governance skill authority templates docs/CURRENT_STATE.md and docs/AI24_PACKAGE_G_AUTHORITY_MATRIX.md were unavailable at this repository root; this report asserts no new phase or operational authority.",
+    "Only derived counts, identifiers, hashes and code references are recorded; no original third-party log, patch or test-name excerpts.",
+    "Any future encoding-controlled regrade would require a separate prospective attempt and explicit treatment of the already inspected outcomes; it is not performed or authorized by this report."
+  ]
+}

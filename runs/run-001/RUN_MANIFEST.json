@@ -1,0 +1,108 @@
+{
+  "campaign_id": "PGOP1_RUN_001",
+  "code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+  "generated_utc": "2026-10-28T16:10:34.850170+00:00",
+  "jobs": {
+    "main": {
+      "audits": 266,
+      "canonical_plan_sha256": "f98a18b30a8ec150f552c32c54b64af70a00e8cd4601f1231b61ec062fb496bc",
+      "completed_units": 3167,
+      "plan_file_sha256": "19eaca08e4bed60ab6d0d5476e055b756dd48ccde3e052422cc7501ef44de555",
+      "source_files": 2901
+    },
+    "task-validation-reference": {
+      "audits": 0,
+      "canonical_plan_sha256": "b957a732689d6fbc43a3937075224ddd96a46387edee81f01becf3ea5e6f75f2",
+      "completed_units": 901,
+      "plan_file_sha256": "d542e64dc9c4b4130b7c5027fc8ba6e7826a040b246ebd75575b1df00becd09f",
+      "source_files": 901
+    }
+  },
+  "local_only": [
+    "Original third-party files",
+    "Private original paths",
+    "Full normalized claim text",
+    "Context Engine object stores",
+    "Raw failed-attempt diagnostics"
+  ],
+  "metrics": {
+    "ACCURACY_PRECISION_FALSE_POSITIVE_FALSE_NEGATIVE_RATES": "NOT_COMPUTED_NO_INDEPENDENT_LABELS",
+    "AGENT_EXECUTIONS": 77807,
+    "AGENT_EXECUTIONS_MEANING": "Attributed local record identities, not authenticated processes",
+    "AUTHENTICATED_DISTINCT_AGENT_EXECUTIONS": "UNKNOWN",
+    "CLAIMS_AUDITED": 351,
+    "CLAIMS_IDENTIFIED": 351,
+    "CLAIMS_IN_UNSUPPORTED_TRANSCRIPTS": "UNKNOWN",
+    "CLAIM_PREDICATES": {
+      "ISSUE_RESOLVED": 116,
+      "TASK_COMPLETED": 235
+    },
+    "CLAIM_VERDICTS": {
+      "INSUFFICIENT_EVIDENCE": 351
+    },
+    "CONTRADICTED": 0,
+    "CROSS_COLLECTION_EXECUTION_IDENTITY_OVERLAP": "UNKNOWN_NOT_MERGED_WITHOUT_BINDING",
+    "FILES_ATTEMPTED": 3802,
+    "FILES_NOT_PERTINENT_OR_REFERENCE_ONLY": 21778,
+    "FILES_PROCESSABLE": 1744,
+    "FILES_PROCESSED": 1744,
+    "FILES_REJECTED_FROM_USABLE_PARSE": 13,
+    "FILES_UNSUPPORTED": 2045,
+    "FILES_WITH_ERRORS": 13,
+    "INDEPENDENT_CLASSIFICATION_REFERENCE_DENOMINATOR": 0,
+    "INDEPENDENT_TRAJECTORY_HOLDOUT": 0,
+    "INSTANCES_WITH_SUFFICIENT_MATCHING_CLAIM_EVIDENCE": 0,
+    "INSUFFICIENT_EVIDENCE": 264,
+    "INTEGRITY_FAILURE": 2,
+    "LOCAL_ARCHIVE_EXECUTIONS_AUDITED": 266,
+    "REJECTION_COUNT_IS_SUBSET_OF_ERROR_COUNT": true,
+    "RELEVANT_FILES": 3802,
+    "SUPPORTED": 0,
+    "TOTAL_DATASET_INSTANCES": 3642,
+    "TOTAL_SOURCE_FILES": 25580,
+    "TRAJECTORY_FILES_JSON": 264,
+    "TRANSCRIPT_FILES_MARKDOWN_UNSUPPORTED": 300,
+    "UNIQUE_INSTANCES": 2819,
+    "VERIFICATION_ERROR": 0
+  },
+  "preservation": {
+    "FORMAL_I7": "NOT_COMPLETED",
+    "I0-I6": "FORMALLY_FROZEN",
+    "I7": "INCOMPLETE",
+    "INDEPENDENT_CUSTODY": "NOT_PROVEN",
+    "OP1_OPERATIONAL_QUALIFICATION": "NOT_ACHIEVED",
+    "PHYSICAL_C2": "DEFERRED_NOT_WAIVED",
+    "historical_campaign": "UNCHANGED"
+  },
+  "private_inventory_sha256": "6ff897fb78cd6622a2fc76d8b04a2ef810fa2b4aee178d1b0520d69fe8f81e94",
+  "public_source_manifest_sha256": "384420118dd13ec527194b01b7ce9f223a62921b843ccbd4b9df178ad7170267",
+  "publication_script_sha256": "e1bb08c4c9d913a9f9a1fbe811c698eb1f5dd1ab4f7cb2ec8cef881af51df287",
+  "status": "PGOP1_RUN_001_PARTIAL_WITH_EXACT_LIMITATIONS",
+  "context_engine": {
+    "batches": 163,
+    "units_bound_and_recovered": 4068,
+    "receipt": "verification/CONTEXT_ENGINE_SUMMARY.json",
+    "scope": "Storage/graph/provenance binding; semantic verdict remains adapter-owned"
+  },
+  "external_verification": {
+    "native_protocol": {
+      "cases": 258,
+      "completed": 247,
+      "errors": 11,
+      "agreements": 193,
+      "discrepancies": 54
+    },
+    "utf8_protocol": {
+      "cases": 258,
+      "completed": 258,
+      "errors": 0,
+      "agreements": 258,
+      "discrepancies": 0
+    },
+    "level": "B",
+    "level_C": "NOT_PERFORMED",
+    "classifier_ground_truth": false
+  },
+  "final_public_file_index": "FINAL_PUBLIC_FILE_INDEX.json"
+}

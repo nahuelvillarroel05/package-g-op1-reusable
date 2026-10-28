@@ -1,0 +1,23 @@
+{
+  "frozen_at_utc": "2026-10-28T15:29:57.775938+00:00",
+  "heldout_textual_outcomes_inspected": false,
+  "historical_source": "Published historical campaign artifacts in the local verified repository, filename/index identifiers only; exact 12 IDs to be transcribed into the split manifest before outcome inspection.",
+  "input_listing_sha256": "26b62ac0a8078f7c6aaf6f08ddcf8564b61b0776d307002236c2868f033ac504",
+  "limitations": [
+    "Current public historical IDs are not yet transcribed into this protocol artifact; split assignments remain pending.",
+    "Submission identifiers and repo group membership require metadata extraction; no claim outcomes inspected.",
+    "Source snapshot has inaccessible protected directories documented in frozen_input_listing_summary.json."
+  ],
+  "models_or_training": false,
+  "protocol_id": "PGOP1_RUN_001_PRE_RESULT_INSPECTION_SPLIT_V1",
+  "rule_order": [
+    "Use only frozen listing paths, filename instance identifiers, and dataset metadata fields needed to identify instance_id/repo; do not inspect textual heldout outcomes or agent claim content before this protocol is frozen.",
+    "Mark the twelve historical development instance IDs identified by the published historical campaign as HISTORICAL_DEVELOPMENT_CASES and exclude them from new development and heldout evaluation.",
+    "Treat historical overlap at repository or submission provenance as contamination: all records from a repository/submission containing a historical development case are ineligible for an independent heldout claim; retain their records as HISTORICAL_OVERLAP_EXCLUDED.",
+    "For remaining new agent trajectories with parseable stable instance IDs, group by repository first; where repository is absent, group by normalized submission/run ID; where both are absent, do not assign to an evaluation split.",
+    "Assign each eligible group deterministically from SHA256(UTF8('PGOP1_RUN_001_SPLIT_V1|'+group_key)): first hex digit 0-3 => NEW_DEVELOPMENT; 4-7 => HELDOUT; 8-f => UNUSED_RESERVE. All evidence for the same group remains in that group.",
+    "Where multiple trajectories share one instance ID and distinct submission IDs, preserve each execution identity, but group together if repository matches; never split linked evidence across development and heldout.",
+    "Dataset membership overlap across Full/Lite/Verified/Multilingual is tracked as one canonical instance identity plus membership set; duplicate dataset appearances do not count as independent cases.",
+    "Freeze assigned IDs and group keys before opening heldout outcome-bearing fields. After inspection, any code tuning contaminates heldout and requires a fresh independent heldout selection."
+  ]
+}

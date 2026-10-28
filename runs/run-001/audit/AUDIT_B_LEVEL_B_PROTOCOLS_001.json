@@ -1,0 +1,76 @@
+{
+  "checks": {
+    "all_utf8_cases_completed_once": true,
+    "native_events_immutable": true,
+    "new_freeze_commitment": true,
+    "protocol_frozen_before_run": true,
+    "recorded_utf8_prestate": true,
+    "same_258_source_triplets": true,
+    "same_code_commit_and_tree": true,
+    "same_code_hashes": true,
+    "same_completed_dataset_row_hashes": true,
+    "same_raw_input_code_pins": true
+  },
+  "created_utc": "2026-10-28T16:12:15.003195+00:00",
+  "interpretation": "Encoding-dependent archived reconstruction. The fresh UTF-8 protocol is prospective and outcome-informed, with identical code/data/upstream and all 258 cases; it is not recovery, fresh patch execution, classifier tuning or independent claim-language evaluation.",
+  "level_c": "NOT_PERFORMED",
+  "mode": "READ_ONLY",
+  "native_protocol": {
+    "agreements_with_archived_reports": 193,
+    "attempt": "attempt-002",
+    "comparison_denominator": 247,
+    "completed": 247,
+    "disagreements_with_archived_reports": 54,
+    "errors": 11,
+    "events_sha256": "ce7cae0f079081fcc2ba9539026fed8ed4ae916e75cc1996d4d32694510fb874"
+  },
+  "native_to_utf8_overlap_changes": [
+    {
+      "count": 140,
+      "native": "True",
+      "utf8": "True"
+    },
+    {
+      "count": 53,
+      "native": "False",
+      "utf8": "False"
+    },
+    {
+      "count": 54,
+      "native": "False",
+      "utf8": "True"
+    }
+  ],
+  "schema": "pgop1.run001.audit-b-level-b-protocol-comparison.v1",
+  "status": "LEVEL_B_PROTOCOL_RECONCILIATION_PASS",
+  "utf8_protocol": {
+    "agreement_counts": {
+      "AGREE": 258
+    },
+    "archive_regrade_contingency": [
+      {
+        "archive": "True",
+        "count": 201,
+        "regrade": "True"
+      },
+      {
+        "archive": "False",
+        "count": 57,
+        "regrade": "False"
+      }
+    ],
+    "attempt": "attempt-003-utf8",
+    "comparison_denominator": 258,
+    "completed": 258,
+    "environment_receipt_sha256": "ec37c6a4dda3d0470145ea26c87f2c20332bfa7a4736c255f7bbb82ac9bab659",
+    "errors": 0,
+    "events_sha256": "ebb1b30027ebf7f7bbf8f3f09e6c51eb31fc59136993d9bfd6b610e2586ca6f0",
+    "freeze_sha256": "87e618cd31a2b0034926f23ed13b0c5c0bae761bb76050607ecfa06a5ecfeabf",
+    "manifest_sha256": "aa8566d20ec43b8495d177fac31a061c84ad4b14a5c6a076ea79440c8679b26f",
+    "protocol_id": "PGOP1_RUN_001_LEVEL_B_UTF8_001",
+    "resolved_counts": {
+      "False": 57,
+      "True": 201
+    }
+  }
+}

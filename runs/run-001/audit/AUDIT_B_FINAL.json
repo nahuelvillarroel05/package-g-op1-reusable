@@ -1,0 +1,164 @@
+{
+  "authority": {
+    "FORMAL_I7": "NOT_COMPLETED",
+    "I0_I6": "FORMALLY_FROZEN",
+    "I7": "INCOMPLETE",
+    "INDEPENDENT_CUSTODY": "NOT_PROVEN",
+    "OP1_OPERATIONAL_QUALIFICATION": "NOT_ACHIEVED",
+    "PHYSICAL_C2": "DEFERRED_NOT_WAIVED",
+    "technical_review_effect": "NO_OPERATIONAL_AUTHORITY_EFFECT"
+  },
+  "campaign_id": "PGOP1_RUN_001",
+  "campaign_status": "PGOP1_RUN_001_PARTIAL_WITH_EXACT_LIMITATIONS",
+  "candidate": {
+    "bytes_including_index": 52662112,
+    "files_including_index": 209,
+    "index": "PUBLIC_FILE_INDEX.json",
+    "index_sha256": "f53df73c904c0144bf482fedb53d7fe717f62c9470c2cb39e5d7f3a63ea0c59d",
+    "indexed_files": 208,
+    "scope_note": "This preserved candidate index predates Audit B. A separate final index must cover the added report/evidence; commit B and ZIP are verified by a release supplement."
+  },
+  "candidate_or_source_modifications_by_auditor": false,
+  "code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+  "created_utc": "2026-10-28T16:22:47.471360+00:00",
+  "evidence": [
+    {
+      "path": "AUDIT_B_PREPARATION_002.json",
+      "sha256": "ff80cece81bd24c7de22c26ee37f9e31647e0a4ee9db892df3afdefc23a74bb5"
+    },
+    {
+      "path": "AUDIT_B_RESULT_RECONCILIATION_001.json",
+      "sha256": "d2da8676b07421c5afbc691f2fd9ff725c71c18527efff1b3c25bbe682a913c6"
+    },
+    {
+      "path": "AUDIT_B_CONTEXT_READONLY_001.json",
+      "sha256": "ea73ed9eb7a6309ed4c1d7910667905444a8df4987d0c1d3c64b97fbdf55a506"
+    },
+    {
+      "path": "AUDIT_B_LEVEL_B_PROTOCOLS_001.json",
+      "sha256": "d6fb4c20e5436bd8a9ac1ebe0bdd3d5747ea07f1f5bcb5dcc84c3ee065172413"
+    },
+    {
+      "path": "AUDIT_B_PUBLIC_CANDIDATE_002.json",
+      "sha256": "07c2039103681f74dc91c7f616d38c8ed53d99d84d81c2f8e182bdfe2aba52ed"
+    }
+  ],
+  "external_verification": {
+    "interpretation": "The UTF-8 protocol followed observed native encoding failures. Both protocols remain visible; agreement is archived consistency, not independent correctness or classifier accuracy.",
+    "level": "B_ARCHIVED_RECONSTRUCTION",
+    "level_c": "NOT_PERFORMED",
+    "native_attempt": {
+      "agreement_denominator": 247,
+      "agreements": 193,
+      "completed": 247,
+      "decode_errors": 11,
+      "disagreements": 54,
+      "preserved_immutable": true,
+      "started": 258
+    },
+    "official_grader_reexecuted_by_auditor": false,
+    "utf8_attempt": {
+      "agreement_denominator": 258,
+      "agreements": 258,
+      "completed": 258,
+      "disagreements": 0,
+      "errors": 0,
+      "fresh_full_scope_protocol_frozen_before_execution": true,
+      "protocol": "PGOP1_RUN_001_LEVEL_B_UTF8_001",
+      "resolved_false": 57,
+      "resolved_true": 201,
+      "same_code_upstream_raw_sources_and_dataset": true,
+      "started": 258
+    }
+  },
+  "findings": [
+    {
+      "id": "AUDIT-B-TA-001",
+      "resolution": "Unchanged-code supplemental plan processed 901 reference files with no agent-audit joins. 300 eval.sh files remain indexed reference code and were not executed.",
+      "severity": "P1",
+      "status": "RESOLVED_BY_FROZEN_SUPPLEMENT",
+      "title": "Main discovery omitted validation reference evidence"
+    },
+    {
+      "id": "AUDIT-B-TA-002",
+      "resolution": "Outcome-informed prospective UTF-8 protocol covered all 258 cases under identical code/data. Native 54 disagreements and 11 errors remain immutable.",
+      "severity": "P1",
+      "status": "RESOLVED_WITH_BOTH_PROTOCOLS_PRESERVED",
+      "title": "Native Windows decoding affected archived grading"
+    },
+    {
+      "id": "AUDIT-B-TA-003",
+      "resolution": "Final-010 receipt/log, exact forensic probe/runner sources, safe fresh-workspace reproduction guidance and preliminary split evidence are now included.",
+      "severity": "P2",
+      "status": "RESOLVED_VERIFIED",
+      "title": "Published audit references initially omitted reproduction evidence"
+    }
+  ],
+  "mode": "READ_ONLY",
+  "pending_release_supplement": [
+    "Final public index membership/hash",
+    "Results commit B and tree",
+    "Remote push and published commit/tree identity",
+    "ZIP size/CRC/membership/unsafe paths/duplicates/fresh extraction/member hashes/external SHA receipt"
+  ],
+  "retained_limitations": [
+    "25 protected directories were not enumerated. Coverage is complete only for the declared accessible frozen scope, not all possible local files.",
+    "2045 unsupported files and 13 parser errors remain explicit; 300 Markdown transcripts have unknown claims and all 326 metadata YAML files are outside the supported flat subset.",
+    "Independent trajectory holdout count and independent claim-language label denominator are zero. The 49 repository-heldout cases share historical submission provenance; the 67 catalog submissions test record formats only.",
+    "77807 is a content-record identity count, including path-derived evidence identities. Distinct authenticated executions and cross-collection execution overlap remain UNKNOWN.",
+    "Raw third-party source bodies and private Context Engine stores remain local because redistribution rights are not established. Hashes and source URLs do not grant rights or establish upstream actor authenticity.",
+    "Reconstruction of the exact snapshot may require local preserved bytes where public origin revisions remain UNKNOWN. The forensic audit runner documents its original fixed layout rather than claiming universal portability.",
+    "Engine storage/provenance PASS does not establish claim semantics, benchmark resolution, independent custody or operational qualification."
+  ],
+  "schema": "pgop1.run001.audit-b-closure.v1",
+  "status": "AUDIT_B_COMPLETE_PUBLIC_CANDIDATE_VERIFIED_WITH_EXACT_LIMITATIONS",
+  "verified": {
+    "all_codeA_freeze_files_match_current_and_git_blobs": 25,
+    "all_units_and_original_sources_bound": true,
+    "auditA_pins_match_executed_code": true,
+    "audit_requests": 266,
+    "audit_verdicts": {
+      "INSUFFICIENT_EVIDENCE": 264,
+      "INTEGRITY_FAILURE": 2
+    },
+    "authenticated_distinct_agent_executions": "UNKNOWN",
+    "claim_predicates": {
+      "ISSUE_RESOLVED": 116,
+      "TASK_COMPLETED": 235
+    },
+    "claim_verdicts": {
+      "INSUFFICIENT_EVIDENCE": 351
+    },
+    "context_batches_independently_verified_read_only": 163,
+    "context_index_mutation": "NOT_PERFORMED",
+    "contradicted_claims": 0,
+    "dataset_memberships": 3642,
+    "dataset_unique_counts": {
+      "FULL": 2519,
+      "LITE": 323,
+      "MULTILINGUAL": 300,
+      "VERIFIED": 500
+    },
+    "files_error": 13,
+    "files_parsed": 1744,
+    "files_unsupported": 2045,
+    "original_third_party_bodies_redistributed": false,
+    "prior_attempt001_blocked_before_any_units": true,
+    "privacy_review": "No unresolved raw-body, personal-path or credential findings; documented nonpersonal forensic layout and Python executable literals retained.",
+    "processing_and_audit_units": 4068,
+    "public_content_record_identities": 77807,
+    "public_derivative_rows_and_object_hashes_match_local_outputs": true,
+    "public_source_index_matches_all_25580_frozen_ids": true,
+    "source_bytes_independently_rehashed": 830354973,
+    "source_files_attempted": 3802,
+    "source_files_independently_rehashed": 25580,
+    "source_hash_size_mtime_drift": 0,
+    "source_read_errors": 0,
+    "supported_claims": 0,
+    "unique_claim_occurrences_identified_and_audited": 351,
+    "unique_dataset_instance_ids": 2819,
+    "upstream_commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+    "upstream_selected_source_files_rehashed": 16
+  }
+}

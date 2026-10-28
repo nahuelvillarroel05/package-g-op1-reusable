@@ -1,0 +1,3194 @@
+{
+  "addendum_sha256": "d9ad2e1f18c558eee19eb1814e2a44221190e3bb667535ef831faa2da00ab039",
+  "assignments": [
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 23,
+      "group_hash_sha256": "64ec86bca6231341bea9a15c4ebf1cb9e6d79316703dddd63be23540dfebedc6",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20231010_rag_claude2"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 23,
+      "group_hash_sha256": "d3e4f133ab44184bce74f5e773fc642053bad5f3c348a7eefa238979b9d26011",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20231010_rag_gpt35"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 23,
+      "group_hash_sha256": "bb0c4cefecc926c1aeeebe1bc3b354435e602e989d16bafe326acb829f505a40",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20231010_rag_swellama13b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 23,
+      "group_hash_sha256": "35209bb7d95543ea42869832c850c54d14d8d3497f4c961537a1af2cc2e0d0d3",
+      "split": "CATALOG_DEV",
+      "submission_id": "20231010_rag_swellama7b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 23,
+      "group_hash_sha256": "e5ef42c9a92aa28c052f0f8f75752028fc2b7eacc937826ef4f2e57ec182d4f1",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240402_rag_claude3opus"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 23,
+      "group_hash_sha256": "e798525050b6fd1cf7c82b69fdb0b56002ce7356dc80572ee9c1064360787ec6",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240402_rag_gpt4"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 34,
+      "group_hash_sha256": "e301c953d0679c4c36dc49b4383d5aca544d02d347ef65e250a920800b7d8b75",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240402_sweagent_claude3opus"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 43,
+      "group_hash_sha256": "d8ed547db03afcf90efedc23de5a03c0540c34d92e1517eb755a574215e50a50",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240402_sweagent_gpt4"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 23,
+      "group_hash_sha256": "519ff68ae95fe9e66ea7da04e347d128b432868fe42506cb7b4db80f5a78c172",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240509_amazon-q-developer-agent-20240430-dev"
+    },
+    {
+      "chat_transcript_file_count": 300,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 308,
+      "group_hash_sha256": "11b1945066eced9d4ebc5b07639e7c42993715be715b7eb20bc57b27cfb34c93",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240523_aider"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 8,
+      "group_hash_sha256": "2b033956673190200561988a0181daa039c3f756d9c953b517268247f8a1d55b",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240524_opencsg_starship_gpt4"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 8,
+      "group_hash_sha256": "ecf0dbb848d523d0725228478b0ffabf8938d5e8d97397e358909a2c851f8466",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240530_autocoderover-v20240408"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 10,
+      "group_hash_sha256": "a6167ac999246e9b38b6ab704e6ca61aab7e5a424b2f6dbc1b90941afe5a0665",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240604_CodeR"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 8,
+      "group_hash_sha256": "428a9149585257fc4c192726f1d894384f3ce80443f80f5009a07c5233ade784",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240612_IBM_Research_Agent101"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 10,
+      "group_hash_sha256": "1ec8ae618bb236b371dc5fd1cbb4b711eab4e133ccc4b57b4e4c515fa20f0970",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240612_MASAI_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 24,
+      "group_hash_sha256": "8b42375b9f2a6c767baa3240bf6d1ecf9025d62550a21bcee87189e39327f793",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240615_appmap-navie_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 24,
+      "group_hash_sha256": "7c863caf9843d62af283677ee9ff89ceffa2cc4f0998fa28cbb103aa9306d3e9",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240617_factory_code_droid"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 10,
+      "group_hash_sha256": "8057aeb33e9141e230f71326c4e0edd1169bed083a949217e99f5431df303b27",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240617_moatless_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 18,
+      "group_hash_sha256": "8f5ccd837f069a4afdde2062faa772f5a71274c179343c69050d075ce4be0b30",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240620_sweagent_claude3.5sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 8,
+      "group_hash_sha256": "ed5a93028e7eba01b16ba8db579781edb2030287abd225334cc126eacd555432",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240621_autocoderover-v20240620"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 9,
+      "group_hash_sha256": "ff3a08267f004fbdf2f05ea59c798b56a8000e747344f737ef3c21aaad37a311",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240622_Lingma_Agent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 9,
+      "group_hash_sha256": "db5272ad7f87e75c19c0663c1cd360bb7de47e1060e85be9e8cd0e4d23bbca41",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240623_moatless_claude35sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "e926a0e740dc7350a59d77b64378fc2cb8576a11e36aac24e442fb826ec6417d",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240627_abanteai_mentatbot_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 16,
+      "group_hash_sha256": "6c712dc945715e2847e87876a130e92739da8e7bbe8156bc40d8b28e7090364d",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240628_autocoderover-v20240620"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 8,
+      "group_hash_sha256": "57c223d9baec4b358b767ff9210b23259a4a94ffeb19a202a60017c1e6f325e6",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240630_agentless_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 8,
+      "group_hash_sha256": "c54873d68c3a671b87f0b137825d5db108093f27c467b7662eb4d94fe4e1c00c",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240702_codestory_aide_mixed"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "bcbb5c251bab445b77e2feb37c4eb17bd107f0f37839cc6d595085478ab51116",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240706_sima_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 24,
+      "group_hash_sha256": "33077a1d2d1243424b987206ab96bc4b5b7c1b316878faa20255fc5e45761f3f",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240721_amazon-q-developer-agent-20240719-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "9123226667a04f3eb880692db6448c4c13ae7c50eac0b53088cbb71816367bb3",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240723_marscode-agent-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3bffabc1c9a1930e1e71ec0249dc47cfc6300915995d9761e0e0ab820825f699",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240725_opendevin_codeact_v1.8_claude35sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 18,
+      "group_hash_sha256": "790b791f519275643dd7f37361c35dd82deea3700edf332737718f65f323bd0a",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240728_sweagent_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "c9094e062285e389d3c7e8e68bcf9e6caba6c28138e844eef29c5f81d2c1064f",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240806_SuperCoder2.0"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b1026f908c296505e118cb30c04641dde8b307eb59945f48e20656bcc7a2b179",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240808_RepoGraph_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "50ac2dea2958fcd01fb7861b8a9d9cd6f7946af0c521cd5d8c3ed5d6e2cd570a",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240811_gru"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "bf7edb0e77d8fa52f357028b764bb52b4c087564e79d5c10502a2ffa0b4addff",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240820_epam-ai-run-gpt-4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "test",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 16,
+      "group_hash_sha256": "0a1bc3576df6300a0edb588c9f413eeef9790e722131b71c01fd993e304439c2",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240820_honeycomb"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "62cc9a1ad14833d07c915f3001f1f29136dfe85b082924b2f1f75d5ff6ac8966",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20240824_gru"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "b099b099290f3e8783a40ed09a6de519d0bd8efe190523535f357f0d52ab283e",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240828_autose_mixed"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "2abcc8fb9a32ac2a9f4ce5e5d943963813cca57780997af9de5209196ca73558",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240829_Isoform"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "b2482bce57cdaf887481dd3c13b9fdad42b719fcfa8afbb6dadf2def53d1318e",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240908_infant_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3cfcbc1ea1d84644f28ddaf3bdf7a112a741b67ab1a91e2056d7dda8303bc0b3",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240912_marscode-agent-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b3c5734521be0f09e4861fe5bedeeda87cdb212233822ed0e5b20d5c73b44a77",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240918_lingma-agent_lingma-swe-gpt-72b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3512a547c5e4db6a8711e95c6a43ff53eb9bc6876e5b3586ac661588192e5cad",
+      "split": "CATALOG_DEV",
+      "submission_id": "20240918_lingma-agent_lingma-swe-gpt-7b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "fe1be0bf4b94016480f13daf59bbe29892372117d0c1ccb5ca8adf36876db986",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240920_solver"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f8aeff06a69d69a15eb319f3574a35aebe2dc91ac109c371c679b23929d8bfe0",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240924_solver"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "9f97a60542ff5e3addc7a989fbc0d49c1a01f1d9f24516844b160c5e696365b8",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20240925_hyperagent_lite1"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "008430016bd8bd7dc713a853cb47055505efc63a92fa00d2e296769d022e8a91",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241001_nfactorial"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "a235f1a7fd2cc5bd7f51a02e725e008daa0a605f77e55ff4bb1b46f86c8ad41a",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241002_lingma-agent_lingma-swe-gpt-72b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "ad9b046e81f7a97c9fd71ea246132de3e88f5d5c4f2edf576db505e7a4342105",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241002_lingma-agent_lingma-swe-gpt-7b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "cd93ca25d0afca37c2b463c3114eb99ac5e4cae73dc66e457400cfa75f5e5aa0",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241006_Agentless_claude3.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "584079eba8ae2bbbc7913b151f1e81e56efa939bcb2e7d27b6fd503cc6416b06",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241006_Agentless_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "3be986cdd7de52bdee94faf4c59134a91c811044943a9dec3fd4a3e8f8f64c08",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241006_RAG_claude3.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b148694163f20a5c2d19db3513a5f54b83dc8e87ffc7bca1b116070966019f8c",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241006_RAG_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "6436c125fd00441914aecdb2266c0dacddd16de2d44b179dec80e864d768ab50",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241006_SWE-agent_JS_claude3.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f280ed6418c66e9bf179c17e149548bde177d9793f800abcb196061dfadf1ef6",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241006_SWE-agent_JS_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "709be389f604a186404594d96bc511c0602b9282c2bb7845bbc613660c07090b",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241006_SWE-agent_M_claude3.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "5a4fd24489ef49b765c67ab16d15cb0515ccc26ea26aec3dbe0ebc3ef5cee98f",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241006_SWE-agent_M_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "9f56a062f0823a7684f9e995e05ada93468985b600847a3570995b9426b09dfa",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241006_SWE-agent_claude3.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b3157092cb9b098062fd57726f1e826764aa6da4cab1847cc24c1c0b25ab7a1e",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241006_SWE-agent_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "269f275d3856146aa7fc2a259d22ee81cb64cfafc8cd1e1a7f5ad16a5f427a52",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241007_nfactorial"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "5bde4496432e28329030c5a2615aee18b4b37f909f146c2c101b9ba2e3aff969",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241016_IBM-SWE-1.0"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "83847f23741c4ade4661df887ea799c6e1534bda59f90381d92ad1ccd866ca3a",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241016_composio_swekit"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "128688f3c13c7e5066d38d30933c12fa47fb461e1326e8d330ae89e408cc75b5",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241016_epam-ai-run-gpt-4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "6073e73636ad38999faafe2b14a36a92a83f9e2e844dccb0e7b81d8ae98417a0",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241022_tools_claude-3-5-haiku"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "858334c7a7f0fef86f1627031cbbd637e24c61721bacec962d6ae87ea5e15171",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241022_tools_claude-3-5-sonnet-updated"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "97cd97724f6d8d9025450d37629d693dc9d190cbf7d70dbbdb86e81c748108ab",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241023_emergent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "651e70b8a9d7d166f153aed7643cf69f328d1e62b360012afd508c7ff48f8ea3",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241025_OpenHands-CodeAct-2.1-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3d63fa04b8ea20decffe8f0e553d61dc38d32f8ea25adfa19fa2c0d28098ee59",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241025_composio_swekit"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "dd40dca004012dad0f059a25539243ae1ce06e78836693baae3ddf32a2cc5a05",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241028_agentless-1.5_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "1bfce6e2fc8bf4c1358df73edb8b180aa3f626802b3faa5a3effc6ea72edb7f4",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241028_solver"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "349c2d4c99eeb65ae7706d66e96d005da4af0db6c47b558640e183f388e23fa2",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241029_OpenHands-CodeAct-2.1-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "8cb6471c70b40e8390837b7c3686b6309a65c2ceb214d76216cdb276aedcf5d4",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241029_epam-ai-run-claude-3-5-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f251242f6640b535207dd89114e738eb653e3f5cfd6f162d3241d8032a39fdc9",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241030_composio_swekit"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "7415b8a6eb09f5bf5d91f784c6d7cedf42676bf003ebfae10fb8c73096533899",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241030_nfactorial"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "8d4fdebe27265a8cfd0e158cbff21abefad5ca5b23ab98d9ce5ee8ea8fdf6357",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241103_OpenHands-CodeAct-2.1-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "4c8ae0e5bb5c17ba69e0b3c46046d0bdd1432c9cc746cdd0ddafb51efd8ac2e1",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241105_nfactorial"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "60404377e7135853a0fb5ea1f156ba092ebbfe7a898aaf33b327a0eeae12dad9",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241106_navie-2-gpt4o-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "d1333b60e72b7640b22b914183545bb37007bd0b0540c76fb8de86475380ba13",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241108_autocoderover-v2.0-claude-3-5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "aaab146b8bd445bf89243b8d8c05a8d89c92cd39e38f12aecee33315d2698ac5",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241108_devlo"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "2ee8fa365ed33424f27ab49b0737bae616ab85327cf649385c84f1d985f3c83d",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241111_codeshelltester_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "cd8d8a8ef456e447999080a39bdba3c98cbc200606b4da0bd97f317f4a806675",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241113_navie-2-gpt4o-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "e048c82bd755879cd359f7b7ce5665d0cfaeb1d55110ac082384e3069b8a2b03",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241113_nebius-search-open-weight-models-11-24"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "2e2adb5ca294a2353ae17cfc283f40d0cd52e938bf6bbd65bfbb06f9095b8c62",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241117_moatless_claude-3.5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "278b879ccfed63a44295bbf78d7c7b05bf774c4df721e3c9530c6faf20c92121",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241117_reproducedRG_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "6132e275103814cfebaa95c7bbb769856beb3fe086d8622fa25a5f560c9aa080",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241120_artemis_agent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "601a1767f8a1255d71af49b2d41163d1cd44295dcf6f0cba0aea88b4629e9d67",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241121_autocoderover-v2.0-claude-3-5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3a67c6668bb5c91eda1fca758f837650fff959b5fcb81f40e2306ce3428e9870",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241122_devlo"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "a2cd4cd813d82c7ea738f33fb532db0c06d30edb4c017af4e4c007b653ab0cdc",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241125_enginelabs"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b8fc3d1add893287e0835a435c5d2a564a61f4a3d1b90a17f58170c5d6f631f7",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241125_marscode-agent-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "dd5383b4cd7918a0a34d80104079520be09999030daf79ffb85592100baa02d7",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241127_globant_codefixer_agent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "aed5e449bd9b500f2da98f8d8458794eba6553a0b2744b45b38c7b4d18aa24c4",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241128_SWE-Fixer_Qwen2.5-7b-retriever_Qwen2.5-72b-editor_20241128"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "e0364a53523e9486eebbe09fd2b7e9957ff85a7231d6a0a24f4bc46b5fd3a492",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241202_agentless-1.5_claude-3.5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "57c3a5fbbc0f66f984e3d8425e581576fb485f577db03ec0845e4867831f4f5b",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241202_amazon-q-developer-agent-20241202-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "aa9852d6a4bb3482a4e67c101e08fe3e92521fbc302aec930af9deffd22f269b",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241203_KortixAI-AgentPress-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "99c7aa0f6746e27d3d4d67577867fc4f6073fd50fb64284a38d601e31b56f6f5",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241207_kodu_sonnet_v1"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "fe27229cc501affff788c9a4a4cc375c76e254d137ce1d243e96f30de6a2e905",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241208_gru"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f481106059e69daac59a0c6e0b7234df3d91c135d7d2a01074a79f30c6010ba4",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241212_epam-ai-run-claude-3-5-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f6dd6a030d2661ad5b98630f546485e39a351eea5a2a6194fcaef8186e7891c6",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241212_google_jules_gemini_2.0_flash_experimental"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3d8f8e6d4e88c48655d5f71f4ab3f54d67913c7116edd2ba8d6cb16c8806398a",
+      "split": "CATALOG_DEV",
+      "submission_id": "20241213_devlo"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "c4799a164e080ea82e45e87edf60879ad802a2d4c829f525216f133c17329ee3",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241220_PatchKitty-0.9_claude-3.5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "7f5ec9d45e2ff774ffff864355aeb8bc141a16a8f6aa0735e2224d1c261bbb46",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241220_blackboxai_agent_v1"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "4d4e67a06aedfe419c16e90e18ea40f1300b2b204ede639bad54980cf4511e0a",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20241221_codestory_midwit_claude-3-5-sonnet_swe-search"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b7fde2533753c15fda5654708a95e0ba4523e471e3aa4daf09c66ad17d72b60d",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20241223_emergent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "bb3e36a50bddade82448655cf315ab4e610b8523a778db74992861035235ba00",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250104_codefuse-aais"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "52576a0771826e4eb0b6f64d82b601c98a9d8b6931da1ba60e4819711a8da8bd",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250104_patched_codes_claude-3.5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "fd501a9190abbd7c69f4cb1fd27ecb9ba6ab1125ecb92294f8a6f9ff675a9b73",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250110_blackboxai_agent_v1.1"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "3a6b30b8370711bd82eb71705d4c6055b154b3420f2e8cca6679e3276935a6ce",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250110_learn_by_interact_claude3.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "dc186b9141baf91e9e6d4d2684dcfc050a95b704873bada7ddd5c16d09a9963b",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250111_moatless_deepseek_v3"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "31c744155f4e8a43752b50925259dbded9d8c266c0be672b66c83aed36e86775",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250112_ugaiforge"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "885d465c8b36ef8f913cd51c55d810235b0ec245eac5c3852ae5eac3c36e0e8e",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250113_OpenCSG-Starship-Agentic-Coder_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "0186e79e3b5b8317e14852521d916d52359ede50cc682ada24c302aece6dddd0",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250113_OrcaLoca"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "a5b7845661b4b7f63c829c1f5c31a775d567e9df106daf094ef170609607e8a0",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250114_Isoform"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "7a57b66afc878904a101676a21fdaeb8c6616561060175e763ff7496bd3494da",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250114_moatless_claude-3.5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "156e676aa6012a19b0e954438fdc8637a7a3a30cdc6f52e2bdcdc1e70b772cbd",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250117_wandb_programmer_o1_crosscheck5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "790e099e4b2a738ebd863950353c373599272acbe51153c5f846412c1e66e976",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250118_codeshellagent_gemini_2.0_flash_experimental"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "0857f311849ba2c3780a748ceaee03d8414cbdd3790bbb5cad77daaa29a2778e",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250120_Bracket"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "abfcb8f603a859e10a941d34c92846a8af14528172d49870aebd5edb2cf12fc9",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250122_autocoderover-v2.1-claude-3-5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "e964c55be451831924dd88708c373448a212608244b0f5c7e6e86463d3218860",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250131_amazon-q-developer-agent-20241202-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "2e06add02d613b094c3006688b01301b6af658d1351e0eb96047a34476c27296",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250203_openhands_4x_scaled"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "add6132323214bc082e2a8fa24dc67722bf4f8a6071db2fed7ee23c097f45146",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250205_dars_agent_claude_3.5_sonnet_deepseek_r1"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b2618dd2b872eb016ee266035aa4c1a3aef93a505c9fd91cd3ea900b8c51b342",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250206_agentscope"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "bb7ae653afd3fc517eb667f8ece9449171a3874847f84ba17b664cce85c4a6f7",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250207_aegis_o3mini"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "3b40282b9ec425067cd8884ce71fc029584adb0a4fb34c8e49375534eade92b4",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250214_agentless_lite_o3_mini"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "490dc0229815749528b52d04d91066f860cedad1e1a6e70dae7ae53d227c15a6",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250224_tools_claude-3-7-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "54024921511fff22c8706f082102f847fe9ab4e8b9f8540629fd11bf18cffb58",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250225_sweagent_claude-3-7-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "82b391158ef5d6e4f8458d16848220694c6e3869c383e79061442eff939436af",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250226_agentless_lite_claude3.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "2564b050a35c6585dae32d9b13d10bc773fd56e1dd64621f12e5d94fccc4b1c5",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250226_sweagent_claude-3-7-sonnet-20250219"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "de6cdf8ed03bc5a3f2bcd5c70809891b45518b77e37d554ffe7987dc400d0449",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250226_swerl_llama3_70b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "81399c2822631a287c10b0cb6aa6c6793a40ac5c1c285df1ad2e035e60306a20",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250227_sweagent-claude-3-7-20250219"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "e8f41f61908b42f2540690fe0da08ef5ca492011a838a371c58c77cb504a5240",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250228_epam-ai-run-claude-3-5-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "ae3db3b0adf6f5c7a6b67a32c8c6c4758fe0a6d38ca82aa753e9806ab9ab37fa",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250306_SWE-Fixer_Qwen2.5-7b-retriever_Qwen2.5-72b-editor"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "7b03d2f83b4377d0970ab62904808ee837456db9a63d87d56a4bfe8c1312b9e5",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250310_codefuse-cgm"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "19b2c1468fb31e3ef50c705810ff4f715a65388caee3cb087b95a9a3ac8ae4f6",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250311_zencoder"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "1459c6b9d89d0a7303393523a9b277e9f682996a510b2d9a4cb19a6f8efc1494",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250316_augment_agent_v0"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "5ffd759abfd055301bb154630abf7e1792e1a20d837c13c44c815169342066f6",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250325_globant_codefixer_agent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "242cc6528e2b25e34bb21e36f7dfae70ab7e78342fa5c423a4d534113b8a381f",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250401_zencoder"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "d3a891f390536a4eefca08ed5cdf97575812915a2885e77f4745887c22679605",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250405_amazon-q-developer-agent-20250405-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "bc1ca429f0274fa7049c06e71a79ef7f5407142298b80c09326abcfc127b2abf",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250405_swe-rizzo_claude37"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "48476e8a4072c8628201b8ffb3c9f89c1ce2d06121bf1971ce29fa22e66e849a",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250410_cortexa"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "0e3571fc8d4499ccd77383f5451380bdfdb75fa2a49bae2974b4765eefc478c4",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250415_openhands"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "5a4abcce92581150ddf46db81a3af19c1bfad09952c87170cc00270b7a9457dc",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250425_Refact_Agent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "80001d5157569d2a924127c807e678cbc74993155e526d9b6a448c2961c0a6d8",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250430_zencoder_ai"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "cffa6c8915150339178d527b1cc3c26f7c61d14c3add6b494fd273a7be6530e6",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250503_patchpilot-v1.1-o4-mini"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "daae9ac19d2b5551acc7888e7db3c29a5c41c4070a9c26845f2406e767994279",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250509_Lingxi_claude-3-5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "a7c735f9b2f08947b1cabf0eee40342e9251601485e9daf104976779f7aa4461",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250509_OpenHands-Versa_claude3.7"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "a35c3472b476664988a1b029d90e6536108da78cbf7faddddfa803da231cfaec",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250511_sweagent_lm_32b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f3121072a0d983e588ea54b94ff2cb2cac573d2ce98672cc439493928361529f",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250514_aime_coder"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "aedf6256773ca7628e991f750e549cb3b68b034835c4e5772a078ebfd3109eae",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250515_Refact_Agent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "cc73304234dad3b88ef947b395bdf6a2b347f99d4fb3a2249d168dad2cf7ece4",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250515_codartai"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "9e148426edc9f8997b38c562e5a2523b9644a9ff02f2113a2a84270e3c83da5b",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250516_cortexa_o3"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "d96f18361a3b4914ae142398080becb34889d49ca5fe25f04bc2850383f2a00e",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250519_devlo"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b7b7b4223aeb32a102f25a84a6fab30f065eb942acc294cc58c18f22228319fb",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250519_trae"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "3ef393f61266bcd12e72601b233b39c9318fd77c01a754c44c74347dd7a2cbc7",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250520_openhands_devstral_small"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "e47b0da87a925648da747c0abf76d52a3d07c3334a90de07ccbd6f4465294e72",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250522_amazon-q-developer-agent-20250405-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "a4776f485840474ac9e32b8fc6214aa75fbb026513d36240f908629926832bc5",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250522_sweagent_claude-4-sonnet-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3c7c25c7f85639dede21f2a2cebd0263b99b5ee91d383c3b1b14ab2cf3ccf9f1",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250522_tools_claude-4-opus"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "68082d2a80f7164a726ecc20d6d5572046e74c9a28e9e17c16e362eaa6d77375",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250522_tools_claude-4-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "fbd1b4c8e66e22dd8c44903e7ded8400e08fa61c35b5e007ec4729c41d25d858",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250524_openhands_claude_4_sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "724539d0c35480e6a9de5fbd2bd0a825c1e987938d20886f92d72f0c7fc8222e",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250526_sweagent_claude-4-sonnet-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "1e476e4e447b6b972a1b38c1795d7caa8515d8d8ecdbe0c86317eabb38348a4a",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250527_amazon.nova-premier-v1.0"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "783f61e721b07db7d886c9d54e5f4d0f2bc85798442f30370e2a690e20e1b514",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250528_Codev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "b727aa73498769448780f16a1eab6c98ed6f4389f6b5bca8b72341bfc90785a8",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250528_OpenHands-Versa-claude4"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "ff52e6c39f5285ddbcae61435db5452fe46f2d8ba37e995f9919c8ddd4bcbcf2",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250528_patchpilot_Co-PatcheR"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "acfa197396fe3c11f0b2b6da9808a2923dd32b789d4c07b175de0dbd3c721d38",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250531_GUIRepair_gpt41"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "bb02751ed31c1888ff4e1cf7baaf3b9a659752ffb3447c620b2dafc3f83dadd4",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250531_GUIRepair_gpt4o"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "ccef89de4a3882eb7c43e1a21d72bbd62611316dec89fbce6736ce8434e5f54d",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250531_GUIRepair_o4mini"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "1a23868d509d625027a358449f758d468e60aea53b825ce3fdfec53f7518d47a",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250603_Refact_Agent_claude-4-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "25193075a3d20f7edee84953311078913a35509a0eca11b9d18f5a706fbdf0c4",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250605_atlassian-rovo-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "0d7fc81efa6a3c05ae39314aabf1890d92a8a9a405703a3f11af6d609201ba86",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250609_KGCompass_deepseek-v3"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "725f10875430cf547240a25be85142271cd28aaaf96e918419887454a5115331",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250610_augment_agent_v1"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "3228adfafab498b3db4a73dfab10881a3c61da7cb787257e29138c44aeabb05b",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250611_Refact_Agent_claude-4-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "59234004a36ed92297f07b34fdf797adc3583618364af36fb67fff4a973ac3a1",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250611_moatless_claude-4-sonnet-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "af5f60e4494b24a1f78e47b8a56beb9586a82778b3731f8127c6fb1b7ebef34a",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250612_trae"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "d01a9283aea61604bc7700fbb61df61a8c43e34f987f774ebbce785ed52e42bf",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250613_ExpeRepair-v1.0"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "9a31a36e3e402d60fe5747d505930634e221d500834fbdff83e790e629a9bb91",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250616_Skywork-SWE-32B"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "23f4803df608c7a775df61e8d473775a53e3829d6bb47d9169a7ee023134e20f",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250616_Skywork-SWE-32B+TTS_Bo8"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "e6763238b17cec46c60e7bc9f89abd58601687affab3f949a0ed3b2cf2935cc5",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250619_KGCompass_claude-3.5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f414856c923586c696560c13c8e13aee9c05e8687610cd462702cdaee7a71f77",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250623_warp"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "ba755666e2683e4383bb04874096411387626540835cc21c9b754898c074c532",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250625_ExpeRepair-v1_claude-4-sonnet-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "618a7476ff918ff8f47c81931dfa943f20643aad632b8d1274b67aee5ada4b14",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250625_SemAgent_Multi-v1_Claude3.7Sonnet_Gemini2.5Pro"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "1dd918028b6f74855d5866671180ef2106126c05e0db5a8de2d5a5e7548a9a3c",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250627_agentless_MCTS-Refine-7B"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "22fee023d897b28cfe8c98170d79c825101d2971caaa8113e80f60fd975e737b",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250629_deepswerl_r2eagent"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "625b8fadd2707b620902af4e0133ef498a9da6ccacce50e660bf63ebce0cc524",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250629_deepswerl_r2eagent_tts"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "d9cc94417ad1fd9f5825de0392a5204b614bb574b75b34902642f3091b4ecf46",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250701_GUIRepair_o3"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "67d56298f9807f23567d9f459a5e8b45734d05574896152e1f54590155b44794",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250710_bloop"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3fce8265dbd2bd88cb18c964e6838aee402cf4be02cd169fd01297d71c78ca14",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250715_qodo_command"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "094c3f2add4e254f47a0cf749b9404c103e223cf8aa60655d4df5a63347d28ae",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250716_openhands_kimi_k2"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "ef96033fc31e965d30efd3c58b13713d612fc6cf35ce50734d62108d3944cd59",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250720_Lingxi-v1.5_claude-4-sonnet-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "2b21ce6d51917d1d0718db385b336068476aedfe843691ab7fb1c4f040cc081f",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250720_mini-v0.0.0-Llama-4-Maverick-17B-Instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "366305006e59a2248c710d6dfe37cb1a3c03b91c70005d470687092481f8e704",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250720_mini-v0.0.0-Llama-4-Scout-17B-Instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "e89f3cd1a253b2cd1bf92c1939b8a84fd16487ff233fb8ce39678a0d9c6e00af",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250720_mini-v0.0.0-claude-3-7-sonnet-20250219"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "630e2aa4292a0c5b920965b4e66ce7d4dfd12b796fd98ccfce4b043fbff2fade",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250720_mini-v0.0.0-gpt-4o-2024-11-20"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "77f0e2cb44daa3aeba88b320245628ab492abb3058f5dc5f9a9bb5424118297a",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250720_mini-v0.0.0_gpt-4.1-mini-2025-04-14"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "51036a346f753d5f759bbddf302b870fc187f6b9cbb0a900f9370801bc0e8924",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250725_sweagent_devstral_small_2507"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "1e6334a5723c20b4a3ff7c04097fd66313634546a1c330425d6c09e5f78deca6",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250726_mini-v1.0.0_claude-sonnet-4-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "6be6df4bff0a46c83f01733a6a72daa68ecdfc12254acd5b319033c6816954d1",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250726_mini-v1.0.0_gemini-2.0-flash"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "0a985fb58678d478917d1ebc3c440616ea2a0eb9c26975f2c266a7d920748ebd",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250726_mini-v1.0.0_gemini-2.5-flash"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "45601fda2ceb49b188da41b685a5079f31dcdf893359ec2a085c8282b4c09afd",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250726_mini-v1.0.0_gemini-2.5-pro"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "6cfaf4d13be853144b16bae88de29e74413c51ee1c4f9c8f89f6b573f77e11b1",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250726_mini-v1.0.0_gpt-4.1-2025-04-14"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "8411fed4b3cb853ac832c7c80e411e1db59d2fcebce3bb4c9301a77b21e2f2d2",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250726_mini-v1.0.0_o3-2025-04-16"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "8d19a83b1ad52ca3ca082c5f6f9c9ef213a4aaeda7d7b902e90c53eae5932b60",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250726_mini-v1.0.0_o4-mini-2025-04-16"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "c04635a6e98dd85c844d22dc25bfe6d6d33d68e06167cd8404e78e72aef5f949",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250728_zai_glm4-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "d0d4fe3069296f3c3dfc27e08cc77262ff4b6f55e941195ab89d39bc68c2a487",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250731_harness_ai"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "a1a81152a20fe4f32b8530587b3a3addadb00733dcbb1ae980131814f71e69dd",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250802_mini-v1.0.0_claude-4-opus-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "5980bb9278a5bdb09e98ebdbdab195b02493828a8cfc2744b00766e900cbcd5e",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250802_mini-v1.0.0_qwen3-coder-480b-a35b-instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "884f9458898e198c5af2d9ec1bb5cff7f67105afd20024de6fb4ecd18b8eb5be",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250803_mini-v1.0.0_qwen2-5-coder-32b-instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "a800d1bbce731d006f6c94b8908d9c0051cb0bc4c5d81e74886c36a72b005eb6",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250804_codesweep_sweagent_kimi_k2_instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "46794320942d487c5c7b630cc77425bca3ae42b1cf6126e21fcf3b5ccd7b2f60",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250804_epam-ai-run-claude-4-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "0b0d17398bf6702df55fa3121f0221e6e2eded916934b95dd665450748614e07",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250805_openhands-Qwen3-Coder-30B-A3B-Instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "1967a79936279925eca4bbd34571532235a66f3c3ca51400aed21cef96b32ddd",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250805_openhands-Qwen3-Coder-480B-A35B-Instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "0f6d0c34ffd743d2fedad787acd3e5babd35e7c35629ddba336d0e80901f5510",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250806_SWE-Exp_DeepSeek-V3"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "2406a092b5f1d989e64c2c367ca2f78d36717e14adf44e4812c84e92b2ab2cf7",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250807_mini-v1.7.0_gpt-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "99c8af0d71854bd49b060376532e3318aa8c86d40a993fdf584519283322490b",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250807_mini-v1.7.0_gpt-5-mini"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "515433a22dd5e05047100cde4f961f10e0868bd02cdf3cabc6ebfabc3b59c247",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250807_mini-v1.7.0_gpt-5-nano"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "1fda255abfedcbda79774f8e61f82fb5ab09785a7bf73bedbd8845a64ade7930",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250807_mini-v1.7.0_gpt-oss-120b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "f6fd1fc1962a7d3afd4e7acf4f165b81e234a413c5daae5aa57bb9c832a21af7",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250807_mini-v1.7.0_kimi-k2-instruct"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "29b7ab5deae3757669a465bb67251de7414badba7adbda3b92edb74e32758946",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250807_openhands_gpt5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "607e306eaf4dbed189662370a6ef51f95b64b3d34cc98011e69759e3d1841ac3",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250819_ACoder"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 4,
+      "group_hash_sha256": "b4b3216e5ea3570351110dc5c85ab006c90bf197c631e3fbe684c8dc700df271",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250822_mini-v1.9.1_glm-4.5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "c97a1cf87156c5206e5d60369e813525bb95a05c717ba666954bd9416ec4504d",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250901_entroPO_R2E_QwenCoder30BA3B"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite",
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 12,
+      "group_hash_sha256": "0881bf1204a18a9658e6d0f5e0927b518bbcef4d93d5a675e0c43b869f34dc45",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250901_entroPO_R2E_QwenCoder30BA3B_tts"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "99e1f0fa270b8f07286306cc6b88ab51445fd6d9b1f32b02d7946bf0eaf4592d",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250901_warp"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "fee363d1d1e08446ab0720db24833c8027aab05d5dd2642860703b30226cc874",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250902_atlassian-rovo-dev"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "84522d64ce0bc4bf75412db773c449adf5afa89ce2ac9933c37018fcdf431315",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250906_KGCompass_claude-4-sonnet-20250514"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "lite"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 5,
+      "group_hash_sha256": "6a0d1a513d64c265204988c1728153c15f465f952e3b7224e23a6a495411747f",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20250911_isea_claude-3.5-sonnet-20241022"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "213f2f182c9ad84d10ee0df4096a9e5a62481aa9c7ad50b7f3001959191fcb6f",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250915_JoyCode"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "0531929b51d6314a5abe410a8de4eb8f1a98de990f28ae0299c4c7900387dfa8",
+      "split": "CATALOG_DEV",
+      "submission_id": "20250924_artemis_agent_v2"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "814df2cf735da184db29a798d5cf4b47aef240bcf79f654d46cc68c63c730290",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250928_trae_doubao_seed_code"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "cab0c0f0cf82265d3531016db468e9e4fbf049aaf5c293cdc5227ef9db2c1c18",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250929_Prometheus_v1.2_gpt5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "8800eb8d28d72b96be03f3e7270ae115cb8bb523957d094e5b0265f554197cdf",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250929_mini-v1.13.3_sonnet-4-5-20250929"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b51ebbfd9f77582394787f1430fab1ff770813840cf48e3c144a38a548a1d648",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20250930_zai_glm4-6"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "0e66131c32fa1b049df306063cb372acbb34b0131312a57c55a46dca2819c828",
+      "split": "CATALOG_DEV",
+      "submission_id": "20251014_Lingxi_kimi_k2"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "ae0a00cf25ee4feacf60ab61ad90c5c149620a8a0016169eb8c1bad30a026a3f",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251015_Prometheus_v1.2.1_gpt5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "d9f6352b63af99a8894692befe522a3828dc77aad26f318d337de1e22672309c",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251021_SalesforceAIResearch_SAGE_bash_only"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "f5739538ec946b01ea9bd378ea249884f414b07ad9138371ab8d453bae955233",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251027_salesforce_SAGE"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "7839455171284fda24dde91bf2593832b1139632bc05af8ba44a7c795aa4eb51",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20251103_SalesforceAIResearch_SAGE_OpenHands"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "3090e7197777e8e68387111de9c86275c64f1cdaa6beda8732def277dc53961a",
+      "split": "CATALOG_DEV",
+      "submission_id": "20251103_sonar-foundation-agent_claude-sonnet-4-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "2348f0c0d40b6d445aeb783da9afb8ecc6341f536a4e97a5a7416ddcfb2a793d",
+      "split": "CATALOG_DEV",
+      "submission_id": "20251110_frogboss-32b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "73240cd5a6cfd99eebf697b341d9400e03ebdcf18075ef785bc1cc2b8a197cea",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20251110_frogmini-14b"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multimodal"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "afa744648d71e4f333b5e8f887fc5838a0ef00c7155934c5af4a86b3b40c3f28",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251117_codefuse_pycfuse_svr"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "593ddf501307650f05cd7481f59eac13beb4054e2eb191efaaf20a71850d8a6a",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20251118_mini-v1.15.0_gemini-3-pro-preview-20251118"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "c7091683bb1c61456c1bcf278359fbd2229ebc684131d522e8f113560b14a01c",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251120_livesweagent_gemini-3-pro-preview"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "d406c7b60d168d3c2c6286c2ce73b3204e34700372824531a031de36ab92b19b",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251120_mini-v1.15.0_gpt-5.1-2025-11-13"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "f4502420a8c400b829cb7d1795ea9519e227dfe9fb40f7d540988243cb73ac87",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251124_mini-v1.16.0_claude-opus-4-5-20251101"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "4add7c8bfb0531943a875b88e1a2f07756724362d6143fc59176c368be023f5d",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20251124_mini-v1.16.0_gpt-5.1-codex"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "9fef0dc5019768272a53be78b749784519748858893d136257424b83d31fb9d4",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251124_mini-v1.17.0_minimax-m2"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "7b0aca8f2ef227bab6aa235b298c5b53cdd8a2326a9a9706da9cbec089b5a53e",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20251127_openhands_claude-opus-4-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "f5f78d3c39b79279359c4308089c99e076a290141461539394a5b0bbb2754b12",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251201_mini-v1.17.1_deepseek-v3.2-reasoner"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "4efa50e432279f0c397735ffaf5e2d4f7f17f56c90adf010a234b66b8c4f3638",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20251201_mini-v1.17.1_glm-4.6"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "8f87110e0d456d1859dfe39f5cc3d48044c80a26eae61980bda3704e642a0261",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251205_sonar-foundation-agent_claude-opus-4-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "351498a55aa1a28d4573cb13be9449f3af03979762e4a4fa2485ec958d7e93b2",
+      "split": "CATALOG_DEV",
+      "submission_id": "20251209_mini-v1.17.2_devstral-2512"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "62c08d4cd44a84dd7b9af5734d16b583ab2f6e96099a38e638c7ad48aa2856d9",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20251209_mini-v1.17.2_devstral-small-2512"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "f1bbebe3801569445fcf329a1932fe4d81207194f72536e944deadae85c5d07c",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251210_mini-v1.17.2_kimi-k2-thinking"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "bcc402475aea64fda21f8bdd967455fc4caac59cd3cbcea4f4f4a5adaad05d62",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251211_mini-v1.17.2_gpt-5.2-2025-12-11"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "873c11fd4d75095e075e07ef615b825c97ad701b35bfe400cab5c17a1c92d6af",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251211_mini-v1.17.2_gpt-5.2-2025-12-11-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "b8d317059efc6d115e84673ddf9df5fe2672eade41fc7c39b190c13223a3305d",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251215_livesweagent_claude-opus-4-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "test"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 6,
+      "group_hash_sha256": "fa0b71e04a969cb5535befc7c1e411aff03728bfa50dedd6ade89f41d47fcb20",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20251219_sonar-foundation-agent_claude-opus-4-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "2f68b8cd3de27371ad8cc04f323fd24fc39f2033e378fe21aea4082fd988560a",
+      "split": "CATALOG_DEV",
+      "submission_id": "20260213_mini-v2.0.0a0_claude-4-5-haiku"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "a88de4e3684d68460a9c4da780511d25cf3348ea4fed4aeb8c6fa6836f8c66e2",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260213_mini-v2.0.0a0_claude-4-5-opus"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "ac88bfb34af2bb935b84460a32d64386975e733a8007c0ef4462e789d61f4bba",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260213_mini-v2.0.0a0_claude-4-5-sonnet"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "32e6dc11ea132d27ec638bd953c79118ac8194398e1974eb9920b6f5debb26c1",
+      "split": "CATALOG_DEV",
+      "submission_id": "20260213_mini-v2.0.0a0_claude-4-6-opus"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "fe05686cfdc9e784507572e112aa4ea555c5ae237fd57fc0d99b4c863a91b640",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260213_mini-v2.0.0a0_deepseek-3-2"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "5bfdb6a2a475e3ad53c5b519590d9d57103bbb11550b41921c8dd7f129a7b3e2",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260213_mini-v2.0.0a0_gemini-3-flash"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "dbd696cb36a765fdeb23b1a345e5781bc1242046a9bc3424bee63e55834079bc",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260213_mini-v2.0.0a0_gemini-3-pro"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "f4952edf339e904cc2ae1575aad3f3b6f849135a803fa135f7a86f4f9c0657fe",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260213_mini-v2.0.0a0_glm-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "7c53ef29caa24e428fdf7b9839f6829347f08c6e0dd1d3b5780bd5f56772bd1f",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260213_mini-v2.0.0a0_gpt-5-2-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "27d2ddac099e9800e0ad31cbb764db5b18132d3bc8a43bcb2591f485e6e0e82f",
+      "split": "CATALOG_DEV",
+      "submission_id": "20260213_mini-v2.0.0a0_gpt-5-mini"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "cbb28ddf9bff2149b91254ba311b966e82fda2db841f8f63de3dee149bf0b808",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260213_mini-v2.0.0a0_kimi-k2-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "62f778062521940ac5ee83fcac37796644fe3a67faf7af16d721db4c4955a486",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260216_mini-v2.0.0a0_minimax-2-5"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "59e2730c02ab53fa557f3911aaf9038b96608ed65b12a71ecaad16ae7699073f",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260217_mini-v2.0.0_claude-4-5-haiku-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "7c59b8cfe9b3eb0448325fba589067a799915cb888f075d773d2d1e002c6216e",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260217_mini-v2.0.0_claude-4-5-opus-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "e9ad19f8f5217b1ef05cbd3ef7b928818c9baa769cff4d2bb3a2bd3a74330ee0",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260217_mini-v2.0.0_claude-4-5-sonnet-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "916851cbb8be8265a178eef0ea08c76a112a8850ba748f33c27315e746807e7c",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260217_mini-v2.0.0_claude-4-6-opus"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "166a89c57743abbdaf5cf6535ff82110a65b79c6117233bbebd5bdec058f0860",
+      "split": "CATALOG_DEV",
+      "submission_id": "20260217_mini-v2.0.0_deepseek-3-2-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "7918cbbc2fac831cf2c28ba1ba4d2ecc544b722bd135670a7af655689e027815",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260217_mini-v2.0.0_gemini-3-flash-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "9f54806112c75fc4a171fa96a2de0c27941a2b55c887a5af67ca6315ed07cfe1",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260217_mini-v2.0.0_glm-5-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "aa998323d964f9cdac22d46c0cc7800f86aee35f3c204398cca8a9dccdded0fb",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260217_mini-v2.0.0_gpt-5-2-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "732e4eb0ba2f6546a55adb20d9f2309fc29c42dae035bea4fd786a05d5abfd86",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260217_mini-v2.0.0_gpt-5-mini"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "2178d7e9a4e93833e498f18333a7663a61d529cdf37d5b6fbca2dda8123e6cef",
+      "split": "CATALOG_DEV",
+      "submission_id": "20260217_mini-v2.0.0_kimi-k2-5-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "08be1d05b5717bf2c7e355ddf9433c3ae5d9d3ac0d31db04d6faf712d2290d74",
+      "split": "CATALOG_DEV",
+      "submission_id": "20260217_mini-v2.0.0_minimax-2-5-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 2,
+      "group_hash_sha256": "c4b9772033a8319c3e08bea072158ade230840b603bfe1682b36e0b36cb655f2",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260219_mini-v2.0.0_gpt-5-2-codex"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "98a59331beb786a4216fe765c9740758418ce0861b800247d2726e64f99553bc",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260220_mini-v2.0.0_gpt-5-2-codex"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 3,
+      "group_hash_sha256": "7ab3a531f0d5d7d06d6e7d1d7b3d88f376d64e45d61b7de2693f257c891004ae",
+      "split": "CATALOG_HELDOUT",
+      "submission_id": "20260226_mini-v2.0.0_gemini-3-pro-high"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "verified"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "9d41e754ebb25a437e0ca46be4a8497f879b5ede91fc10f0056034bf857ce90b",
+      "split": "CATALOG_RESERVE",
+      "submission_id": "20260901_mini-v2.4.2_gemini-3-5-flash"
+    },
+    {
+      "chat_transcript_file_count": 0,
+      "dataset_partitions": [
+        "multilingual"
+      ],
+      "evaluation_status": "CATALOG_ONLY_NO_INDEPENDENT_CLAIM_LANGUAGE_REFERENCE",
+      "file_count": 7,
+      "group_hash_sha256": "155d57262f8e39e17191392b60cf461da200f16a37971ea3fb8a6dfd66241309",
+      "split": "CATALOG_DEV",
+      "submission_id": "20260902_mini-v2.4.6_gemini-3-5-flash"
+    }
+  ],
+  "chat_transcript_count": 300,
+  "counts": {
+    "CATALOG_DEV": 70,
+    "CATALOG_HELDOUT": 67,
+    "CATALOG_RESERVE": 148
+  },
+  "heldout_text_inspected": false,
+  "independent_claim_language_reference": false,
+  "protocol_id": "PGOP1_RUN_001_PRE_RESULT_INSPECTION_SPLIT_V1_ADDENDUM",
+  "schema_version": "1.0",
+  "selection_rule": "Whole submission folder; SHA256('PGOP1_RUN_001_PUBLIC_SUBMISSION_SPLIT_V1|'+submission_id), first hex nibble 0-3=CATALOG_DEV, 4-7=CATALOG_HELDOUT, 8-f=CATALOG_RESERVE.",
+  "submission_count": 285,
+  "submission_partition_directory_count": 326
+}

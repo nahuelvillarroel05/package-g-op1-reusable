@@ -1,0 +1,38 @@
+{
+  "schema": "pgop1.run001.level-b-utf8-environment-receipt.public.v1",
+  "status": "HASH_BOUND_TO_COMPLETE_UTF8_LEVEL_B_ATTEMPT",
+  "attempt_id": "attempt-003-utf8",
+  "protocol_id": "PGOP1_RUN_001_LEVEL_B_UTF8_001",
+  "code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+  "prestate_sha256": "ec37c6a4dda3d0470145ea26c87f2c20332bfa7a4736c255f7bbb82ac9bab659",
+  "freeze_manifest_sha256": "87e618cd31a2b0034926f23ed13b0c5c0bae761bb76050607ecfa06a5ecfeabf",
+  "event_pin_sha256": "645a061c7b42e6092b05c6f590d9d16318989858e9ea9adfb9dad0e321e0e3fe",
+  "event_log_sha256": "ebb1b30027ebf7f7bbf8f3f09e6c51eb31fc59136993d9bfd6b610e2586ca6f0",
+  "run_manifest_sha256": "aa8566d20ec43b8495d177fac31a061c84ad4b14a5c6a076ea79440c8679b26f",
+  "execution_log_sha256": "c4857d949d01f8c894603d274e59273da31e8c9a6d6e1344a0f21c4fe46c92b6",
+  "input_inventory_sha256": "6ff897fb78cd6622a2fc76d8b04a2ef810fa2b4aee178d1b0520d69fe8f81e94",
+  "upstream_verification_sha256": "ffbb0f169c08c066b0ae91405e7cce842229205af0c8505c46aff2794e5935f4",
+  "dataset_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+  "official_package_sha256": "83423d149c51d01a9eb526ac4bc2f9418b2428528cd24d5f6d9998f3d77dcc85",
+  "regrade_script_sha256": "3959a8c07d649a60b352df43242a6e2da1aae44de57a9316fedacb86be48ce34",
+  "runtime_prestate": {
+    "python_version": "3.11.9 (main, Aug 14 2024, 04:18:20) [MSC v.1929 64 bit (AMD64)]",
+    "utf8_mode": 1,
+    "preferred_encoding": "utf-8"
+  },
+  "result_counts": {
+    "cases": 258,
+    "completed": 258,
+    "failed": 0,
+    "interrupted_unknown": 0,
+    "archived_report_matches": 258,
+    "archived_report_mismatches": 0
+  },
+  "no_code_or_source_mutation_assertion": {
+    "code_commit_same_as_native_attempt_002": true,
+    "input_hashes_same_as_native_attempt_002": true,
+    "patch_execution": false,
+    "regrade_repeated": false
+  }
+}

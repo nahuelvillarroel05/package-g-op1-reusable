@@ -1,0 +1,74 @@
+{
+  "schema": "pgop1.run001.level-b-utf8-summary.public.v1",
+  "status": "ALL_258_UTF8_REGRADES_COMPLETED; 258_REPORT_AGREEMENTS",
+  "observed_utc": "2026-10-28T16:09:32.447219+00:00",
+  "scope": {
+    "cases": 258,
+    "completed": 258,
+    "failed": 0,
+    "interrupted_unknown": 0,
+    "trajectories_regraded": 0
+  },
+  "protocol": {
+    "id": "PGOP1_RUN_001_LEVEL_B_UTF8_001",
+    "environment": {
+      "PYTHONUTF8": "1",
+      "utf8_mode": 1,
+      "preferred_encoding": "utf-8"
+    },
+    "execution_shape": "Fresh complete 258-case pass under the frozen UTF-8 environment protocol; not a selective retry of prior failures.",
+    "classification_code_tuned": false,
+    "fresh_patch_or_test_execution": false
+  },
+  "frozen_code_and_inputs": {
+    "code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+    "code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+    "inventory_sha256": "6ff897fb78cd6622a2fc76d8b04a2ef810fa2b4aee178d1b0520d69fe8f81e94",
+    "upstream_verification_sha256": "ffbb0f169c08c066b0ae91405e7cce842229205af0c8505c46aff2794e5935f4",
+    "dataset_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+    "official_package_sha256": "83423d149c51d01a9eb526ac4bc2f9418b2428528cd24d5f6d9998f3d77dcc85",
+    "regrade_script_sha256": "3959a8c07d649a60b352df43242a6e2da1aae44de57a9316fedacb86be48ce34"
+  },
+  "archived_reports": {
+    "resolved_true": 201,
+    "resolved_false": 57
+  },
+  "native_attempt_002": {
+    "completed": 247,
+    "failed": 11,
+    "interrupted_unknown": 0,
+    "regraded_resolved_true": 140,
+    "regraded_resolved_false": 107,
+    "report_matches": 193,
+    "report_mismatches": 54,
+    "unavailable": 11,
+    "mismatch_direction": "regrade_false_vs_report_true_only"
+  },
+  "utf8_attempt_003": {
+    "attempt_id": "attempt-003-utf8",
+    "completed": 258,
+    "failed": 0,
+    "interrupted_unknown": 0,
+    "regraded_resolved_true": 201,
+    "regraded_resolved_false": 57,
+    "report_matches": 258,
+    "report_mismatches": 0,
+    "unavailable": 0
+  },
+  "protocol_differences": {
+    "shared_native_completed_cases": 247,
+    "same_boolean_outcome": 193,
+    "changed_boolean_outcome": 54,
+    "all_changed_cases": "native attempt-002 false/report true became UTF-8 true/report true",
+    "native_attempt_002_unavailable_now_graded": 11,
+    "prior_unavailable_cases_now_matching_reports": 11,
+    "remaining_utf8_vs_archived_report_mismatches": 0
+  },
+  "source_integrity": {
+    "triplets_checked": 258,
+    "individual_source_hashes_checked": 774,
+    "hash_mismatches": 0,
+    "all_case_ids_match_native_attempt_and_inventory": true
+  },
+  "interpretation_limit": "Level B direct calls to the pinned unmodified official SWE-bench _grade using archived logs, patch text, and local frozen test rows. This is not an exact CLI run, does not execute patches, and is not ground truth for PGOP1 Level D classifier outputs or a campaign acceptance/authority claim."
+}

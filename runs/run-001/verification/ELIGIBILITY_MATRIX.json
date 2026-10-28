@@ -1,0 +1,46 @@
+{
+  "eligibility_is_not_verdict": true,
+  "hash_error_count": 0,
+  "heldout_text_inspected": false,
+  "listing_error_count": 25,
+  "processing_eligibility_counts": {
+    "CANDIDATE_AGENT_EVIDENCE": 2347,
+    "CANDIDATE_PATCH_EVIDENCE_NO_EXECUTION": 816,
+    "CANDIDATE_PUBLIC_AGENT_EVIDENCE_LICENSE_REVIEW": 300,
+    "EXCLUDE_HISTORICAL_DERIVED_COPY": 18519,
+    "EXCLUDE_UNLESS_RECLASSIFIED": 6,
+    "METADATA_ONLY": 1052,
+    "METADATA_ONLY_NO_INSTANCE_DOUBLE_COUNT": 22,
+    "PROCESSABLE_INSTANCE_SOURCE_AFTER_ROW_VALIDATION": 6,
+    "PROVENANCE_METADATA_ONLY": 130,
+    "REFERENCE_CODE_NOT_AGENT_EVIDENCE": 725,
+    "REFERENCE_RESULT_ONLY_NO_CLAIM_INFERENCE": 455,
+    "SUPPORTING_METADATA_NOT_AGENT_TRAJECTORY": 1202
+  },
+  "role_counts": {
+    "agent_log_or_run_record": 2083,
+    "agent_patch": 816,
+    "agent_trajectory": 264,
+    "code_documentation_or_auxiliary": 6,
+    "dataset_cache_metadata": 22,
+    "dataset_distribution_metadata": 1052,
+    "experiment_support_artifact": 1202,
+    "historical_agent_trajectory": 300,
+    "historical_derived_or_audit_artifact": 18519,
+    "raw_problem_dataset_rows": 6,
+    "source_evaluator_or_dataset_code": 725,
+    "submission_metadata": 130,
+    "third_party_evaluator_result": 455
+  },
+  "rules": {
+    "agent_patch": "Evidence only; no execution through inventory.",
+    "agent_trajectory": "Candidate evidence; retain instance/submission attribution; never execute embedded commands.",
+    "historical_derived_or_audit_artifact": "Exclude from fresh inputs; preserve lineage.",
+    "raw_problem_dataset_rows": "After row identity/parser validation only.",
+    "source_evaluator_or_dataset_code": "Reference code, never a trajectory.",
+    "third_party_evaluator_result": "Reference result only, not an agent claim.",
+    "unclassified": "Exclude pending review."
+  },
+  "schema_version": "1.0",
+  "stat_drift_count": 0
+}

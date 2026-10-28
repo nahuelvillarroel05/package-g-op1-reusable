@@ -1,0 +1,22 @@
+{
+  "code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "executed_once_in_final_frozen_campaign": true,
+  "post_evaluation_code_tuning": false,
+  "repository_heldout": {
+    "cases": 49,
+    "independent": false,
+    "verdicts": {
+      "INSUFFICIENT_EVIDENCE": 49
+    }
+  },
+  "whole_submission_catalog_heldout": {
+    "files": 347,
+    "scope": "Format/record checks only; no independent claim-language reference",
+    "statuses": {
+      "ERROR": 4,
+      "SUPPORTED": 68,
+      "UNSUPPORTED": 275
+    },
+    "submission_ids": 67
+  }
+}

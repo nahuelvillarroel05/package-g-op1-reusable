@@ -1,0 +1,79 @@
+{
+  "auditor_attempts": [
+    {
+      "attempt": 1,
+      "candidate_or_source_mutation": false,
+      "field": "public split uses split, not split_assignment",
+      "status": "AUDITOR_SCRIPT_KEY_ERROR_AFTER_HASH_LOOP"
+    },
+    {
+      "attempt": 2,
+      "status": "THIS_RECORD"
+    }
+  ],
+  "checks": {
+    "all_frozen_code_bytes_match": true,
+    "all_inventory_source_bytes_match": true,
+    "attempt001_blocked_logs": true,
+    "attempt001_no_campaign_units": true,
+    "attempt001_no_regrade_events": true,
+    "audit_a_pin_match": true,
+    "complete_disposition_index": true,
+    "exact_code_commit": true,
+    "exact_code_tree": true,
+    "frozen_code_mapping": true,
+    "inventory_commitment": true,
+    "listing_commitment": true,
+    "protocol_commitments": true,
+    "public_submission_split_counts": true,
+    "source_set_matches_relevant_dispositions": true,
+    "sources_exact_inventory_members": true,
+    "trajectory_split_counts": true,
+    "unique_inventory_paths": true,
+    "unique_inventory_source_ids": true
+  },
+  "code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "code_drift": [],
+  "code_freeze_sha256": "301910f07375dba60cc818853c16c5a046d11b296023ec47c767b7e506f056df",
+  "code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+  "ended_utc": "2026-10-28T16:04:29.317989+00:00",
+  "inaccessible_directories_declared": 25,
+  "inventory_bytes_rehashed": 830354973,
+  "inventory_files_rehashed": 25580,
+  "inventory_sha256": "6ff897fb78cd6622a2fc76d8b04a2ef810fa2b4aee178d1b0520d69fe8f81e94",
+  "limitations": [
+    "Campaign results and public derivatives are still being prepared; this is not Audit B closure.",
+    "The main plan's omitted validation reference evidence requires supplemental processing or exact scope reconciliation.",
+    "Permission-denied directories were recorded, not retried or bypassed."
+  ],
+  "main_plan": {
+    "audit_requests": 266,
+    "excluded_output_subtrees": [
+      "Engineering/PGOP1_RUN_001"
+    ],
+    "sources": 2901
+  },
+  "mode": "READ_ONLY",
+  "plan_sha256": "19eaca08e4bed60ab6d0d5476e055b756dd48ccde3e052422cc7501ef44de555",
+  "schema": "pgop1.run001.audit-b-preparation.v1",
+  "source_drift": [],
+  "source_errors": [],
+  "splits": {
+    "independent_claim_language_reference": false,
+    "independent_trajectory_heldout_count": 0,
+    "public_submission": {
+      "CATALOG_DEV": 70,
+      "CATALOG_HELDOUT": 67,
+      "CATALOG_RESERVE": 148
+    },
+    "trajectory": {
+      "HISTORICAL_DEVELOPMENT_CASES": 12,
+      "NEW_DEVELOPMENT": 59,
+      "NEW_DEVELOPMENT_ALLOW_HISTORICAL_PROVENANCE": 40,
+      "REPOSITORY_HELDOUT_SHARED_SUBMISSION_NOT_INDEPENDENT": 49,
+      "UNUSED_RESERVE": 104
+    }
+  },
+  "started_utc": "2026-10-28T16:03:54.253239+00:00",
+  "status": "PREPARATION_CHECKS_PASS"
+}
