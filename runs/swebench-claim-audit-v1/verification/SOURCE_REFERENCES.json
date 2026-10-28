@@ -1,0 +1,45 @@
+{
+  "schema": "pgop1.swebench.v1-source-references.v1",
+  "dataset": {
+    "source_url": "https://huggingface.co/datasets/SWE-bench/SWE-bench_Multilingual/blob/main/data/test-00000-of-00001.parquet",
+    "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+    "split": "test",
+    "file_path": "data/test-00000-of-00001.parquet",
+    "revision": "846e647 (file page revision observed 2026-10-27)",
+    "sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+    "license": "MIT as displayed on the official Hugging Face dataset page; complete data excluded from this release."
+  },
+  "agent_run": {
+    "repository_url": "https://github.com/SWE-bench/20260902_mini-v2.4.6_gemini-3-5-flash",
+    "logs_tree_url": "https://github.com/SWE-bench/20260902_mini-v2.4.6_gemini-3-5-flash/tree/main/logs",
+    "trajectories_tree_url": "https://github.com/SWE-bench/20260902_mini-v2.4.6_gemini-3-5-flash/tree/main/trajs",
+    "catalog_run_path": "evaluation/multilingual/20260902_mini-v2.4.6_gemini-3-5-flash",
+    "upstream_repository_relative_paths": {
+      "global_predictions": "all_preds.jsonl",
+      "selected_logs": "logs/{instance_id}/{patch.diff,report.json,test_output.txt.gz}",
+      "selected_trajectory": "trajs/{instance_id}.traj.json"
+    },
+    "local_archive_relative_paths": {
+      "global_predictions": "logs/all_preds.jsonl",
+      "selected_logs": "logs/logs/{instance_id}/{patch.diff,report.json,test_output.txt.gz}",
+      "selected_trajectory": "logs/trajs/{instance_id}.traj.json"
+    },
+    "global_predictions_sha256": "f59500bc9a1961d2fd0230f81a712f5f420dfbad88c48cbaedb4756207f4df36",
+    "redistribution_license": "UNKNOWN; raw run artifacts excluded and referenced by per-instance hashes.",
+    "local_archive_base_path": "D:/PGOP1_DATA/SWEbench",
+    "local_archive_path_semantics": "All local_archive_relative_paths are relative to this archive root; upstream_repository_relative_paths use the GitHub run repository root."
+  },
+  "experiment_catalog": {
+    "repository_url": "https://github.com/SWE-bench/experiments",
+    "run_tree_url": "https://github.com/SWE-bench/experiments/tree/main/evaluation/multilingual/20260902_mini-v2.4.6_gemini-3-5-flash",
+    "run_metadata_url": "https://github.com/SWE-bench/experiments/blob/main/evaluation/multilingual/20260902_mini-v2.4.6_gemini-3-5-flash/metadata.yaml",
+    "branch_mutability": "main is mutable; local file hashes bind the archived snapshot used here.",
+    "files": {
+      "README.md": "31ba46857a64ae623100fe7b998a47c98701e55ab2261adcf3add848fe6571d9",
+      "metadata.yaml": "f27d329210acbd41e0c75487c2b76bd9f499475de7a06660b6d70ab05c1c7702",
+      "per_instance_details.json": "9b5386afa009c23742dc99697af43322d6c5d98fbd7294bfd3a4991bd977ef71",
+      "results/results.json": "d57ec5c2bc4df9f124e7af2449eaa06060f4a4d44878bf9574d53d9ac06e4001"
+    },
+    "redistribution_license": "UNKNOWN for experiment catalog and result records; raw files excluded."
+  }
+}

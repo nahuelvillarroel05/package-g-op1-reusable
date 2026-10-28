@@ -1,0 +1,127 @@
+{
+  "schema": "pgop1.swebench.multilingual-v1-instance-binding.v1",
+  "dataset_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+  "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+  "bindings": [
+    {
+      "instance_id": "axios__axios-5892",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "axios/axios",
+      "version": "5892",
+      "base_commit": "ae003913a39f3bdf9bbbd8f71a1ed681fd044d8b",
+      "canonical_row_sha256": "398a3f7cc854bf9e80d605c00f866959d402ae47a0dfb87f9d234f7a5ea9d734"
+    },
+    {
+      "instance_id": "axios__axios-6539",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "axios/axios",
+      "version": "6539",
+      "base_commit": "c6cce43cd94489f655f4488c5a50ecaf781c94f2",
+      "canonical_row_sha256": "0915fd8cc823304eb64fc25144aa03689d1c2454c96ccb2f5628e4dd95d49fb5"
+    },
+    {
+      "instance_id": "briannesbitt__carbon-2762",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "briannesbitt/carbon",
+      "version": "2762",
+      "base_commit": "077657bce453df6992607e5aaa538d957068ae40",
+      "canonical_row_sha256": "abe7c3a217338452dd2740c39865edbbe74759dff3b9937f3e1cf0f66ac3eda4"
+    },
+    {
+      "instance_id": "briannesbitt__carbon-3005",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "briannesbitt/carbon",
+      "version": "3005",
+      "base_commit": "640940f4a9303e458fc29341821395460f32b3b5",
+      "canonical_row_sha256": "58ddf2349959c3383a4d87af883872d4064df3075f228cc2cf696ef6e5f0724c"
+    },
+    {
+      "instance_id": "fluent__fluentd-3328",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "fluent/fluentd",
+      "version": "3328",
+      "base_commit": "07df9a0d850a4f03d95ac82e3d818a90631ad9d3",
+      "canonical_row_sha256": "64b4728c34221eea869c02ce89f5f098553f14ca2d9cca305b9e2125505c29be"
+    },
+    {
+      "instance_id": "fluent__fluentd-4311",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "fluent/fluentd",
+      "version": "4311",
+      "base_commit": "fcbcb567c93f8aff3e817371c18dc98b2a5094ff",
+      "canonical_row_sha256": "0dc102c597beb04f77213cd2e238b9f48cda6c358545905ea6012f4c6e6bb4db"
+    },
+    {
+      "instance_id": "fmtlib__fmt-3272",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "fmtlib/fmt",
+      "version": "3272",
+      "base_commit": "0f42c17d85f26bbbd6a30d71ce8306d371426bfc",
+      "canonical_row_sha256": "e623ab45d747968952248680eb14b5d7eca641762164dc7f0c20839b2e2d6375"
+    },
+    {
+      "instance_id": "fmtlib__fmt-3158",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "fmtlib/fmt",
+      "version": "3158",
+      "base_commit": "80f8d34427d40ec5e7ce3b10ededc46bd4bd5759",
+      "canonical_row_sha256": "51618f3e4128617e310214b9c89c2bfc680644badc3c3d7206fa9580dc32e19c"
+    },
+    {
+      "instance_id": "gin-gonic__gin-1957",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "gin-gonic/gin",
+      "version": "1957",
+      "base_commit": "09a3650c97ca7ef3a542d428a9fb2c8da8c18002",
+      "canonical_row_sha256": "7a238ce7e231dca227dfed846f07f58e716899be534139e334adaa78dd2a94cd"
+    },
+    {
+      "instance_id": "gin-gonic__gin-2755",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "gin-gonic/gin",
+      "version": "2755",
+      "base_commit": "f2bbdfe9f26d84cb994f381050692a9e4553bf75",
+      "canonical_row_sha256": "410fc299263fefcb9b7a214b2bf6646bc913ebec5a80c88a79b399d13b859b85"
+    },
+    {
+      "instance_id": "google__gson-1093",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "google/gson",
+      "version": "1093",
+      "base_commit": "0aaef0fd1bb1b9729543dc40168adfb829eb75a4",
+      "canonical_row_sha256": "0ff33cfc23e690ff45a2bcfc3303e09d90acd94597d0e59c5a19eb16b20776ae"
+    },
+    {
+      "instance_id": "google__gson-2311",
+      "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+      "split": "test",
+      "dataset_revision": "846e647 (file page revision observed 2026-10-27)",
+      "repo": "google/gson",
+      "version": "2311",
+      "base_commit": "9f26679e7a96f0bb9952c326b2d9f79ef03ea9f5",
+      "canonical_row_sha256": "4c0bbc1ffea1d6e05823b7c2e7e25d4b8b18ac98f7dce2e64469cb2a240093e8"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "pgop1.swebench.multilingual-dataset-verification.v1",
+  "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+  "split": "test",
+  "artifact_name": "test-00000-of-00001.parquet",
+  "local_bytes": 1875846,
+  "local_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+  "upstream_reference": {
+    "url": "https://huggingface.co/datasets/SWE-bench/SWE-bench_Multilingual/blob/main/data/test-00000-of-00001.parquet",
+    "revision": "846e647 (file page revision observed 2026-10-27)",
+    "published_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+    "sha256_match": true,
+    "observed_utc_date": "2026-10-27"
+  },
+  "parquet": {
+    "reader": "pyarrow",
+    "reader_version": "23.0.1",
+    "format_version": "2.6",
+    "row_groups": 1,
+    "row_count": 300,
+    "unique_instance_id_count": 300,
+    "duplicate_instance_ids": [],
+    "fields": [
+      "base_commit",
+      "created_at",
+      "eval_type",
+      "image",
+      "instance_id",
+      "log_parser",
+      "repo",
+      "version",
+      "patch",
+      "test_patch",
+      "eval_script",
+      "problem_statement",
+      "hints_text",
+      "FAIL_TO_PASS",
+      "PASS_TO_PASS"
+    ],
+    "missing_required_fields": []
+  },
+  "v4_binding": {
+    "selected_instance_count": 12,
+    "selected_ids_present": true,
+    "all_selected_ids_unique": true,
+    "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2"
+  },
+  "source_identity_limit": "The current official file page provides the matching SHA-256 and revision. Dataset and split labels are bound by that external reference; they are not authenticated by the Parquet bytes alone."
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "pgop1.swebench.security-test-results.closeout.v2",
+  "status": "PASS_WITH_EXPLICIT_UNTESTED_BOUNDARIES",
+  "current_public_adapter_sha256": "3b5246772237a813f86bdd9bab4ab9fb5edd4fabe979dfdcca1dae8b42a2a307",
+  "test_module_sha256": "aac6b90ff361b387d7f2a7002070178a1cee62625275c48d936fcebd7a134892",
+  "final_attempt_id": "PGOP1-SWB-TEST-T021",
+  "final_attempt": {
+    "stdout": "logs/tests/T021-GREEN.stdout.txt",
+    "stderr": "logs/tests/T021-GREEN.stderr.txt",
+    "exitcode": "logs/tests/T021-GREEN.exitcode.txt",
+    "warnings": 0,
+    "passed": 44,
+    "failed": 0,
+    "collected": 44,
+    "elapsed_seconds": 1.75,
+    "status": "PASS"
+  },
+  "controls": [
+    {
+      "control": "NONCANONICAL_ZIP_PATHS",
+      "status": "PASS",
+      "red_attempt": "PGOP1-SWB-TEST-T017",
+      "green_attempt": "PGOP1-SWB-TEST-T018",
+      "coverage": [
+        "dot path component",
+        "repeated separator",
+        "mixed separator duplicate alias"
+      ]
+    },
+    {
+      "control": "SAFE_NESTED_ZIP_PATHS",
+      "status": "PASS",
+      "coverage": [
+        "safe explicit directory entry",
+        "nested file path"
+      ]
+    },
+    {
+      "control": "ARCHIVE_INTEGRITY",
+      "status": "PASS",
+      "coverage": [
+        "path traversal rejection",
+        "corrupt CRC rejection",
+        "expansion ratio limit"
+      ]
+    },
+    {
+      "control": "CLAIM_AND_INSTANCE_BINDING",
+      "status": "PASS",
+      "coverage": [
+        "source hash binding",
+        "patch equality",
+        "wrong instance join",
+        "duplicate identifiers and JSON fields"
+      ]
+    },
+    {
+      "control": "CONTEXT_ENGINE_RECOVERY",
+      "status": "PASS",
+      "coverage": [
+        "fresh process verify/latest/query",
+        "no provider dispatch or redispatch"
+      ]
+    }
+  ],
+  "independent_finding": "Original V4-bound adapter normalized ZIP member paths before checking raw components; prospective publication patch rejects noncanonical paths and normalized duplicate aliases. V4 results remain bound to the original adapter hash.",
+  "not_performed": [
+    "full repository suite",
+    "Docker or task-repository test execution",
+    "official SWE-bench grading",
+    "provider-authenticated replay",
+    "independent operational custody"
+  ],
+  "limits": "Focused synthetic tests cover the listed controls; they do not authenticate external evaluator records or establish task resolution.",
+  "environment_setup_attempts": [
+    "PGOP1-SWB-TEST-T019",
+    "PGOP1-SWB-TEST-T020"
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "schema": "pgop1.swebench.public-v4-receipt-index.v1",
+  "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+  "successful_run_count": 3,
+  "receipt_count": 36,
+  "runs": [
+    {
+      "run_id": "SWECLAIM-20261027T211344Z-9e53e8641ca3",
+      "run_receipt_count": 12,
+      "run_completion_sha256": "e92002f0bb1b77821a273e8c3128f699894b0b81e0c2cfd129ead1e6f0874040",
+      "receipts": [
+        {
+          "instance_id": "axios__axios-5892",
+          "receipt_sha256": "219e16d254a14d234fe83b24bfab00399186c0125beb77dfd96f35fcee70cd66",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "axios__axios-6539",
+          "receipt_sha256": "72899b3afda8d4a037735c8dc29f6e35b3ae15e47301c132b91074d51f3f9ade",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "briannesbitt__carbon-2762",
+          "receipt_sha256": "542fba8d4a55a6734a28a804cbd6905f6f5f6a7d12151266eaa7dff007dd1685",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "briannesbitt__carbon-3005",
+          "receipt_sha256": "d978ab21b0c1f47e85146e429a1ea88a4af8cba3a2bddebf1f86a36585b92a6e",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fluent__fluentd-3328",
+          "receipt_sha256": "522836c79be89deb8e1f6d76093322ccc626acde6a1ea9f27c3f4328717455ed",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fluent__fluentd-4311",
+          "receipt_sha256": "33e4085cc087321a39db8fac11d50dfa6aa96bf8cbc7fbabe50c89c38bd576f3",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fmtlib__fmt-3272",
+          "receipt_sha256": "24241350a368771799e2072e1e181f7bf9dbc82c2df6a7e004e837860e434acb",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fmtlib__fmt-3158",
+          "receipt_sha256": "897ca7d4fd5bdc83c60a7fc1f8c2476f3fd106309d8c67e524acde4f1675be36",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "gin-gonic__gin-1957",
+          "receipt_sha256": "36d55b9194996c8135d60256e54e0bd71295723c81fb632fc61f357e46e42107",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "gin-gonic__gin-2755",
+          "receipt_sha256": "3666d983973759438d605f07a681480d25f2955e4a7a75dc32173c622bf13380",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "google__gson-1093",
+          "receipt_sha256": "5e9529fef2a452764308c20eadf7f2fdf2128027c339a6f6e61179eccfd092c2",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "google__gson-2311",
+          "receipt_sha256": "b159b9af22f0519ae9c27cebe4750ae1157dcc7f128301fdac06fe94ef33ba3a",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        }
+      ]
+    },
+    {
+      "run_id": "SWECLAIM-20261027T211350Z-add2f5a46462",
+      "run_receipt_count": 12,
+      "run_completion_sha256": "9cb07d7722a52aa64eb205f7d5c27013cda484fa258621a9946bf3da26cf3675",
+      "receipts": [
+        {
+          "instance_id": "axios__axios-5892",
+          "receipt_sha256": "219e16d254a14d234fe83b24bfab00399186c0125beb77dfd96f35fcee70cd66",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "axios__axios-6539",
+          "receipt_sha256": "72899b3afda8d4a037735c8dc29f6e35b3ae15e47301c132b91074d51f3f9ade",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "briannesbitt__carbon-2762",
+          "receipt_sha256": "542fba8d4a55a6734a28a804cbd6905f6f5f6a7d12151266eaa7dff007dd1685",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "briannesbitt__carbon-3005",
+          "receipt_sha256": "d978ab21b0c1f47e85146e429a1ea88a4af8cba3a2bddebf1f86a36585b92a6e",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fluent__fluentd-3328",
+          "receipt_sha256": "522836c79be89deb8e1f6d76093322ccc626acde6a1ea9f27c3f4328717455ed",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fluent__fluentd-4311",
+          "receipt_sha256": "33e4085cc087321a39db8fac11d50dfa6aa96bf8cbc7fbabe50c89c38bd576f3",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fmtlib__fmt-3272",
+          "receipt_sha256": "24241350a368771799e2072e1e181f7bf9dbc82c2df6a7e004e837860e434acb",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fmtlib__fmt-3158",
+          "receipt_sha256": "897ca7d4fd5bdc83c60a7fc1f8c2476f3fd106309d8c67e524acde4f1675be36",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "gin-gonic__gin-1957",
+          "receipt_sha256": "36d55b9194996c8135d60256e54e0bd71295723c81fb632fc61f357e46e42107",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "gin-gonic__gin-2755",
+          "receipt_sha256": "3666d983973759438d605f07a681480d25f2955e4a7a75dc32173c622bf13380",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "google__gson-1093",
+          "receipt_sha256": "5e9529fef2a452764308c20eadf7f2fdf2128027c339a6f6e61179eccfd092c2",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "google__gson-2311",
+          "receipt_sha256": "b159b9af22f0519ae9c27cebe4750ae1157dcc7f128301fdac06fe94ef33ba3a",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        }
+      ]
+    },
+    {
+      "run_id": "SWECLAIM-20261027T211356Z-9e9a2e899b21",
+      "run_receipt_count": 12,
+      "run_completion_sha256": "add9db162e76857233fd2151c3cdb55d1b8d43aa5bed09618cba864323bcab1d",
+      "receipts": [
+        {
+          "instance_id": "axios__axios-5892",
+          "receipt_sha256": "219e16d254a14d234fe83b24bfab00399186c0125beb77dfd96f35fcee70cd66",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "axios__axios-6539",
+          "receipt_sha256": "72899b3afda8d4a037735c8dc29f6e35b3ae15e47301c132b91074d51f3f9ade",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "briannesbitt__carbon-2762",
+          "receipt_sha256": "542fba8d4a55a6734a28a804cbd6905f6f5f6a7d12151266eaa7dff007dd1685",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "briannesbitt__carbon-3005",
+          "receipt_sha256": "d978ab21b0c1f47e85146e429a1ea88a4af8cba3a2bddebf1f86a36585b92a6e",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fluent__fluentd-3328",
+          "receipt_sha256": "522836c79be89deb8e1f6d76093322ccc626acde6a1ea9f27c3f4328717455ed",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fluent__fluentd-4311",
+          "receipt_sha256": "33e4085cc087321a39db8fac11d50dfa6aa96bf8cbc7fbabe50c89c38bd576f3",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fmtlib__fmt-3272",
+          "receipt_sha256": "24241350a368771799e2072e1e181f7bf9dbc82c2df6a7e004e837860e434acb",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "fmtlib__fmt-3158",
+          "receipt_sha256": "897ca7d4fd5bdc83c60a7fc1f8c2476f3fd106309d8c67e524acde4f1675be36",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "gin-gonic__gin-1957",
+          "receipt_sha256": "36d55b9194996c8135d60256e54e0bd71295723c81fb632fc61f357e46e42107",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "gin-gonic__gin-2755",
+          "receipt_sha256": "3666d983973759438d605f07a681480d25f2955e4a7a75dc32173c622bf13380",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "google__gson-1093",
+          "receipt_sha256": "5e9529fef2a452764308c20eadf7f2fdf2128027c339a6f6e61179eccfd092c2",
+          "v4_verdict": "SUPPORTED",
+          "verbatim_source_text_included": false
+        },
+        {
+          "instance_id": "google__gson-2311",
+          "receipt_sha256": "b159b9af22f0519ae9c27cebe4750ae1157dcc7f128301fdac06fe94ef33ba3a",
+          "v4_verdict": "CONTRADICTED",
+          "verbatim_source_text_included": false
+        }
+      ]
+    }
+  ],
+  "raw_receipt_bytes_included": false,
+  "reason_raw_receipts_excluded": "Third-party trajectory/log redistribution rights are unresolved."
+}

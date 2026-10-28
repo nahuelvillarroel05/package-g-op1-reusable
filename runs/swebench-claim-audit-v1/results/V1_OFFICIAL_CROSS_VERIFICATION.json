@@ -1,0 +1,463 @@
+{
+  "schema": "pgop1.swebench.v1-official-cross-verification.v1",
+  "official_regrade_status": "BLOCKED",
+  "case_count": 12,
+  "cases": [
+    {
+      "INSTANCE_ID": "axios__axios-5892",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "398a3f7cc854bf9e80d605c00f866959d402ae47a0dfb87f9d234f7a5ea9d734",
+        "trajectory_sha256": "3defd543f3dce9e17203f4dc0c4eebf5565216b69aa3d0cae489bbeb6954d354",
+        "patch_sha256": "e64ea86801c9b045afb21d0a0365e7a3f4cf892a87f190ec4fa9f337a1dc9cee",
+        "test_output_gzip_sha256": "ee95a3b01176124670c7792e134925de08225c57813fb6d1983e7bdd9e29c050",
+        "report_json_sha256": "3ae8c63337873a8d299fd08b8b7c400dae776076f21ea5de3a8909e234f7b4ef",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "aabc3f76acc7acdbb9c23487abad4c006f19fd034e59d72435b81d21606b7887",
+        "matched_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": true,
+        "report_resolved": true,
+        "catalog_resolved": true,
+        "summary_resolved": true,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "SUPPORTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=axios/axios; version=5892; base_commit=ae003913a39f3bdf9bbbd8f71a1ed681fd044d8b."
+      ]
+    },
+    {
+      "INSTANCE_ID": "axios__axios-6539",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "0915fd8cc823304eb64fc25144aa03689d1c2454c96ccb2f5628e4dd95d49fb5",
+        "trajectory_sha256": "4a060d8ac1790863e33f854103fdf6bb57cfce288d70cc7a1e8fb41331dfdc94",
+        "patch_sha256": "4bf52afa0a20b7468e2783abd5526cff8cad35c424f6cfe01949a63514976533",
+        "test_output_gzip_sha256": "5330e6e75fdec78d2185631b00894d816303bc6dad47c1031aa82ee45a253e43",
+        "report_json_sha256": "bd06ed2e346b3adb3ff28e48d991a0f876cade4ca78ddabd722da3f1b64cfb56",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "21561779be149c52886ead9c93e5c78fdfeacde9c08266273343e590d476301d",
+        "matched_text_sha256": "97ce03bd05da4e12058bc8c01a9f29928682a3a7cb7c586eca95532acf636325",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": false,
+        "report_resolved": false,
+        "catalog_resolved": false,
+        "summary_resolved": false,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "CONTRADICTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=axios/axios; version=6539; base_commit=c6cce43cd94489f655f4488c5a50ecaf781c94f2."
+      ]
+    },
+    {
+      "INSTANCE_ID": "briannesbitt__carbon-2762",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "abe7c3a217338452dd2740c39865edbbe74759dff3b9937f3e1cf0f66ac3eda4",
+        "trajectory_sha256": "2c0c6f532a822550acbd5a335a048c7dbb415eb39d61762c52320c62978b2745",
+        "patch_sha256": "c7a5ffbcebb6989034b1264e3dae2ab79c9914434be8f1b39bce3f73f75ffa7c",
+        "test_output_gzip_sha256": "71c211e701d1e112899404b7fd16747cf89c293bde793d31292a623a5bd066ca",
+        "report_json_sha256": "ab16681c750df77036aa0ddbb9ea6e788904cb021ef19fb1c7b214844930b1f5",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "548872845c0ddac415d2e9454ab96987ae91c610911a56d4499e16da0cb052f5",
+        "matched_text_sha256": "717234769face00044bdcb95d57d6842e64ef98b14aa6dd6e1accbfe8c373fc1",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": true,
+        "report_resolved": true,
+        "catalog_resolved": true,
+        "summary_resolved": true,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "SUPPORTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=briannesbitt/carbon; version=2762; base_commit=077657bce453df6992607e5aaa538d957068ae40."
+      ]
+    },
+    {
+      "INSTANCE_ID": "briannesbitt__carbon-3005",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "58ddf2349959c3383a4d87af883872d4064df3075f228cc2cf696ef6e5f0724c",
+        "trajectory_sha256": "0d7a09a890a0f8dbafd9ffc907fba8f7c6ea8d969a8f70c96f88eed2614c9a04",
+        "patch_sha256": "484f5e0bafa175ae65cc51e985c73c67bfdaaa5481159d3162e26fb1e706c7f1",
+        "test_output_gzip_sha256": "d0bbdbe7489937373ab6f1c0832ddedd52077109fd531bf9f486930222559217",
+        "report_json_sha256": "573a15bb618c73392cf6d1cddb01179de3e173738b649eeed45fea3c26507643",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "407fbb1adbe3cae00b6352b31cf813a5866a5824d2ba9229f593ed0844a533dc",
+        "matched_text_sha256": "b105e463c8213b9e9d10725a65cab5c7def33f6afe87204285701df03403ef30",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": false,
+        "report_resolved": false,
+        "catalog_resolved": false,
+        "summary_resolved": false,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "CONTRADICTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=briannesbitt/carbon; version=3005; base_commit=640940f4a9303e458fc29341821395460f32b3b5."
+      ]
+    },
+    {
+      "INSTANCE_ID": "fluent__fluentd-3328",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "64b4728c34221eea869c02ce89f5f098553f14ca2d9cca305b9e2125505c29be",
+        "trajectory_sha256": "24e3f2a947966693572a61c0b29a81ceba100213ba4d1ad6f8c86e2839bb13e3",
+        "patch_sha256": "8df9c7adbd8a583cbaaf631f24d427dd15d2b05fca2f3524f77ef2b43c6beed7",
+        "test_output_gzip_sha256": "3459b2c0e37fd42e7675c339709e7474d590c1e87e4710a682e2d84eb58b5093",
+        "report_json_sha256": "53d0582c7190d9615c1af3f754d04a2a412d631fd10024070f7eb8ea3bc12b40",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "97db12b0df94fed7ab22628c4f76f088232959f2e966cf1036049a81084e43a3",
+        "matched_text_sha256": "6b17b5b5531431e030b1259ca0e406b40a118ca4b5dcdee9a941eceb954802a5",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": true,
+        "report_resolved": true,
+        "catalog_resolved": true,
+        "summary_resolved": true,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "SUPPORTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=fluent/fluentd; version=3328; base_commit=07df9a0d850a4f03d95ac82e3d818a90631ad9d3."
+      ]
+    },
+    {
+      "INSTANCE_ID": "fluent__fluentd-4311",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "0dc102c597beb04f77213cd2e238b9f48cda6c358545905ea6012f4c6e6bb4db",
+        "trajectory_sha256": "f962409e5b33c22e39d47992db6a37a9849d5225f33ef681995a02f0e32bde42",
+        "patch_sha256": "cedc062ae53e834b3705f983ede4a2969cb29c45ad5a6acd7ce930740c9f1ba5",
+        "test_output_gzip_sha256": "a0d0acded905e0111f02a55303c40d179fb2a45b10209c43be67e0d25b776543",
+        "report_json_sha256": "378beb27a43af75394f797d048c17cffbb5dc9d247fa28a5a536dd6fe43e8a9e",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "46973c8fbb493533027e628858b79d3355972f7f7451ede7d834d7f0e97b3693",
+        "matched_text_sha256": "6b17b5b5531431e030b1259ca0e406b40a118ca4b5dcdee9a941eceb954802a5",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": false,
+        "report_resolved": false,
+        "catalog_resolved": false,
+        "summary_resolved": false,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "CONTRADICTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=fluent/fluentd; version=4311; base_commit=fcbcb567c93f8aff3e817371c18dc98b2a5094ff."
+      ]
+    },
+    {
+      "INSTANCE_ID": "fmtlib__fmt-3272",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "e623ab45d747968952248680eb14b5d7eca641762164dc7f0c20839b2e2d6375",
+        "trajectory_sha256": "4d29fe247e0777c1462377963a5473cbcb5dda1dfd50e2ac7a95959c3388d52b",
+        "patch_sha256": "5917f52bb213b5c04da9e8279c9e04cfebd2c100d69a5dc16b1a8e0012f999df",
+        "test_output_gzip_sha256": "bfbae30914cc6b556fd9f3464cf54f3af57ef6b41c890be2285bf14b44fe83a2",
+        "report_json_sha256": "a1cbb48653a5d73f3a5c0b4a73da55b7a8e3e9e12ec1b55d76608646cff507d6",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "7ff4c71e8734331f8b6b321d3a3a5407e8177e9facaf0a2c01edbffe558fba60",
+        "matched_text_sha256": "bfa9e6a8cc9aa2771b48ea55ce7938d70e02cb5b2c86577ab6d9936920bfaf35",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": true,
+        "report_resolved": true,
+        "catalog_resolved": true,
+        "summary_resolved": true,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "SUPPORTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=fmtlib/fmt; version=3272; base_commit=0f42c17d85f26bbbd6a30d71ce8306d371426bfc."
+      ]
+    },
+    {
+      "INSTANCE_ID": "fmtlib__fmt-3158",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "51618f3e4128617e310214b9c89c2bfc680644badc3c3d7206fa9580dc32e19c",
+        "trajectory_sha256": "ce27991bcc99e5c0f81bc0fc4fe583e0c816d4c3a056707001987306479a352a",
+        "patch_sha256": "51b58dae4232fd75e17dd8628b2f9d38b174429adfcd05a60adbc2e5c53a6c9c",
+        "test_output_gzip_sha256": "d21202a24f8d02f225255071965848738c815f6db55ba8861e14e62f30b73fd2",
+        "report_json_sha256": "d03e9fdc3d81af2574be2f600175bcdb3c2ff8afcec63495a835ddb39acf2c2c",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "79886e7fb85bedceb511c0bd411f5baefa3591bf748e9aa61a92bfdbdd43de4c",
+        "matched_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": false,
+        "report_resolved": false,
+        "catalog_resolved": false,
+        "summary_resolved": false,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "CONTRADICTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=fmtlib/fmt; version=3158; base_commit=80f8d34427d40ec5e7ce3b10ededc46bd4bd5759."
+      ]
+    },
+    {
+      "INSTANCE_ID": "gin-gonic__gin-1957",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "7a238ce7e231dca227dfed846f07f58e716899be534139e334adaa78dd2a94cd",
+        "trajectory_sha256": "a5722be52f56c11a62cc919ba249c25abbc9b06fa823f262aabe77759f7fea9f",
+        "patch_sha256": "6a95075e9817e2d08515c700486c8267ff028717154cb5397c810e902ff53307",
+        "test_output_gzip_sha256": "a5195145590f9cf762b95d19e0b4da7310aaea1b67ecccd807c42689deb07063",
+        "report_json_sha256": "3f5a1562f3278edc8ed180910c412109d2e0ed6f49050ae95f892e329b96b379",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "3a5c4bf39a23d13e2b9ce0fe21e0bf960f199ccccbe9708ec16fe5a4649ebc8c",
+        "matched_text_sha256": "6b17b5b5531431e030b1259ca0e406b40a118ca4b5dcdee9a941eceb954802a5",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": true,
+        "report_resolved": true,
+        "catalog_resolved": true,
+        "summary_resolved": true,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "SUPPORTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=gin-gonic/gin; version=1957; base_commit=09a3650c97ca7ef3a542d428a9fb2c8da8c18002."
+      ]
+    },
+    {
+      "INSTANCE_ID": "gin-gonic__gin-2755",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "410fc299263fefcb9b7a214b2bf6646bc913ebec5a80c88a79b399d13b859b85",
+        "trajectory_sha256": "9f032bec07aa4bafe6635903b5d66060cd4311f9fa1761ffac09ba7f85148c42",
+        "patch_sha256": "fc4f3aaeaac80822c0bb9deb4f9133bcec8b4eee83f98e4e41276a494a7bd150",
+        "test_output_gzip_sha256": "8805c7baaa344d2fbdcea82d656a6267c1e9e7f443a76c312536016b3f91b373",
+        "report_json_sha256": "22f8c42646890c6fa0849ee861bd766ffefa7cd6eb817156d87a75f3bb2cc1d3",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "0cac4a74c9e5ef3465e4e2ec756630e4152a5762553f6d84bc4a0f071484b69f",
+        "matched_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": false,
+        "report_resolved": false,
+        "catalog_resolved": false,
+        "summary_resolved": false,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "CONTRADICTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=gin-gonic/gin; version=2755; base_commit=f2bbdfe9f26d84cb994f381050692a9e4553bf75."
+      ]
+    },
+    {
+      "INSTANCE_ID": "google__gson-1093",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "0ff33cfc23e690ff45a2bcfc3303e09d90acd94597d0e59c5a19eb16b20776ae",
+        "trajectory_sha256": "345703aa02aa46f1df7c66fe94fc4b0ca38dc5601273dbfd341578d36fc0dbf6",
+        "patch_sha256": "942f5d57a5a06fe0aace3bdc265d5ef3e94361257d5898bb52322a554cf19eda",
+        "test_output_gzip_sha256": "f844b115c2ed9044c282038e1bd38d2ddeb98060ae18770208d74953c81f9d60",
+        "report_json_sha256": "fd5972a58fd35ac39a81d6bd54aeadf08de36dbabdbd291e5aab9d90375a2791",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "4838f847b9afac2c30a680b42ff7994337bba33a1cf9d53fc58e7fe407c7f92c",
+        "matched_text_sha256": "bfa9e6a8cc9aa2771b48ea55ce7938d70e02cb5b2c86577ab6d9936920bfaf35",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": true,
+        "report_resolved": true,
+        "catalog_resolved": true,
+        "summary_resolved": true,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "SUPPORTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=google/gson; version=1093; base_commit=0aaef0fd1bb1b9729543dc40168adfb829eb75a4."
+      ]
+    },
+    {
+      "INSTANCE_ID": "google__gson-2311",
+      "DATASET_VERSION": "SWE-bench_Multilingual test; 846e647 (file page revision observed 2026-10-27)",
+      "SOURCE_HASHES": {
+        "dataset_file_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+        "dataset_row_sha256": "4c0bbc1ffea1d6e05823b7c2e7e25d4b8b18ac98f7dce2e64469cb2a240093e8",
+        "trajectory_sha256": "31e8d097793c4d72e828f958ea5cee216189959f8aca3711846eb280e5cc5c43",
+        "patch_sha256": "43fbf9c8848d227986c94b71adedb9f34128ad909013cf9456b262379f537ecc",
+        "test_output_gzip_sha256": "ca68d158ba3c2f1a4a77a1e157238f73b0138f9b64af7611c7f344ab43944aeb",
+        "report_json_sha256": "2b1e674f80b44da0f1ec203a4a70da8bd4e61b7d50a29567911e04a758d8b218",
+        "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+        "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e"
+      },
+      "AGENT_STATEMENT": {
+        "predicate": "TASK_RESOLVED",
+        "asserted_value": true,
+        "statement_sha256": "c39757fde2ffed1ce127ff7fbfddec72493e8395520c337f87c774e9dd4c9220",
+        "matched_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+        "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+      },
+      "ARCHIVED_EVALUATOR_RESULT": {
+        "observed_value": false,
+        "report_resolved": false,
+        "catalog_resolved": false,
+        "summary_resolved": false,
+        "local_record_consistency": "CONSISTENT"
+      },
+      "OFFICIAL_REGRADE_RESULT": null,
+      "PGOP1_V4_VERDICT": "CONTRADICTED",
+      "AGREEMENT_STATUS": "OFFICIAL_REGRADE_BLOCKED; LOCAL_ARCHIVED_RECORDS_MATCH_V4",
+      "DISCREPANCIES": [],
+      "LIMITATIONS": [
+        "The official SWE-bench verifier did not run in this environment.",
+        "V4 compares explicit statement text to local report/catalog/summary records only.",
+        "No provider identity, evaluator authenticity, objective issue resolution, or patch re-execution is established.",
+        "Bound dataset row: repo=google/gson; version=2311; base_commit=9f26679e7a96f0bb9952c326b2d9f79ef03ea9f5."
+      ]
+    }
+  ]
+}

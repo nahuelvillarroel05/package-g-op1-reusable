@@ -1,0 +1,20 @@
+{
+  "schema": "pgop1.swebench.public-v4-results.v1",
+  "campaign_id": "CAMPAIGN_SELECTION_V4",
+  "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+  "selection_binding_sha256": "0e5de088c91831c5eecb29a63a8676121228baa1a81afd7124b6224966398de2",
+  "successful_run_ids": [
+    "SWECLAIM-20261027T211344Z-9e53e8641ca3",
+    "SWECLAIM-20261027T211350Z-add2f5a46462",
+    "SWECLAIM-20261027T211356Z-9e9a2e899b21"
+  ],
+  "receipt_count_per_run": 12,
+  "verdict_counts": {
+    "SUPPORTED": 6,
+    "CONTRADICTED": 6
+  },
+  "claim_audit_scope": "local archived report/catalog/summary comparison only",
+  "official_regrade_status": "BLOCKED_BEFORE_GRADING; see OFFICIAL_REGRADE_EXECUTION.json",
+  "v4_results_sha256": "65bf7f86abbce88a8915cf9ea221dd893548aced8d973e7d26385f02086f565e",
+  "source_workspace_path": "WITHHELD"
+}

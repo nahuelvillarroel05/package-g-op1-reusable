@@ -1,0 +1,105 @@
+{
+    "schema":  "pgop1.swebench.official-regrade-status.v1",
+    "status":  "BLOCKED",
+    "official_grader_invoked_for_cases":  false,
+    "cases_regraded":  0,
+    "source":  {
+                   "local_version":  "5.0.2",
+                   "verify_py_sha256":  "d07cb693ae59cbc70102b019878b2e6a79698ef1bc31c0aa344f8cb34f397ff0",
+                   "cli_datasets_py_sha256":  "87e7e7ada83f8d2fd012b232df14bcde2960c13404140bc0f2d1fe46fd6afa02",
+                   "cli_submit_py_sha256":  "4c4e70f7080d1b921feec18ddfccb0675a1078b29cce1b2e997e164046a738e8",
+                   "package_py_sha256":  "83423d149c51d01a9eb526ac4bc2f9418b2428528cd24d5f6d9998f3d77dcc85",
+                   "upstream_git_commit":  "UNAVAILABLE_NO_GIT_METADATA_IN_LOCAL_CHECKOUT"
+               },
+    "remaining_requirements":  [
+                                   "typer",
+                                   "docker",
+                                   "datasets"
+                               ],
+    "official_verifier_local_dataset_argument":  false,
+    "no_grader_source_changes":  true,
+    "docker_run_or_task_test_execution":  "NOT_PERFORMED",
+    "root_cause":  "The local verifier checkout is not installed with required dependencies; its verify() path resolves the dataset from a hardcoded Hugging Face ID and does not accept the verified local Parquet path.",
+    "next_step":  "Provision a pinned SWE-bench 5.0.2 environment and an exact offline dataset snapshot binding before a separately authorized regrade attempt.",
+    "attempts":  [
+                     {
+                         "exit_code":  1,
+                         "attempt_id":  "OFFREG-001",
+                         "equivalent_raw_capture":  "logs/official_regrade/attempt-006-cli.stderr.txt",
+                         "cause":  "ModuleNotFoundError: No module named typer",
+                         "kind":  "CLI_VERIFY",
+                         "raw_capture":  "CONSOLE_TRANSCRIPT",
+                         "status":  "BLOCKED_BEFORE_GRADING"
+                     },
+                     {
+                         "exit_code":  1,
+                         "attempt_id":  "OFFREG-002",
+                         "equivalent_raw_capture":  "logs/official_regrade/attempt-008-direct-import.stderr.txt",
+                         "cause":  "ModuleNotFoundError: No module named docker during swebench.harness import",
+                         "kind":  "DIRECT_VERIFIER_IMPORT",
+                         "raw_capture":  "CONSOLE_TRANSCRIPT",
+                         "status":  "BLOCKED_BEFORE_GRADING"
+                     },
+                     {
+                         "exit_code":  null,
+                         "attempt_id":  "OFFREG-003",
+                         "cause":  "CLI traceback surfaced as PowerShell NativeCommandError; capture script stopped before writing exit status",
+                         "kind":  "CLI_VERIFY_CAPTURE_RETRY",
+                         "raw_capture":  "TOOL_TRANSCRIPT_ONLY",
+                         "status":  "BLOCKED_BEFORE_GRADING"
+                     },
+                     {
+                         "exit_code":  1,
+                         "exitcode":  "logs/official_regrade/attempt-003-cli.exitcode.txt",
+                         "stderr":  "logs/official_regrade/attempt-003-cli.stderr.txt",
+                         "cause":  "ModuleNotFoundError: No module named typer",
+                         "stdout":  "logs/official_regrade/attempt-003-cli.stdout.txt",
+                         "status":  "BLOCKED_BEFORE_GRADING",
+                         "kind":  "CLI_VERIFY_POWERSHELL_CAPTURE",
+                         "attempt_id":  "OFFREG-004"
+                     },
+                     {
+                         "exit_code":  1,
+                         "exitcode":  "logs/official_regrade/attempt-004-direct-import.exitcode.txt",
+                         "stderr":  "logs/official_regrade/attempt-004-direct-import.stderr.txt",
+                         "cause":  "ModuleNotFoundError: No module named docker",
+                         "stdout":  "logs/official_regrade/attempt-004-direct-import.stdout.txt",
+                         "status":  "BLOCKED_BEFORE_GRADING",
+                         "kind":  "DIRECT_VERIFIER_IMPORT_POWERSHELL_CAPTURE",
+                         "attempt_id":  "OFFREG-005"
+                     },
+                     {
+                         "exit_code":  1,
+                         "exitcode":  "logs/official_regrade/attempt-006-cli.exitcode.txt",
+                         "stderr":  "logs/official_regrade/attempt-006-cli.stderr.txt",
+                         "cause":  "ModuleNotFoundError: No module named typer",
+                         "stdout":  "logs/official_regrade/attempt-006-cli.stdout.txt",
+                         "status":  "BLOCKED_BEFORE_GRADING",
+                         "kind":  "CLI_VERIFY_RAW_STREAM_CAPTURE",
+                         "attempt_id":  "OFFREG-006"
+                     },
+                     {
+                         "exit_code":  1,
+                         "exitcode":  "logs/official_regrade/attempt-007-direct-import.exitcode.txt",
+                         "stderr":  "logs/official_regrade/attempt-007-direct-import.stderr.txt",
+                         "cause":  "Start-Process argument quoting yielded Python SyntaxError before official verifier import",
+                         "stdout":  "logs/official_regrade/attempt-007-direct-import.stdout.txt",
+                         "status":  "NOT_A_GRADER_ATTEMPT",
+                         "kind":  "DIRECT_IMPORT_ARGUMENT_SYNTAX_PROBE",
+                         "attempt_id":  "OFFREG-007"
+                     },
+                     {
+                         "exit_code":  1,
+                         "exitcode":  "logs/official_regrade/attempt-008-direct-import.exitcode.txt",
+                         "stderr":  "logs/official_regrade/attempt-008-direct-import.stderr.txt",
+                         "cause":  "ModuleNotFoundError: No module named docker",
+                         "stdout":  "logs/official_regrade/attempt-008-direct-import.stdout.txt",
+                         "status":  "BLOCKED_BEFORE_GRADING",
+                         "kind":  "DIRECT_VERIFIER_IMPORT_RAW_STREAM_CAPTURE",
+                         "attempt_id":  "OFFREG-008"
+                     }
+                 ],
+    "attempt_count":  8,
+    "raw_output_artifacts":  "Included under logs/official_regrade/ in the final handoff ZIP; personal workspace paths are excluded from public Git.",
+    "execution_ledger_path":  "OFFICIAL_REGRADE_EXECUTION.json"
+}

@@ -1,0 +1,117 @@
+{
+  "schema": "pgop1.swebench.public-v4-selection.v1",
+  "campaign_id": "CAMPAIGN_SELECTION_V4",
+  "selection_sha256": "91a353a236089be492dd869d974507ddea46e99df556a2c89dc90dc8dbfcbcf2",
+  "selection_state": "FROZEN_BEFORE_ADAPTER_EXECUTION",
+  "selection_frozen_utc": "2026-10-27T21:13:33.912696+00:00",
+  "sample_size": 12,
+  "selection_scope": "Bounded claim-vs-recorded-evaluator-result engineering demonstration; not a benchmark score estimate.",
+  "instances": [
+    {
+      "instance_id": "axios__axios-5892",
+      "repository_id": "axios__axios",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "axios__axios-6539",
+      "repository_id": "axios__axios",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "97ce03bd05da4e12058bc8c01a9f29928682a3a7cb7c586eca95532acf636325",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "briannesbitt__carbon-2762",
+      "repository_id": "briannesbitt__carbon",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "717234769face00044bdcb95d57d6842e64ef98b14aa6dd6e1accbfe8c373fc1",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "briannesbitt__carbon-3005",
+      "repository_id": "briannesbitt__carbon",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "b105e463c8213b9e9d10725a65cab5c7def33f6afe87204285701df03403ef30",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "fluent__fluentd-3328",
+      "repository_id": "fluent__fluentd",
+      "claim_type": "TASK_COMPLETION",
+      "accepted_text_sha256": "6b17b5b5531431e030b1259ca0e406b40a118ca4b5dcdee9a941eceb954802a5",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "fluent__fluentd-4311",
+      "repository_id": "fluent__fluentd",
+      "claim_type": "TASK_COMPLETION",
+      "accepted_text_sha256": "6b17b5b5531431e030b1259ca0e406b40a118ca4b5dcdee9a941eceb954802a5",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "fmtlib__fmt-3272",
+      "repository_id": "fmtlib__fmt",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "bfa9e6a8cc9aa2771b48ea55ce7938d70e02cb5b2c86577ab6d9936920bfaf35",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "fmtlib__fmt-3158",
+      "repository_id": "fmtlib__fmt",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "gin-gonic__gin-1957",
+      "repository_id": "gin-gonic__gin",
+      "claim_type": "TASK_COMPLETION",
+      "accepted_text_sha256": "6b17b5b5531431e030b1259ca0e406b40a118ca4b5dcdee9a941eceb954802a5",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "gin-gonic__gin-2755",
+      "repository_id": "gin-gonic__gin",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "google__gson-1093",
+      "repository_id": "google__gson",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "bfa9e6a8cc9aa2771b48ea55ce7938d70e02cb5b2c86577ab6d9936920bfaf35",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    },
+    {
+      "instance_id": "google__gson-2311",
+      "repository_id": "google__gson",
+      "claim_type": "ISSUE_RESOLUTION",
+      "accepted_text_sha256": "353787a361a18584db21d8e2081c1af487ddc9d413b21c51c3f140af983cc909",
+      "verbatim_text_publication": "WITHHELD_SOURCE_REDISTRIBUTION_RIGHTS_UNKNOWN"
+    }
+  ],
+  "scope_limits_as_of_v4_freeze_utc": "2026-10-27T21:13:33.912696+00:00",
+  "scope_limits_at_v4_freeze": [
+    "No official multilingual dataset row bytes or base_commit/version rows are asserted from local Full/Lite/Verified shards.",
+    "No issue repository checkout, Docker evaluation, hidden gold access, adapter execution, or evaluator replay occurred.",
+    "Recorded reports and catalog statuses are source evidence; actual evaluator execution is not independently attested.",
+    "The sample is outcome-stratified and purposive; it is not statistically representative.",
+    "Selected third-party logs and patches are not included in a redistribution bundle; experiment artifact license grant was not established locally.",
+    "Official SWE-bench submit verify was not run: local verifier requires SWE-bench Multilingual test rows, which are absent. No dataset fetch was made.",
+    "Official dataset row bytes and base_commit/version data remain UNKNOWN locally; official regrade remains blocked on missing Multilingual rows.",
+    "Catalog/report/trajectory consistency and recorded claim excerpts do not independently prove evaluator execution or provider identity.",
+    "Process exit codes are recorded only as markers; they are not used as claim correctness evidence.",
+    "Selection is balanced and repository-diverse but purposive; it is not statistically representative.",
+    "Raw third-party logs, trajectories and patches are not redistributed; run-artifact license remains UNKNOWN."
+  ],
+  "post_freeze_dataset_verification": {
+    "status": "PASS",
+    "dataset_sha256": "92abca7cb527b41a9f66d03a26ce441ff7319e3a49f985998fd56be4bb9b08b2",
+    "row_count": 300,
+    "selected_instance_count": 12,
+    "all_selected_ids_present": true,
+    "note": "This later verification does not alter the frozen V4 selection or its historical knowledge state."
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "schema":  "pgop1.swebench.original-workspace-preservation.v1",
+    "workspace":  "Engineering/PGOP1_SWEBENCH_CLAIM_AUDIT_V1",
+    "verification_result":  "PASS",
+    "manifest_sha256":  "b88183186706e9bd0131324e03d49a281b11a0eb91ccef48e631b26cb567a299",
+    "expected_files":  580,
+    "actual_files":  580,
+    "expected_bytes":  12590237,
+    "actual_bytes":  12590237,
+    "missing_files":  0,
+    "extra_files":  0,
+    "hash_or_size_mismatches":  0,
+    "verified_utc":  "2026-10-28T00:13:04Z",
+    "excluded_from_prior_manifest":  [
+                                         ".git",
+                                         ".pytest_cache",
+                                         "__pycache__",
+                                         "test-runs",
+                                         ".pytest-*"
+                                     ]
+}
