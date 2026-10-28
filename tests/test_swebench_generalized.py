@@ -21,6 +21,7 @@ TRAJECTORY_PARSER = "pgop1.swebench.trajectory.miniswe_json.v1"
 REPORT_PARSER = "pgop1.swebench.evaluator_report.resolved_map_json.v1"
 SUMMARY_PARSER = "pgop1.swebench.results.resolved_list_json.v1"
 CATALOG_PARSER = "pgop1.swebench.catalog.per_instance_details_json.v1"
+MARKDOWN_PARSER = "pgop1.swebench.trajectory.aider_markdown_unattributed.v1"
 
 
 def _write(root: Path, path: str, data: bytes, role: str, parser_id: str) -> dict[str, object]:
@@ -48,6 +49,101 @@ def _report(root: Path, resolved: bool = True) -> dict[str, object]:
 
 def _request(*descriptors: dict[str, object], instance_id: str = INSTANCE) -> dict[str, object]:
     return {"run_id": RUN, "instance_id": instance_id, "evidence": list(descriptors)}
+
+
+def _markdown(root: Path, text: str) -> dict[str, object]:
+    return _write(root, "transcript.md", text.encode(), "AGENT_TRAJECTORY", MARKDOWN_PARSER)
+
+
+@pytest.mark.parametrize("content", [
+    "I have resolved the task.", "#### User\nI have resolved the task.",
+    "#### Assistant\nI have resolved the task.", "> I have resolved the task.",
+    "```tool\nI have resolved the task.\n```", "    I have resolved the task.",
+    "I have not resolved the task.", "If tests passed, I have resolved the task.",
+    "I have resolved the task.\nCorrection: the task remains unresolved.",
+    "```\n#### Assistant\nI have resolved the task.",
+])
+def test_aider_markdown_never_invents_actor_or_claim(tmp_path: Path, content: str) -> None:
+    descriptor = _markdown(tmp_path, "# aider chat started at 2026-10-28\n" + content)
+    result = audit_evidence(tmp_path, _request(descriptor, _report(tmp_path)))
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] == []
+    assert result["relationships"] == []
+    parsed = audit_file(tmp_path, {**descriptor, "run_id": RUN})
+    assert parsed["status"] == "SUPPORTED"
+    assert {o["value"]["actor"] for o in parsed["observations"]} == {"UNKNOWN"}
+    assert next(r for r in result["SOURCE_PROVENANCE"]["evidence_references"]
+                if r["path"] == descriptor["path"])["instance_binding"] == "RUN_ONLY"
+
+
+def test_aider_markdown_blocks_bind_exact_bytes_and_recover_engine(tmp_path: Path) -> None:
+    text = ("# aider chat started at 2026-10-28\n> tool output\n"
+            "```python\n#### Assistant\nI resolved the task.\n```\nplain text\n")
+    descriptor = _markdown(tmp_path, text)
+    parsed = audit_file(tmp_path, {**descriptor, "run_id": RUN})
+    assert parsed["status"] == "SUPPORTED"
+    lines = text.splitlines(keepends=True)
+    next_line = 1
+    for observation in parsed["observations"]:
+        block = observation["value"]
+        assert block["line_start"] == next_line
+        raw = "".join(lines[block["line_start"] - 1:block["line_end"]]).encode()
+        assert hashlib.sha256(raw).hexdigest() == block["sha256"]
+        assert len(raw) == block["bytes"]
+        next_line = block["line_end"] + 1
+    assert next_line == len(lines) + 1
+    code = next(o["value"] for o in parsed["observations"]
+                if o["value"]["structure"] == "FENCED_CODE")
+    assert (code["line_start"], code["line_end"]) == (3, 6)
+    # Reuse the bridge's explicit batch contract for run-only observations.
+    result = {"schema": "pgop1.swebench.generalized-audit.v1",
+              "result_scope": "BATCH_AGGREGATE", "batch_id": "markdown-blocks-dev",
+              "run_id": RUN, "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
+              "SOURCE_PROVENANCE": {"evidence_references": [
+                  {**parsed["source_ref"], "instance_binding": "RUN_ONLY"}]},
+              "observations": parsed["observations"], "EXECUTION_EVIDENCE": []}
+    bound = bind_generalized_audit(result, tmp_path, tmp_path / "context-markdown")
+    assert bound["context_engine"]["status"] == "PASS"
+    assert bound["context_engine"]["fresh_process_readback"]["status"] == "PASS"
+    from runtime.candidate.swebench_claim_audit.generalized_bridge import recover_generalized_audit
+    recovered = recover_generalized_audit(tmp_path / "context-markdown")
+    assert recovered["status"] == "PASS"
+
+
+def test_aider_markdown_preserves_authentic_leading_blank_lines(tmp_path: Path) -> None:
+    descriptor = _markdown(tmp_path, "\n\n# aider chat started at date\ntext\n")
+    result = audit_file(tmp_path, {**descriptor, "run_id": RUN})
+    assert result["status"] == "SUPPORTED"
+    assert result["observations"][0]["value"]["structure"] == "BLANK"
+    assert result["observations"][0]["value"]["line_start"] == 1
+    assert result["observations"][0]["value"]["line_end"] == 2
+    assert result["observations"][1]["value"]["line_start"] == 3
+
+
+@pytest.mark.parametrize("raw,reason,status", [
+    (b"#### Assistant\nI resolved the task.", "UNSUPPORTED_MARKDOWN_SHAPE", "UNSUPPORTED"),
+    (b"# aider chat started at date\n\xff", "MARKDOWN_ENCODING_INVALID", "ERROR"),
+    (b"", "UNSUPPORTED_MARKDOWN_SHAPE", "UNSUPPORTED"),
+])
+def test_aider_markdown_rejects_unknown_shape_and_encoding(tmp_path: Path, raw: bytes,
+                                                         reason: str, status: str) -> None:
+    descriptor = _write(tmp_path, "bad.md", raw, "AGENT_TRAJECTORY", MARKDOWN_PARSER)
+    result = audit_file(tmp_path, {**descriptor, "run_id": RUN})
+    assert result["status"] == status
+    assert result["reason_codes"] == [reason]
+    assert result["observations"] == []
+
+
+def test_aider_markdown_commitment_and_duplicate_rejections(tmp_path: Path) -> None:
+    descriptor = _markdown(tmp_path, "# aider chat started at date\nI resolved the task.")
+    bad = audit_file(tmp_path, {**descriptor, "sha256": "0" * 64, "run_id": RUN})
+    assert bad["reason_codes"] == ["SOURCE_HASH_MISMATCH"]
+    duplicated = audit_evidence(tmp_path, _request(descriptor, descriptor))
+    assert duplicated["AUDIT_VERDICT"] != "SUPPORTED"
+    assert "DUPLICATE_SOURCE_DESCRIPTOR" in duplicated["reason_codes"]
+    mismatched = audit_evidence(tmp_path, _request({**descriptor, "instance_id": "other-1"}))
+    assert mismatched["AUDIT_VERDICT"] != "SUPPORTED"
+    assert "WRONG_INSTANCE_BINDING" in mismatched["reason_codes"]
 
 
 def test_resolution_claim_is_compared_to_instance_and_run_bound_report(tmp_path: Path) -> None:

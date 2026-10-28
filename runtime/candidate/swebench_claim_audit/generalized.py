@@ -48,6 +48,7 @@ PARSER_VERSIONS = {
     "pgop1.swebench.log.gzip_text_unattributed.v1": "1.0.0",
     "pgop1.swebench.patch.unified_diff.v1": "1.0.0",
     "pgop1.swebench.metadata.yaml.v1": "1.0.0",
+    "pgop1.swebench.trajectory.aider_markdown_unattributed.v1": "1.0.0",
 }
 PARSER_ROLES = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": {"PREDICTION", "prediction", "agent_log_or_run_record"},
@@ -65,6 +66,8 @@ PARSER_ROLES = {
         "EXECUTION_LOG", "agent_log_or_run_record"},
     "pgop1.swebench.patch.unified_diff.v1": {"PATCH_ARTIFACT", "agent_patch"},
     "pgop1.swebench.metadata.yaml.v1": {"RUN_METADATA", "submission_metadata"},
+    "pgop1.swebench.trajectory.aider_markdown_unattributed.v1": {
+        "AGENT_TRAJECTORY", "historical_agent_trajectory"},
 }
 
 
@@ -413,6 +416,61 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
            target: str | None) -> list[dict[str, Any]]:
     parser = desc["parser_id"]
     out: list[dict[str, Any]] = []
+    if parser == "pgop1.swebench.trajectory.aider_markdown_unattributed.v1":
+        # Aider's presentation markers are not authenticated speaker labels.
+        # Index structural spans only; never route their prose through _claims.
+        if len(raw) > MAX_TEXT_BYTES:
+            raise AuditError("INPUT_TOO_LARGE", "Markdown exceeds text parser bound")
+        try:
+            text = raw.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise AuditError("MARKDOWN_ENCODING_INVALID", "Markdown is not UTF-8") from exc
+        lines = text.splitlines(keepends=True)
+        banner = next((line for line in lines if line.strip()), "")
+        if not re.fullmatch(r"# aider chat started at [^\r\n]+[\r\n]*", banner):
+            raise AuditError("UNSUPPORTED_MARKDOWN_SHAPE", "missing explicit Aider transcript banner")
+        fence: tuple[str, int] | None = None
+        block: list[str] = []
+        block_kind = ""
+        block_start = 1
+
+        def emit(end: int) -> None:
+            if block:
+                content = "".join(block).encode("utf-8")
+                value = {"structure": block_kind, "actor": "UNKNOWN",
+                         "bytes": len(content), "sha256": _sha(content),
+                         "line_start": block_start, "line_end": end}
+                _append_observation(out, _obs(
+                    ref, run, "UNKNOWN", "transcript_structure", "UNATTRIBUTED_MARKDOWN_BLOCK",
+                    value, f"/lines/{block_start}-{end}", "UNATTRIBUTED_TRANSCRIPT_CONTENT"))
+
+        for number, line in enumerate(lines, 1):
+            marker = re.match(r" {0,3}(`{3,}|~{3,})(.*?)[\r\n]*$", line)
+            if fence is not None:
+                kind = "FENCED_CODE"
+                if (marker and marker[1][0] == fence[0]
+                        and len(marker[1]) >= fence[1] and not marker[2].strip()):
+                    fence = None
+            elif marker:
+                kind = "FENCED_CODE"
+                fence = (marker[1][0], len(marker[1]))
+            elif re.match(r" {0,3}>", line):
+                kind = "BLOCKQUOTE"
+            elif re.match(r" {0,3}#{1,6}(?:\s|$)", line):
+                kind = "HEADING"
+            elif line.startswith(("    ", "\t")):
+                kind = "INDENTED_CODE_OR_TEXT"
+            else:
+                kind = "UNATTRIBUTED_TEXT" if line.strip() else "BLANK"
+            if block and kind != block_kind:
+                emit(number - 1)
+                block = []
+            if not block:
+                block_start, block_kind = number, kind
+            block.append(line)
+        # An unclosed fence remains code through EOF, including apparent labels.
+        emit(len(lines))
+        return out
     if parser == "pgop1.swebench.prediction.miniswe_jsonl.v1":
         seen: set[str] = set()
         for line_no, line in enumerate(raw.splitlines(), 1):
@@ -597,7 +655,8 @@ def audit_file(data_root: str | os.PathLike[str], descriptor: dict[str, object])
                        "observations": observations})
         return result
     except AuditError as exc:
-        unsupported_codes = {"UNSUPPORTED_FORMAT", "UNSUPPORTED_YAML_SHAPE", "UNSUPPORTED_PATCH_SHAPE"}
+        unsupported_codes = {"UNSUPPORTED_FORMAT", "UNSUPPORTED_YAML_SHAPE", "UNSUPPORTED_PATCH_SHAPE",
+                             "UNSUPPORTED_MARKDOWN_SHAPE"}
         result["status"] = "UNSUPPORTED" if exc.code in unsupported_codes else "ERROR"
         result["reason_codes"] = [exc.code]
         return result
