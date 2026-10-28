@@ -1,0 +1,46 @@
+{
+  "schema": "pgop1.run002.metric-plan.v1",
+  "campaign": "PGOP1_RUN_002",
+  "execution": "NOT_PERFORMED",
+  "values": {
+    "SOURCE_FILES": "NOT_MEASURED",
+    "ELIGIBLE_FILES": "NOT_MEASURED",
+    "PARSED_FILES": "NOT_MEASURED",
+    "UNSUPPORTED_FILES": "NOT_MEASURED",
+    "PROCESSING_ERRORS": "NOT_MEASURED",
+    "AGENT_EXECUTIONS": "NOT_MEASURED",
+    "ATTRIBUTED_MESSAGES": "NOT_MEASURED",
+    "UNKNOWN_SPEAKER_MESSAGES": "NOT_MEASURED",
+    "CLAIMS_IDENTIFIED": "NOT_MEASURED",
+    "CLAIMS_AUDITED": "NOT_MEASURED",
+    "SUPPORTED": "NOT_MEASURED",
+    "CONTRADICTED": "NOT_MEASURED",
+    "INSUFFICIENT_EVIDENCE": "NOT_MEASURED",
+    "INTEGRITY_FAILURE": "NOT_MEASURED",
+    "VERIFICATION_ERROR": "NOT_MEASURED",
+    "INDEPENDENT_REFERENCE_CASES": "NOT_MEASURED",
+    "TRUE_POSITIVES": "NOT_MEASURED",
+    "TRUE_NEGATIVES": "NOT_MEASURED",
+    "FALSE_POSITIVES": "NOT_MEASURED",
+    "FALSE_NEGATIVES": "NOT_MEASURED",
+    "ABSTENTIONS": "NOT_MEASURED",
+    "CONTEXT_ENGINE_UNITS": "NOT_MEASURED",
+    "RECOVERY_VERIFICATIONS": "NOT_MEASURED"
+  },
+  "denominators": {
+    "file_dispositions": "processing attempts over unique frozen eligible source IDs; errors and unsupported retained",
+    "messages": "all parsed records; source-declared labels separate from verified attribution",
+    "claims": "distinct source/message/span/predicate/polarity identity; no claim synthesized from evaluator",
+    "verdicts": "all audited claims; verdict counts sum to claims audited; parse dispositions separate",
+    "reference_metrics": "eligible independently adjudicated concrete-predicate cases only; development/synthetic excluded",
+    "context": "immutable committed batch/member observations; successful recovery count separate from attempted recovery"
+  },
+  "calculation": {
+    "precision": "TP/(TP+FP)",
+    "recall": "TP/(TP+FN+positive_abstentions+missed_positive_reference_claims+positive_technical_failures)",
+    "decided_accuracy": "(TP+TN)/(TP+TN+FP+FN)",
+    "empty_denominator": "NOT_COMPUTABLE"
+  },
+  "independent_metrics_availability": "BLOCKED_INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE",
+  "targets": "No prescribed number of SUPPORTED claims; measure actual rejection and abstention"
+}

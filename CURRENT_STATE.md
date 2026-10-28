@@ -6,11 +6,14 @@ and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence p
 ## Checkout and architecture
 
 Repository: `nahuelvillarroel05/package-g-op1-reusable`; checkout
-`Engineering/PGOP1_RUN_001/repo`; branch `feat/pgop1-run-001`.
-Coverage intervention base HEAD: `ee0eab0b0673dfb29322d2cd07f82535475a4f90`;
-initial tracked tree clean. Origin URL matches the named repository. Live remote
-verification failed with Schannel SEC_E_NO_CREDENTIALS; current publication UNKNOWN.
-Prospective code/tests and these indexes remain uncommitted, with no push.
+`Engineering/PGOP1_RUN_001/repo`; branch `feat/pgop1-run-002-preparation`.
+Coverage engineering was consolidated without byte changes in
+`46ed62c7fcc2ca08098c0aeae3c42fe7d36eddd5` (tree
+`ad06438454fb4dd8124907cc828399e5d870571d`), after exact manifest/patch verification
+and 138 passing regressions. GitHub API independently verified the published
+RUN-001 branch at `ee0eab0b0673dfb29322d2cd07f82535475a4f90` after Git's Schannel
+route failed. New engineering remains local; no push. Final candidate identity
+is recorded outside Git in the preparation workspace's CODE_REFERENCE.json.
 
 `src/package_g/` is the consolidated historical core. Experimental engineering
 remains in `runtime/candidate/`; no promotion. Context Engine v0.1 stores immutable
@@ -59,7 +62,7 @@ NOT_PERFORMED. Six dataset shards have 3642 memberships/2819 unique IDs, not
 independent problems. Original twelve/49 reserved cases do not establish
 independent semantic labels. Twenty-five inaccessible directories remain excluded.
 
-## Current engineering result
+## Previous engineering result
 
 `PGOP1_CLAIM_AUDIT_COVERAGE_AND_SEMANTIC_VALIDATION_PARTIAL_WITH_EXACT_LIMITATIONS`.
 Workspace: `../../../PGOP1_CLAIM_AUDIT_COVERAGE_001/` relative to checkout, outside
@@ -84,17 +87,50 @@ Role attribution and independent semantic generalization remain unqualified;
 `INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`, independent denominator zero.
 No full campaign, RUN-002, Docker/patch execution or operational qualification.
 
+## RUN-002 preparation
+
+Result: `PGOP1_RUN_002_PREPARATION_PARTIAL_WITH_EXACT_LIMITATIONS`;
+readiness `NOT_READY`. Workspace `../../../PGOP1_RUN_002_PREPARATION/` from
+checkout (outside Git; Windows denied creation inside Engineering).
+Read FINAL_HANDOFF.md, ENGINEERING_REPORT.md, CODE_REFERENCE.json,
+TECHNICAL_AUDIT.md, TEST_RESULTS.json and run-002-preparation/ there.
+
+Prospective explicit role-export and native MiniSwe attribution parsers bind
+source hashes, message pointers/spans and declared roles. Actual speaker remains
+UNKNOWN; declarations and caller time/scope do not authenticate an agent or
+execution. They emit no semantic claims. MiniSwe legacy parser 1.0.1 closes
+audited code/role/run/actor false-positive routes; history is unchanged.
+Predicate reference scoring validates exact identities, five audit verdicts,
+abstentions and missing extractions. The narrow TASK_RESOLVED comparison is not
+a universal completion/test/file-modification verifier. Other concrete predicate
+contracts are explicitly NOT_IMPLEMENTED, pending appropriate source evidence.
+
+Bounded streaming chunks and checkpointed composition reuse the existing Engine
+and bridge, with durable identities, hash chains, rejection records, recovery
+and explicit NO_REDISPATCH on orphan output. Exact tested volume, process
+interruption coverage and remaining original-source memory bounds are in
+BATCHING_REPORT.md and TECHNICAL_AUDIT.md; do not infer unlimited ingestion.
+
+Independent protocol frozen before new public-source research. Only metadata
+and documentation were consulted; no heldout bodies or labels were evaluated.
+`INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`: independent adjudicated claim-span
+references are missing. Synthetic tests and five authentic development files
+cannot establish precision. Comparison is 5/5 accepted before and after, with
+additional declared-role metadata; no corpus-wide coverage gain is claimed.
+Campaign metrics remain NOT_MEASURED. RUN-002 was not executed.
+
 ## Observability and next work
 
 Local collector: `../../../PGOP1_AGENT_USAGE_RECOVERY_001/`; verified 25 manifest
 members and ZIP SHA-256 `21f908e9c65f30bcc24bed7b1b9e89bcec21398cb9f4aad00dd8fd40ba73edd5`.
 It is a compatible reconstruction, ORIGINAL_IMPLEMENTATION_NOT_RECOVERED.
-Current cutoff, response/tool/token counters and limits are in AGENT_USAGE.json
-and metadata-only AGENT_USAGE.csv in the new workspace. Automatic review sessions
+Current cutoff, response/tool/token counters and limits are in
+AGENT_TOKEN_AND_CALL_USAGE.json and metadata-only AGENT_USAGE.csv in the
+preparation workspace. Automatic review sessions
 are distinguished from project agents. Cached/reasoning tokens are subsets;
 observed usage is not `/goal`, billing or global provider coverage. Cache unchanged.
 
 Next objective prepared, not executed:
-`PGOP1_ATTRIBUTED_TRANSCRIPT_AND_PREDICATE_EVIDENCE_QUALIFICATION`.
-See [NEXT_STEP](docs/engineering/NEXT_STEP.md) for attribution contracts, independent
-labels, bounded format priorities and review requirements.
+`PGOP1_RUN_002_BLOCKER_CLOSURE`.
+See [NEXT_STEP](docs/engineering/NEXT_STEP.md). No RUN-002 execution until the
+material blockers close and a new explicit execution authorization is supplied.

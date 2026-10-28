@@ -1,0 +1,62 @@
+{
+  "schema": "pgop1.run002.preparation-source-manifest.v1",
+  "campaign_execution": "NOT_PERFORMED",
+  "development": [
+    {
+      "source_id": "SRC-b95e7a4acc3507fee2b1",
+      "path": "experiments-main/evaluation/lite/20240523_aider/chat-transcripts/sympy__sympy-24909.md",
+      "sha256": "0eee978aabb3c5982312e3ada86236b613fbb4621ca6df77102c567faef69426",
+      "bytes": 24695,
+      "role": "AGENT_TRAJECTORY",
+      "parser_id": "pgop1.swebench.trajectory.aider_markdown_unattributed.v1",
+      "run_id": "RUN002_PREPARATION_DEVELOPMENT"
+    },
+    {
+      "source_id": "SRC-b4cbc2d8462d347f4c30",
+      "path": "experiments-main/evaluation/lite/20240523_aider/chat-transcripts/sympy__sympy-24213.md",
+      "sha256": "7971924818661d9b087acb26b32b4c2b869e4477b9c63a0382e7f3af12cbc0f6",
+      "bytes": 2808,
+      "role": "AGENT_TRAJECTORY",
+      "parser_id": "pgop1.swebench.trajectory.aider_markdown_unattributed.v1",
+      "run_id": "RUN002_PREPARATION_DEVELOPMENT"
+    },
+    {
+      "source_id": "SRC-6aaac7440bee7cce868e",
+      "path": "experiments-main/evaluation/lite/20240523_aider/chat-transcripts/sympy__sympy-24152.md",
+      "sha256": "53e5bbc3a5c5dff46ed8b54ea125ffc76bf7e952840ea5be0b08ffb07d797256",
+      "bytes": 4140,
+      "role": "AGENT_TRAJECTORY",
+      "parser_id": "pgop1.swebench.trajectory.aider_markdown_unattributed.v1",
+      "run_id": "RUN002_PREPARATION_DEVELOPMENT"
+    },
+    {
+      "source_id": "SRC-ee8139aff5ea51c48280",
+      "path": "logs/trajs/tokio-rs__tokio-7139.traj.json",
+      "sha256": "60099f4b9624d41d899bef415b086d0f8168e444296cac66d6357e0ca7a817d8",
+      "bytes": 472212,
+      "role": "AGENT_TRAJECTORY",
+      "parser_id": "pgop1.swebench.trajectory.miniswe_role_attribution.v1",
+      "run_id": "LOCAL_ARCHIVE_LOGS_COLLECTION",
+      "instance_id": "tokio-rs__tokio-7139",
+      "scope": "CALLER_DECLARED_DEVELOPMENT_SOURCE_SNAPSHOT",
+      "timestamp": "2026-10-28T00:00:00+00:00"
+    },
+    {
+      "source_id": "SRC-53bb693d4de7dc3daba5",
+      "path": "logs/trajs/tokio-rs__tokio-6838.traj.json",
+      "sha256": "34119df234a9a62ce0c7b2978efeb6e6eff710d18d44cca36125d90fcb4e8318",
+      "bytes": 271578,
+      "role": "AGENT_TRAJECTORY",
+      "parser_id": "pgop1.swebench.trajectory.miniswe_role_attribution.v1",
+      "run_id": "LOCAL_ARCHIVE_LOGS_COLLECTION",
+      "instance_id": "tokio-rs__tokio-6838",
+      "scope": "CALLER_DECLARED_DEVELOPMENT_SOURCE_SNAPSHOT",
+      "timestamp": "2026-10-28T00:00:00+00:00"
+    }
+  ],
+  "evaluation": [],
+  "independent_reference_status": "INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE",
+  "public_candidates": "SOURCE_RESEARCH.json; metadata leads only, not eligible reserved sources",
+  "eligibility": "Exact source commitment and parser shape; development role declarations only, no semantic independence",
+  "historical_sources": "V1/RUN001 families excluded from independent evaluation"
+}

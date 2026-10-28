@@ -10,6 +10,7 @@ import hashlib
 import io
 import json
 import os
+from datetime import datetime
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
 import stat
@@ -40,7 +41,8 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.0.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.0.1",
+    "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.0.0",
     "pgop1.swebench.results.resolved_list_json.v1": "1.0.0",
@@ -49,10 +51,13 @@ PARSER_VERSIONS = {
     "pgop1.swebench.patch.unified_diff.v1": "1.0.0",
     "pgop1.swebench.metadata.yaml.v1": "1.0.0",
     "pgop1.swebench.trajectory.aider_markdown_unattributed.v1": "1.0.0",
+    "pgop1.swebench.transcript.role_export.v1": "1.0.0",
 }
 PARSER_ROLES = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": {"PREDICTION", "prediction", "agent_log_or_run_record"},
     "pgop1.swebench.trajectory.miniswe_json.v1": {
+        "AGENT_TRAJECTORY", "agent_trajectory", "historical_agent_trajectory"},
+    "pgop1.swebench.trajectory.miniswe_role_attribution.v1": {
         "AGENT_TRAJECTORY", "agent_trajectory", "historical_agent_trajectory"},
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": {
         "EVALUATOR_REPORT", "third_party_evaluator_result"},
@@ -68,6 +73,7 @@ PARSER_ROLES = {
     "pgop1.swebench.metadata.yaml.v1": {"RUN_METADATA", "submission_metadata"},
     "pgop1.swebench.trajectory.aider_markdown_unattributed.v1": {
         "AGENT_TRAJECTORY", "historical_agent_trajectory"},
+    "pgop1.swebench.transcript.role_export.v1": {"ROLE_EXPORT", "agent_trajectory"},
 }
 
 
@@ -318,6 +324,9 @@ def _claims(text: str) -> list[tuple[str, bool, str, list[int]]]:
             sentence = text[start:end]
             prefix = text[start:match.start()]
             line = text[text.rfind("\n", 0, match.start()) + 1:match.start()]
+            full_line = text[text.rfind("\n", 0, match.start()) + 1:
+                             (text.find("\n", match.start()) if "\n" in text[match.start():]
+                              else len(text))]
             prior_lines = text[:text.rfind("\n", 0, match.start())].splitlines()
             in_lazy_quote = False
             for previous_line in reversed(prior_lines):
@@ -326,7 +335,8 @@ def _claims(text: str) -> list[tuple[str, bool, str, list[int]]]:
                 if re.match(r" {0,3}>", previous_line):
                     in_lazy_quote = True
                     break
-            if (_fenced(text, match.start()) or re.match(r" {0,3}>", line)
+            if (full_line.startswith(("    ", "\t")) or _fenced(text, match.start())
+                    or re.match(r" {0,3}>", line)
                     or in_lazy_quote or _HEDGES.search(sentence) or _REPORTED_PREFIX.search(prefix)
                     or _DENIAL_PREFIX.search(prefix) or _RETRACTION.search(text[match.end():])
                     or (asserted and (_NEGATION.search(sentence) or prefix.strip()))):
@@ -353,14 +363,6 @@ def _assistant_messages(doc: dict[str, Any]) -> list[tuple[str, str]]:
             continue
         if message.get("role") == "assistant" and isinstance(message.get("content"), str):
             texts.append((message["content"], f"/messages/{i}/content"))
-        extra = message.get("extra")
-        response = extra.get("response") if isinstance(extra, dict) else None
-        choices = response.get("choices") if isinstance(response, dict) else None
-        if isinstance(choices, list):
-            for j, choice in enumerate(choices):
-                reply = choice.get("message") if isinstance(choice, dict) else None
-                if isinstance(reply, dict) and reply.get("role") == "assistant" and isinstance(reply.get("content"), str):
-                    texts.append((reply["content"], f"/messages/{i}/extra/response/choices/{j}/message/content"))
     return texts
 
 
@@ -416,6 +418,152 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
            target: str | None) -> list[dict[str, Any]]:
     parser = desc["parser_id"]
     out: list[dict[str, Any]] = []
+    if parser == "pgop1.swebench.transcript.role_export.v1":
+        # Role labels are source-declared metadata, not authenticated identities.
+        # Bind every declared message to a committed source byte span and all
+        # required contextual identities, but do not infer claims from it.
+        doc = _json(raw)
+        if not isinstance(doc, dict) or doc.get("schema") != "pgop1.swebench.transcript-role-export.v1":
+            raise AuditError("MALFORMED_ROLE_EXPORT", "role export schema is invalid")
+        iid, export_run = doc.get("instance_id"), doc.get("run_id")
+        scope, timestamp = doc.get("scope"), doc.get("timestamp")
+        if not _valid_id(iid) or not _valid_run(export_run):
+            raise AuditError("ROLE_EXPORT_BINDING_INVALID", "role export requires valid run and instance IDs")
+        if export_run != run or (target is not None and iid != target):
+            raise AuditError("WRONG_INSTANCE_BINDING", "role export run or instance conflicts with request")
+        if desc.get("instance_id") is None:
+            raise AuditError("INSTANCE_ID_REQUIRED", "role export requires a descriptor instance binding")
+        if desc["instance_id"] != iid:
+            raise AuditError("WRONG_INSTANCE_BINDING", "role export instance conflicts with descriptor")
+        if not isinstance(scope, str) or not scope.strip() or len(scope) > 256:
+            raise AuditError("ROLE_EXPORT_SCOPE_INVALID", "role export requires a bounded nonempty scope")
+        if not isinstance(timestamp, str) or len(timestamp) > 64:
+            raise AuditError("ROLE_EXPORT_TIME_INVALID", "role export requires an ISO timestamp")
+        try:
+            parsed_time = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise AuditError("ROLE_EXPORT_TIME_INVALID", "role export timestamp is not ISO formatted") from exc
+        if parsed_time.tzinfo is None or parsed_time.utcoffset() is None:
+            raise AuditError("ROLE_EXPORT_TIME_INVALID", "role export timestamp requires timezone")
+        caller_scope, caller_timestamp = desc.get("scope"), desc.get("timestamp")
+        if caller_scope != scope or caller_timestamp != timestamp:
+            raise AuditError("ROLE_EXPORT_CALLER_BINDING_MISMATCH", "caller scope/time must match export declarations")
+        source = doc.get("source")
+        if not isinstance(source, dict) or not isinstance(source.get("text"), str):
+            raise AuditError("ROLE_EXPORT_SOURCE_INVALID", "role export must embed committed source text")
+        source_bytes = source["text"].encode("utf-8")
+        if (len(source_bytes) > MAX_TEXT_BYTES or type(source.get("bytes")) is not int
+                or source.get("bytes") != len(source_bytes)
+                or source.get("sha256") != _sha(source_bytes)):
+            raise AuditError("ROLE_EXPORT_SOURCE_COMMITMENT_INVALID", "embedded source commitment does not match")
+        messages = doc.get("messages")
+        if not isinstance(messages, list) or len(messages) > MAX_OBSERVATIONS:
+            raise AuditError("ROLE_EXPORT_MESSAGES_INVALID", "role export messages must be a bounded array")
+        message_ids: set[str] = set()
+        spans: list[tuple[int, int]] = []
+        for index, message in enumerate(messages):
+            if not isinstance(message, dict):
+                raise AuditError("ROLE_EXPORT_MESSAGES_INVALID", "role export message must be an object")
+            message_id, speaker = message.get("message_id"), message.get("speaker")
+            start, end, content_hash = message.get("byte_start"), message.get("byte_end"), message.get("sha256")
+            if (not isinstance(message_id, str) or not message_id.strip() or len(message_id) > 256
+                    or not isinstance(speaker, str)
+                    or speaker not in {"assistant", "user", "tool", "system", "unknown"}
+                    or type(start) is not int or type(end) is not int or start < 0 or end <= start
+                    or end > len(source_bytes)):
+                raise AuditError("ROLE_EXPORT_MESSAGE_INVALID", "role export message fields are invalid")
+            if message_id in message_ids:
+                raise AuditError("ROLE_EXPORT_DUPLICATE_MESSAGE_ID", "message IDs must be unique")
+            message_ids.add(message_id)
+            spans.append((start, end))
+            segment = source_bytes[start:end]
+            try:
+                segment.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise AuditError("ROLE_EXPORT_SPAN_ENCODING_INVALID", "message span splits UTF-8 text") from exc
+            if not isinstance(content_hash, str) or content_hash != _sha(segment):
+                raise AuditError("ROLE_EXPORT_SPAN_HASH_MISMATCH", "message span hash does not match source bytes")
+            value = {"source_id": ref["path"], "source_hash": ref["sha256"],
+                     "transcript_format": "pgop1.swebench.transcript-role-export.v1",
+                     "message_id": message_id, "speaker_role": "UNKNOWN",
+                     "declared_speaker": speaker, "speaker_provenance": "SOURCE_DECLARED",
+                     "speaker_verification_level": "SOURCE_DECLARED_HASH_BOUND_UNVERIFIED",
+                     "content_hash": content_hash, "content_span": {"byte_start": start, "byte_end": end},
+                     "claim_predicate": "NONE", "caller_scope": caller_scope,
+                     "caller_timestamp": caller_timestamp,
+                     "declared_scope": scope, "declared_timestamp": timestamp,
+                     "attribution_status": "SOURCE_DECLARED_UNVERIFIED",
+                     "source_content_sha256": source["sha256"]}
+            _append_observation(out, _obs(ref, run, iid, "transcript_attribution",
+                                          "DECLARED_SPEAKER", value, f"/messages/{index}",
+                                          "SOURCE_DECLARED_NOT_AUTHENTICATED"))
+        ordered_spans = sorted(spans)
+        if any(left[1] > right[0] for left, right in zip(ordered_spans, ordered_spans[1:])):
+            raise AuditError("ROLE_EXPORT_OVERLAPPING_SPANS", "message byte spans must not overlap")
+        return out
+    if parser == "pgop1.swebench.trajectory.miniswe_role_attribution.v1":
+        # The native role field is preserved as a source declaration, never as
+        # authenticated identity. This parser intentionally emits no claims.
+        doc = _json(raw)
+        if not isinstance(doc, dict) or not _valid_id(doc.get("instance_id")):
+            raise AuditError("MALFORMED_TRAJECTORY", "trajectory requires a valid instance_id")
+        iid = doc["instance_id"]
+        if target is not None and target != iid:
+            raise AuditError("WRONG_INSTANCE_BINDING", "trajectory instance_id conflicts with request")
+        if desc.get("instance_id") is None:
+            raise AuditError("INSTANCE_ID_REQUIRED", "attribution parser requires descriptor instance binding")
+        if desc["instance_id"] != iid:
+            raise AuditError("WRONG_INSTANCE_BINDING", "trajectory instance_id conflicts with descriptor")
+        if doc.get("run_id") is not None and doc["run_id"] != run:
+            raise AuditError("WRONG_RUN_BINDING", "trajectory run_id conflicts with audit request")
+        scope, timestamp = desc.get("scope"), desc.get("timestamp")
+        if not isinstance(scope, str) or not scope.strip() or len(scope) > 256:
+            raise AuditError("ROLE_EXPORT_SCOPE_INVALID", "attribution descriptor requires scope")
+        if not isinstance(timestamp, str) or len(timestamp) > 64:
+            raise AuditError("ROLE_EXPORT_TIME_INVALID", "attribution descriptor requires timestamp")
+        try:
+            parsed_time = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise AuditError("ROLE_EXPORT_TIME_INVALID", "attribution timestamp is not ISO formatted") from exc
+        if parsed_time.tzinfo is None or parsed_time.utcoffset() is None:
+            raise AuditError("ROLE_EXPORT_TIME_INVALID", "attribution timestamp requires timezone")
+        messages = doc.get("messages")
+        if not isinstance(messages, list) or len(messages) > MAX_OBSERVATIONS:
+            raise AuditError("MALFORMED_TRAJECTORY", "trajectory messages must be a bounded array")
+        for index, message in enumerate(messages):
+            if not isinstance(message, dict):
+                raise AuditError("MALFORMED_TRAJECTORY", "every trajectory message must be an object")
+            speaker = message.get("role")
+            declared = speaker if isinstance(speaker, str) and speaker in {
+                "assistant", "user", "tool", "system"} else "UNKNOWN"
+            if "content" not in message:
+                content_bytes, content_status = b"", "CONTENT_MISSING"
+            elif isinstance(message["content"], str):
+                content_bytes, content_status = message["content"].encode("utf-8"), "TEXT"
+            else:
+                try:
+                    content_bytes = json.dumps(message["content"], sort_keys=True,
+                                               ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+                except (TypeError, ValueError, RecursionError) as exc:
+                    raise AuditError("MALFORMED_TRAJECTORY", "message content cannot be canonically represented") from exc
+                content_status = "NON_TEXT_UNSUPPORTED"
+            if len(content_bytes) > MAX_CLAIM_BYTES * 64:
+                raise AuditError("CLAIM_TEXT_TOO_LARGE", "transcript message exceeds attribution bound")
+            pointer = f"/messages/{index}/content"
+            value = {"source_id": ref["path"], "source_hash": ref["sha256"],
+                     "transcript_format": "miniswe_json.messages.v1",
+                     "message_id": pointer, "speaker_role": "UNKNOWN",
+                     "declared_speaker": declared, "speaker_provenance": "SOURCE_DECLARED",
+                     "speaker_verification_level": "SOURCE_DECLARED_ROLE_RECORD_HASH_BOUND",
+                     "content_hash": _sha(content_bytes), "content_span": None,
+                     "content_status": content_status, "claim_predicate": "NONE", "caller_scope": scope,
+                     "caller_timestamp": timestamp, "event_time": "UNKNOWN",
+                     "attribution_status": "SOURCE_DECLARED_UNVERIFIED",
+                     "content_bytes": len(content_bytes)}
+            _append_observation(out, _obs(ref, run, iid, "transcript_attribution", "DECLARED_SPEAKER",
+                                          value, pointer,
+                                          "SOURCE_DECLARED_NOT_AUTHENTICATED"))
+        return out
     if parser == "pgop1.swebench.trajectory.aider_markdown_unattributed.v1":
         # Aider's presentation markers are not authenticated speaker labels.
         # Index structural spans only; never route their prose through _claims.
@@ -502,12 +650,22 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
         if not isinstance(doc, dict) or not _valid_id(doc.get("instance_id")):
             raise AuditError("MALFORMED_TRAJECTORY", "trajectory requires a valid instance_id")
         iid = doc["instance_id"]
+        if doc.get("run_id") is not None and doc["run_id"] != run:
+            raise AuditError("WRONG_RUN_BINDING", "trajectory run_id conflicts with request")
         if target is not None and target != iid:
             raise AuditError("WRONG_INSTANCE_BINDING", "trajectory instance_id conflicts with request")
         if desc.get("instance_id") is not None and desc["instance_id"] != iid:
             raise AuditError("WRONG_INSTANCE_BINDING", "trajectory instance_id conflicts with descriptor")
         candidate_claims: list[tuple[int, dict[str, Any]]] = []
-        for message_order, (text, pointer) in enumerate(_assistant_messages(doc)):
+        # An unscoped agent_id cannot bind the source-declared role records to
+        # this request. Preserve the file as parsed evidence, but abstain from
+        # extracting claims until a version with an explicit scope contract.
+        messages = doc.get("messages")
+        message_actor_ids = isinstance(messages, list) and any(
+            isinstance(message, dict) and any(key in message for key in ("agent_id", "agent_ids", "speaker_id"))
+            for message in messages)
+        texts = [] if "agent_id" in doc or "agent_ids" in doc or message_actor_ids else _assistant_messages(doc)
+        for message_order, (text, pointer) in enumerate(texts):
             for predicate, asserted, matched, span in _claims(text):
                 claim = {
                     "claim_id": _stable("claim", run, iid, ref["path"], pointer, predicate,

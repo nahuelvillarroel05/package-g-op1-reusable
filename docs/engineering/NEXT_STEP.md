@@ -1,47 +1,55 @@
-# PGOP1 — Next Engineering Stage
+# PGOP1 next objective: RUN-002 blocker closure
 
 PREPARED_NOT_EXECUTED, 2026-10-28.
-Objective: `PGOP1_ATTRIBUTED_TRANSCRIPT_AND_PREDICATE_EVIDENCE_QUALIFICATION`.
-Read [AGENTS.md](../../AGENTS.md) and [CURRENT_STATE.md](../../CURRENT_STATE.md).
-No RUN-002, full campaign, src promotion, push or operational I7 qualification.
+Objective: `PGOP1_RUN_002_BLOCKER_CLOSURE`.
+Read AGENTS.md, CURRENT_STATE.md and the exact external preparation handoff:
+`../../../PGOP1_RUN_002_PREPARATION/FINAL_HANDOFF.md`.
+The candidate is on `feat/pgop1-run-002-preparation`; its commit/tree and hashes
+are in CODE_REFERENCE.json outside Git. No self-referential commit SHA is stored
+in these indexes. Check actual HEAD/branch/tree/status/remote before acting.
 
-## Starting evidence
+Previous coverage code is committed as
+`46ed62c7fcc2ca08098c0aeae3c42fe7d36eddd5`, preserving its exact approved bytes.
+The RUN-002 preparation candidate adds conservative source-declared role
+metadata, closes audited legacy false supports, and implements bounded
+checkpointed composition with the existing bridge. Read ATTRIBUTION_SPEC.md,
+PREDICATE_EVIDENCE_SPEC.md, BATCHING_REPORT.md, TEST_RESULTS.json and
+TECHNICAL_AUDIT.md for exact validated scope and remaining limitations.
 
-Base HEAD of coverage intervention: `ee0eab0b0673dfb29322d2cd07f82535475a4f90`.
-Prospective changes remain uncommitted for review. Local Engineering workspace:
-`../../../PGOP1_CLAIM_AUDIT_COVERAGE_001/` from checkout; outside Git.
-Read ENGINEERING_REPORT.md, FINAL_HANDOFF.md, EVALUATION_PROTOCOL.md,
-COVERAGE_ANALYSIS.json, ERROR_CLASSIFICATION.json, SEMANTIC_ANALYSIS.md,
-AUTHENTIC_VALIDATION.json, TEST_RESULTS.json, TECHNICAL_AUDIT.md and AGENT_USAGE.json.
-CODE_REFERENCE.json pins evaluated working-tree bytes. Do not identify those
-modified bytes solely by the baseline HEAD.
+Readiness is NOT_READY:
+`PGOP1_RUN_002_PREPARATION_PARTIAL_WITH_EXACT_LIMITATIONS`.
+The independent claim-span semantic holdout is unavailable. No authentic
+independent accuracy has been measured. Existing V1 twelve/49 RUN-001 cases,
+three Aider transcripts, native MiniSwe development files and all same-family
+variants remain DEVELOPMENT. SOURCE_RESEARCH.json contains public metadata
+leads, not qualified evaluation cases. Do not inspect heldout answers/labels
+during parser preparation.
 
-RUN-001 is frozen: 1744 accepted, 2045 unsupported and 13 errors over 3802 files;
-351 insufficient claims over 266 execution audits. New Markdown support is
-structural only, with UNKNOWN actors and zero claims. The three authentic
-development files are one source family, not an independent semantic holdout.
+Next authorized engineering objective should:
+1. Obtain new independent source-family references with verifiable original role
+   records and concrete-predicate labels. Freeze original IDs/hashes, family
+   split, spans, identities, evidence rationale and blinded adjudication before
+   candidate evaluation. Retain UNKNOWN disagreements. Do not substitute
+   benchmark resolved=true for task completion, tests or file predicates.
+2. Establish only concrete predicate contracts supported by appropriate genuine
+   source evidence. TASK_RESOLVED remains narrow; the seven requested task,
+   issue, test, patch, file and command contracts are NOT_IMPLEMENTED. Caller
+   time/scope is not verified execution time or authenticated custody.
+3. Close any residual source streaming/resource qualification and audit limits
+   identified in the final batching report. Reuse the existing Engine/bridge;
+   preserve orphan NO_REDISPATCH and I7/P010 boundaries.
+4. Freeze the resulting code and independent evaluation protocol; run relevant
+   regressions and Sol XHigh audit, and issue a new verifiable readiness
+   decision. Re-review material code changes rather than reusing old PASS.
+5. Request a separate execution objective only after material readiness gates
+   close. Preparing an execution plan does not execute PGOP1_RUN_002.
 
-## Proposed bounded work
+Reusable local usage collector:
+`../../../PGOP1_AGENT_USAGE_RECOVERY_001/`. Verify its existing manifest/ZIP
+before use; do not reconstruct it. Preserve observable session/model roles,
+automatic reviews, token subsets and cutoff coverage. Cache unchanged.
 
-1. Establish a verifiable transcript export specification with explicit speaker
-   provenance. Aider headings, blockquotes and fences do not authenticate
-   assistant/user/tool roles. Preserve UNKNOWN until attribution is demonstrated.
-2. Obtain independent concrete-predicate labels, freeze hashes and source-family
-   development/evaluation separation before extractor changes. Existing V1 twelve
-   cases, RUN-001 49 reserved cases and current three Aider files are development.
-   Without new valid references retain INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE
-   and zero independent metric denominators.
-3. Consider narrow versioned count-summary and warning-prefixed patch parsers
-   only as metadata/bytes, without minting instance outcomes. Preserve malformed,
-   incompatible and duplicate-source rejections. Missing membership is UNKNOWN.
-4. Define deterministic bounded composition through existing bridge/batch APIs
-   before larger Markdown ingestion: discovery permits 20000 observations,
-   exceeding direct bridge capacity. Keep explicit RUN_ONLY provenance.
-5. Run the four existing required suites and bounded authentic checks. Audit
-   semantic changes with Sol XHigh. No protected core, pins or historical edits.
-
-Reuse verified `../../../PGOP1_AGENT_USAGE_RECOVERY_001/` locally; report automatic
-review sessions separately from project agents, cutoff and missing data.
-Do not change Codex cache, ACLs or AGENTS.md. No benchmark/model/Docker execution.
-The next objective requires its own authorization; preparing it does not execute
-it or reopen formal I7, independent custody or Physical C2.
+No RUN-002, mass campaign, fresh Docker/regrade, model, training, push, src
+promotion, historical mutation, ACL change or operational I7 qualification is
+authorized by this next-step document. The Owner's current task defines scope.
+I0-I6 remain formally frozen; I7 incomplete; Physical C2 DEFERRED_NOT_WAIVED.
