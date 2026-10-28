@@ -13,6 +13,7 @@ from runtime.candidate.swebench_claim_audit.generalized import (
     audit_evidence,
     audit_file,
 )
+from runtime.candidate.swebench_claim_audit.generalized_bridge import bind_generalized_audit
 
 RUN = "run-dev-001"
 INSTANCE = "sharkdp__bat-562"
@@ -60,6 +61,13 @@ def test_resolution_claim_is_compared_to_instance_and_run_bound_report(tmp_path:
     assert result["relationships"][0]["evidence_bindings"][0]["sha256"] == descriptors[0]["sha256"]
     assert {ref["role"] for ref in result["SOURCE_PROVENANCE"]["evidence_references"]} == {
         "AGENT_TRAJECTORY", "EVALUATOR_REPORT"}
+
+
+def test_normalized_claim_relationship_binds_through_generalized_bridge(tmp_path: Path) -> None:
+    result = audit_evidence(tmp_path, _request(_trajectory(tmp_path), _report(tmp_path)))
+    bound = bind_generalized_audit(result, tmp_path, tmp_path / "context")
+    assert bound["context_engine"]["status"] == "PASS"
+    assert bound["context_engine"]["fresh_process_readback"]["status"] == "PASS"
 
 
 def test_completion_claim_is_not_a_benchmark_resolution_claim(tmp_path: Path) -> None:

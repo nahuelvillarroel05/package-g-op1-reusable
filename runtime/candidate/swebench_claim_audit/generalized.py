@@ -476,8 +476,10 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
             if superseding:
                 claim["superseded_by"] = superseding[-1]["claim_id"]
         for _, claim in candidate_claims:
-            _append_observation(out, _obs(ref, run, iid, "agent_statement", claim["predicate"], claim,
-                                          claim["source_pointer"], claim["attribution"]))
+            normalized = _obs(ref, run, iid, "agent_statement", claim["predicate"], claim,
+                              claim["source_pointer"], claim["attribution"])
+            normalized["claim_id"] = claim["claim_id"]
+            _append_observation(out, normalized)
         return out
 
     if parser in {"pgop1.swebench.evaluator_report.resolved_map_json.v1",
