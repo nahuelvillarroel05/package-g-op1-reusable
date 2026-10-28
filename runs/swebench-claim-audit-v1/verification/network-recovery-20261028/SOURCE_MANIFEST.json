@@ -1,0 +1,99 @@
+{
+  "schema": "pgop1.swebench.network-recovery-public-source-manifest.v1",
+  "source_zip": {
+    "sha256": "eeeea35b19cef57fd34b2033d8cc18345b97028c9a004af4bb7866c2c108da42",
+    "bytes": 191610,
+    "members": 114,
+    "all_extracted_member_hashes_match": true
+  },
+  "source_evidence": [
+    {
+      "file": "FINAL_HANDOFF.md",
+      "sha256": "bc5dc69509ac6df4027ddda38933cee3f6d72cabb59592095571ffb09d903164",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "REGRADE_EXECUTION.json",
+      "sha256": "075fc91d0faf456f825fdfb571729cec85320f656aa8b90f0df96fd6f8fcca8b",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "REGRADE_RESULTS.json",
+      "sha256": "17cc8a2177aad48cbb3d0f4065122c89a5dc03c2fe64a31678a6ebc361ecfdb2",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "V1_RECONCILIATION.json",
+      "sha256": "82cd90bb486a2b24a56887a4bbbab9e946132492915e8a9a41141061e8f12563",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "ENVIRONMENT_VERIFICATION.json",
+      "sha256": "de9719ebebe8c0253a4ab1f3649cb3209307bc0c321b8406feb975fa3a73e131",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "UPSTREAM_SOURCE_IDENTITY.json",
+      "sha256": "ac59ec19b0ecdc1011b6dd2bf1dfefd501aecd72339c2ebccd4ed9eddb521d9c",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "FINAL_TECHNICAL_AUDIT.md",
+      "sha256": "1188f53d46d67658ae6559b01f8e903e04289cd6c51121f571bf7b4fd97b44d7",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "INTEGRITY_MANIFEST.json",
+      "sha256": "00a72a13e21c0ef88bab6ac5fd6e1eab2136ba4fdcfa98962e3c69c581aa1a70",
+      "transformation": "Whitelisted public fields or scoped summary derived; paths and captures excluded."
+    },
+    {
+      "file": "PGOP1_SWEBENCH_V1_NETWORK_RECOVERY_SUPPLEMENT.zip",
+      "sha256": "eeeea35b19cef57fd34b2033d8cc18345b97028c9a004af4bb7866c2c108da42",
+      "bytes": 191610,
+      "transformation": "Original verified archive; retained outside the repository."
+    }
+  ],
+  "derived_public_files": [
+    {
+      "file": "runs/swebench-claim-audit-v1/verification/network-recovery-20261028/REGRADE_EXECUTION_PUBLIC.json",
+      "sha256": "cf4a17ce64e683705dde91b6fd2efc7b0df1ca1ace3cdd3db5299945627c6ef1"
+    },
+    {
+      "file": "runs/swebench-claim-audit-v1/verification/network-recovery-20261028/REGRADE_RESULTS_PUBLIC.json",
+      "sha256": "205ae9a7d001d1c6d5ab604c9a939bed373a03f91bf2d595e2a04f33e33c3a8c"
+    },
+    {
+      "file": "runs/swebench-claim-audit-v1/verification/network-recovery-20261028/V1_RECONCILIATION_PUBLIC.json",
+      "sha256": "931948b38c44390c8fef87f9c605c8ac1980bc035693249689b7eff1f05bd91e"
+    },
+    {
+      "file": "runs/swebench-claim-audit-v1/verification/network-recovery-20261028/UPSTREAM_SOURCE_IDENTITY_PUBLIC.json",
+      "sha256": "a62f3c9b0b996c33dd6bf4a03fcb35eaeb903bf0fecec9d4d274c36762141659"
+    },
+    {
+      "file": "runs/swebench-claim-audit-v1/verification/network-recovery-20261028/TECHNICAL_AUDIT_SUMMARY.md",
+      "sha256": "2822f8ce4267a63b4bdc721e49b9982e6cdf4a8574219d9bd1d9181f825bfa5a"
+    },
+    {
+      "file": "runs/swebench-claim-audit-v1/CAMPAIGN_SUMMARY.md",
+      "sha256": "b8b150deabde99eb653e784afeb80342342def63723b4664b1c6cc9b021a1bbe"
+    },
+    {
+      "file": "runs/swebench-claim-audit-v1/README.md",
+      "sha256": "37c22ba9a3f54a9435f4bc48cc8c27413690f975687de0eefd98d25ff488e22a"
+    }
+  ],
+  "self_reference": "Intentionally excluded; hash this manifest externally.",
+  "private_material_excluded": [
+    "personal local paths",
+    "credentials and secrets",
+    "private execution logs and captures",
+    "complete dataset",
+    "patch contents",
+    "trajectories",
+    "upstream source copies",
+    "virtual environments",
+    "caches"
+  ]
+}

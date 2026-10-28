@@ -1,0 +1,174 @@
+{
+  "schema": "pgop1.swebench.public-network-recovery-reconciliation.v1",
+  "observed_utc": "2026-10-28T02:41:34.577116-03:00",
+  "status": "RECONCILED_12_OF_12",
+  "campaign": "V1 frozen V4 selector",
+  "denominators": {
+    "full_entry_archived_log_instances": 258,
+    "full_entry_cli_verdict": "PASS",
+    "selected_v1_cases": 12,
+    "separate_direct_grades": 12,
+    "full_multilingual_test_split_rows": 300
+  },
+  "historical_v4": {
+    "engineering_runs": 3,
+    "receipts": 36,
+    "supported": 6,
+    "contradicted": 6
+  },
+  "individual_grading": {
+    "resolved": 6,
+    "not_resolved": 6,
+    "agrees_with_archived_result_and_frozen_v4": 12,
+    "discrepancies": 0,
+    "not_assessable": 0
+  },
+  "case_bindings": [
+    {
+      "instance_id": "axios__axios-5892",
+      "v4_verdict": "SUPPORTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": true,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "398a3f7cc854bf9e80d605c00f866959d402ae47a0dfb87f9d234f7a5ea9d734",
+      "patch_sha256": "e64ea86801c9b045afb21d0a0365e7a3f4cf892a87f190ec4fa9f337a1dc9cee",
+      "test_output_gzip_sha256": "ee95a3b01176124670c7792e134925de08225c57813fb6d1983e7bdd9e29c050"
+    },
+    {
+      "instance_id": "axios__axios-6539",
+      "v4_verdict": "CONTRADICTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": false,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "0915fd8cc823304eb64fc25144aa03689d1c2454c96ccb2f5628e4dd95d49fb5",
+      "patch_sha256": "4bf52afa0a20b7468e2783abd5526cff8cad35c424f6cfe01949a63514976533",
+      "test_output_gzip_sha256": "5330e6e75fdec78d2185631b00894d816303bc6dad47c1031aa82ee45a253e43"
+    },
+    {
+      "instance_id": "briannesbitt__carbon-2762",
+      "v4_verdict": "SUPPORTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": true,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "abe7c3a217338452dd2740c39865edbbe74759dff3b9937f3e1cf0f66ac3eda4",
+      "patch_sha256": "c7a5ffbcebb6989034b1264e3dae2ab79c9914434be8f1b39bce3f73f75ffa7c",
+      "test_output_gzip_sha256": "71c211e701d1e112899404b7fd16747cf89c293bde793d31292a623a5bd066ca"
+    },
+    {
+      "instance_id": "briannesbitt__carbon-3005",
+      "v4_verdict": "CONTRADICTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": false,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "58ddf2349959c3383a4d87af883872d4064df3075f228cc2cf696ef6e5f0724c",
+      "patch_sha256": "484f5e0bafa175ae65cc51e985c73c67bfdaaa5481159d3162e26fb1e706c7f1",
+      "test_output_gzip_sha256": "d0bbdbe7489937373ab6f1c0832ddedd52077109fd531bf9f486930222559217"
+    },
+    {
+      "instance_id": "fluent__fluentd-3328",
+      "v4_verdict": "SUPPORTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": true,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "64b4728c34221eea869c02ce89f5f098553f14ca2d9cca305b9e2125505c29be",
+      "patch_sha256": "8df9c7adbd8a583cbaaf631f24d427dd15d2b05fca2f3524f77ef2b43c6beed7",
+      "test_output_gzip_sha256": "3459b2c0e37fd42e7675c339709e7474d590c1e87e4710a682e2d84eb58b5093"
+    },
+    {
+      "instance_id": "fluent__fluentd-4311",
+      "v4_verdict": "CONTRADICTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": false,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "0dc102c597beb04f77213cd2e238b9f48cda6c358545905ea6012f4c6e6bb4db",
+      "patch_sha256": "cedc062ae53e834b3705f983ede4a2969cb29c45ad5a6acd7ce930740c9f1ba5",
+      "test_output_gzip_sha256": "a0d0acded905e0111f02a55303c40d179fb2a45b10209c43be67e0d25b776543"
+    },
+    {
+      "instance_id": "fmtlib__fmt-3272",
+      "v4_verdict": "SUPPORTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": true,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "e623ab45d747968952248680eb14b5d7eca641762164dc7f0c20839b2e2d6375",
+      "patch_sha256": "5917f52bb213b5c04da9e8279c9e04cfebd2c100d69a5dc16b1a8e0012f999df",
+      "test_output_gzip_sha256": "bfbae30914cc6b556fd9f3464cf54f3af57ef6b41c890be2285bf14b44fe83a2"
+    },
+    {
+      "instance_id": "fmtlib__fmt-3158",
+      "v4_verdict": "CONTRADICTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": false,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "51618f3e4128617e310214b9c89c2bfc680644badc3c3d7206fa9580dc32e19c",
+      "patch_sha256": "51b58dae4232fd75e17dd8628b2f9d38b174429adfcd05a60adbc2e5c53a6c9c",
+      "test_output_gzip_sha256": "d21202a24f8d02f225255071965848738c815f6db55ba8861e14e62f30b73fd2"
+    },
+    {
+      "instance_id": "gin-gonic__gin-1957",
+      "v4_verdict": "SUPPORTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": true,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "7a238ce7e231dca227dfed846f07f58e716899be534139e334adaa78dd2a94cd",
+      "patch_sha256": "6a95075e9817e2d08515c700486c8267ff028717154cb5397c810e902ff53307",
+      "test_output_gzip_sha256": "a5195145590f9cf762b95d19e0b4da7310aaea1b67ecccd807c42689deb07063"
+    },
+    {
+      "instance_id": "gin-gonic__gin-2755",
+      "v4_verdict": "CONTRADICTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": false,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "410fc299263fefcb9b7a214b2bf6646bc913ebec5a80c88a79b399d13b859b85",
+      "patch_sha256": "fc4f3aaeaac80822c0bb9deb4f9133bcec8b4eee83f98e4e41276a494a7bd150",
+      "test_output_gzip_sha256": "8805c7baaa344d2fbdcea82d656a6267c1e9e7f443a76c312536016b3f91b373"
+    },
+    {
+      "instance_id": "google__gson-1093",
+      "v4_verdict": "SUPPORTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": true,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "0ff33cfc23e690ff45a2bcfc3303e09d90acd94597d0e59c5a19eb16b20776ae",
+      "patch_sha256": "942f5d57a5a06fe0aace3bdc265d5ef3e94361257d5898bb52322a554cf19eda",
+      "test_output_gzip_sha256": "f844b115c2ed9044c282038e1bd38d2ddeb98060ae18770208d74953c81f9d60"
+    },
+    {
+      "instance_id": "google__gson-2311",
+      "v4_verdict": "CONTRADICTED",
+      "regrade_status": "DIRECT_ORIGINAL_GRADER_EXECUTED_AND_MATCHED",
+      "resolved": false,
+      "agreement": "AGREES_WITH_ARCHIVED_RESULT_AND_FROZEN_V4",
+      "discrepancy": "NONE_OBSERVED",
+      "dataset_row_sha256": "4c0bbc1ffea1d6e05823b7c2e7e25d4b8b18ac98f7dce2e64469cb2a240093e8",
+      "patch_sha256": "43fbf9c8848d227986c94b71adedb9f34128ad909013cf9456b262379f537ecc",
+      "test_output_gzip_sha256": "ca68d158ba3c2f1a4a77a1e157238f73b0138f9b64af7611c7f344ab43944aeb"
+    }
+  ],
+  "upstream": {
+    "commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+    "matched_files": 16,
+    "inspected_files": 16,
+    "scope": "selected implementation files"
+  },
+  "limitations": [
+    "The CLI source checkout has no Git metadata. Selected source hashes match the prior inspected snapshot but do not independently authenticate origin/commit.",
+    "The PyPI swebench==5.0.2 wheel is a distinct package surface and has no submit verify command.",
+    "The official CLI loads a Hub dataset by mutable dataset name with no explicit revision. The local per-case run binds to the exact local Parquet hash and reproduces all frozen row hashes.",
+    "No Docker/container execution, patch reapplication, or test rerun occurred.",
+    "No conclusion about provider authentication or broader correctness follows from SWE-bench’s recorded-output grading.",
+    "Historical receipts, results, campaign bindings, original entry, logs, patches, and prior ZIP were not modified."
+  ]
+}

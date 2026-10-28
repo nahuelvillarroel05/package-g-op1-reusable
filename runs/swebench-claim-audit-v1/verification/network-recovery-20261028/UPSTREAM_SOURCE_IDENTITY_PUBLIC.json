@@ -1,0 +1,159 @@
+{
+  "schema": "pgop1.swebench.public-upstream-source-identity.v1",
+  "status": "16_OF_16_INSPECTED_SOURCE_FILES_BYTE_MATCH_PINNED_GITHUB_UPSTREAM",
+  "repository": "https://github.com/SWE-bench/SWE-bench",
+  "resolved_commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "inspected_files": 16,
+  "matches_raw_main": 16,
+  "matches_raw_pinned": 16,
+  "all_pinned_raw_http_200": true,
+  "scope_limit": "Selected implementation files only; the local source checkout has no Git metadata and full checkout identity is not established.",
+  "evidence_reference": "https://github.com/SWE-bench/SWE-bench/commit/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "matched_files": 16,
+  "files": [
+    {
+      "relative_path": "swebench/submit/package.py",
+      "checkout_sha256": "83423d149c51d01a9eb526ac4bc2f9418b2428528cd24d5f6d9998f3d77dcc85",
+      "checkout_bytes": 19422,
+      "pinned_sha256": "83423d149c51d01a9eb526ac4bc2f9418b2428528cd24d5f6d9998f3d77dcc85",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/submit/package.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/cli/cli.py",
+      "checkout_sha256": "799a456591af132521bf2bd8fdf33e1de335cfec069efd1d35837d6bd92121c5",
+      "checkout_bytes": 2254,
+      "pinned_sha256": "799a456591af132521bf2bd8fdf33e1de335cfec069efd1d35837d6bd92121c5",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/cli/cli.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/cli/submit.py",
+      "checkout_sha256": "4c4e70f7080d1b921feec18ddfccb0675a1078b29cce1b2e997e164046a738e8",
+      "checkout_bytes": 17664,
+      "pinned_sha256": "4c4e70f7080d1b921feec18ddfccb0675a1078b29cce1b2e997e164046a738e8",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/cli/submit.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/submit/verify.py",
+      "checkout_sha256": "d07cb693ae59cbc70102b019878b2e6a79698ef1bc31c0aa344f8cb34f397ff0",
+      "checkout_bytes": 6727,
+      "pinned_sha256": "d07cb693ae59cbc70102b019878b2e6a79698ef1bc31c0aa344f8cb34f397ff0",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/submit/verify.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/cli/_datasets.py",
+      "checkout_sha256": "87e7e7ada83f8d2fd012b232df14bcde2960c13404140bc0f2d1fe46fd6afa02",
+      "checkout_bytes": 1004,
+      "pinned_sha256": "87e7e7ada83f8d2fd012b232df14bcde2960c13404140bc0f2d1fe46fd6afa02",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/cli/_datasets.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/grading.py",
+      "checkout_sha256": "a095273010175001a6779e365b3b77abb8657c7ac2e4f80b4bc360faa6f09483",
+      "checkout_bytes": 14144,
+      "pinned_sha256": "a095273010175001a6779e365b3b77abb8657c7ac2e4f80b4bc360faa6f09483",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/grading.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/utils.py",
+      "checkout_sha256": "c22f38fdd4ffd34301da7f837b82926cf261d81ca0387d92dd2990b393517c79",
+      "checkout_bytes": 9794,
+      "pinned_sha256": "c22f38fdd4ffd34301da7f837b82926cf261d81ca0387d92dd2990b393517c79",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/utils.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/types.py",
+      "checkout_sha256": "558b6e7193306c304f9847a8a83dcab6a03ee333f6d51e61152e8821f89e0725",
+      "checkout_bytes": 1178,
+      "pinned_sha256": "558b6e7193306c304f9847a8a83dcab6a03ee333f6d51e61152e8821f89e0725",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/types.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/constants/__init__.py",
+      "checkout_sha256": "8895ab5313d874349c4b07bd223bb9eb00acaee377b432e67cc7ad840341e79b",
+      "checkout_bytes": 2182,
+      "pinned_sha256": "8895ab5313d874349c4b07bd223bb9eb00acaee377b432e67cc7ad840341e79b",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/constants/__init__.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/log_parsers/__init__.py",
+      "checkout_sha256": "2227a8696ce43a4266dccfa434374afaff43df6bd0b1769f431f5efe76500c14",
+      "checkout_bytes": 4436,
+      "pinned_sha256": "2227a8696ce43a4266dccfa434374afaff43df6bd0b1769f431f5efe76500c14",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/log_parsers/__init__.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/log_parsers/javascript.py",
+      "checkout_sha256": "87e907b21b54b08b84a4819fa8b7214f7df5f4eb93be586dfea1d5cd2245eb1a",
+      "checkout_bytes": 30686,
+      "pinned_sha256": "87e907b21b54b08b84a4819fa8b7214f7df5f4eb93be586dfea1d5cd2245eb1a",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/log_parsers/javascript.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/log_parsers/php.py",
+      "checkout_sha256": "869f5a8654c73f7f75a6ddd441f3068566a30bb5a0b6d242769cb0b715a14c1d",
+      "checkout_bytes": 1452,
+      "pinned_sha256": "869f5a8654c73f7f75a6ddd441f3068566a30bb5a0b6d242769cb0b715a14c1d",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/log_parsers/php.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/log_parsers/ruby.py",
+      "checkout_sha256": "3328c72a360fc518473382dfcf8117172ed8cbb89b7838b4c0801e5fe6547bcf",
+      "checkout_bytes": 3589,
+      "pinned_sha256": "3328c72a360fc518473382dfcf8117172ed8cbb89b7838b4c0801e5fe6547bcf",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/log_parsers/ruby.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/log_parsers/c.py",
+      "checkout_sha256": "861a34ce7e596fd5d155ac15bf88acdc495ce12da13a8ae8bbdf8b07edee5e00",
+      "checkout_bytes": 4375,
+      "pinned_sha256": "861a34ce7e596fd5d155ac15bf88acdc495ce12da13a8ae8bbdf8b07edee5e00",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/log_parsers/c.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/log_parsers/go.py",
+      "checkout_sha256": "b604f1e26ddbffad22a14ec012e0235046f006abe43c88a01b13fba3f144f731",
+      "checkout_bytes": 1248,
+      "pinned_sha256": "b604f1e26ddbffad22a14ec012e0235046f006abe43c88a01b13fba3f144f731",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/log_parsers/go.py",
+      "checkout_matches_pinned": true
+    },
+    {
+      "relative_path": "swebench/harness/log_parsers/java.py",
+      "checkout_sha256": "427b4c1e8361c1ca11461d34ec977356f3550fdc2328a78b9be394bcc5da0bdb",
+      "checkout_bytes": 5815,
+      "pinned_sha256": "427b4c1e8361c1ca11461d34ec977356f3550fdc2328a78b9be394bcc5da0bdb",
+      "pinned_status": 200,
+      "pinned_url": "https://raw.githubusercontent.com/SWE-bench/SWE-bench/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/log_parsers/java.py",
+      "checkout_matches_pinned": true
+    }
+  ]
+}

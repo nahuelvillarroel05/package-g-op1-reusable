@@ -1,0 +1,48 @@
+{
+  "schema": "pgop1.swebench.public-network-recovery-execution.v1",
+  "observed_utc": "2026-10-28T02:41:34.577116-03:00",
+  "status": "OFFICIAL_CLI_PASS_WITH_12_CASE_DIRECT_GRADES",
+  "environment": {
+    "python": "3.11.9",
+    "swebench_distribution": "swebench",
+    "swebench_version": "5.0.2",
+    "pypi_wheel_sha256": "b7f0416a1e686eca22c2f749b5f816685a202835032f6683080e2b53545bbb62",
+    "wheel_cli_surface": "No submit verify command",
+    "source_checkout_cli_surface": "submit verify available; materially distinct from PyPI wheel",
+    "docker_engine_or_containers_used": false
+  },
+  "full_entry_verification": {
+    "status": "PASS",
+    "exit_code": 0,
+    "archived_log_instances_regraded": 258,
+    "result": "PASS -- the entry matches its artifacts",
+    "test_split_rows_observed": 300,
+    "dataset_id": "SWE-bench/SWE-bench_Multilingual",
+    "limitation": "The aggregate CLI verdict covers 258 archived log instances; it does not enumerate 258 explicit per-instance outcomes."
+  },
+  "selected_case_grading": {
+    "method": "Unmodified SWE-bench source _grade function on frozen local test rows, recorded patches, and recorded test outputs",
+    "selected_cases": 12,
+    "resolved": 6,
+    "not_resolved": 6,
+    "match_archive_and_v4": 12,
+    "docker_patch_application_or_test_rerun": false
+  },
+  "upstream": {
+    "repository": "https://github.com/SWE-bench/SWE-bench",
+    "commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+    "inspected_files": 16,
+    "matched_files": 16,
+    "scope_limit": "Only the 16 inspected implementation files are established as byte matches; the full local checkout identity is not established."
+  },
+  "first_attempt": {
+    "exit_code": 1,
+    "issue": "Windows charmap decode error",
+    "retry": "UTF-8 environment variables for retry only; no source changes"
+  },
+  "limitations": [
+    "No Docker or patch reapplication/test execution occurred.",
+    "No provider identity authentication or general accuracy claim follows.",
+    "Official CLI dataset loading used the mutable Hub dataset name; the selected-case grading used the SHA-bound local Parquet."
+  ]
+}
