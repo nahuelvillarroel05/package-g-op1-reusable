@@ -110,3 +110,23 @@ preflight, immutable checkpoints and recovery constrain resource use.
 `GATE_11=BLOCKED`, `RUN_002=NOT_READY`, and
 `INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE` remain in force. No push, model,
 training, Docker, fresh Level C or Ubuntu workstation operation is authorized here.
+
+## Owner decision: F-16 and future Linux compatibility
+
+`F16=DEFERRED_LINUX_VALIDATION_PENDING` (2026-10-29).
+Sonnet reproduced a platform problem on Linux. The latest Codex engineering did
+not reproduce it on Windows; Astra classified it NOT_REPRODUCED_WINDOWS_ONLY.
+The original NOT_REPRODUCED matrix classification remains unchanged, and is not
+FIXED_AND_VERIFIED. Windows non-reproduction does not prove the Linux defect gone.
+
+The final Linux compatibility stage must prepare a reproducible Linux environment,
+rerun portable suites, reproduce F-16, correct platform differences, review Windows
+runtime dependencies, check paths/locks/file identities, run cross-platform
+regressions and request a new technical audit. F-16 is not necessarily the only
+Linux qualification requirement. This stage is deferred and is not executed or
+authorized by this publication. POSIX grants/locks remain unqualified.
+
+The earlier no-push statement above describes the campaign document's original
+scope. The Owner separately authorized the normal experimental-branch publication;
+models/training, new campaigns, main merge and src promotion remain outside scope.
+See [publication summary](SONNET_REMEDIATION_PUBLICATION.md).

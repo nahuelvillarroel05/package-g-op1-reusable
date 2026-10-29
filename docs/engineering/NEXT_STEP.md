@@ -1,19 +1,32 @@
-# PGOP1 next objective: independent reference qualification
+# PGOP1 next objective: external Sonnet remediation review
 
-## Active Owner-authorized engineering objective (2026-10-29)
+## Current handoff (2026-10-29)
 
-`PGOP1_SONNET_FINDINGS_REMEDIATION_AND_FULL_ENGINEERING_RUN` supersedes preparation
-as the immediate engineering task. Preserve the independent-reference gate below.
-Use the separate `PGOP1_SONNET_REMEDIATION_001` workspace and prospective remediation
-branch. Finish each finding's reproduction/resolution, focused/adversarial tests and
-internal review; freeze exact code commit/tree; obtain actual independent Astra
-review with no material blockers; only then execute the exhaustive post-Sonnet
-engineering campaign and fresh-process recovery. See its external FINAL_HANDOFF.md
-for the current terminal or continuation status, rather than inferring completion
-from this workflow. No push, models, Docker, private GOLD or formal RUN-002.
+Owner authorized publication of experimental branch
+`feat/pgop1-sonnet-findings-remediation-001`, preserving code candidate
+`e0115476ed46dde3bd583f67f767c501df7979f3` and tree
+`418b76fe58e5a3160f3d353b9270b82b288aaa67`. Read the
+[public summary](../audits/SONNET_REMEDIATION_PUBLICATION.md) and
+[Sonnet handoff](../audits/SONNET_PUBLIC_AUDIT_HANDOFF.md).
+Exact remote identity is checked by the separate publication receipt.
 
-After engineering, independent adjudicated references remain the next separate
-qualification task. A successful engineering campaign cannot close GATE_11.
+Original receipts: 17 findings (12 fixed/verified, 4 scoped valid contracts,
+1 not reproduced), Windows 312 passed, Astra 119 passed with
+PASS_WITH_NONMATERIAL_LIMITATIONS; full engineering run COMPLETE:
+25,580 source files / 3,802 attempts / 2,044 accepted / 1,745 unsupported /
+13 errors / 266 execution audits / 4,068 Context Engine units.
+No tests or campaigns are rerun during publication.
+
+Next intervention: obtain an actual public-only Sonnet review of F-01..F-15 and
+F-17 against baseline `676f2f08a7bb7602bb0bc6e66d845684e1833783`, including material
+regressions, associations/verdicts and excluded claims. Review status is PENDING;
+preparation does not assert approval or send a review request.
+`F16=DEFERRED_LINUX_VALIDATION_PENDING`: preserve Sonnet's Linux reproduction and
+Astra's NOT_REPRODUCED_WINDOWS_ONLY; follow the future Linux stage described in
+[compatibility](../audits/SONNET_REMEDIATION_COMPATIBILITY.md). Do not run it now.
+
+Independent reference qualification remains separate, GATE_11=BLOCKED and
+RUN_002=NOT_READY. No models, training, new campaign, main merge or src promotion.
 
 ## Earlier prepared objective and retained gate
 
@@ -34,17 +47,13 @@ No current commit SHA is inserted into its own files.
 
 ## Publication and external review follow-up
 
-The public-candidate release objective supersedes the earlier no-push task scope
-only for the authorized experimental branch. See
-[external audit scope](../audits/EXTERNAL_AUDIT_SCOPE.md) and
-[Sonnet handoff](../audits/SONNET_PUBLIC_AUDIT_HANDOFF.md).
-Sonnet audit remains PENDING until an actual public-only report is received.
-Exploratory semantic evaluation remains DESIGNED_NOT_EXECUTED; no execution is
-authorized by its plan. Independent qualification below remains a separate gate.
-Exact published documentation commit/tree and verification are in the external
-release handoff. No main merge, src promotion or RUN-002 execution.
+The current Owner publication authorization applies only to the experimental
+remediation branch. The prior public-release documents describe baseline
+`676f2f08`; use the current Sonnet handoff for the corrected candidate.
+Exploratory semantic evaluation remains DESIGNED_NOT_EXECUTED. No public review
+can substitute for independent adjudication or authorize RUN-002.
 
-## Current engineering evidence
+## Retained earlier engineering evidence
 
 The conservative attribution/predicate candidate is retained. Source-fragment
 V2 now composes bounded original bytes and normalized observation iterators

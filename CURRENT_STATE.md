@@ -3,31 +3,36 @@
 Updated 2026-10-29. Mutable index, not primary authority. Read [AGENTS.md](AGENTS.md)
 and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence prevail.
 
-## Sonnet findings engineering convergence
+## Sonnet remediation publication and next review
 
-Owner objective: `PGOP1_SONNET_FINDINGS_REMEDIATION_AND_FULL_ENGINEERING_RUN`.
-Prospective branch: `feat/pgop1-sonnet-findings-remediation-001`, based on `f416c8d`;
-executable baseline `676f2f08` is preserved. The original checkout remains untouched;
-Windows denied sibling creation under Engineering and Git-ref writes there. Work
-uses a separate clone in the authorized `PGOP1_SONNET_REMEDIATION_001` workspace.
-The original Sonnet report/R01-R15 inputs were not found in the bounded search;
-reproductions use the Owner's individual F-01..F-17 descriptions. All 17 baseline
-classifications were recorded before implementation. Baseline seven suites were
-actually rerun on Windows: 216 passed. Later counts must come from current JUnit.
+Code candidate: `e0115476ed46dde3bd583f67f767c501df7979f3`; tree
+`418b76fe58e5a3160f3d353b9270b82b288aaa67`. Experimental branch:
+`feat/pgop1-sonnet-findings-remediation-001`. The Owner authorized its normal push
+on 2026-10-29. Publication identity and remote verification belong to the separate
+publication receipt; this document does not predeclare a successful push.
+The candidate is preserved; this prospective documentation follows it.
 
-See [compatibility](docs/audits/SONNET_REMEDIATION_COMPATIBILITY.md). The external
-workspace's CODE_REFERENCE.json, SONNET_FINDINGS_RESOLUTION_MATRIX.json,
-astra-review/ and FINAL_HANDOFF.md control the final candidate/review/run status;
-this index does not predeclare their completion. Astra must inspect the frozen
-candidate before the full engineering campaign. The campaign uses its own
-post-Sonnet engineering ID, never formal RUN-002. Main and supplemental RUN-001
-plans cover 3,802 pertinent sources in the 25,580-file snapshot. All 3,802 source
-hashes were rechecked without mismatch; 300 Aider parser assignments are upgraded
-prospectively. Sources, old results and 25 inaccessible directories are preserved.
+Historical exact-candidate evidence: 17 findings = 12 FIXED_AND_VERIFIED +
+4 VALID_CONTRACT_WITH_EXPLICIT_SCOPE + 1 NOT_REPRODUCED; Windows 312 passed;
+Astra PASS_WITH_NONMATERIAL_LIMITATIONS, 119 passed. Full engineering run COMPLETE:
+25,580 source files, 3,802 processing attempts, 2,044 accepted, 1,745 unsupported,
+13 errors, 266 execution audits, 4,068 Context Engine campaign units.
+These are reused original receipts, not tests or campaigns rerun for publication.
+See [public findings/evidence summary](docs/audits/SONNET_REMEDIATION_PUBLICATION.md)
+and [compatibility limits](docs/audits/SONNET_REMEDIATION_COMPATIBILITY.md).
 
-`GATE_11=BLOCKED`, `RUN_002=NOT_READY`,
-`INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`. No push or src promotion. The sections
-below preserve the pre-remediation history; their PENDING labels describe that time.
+Owner decision: `F16=DEFERRED_LINUX_VALIDATION_PENDING`. Sonnet reproduced a Linux
+platform problem; Codex did not reproduce it on Windows and Astra recorded
+NOT_REPRODUCED_WINDOWS_ONLY. Neither Windows result closes the Linux finding.
+Linux compatibility remains future work and may require more than F-16.
+
+Next: public-only Sonnet review of F-01..F-15 and F-17 against baseline `676f2f08`,
+material regressions, associations/verdicts and excluded-claim accounting.
+[Review handoff](docs/audits/SONNET_PUBLIC_AUDIT_HANDOFF.md).
+New Sonnet approval is PENDING. Independent reference qualification remains a
+separate subsequent gate: `GATE_11=BLOCKED`, `RUN_002=NOT_READY`,
+`INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`. No main merge or src promotion.
+The sections below preserve pre-remediation history and its original denominators.
 
 ## Retained history and boundaries
 
