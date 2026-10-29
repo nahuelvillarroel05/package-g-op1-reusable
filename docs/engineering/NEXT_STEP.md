@@ -15,6 +15,18 @@ Do not rewrite it. Consolidation is commit
 `e96dce5297fcfae773d7c33118f7ad885f7c4db5`.
 No current commit SHA is inserted into its own files.
 
+## Publication and external review follow-up
+
+The public-candidate release objective supersedes the earlier no-push task scope
+only for the authorized experimental branch. See
+[external audit scope](../audits/EXTERNAL_AUDIT_SCOPE.md) and
+[Sonnet handoff](../audits/SONNET_PUBLIC_AUDIT_HANDOFF.md).
+Sonnet audit remains PENDING until an actual public-only report is received.
+Exploratory semantic evaluation remains DESIGNED_NOT_EXECUTED; no execution is
+authorized by its plan. Independent qualification below remains a separate gate.
+Exact published documentation commit/tree and verification are in the external
+release handoff. No main merge, src promotion or RUN-002 execution.
+
 ## Current engineering evidence
 
 The conservative attribution/predicate candidate is retained. Source-fragment
@@ -64,8 +76,10 @@ Reuse the existing verified local collector
 Report parent-linked model roles, automatic reviews, responses/calls/delegations,
 token subsets, measurement window and missing coverage. Keep Codex cache as is.
 
-No RUN-002, mass campaign, fresh Docker/regrade, model/training, push, src
-promotion, protected historical edit, ACL change or operational I7 qualification.
+Independent-reference qualification itself authorizes no RUN-002, mass campaign,
+fresh Docker/regrade, model/training, push, src promotion, protected historical
+edit, ACL change or operational I7 qualification. Experimental publication is
+authorized separately by the public-candidate release objective above.
 I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED;
 OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED; INDEPENDENT_CUSTODY=NOT_PROVEN;
 PHYSICAL_C2=DEFERRED_NOT_WAIVED.

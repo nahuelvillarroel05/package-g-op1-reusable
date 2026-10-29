@@ -3,6 +3,22 @@
 Verified 2026-10-28. Mutable index, not primary authority. Read [AGENTS.md](AGENTS.md)
 and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence prevail.
 
+## Public candidate publication and audit design
+
+Publication objective: `PGOP1_PUBLIC_CANDIDATE_RELEASE_AND_EVALUATION_DESIGN_001`.
+Code candidate `676f2f08a7bb7602bb0bc6e66d845684e1833783`, tree
+`c81bb27122a011662e20e52a2645fd3ac119dc6f`; documentation is a later descendant.
+See [public review](docs/audits/PUBLIC_CANDIDATE_REVIEW.md),
+[external scope](docs/audits/EXTERNAL_AUDIT_SCOPE.md),
+[branch comparison](docs/audits/BRANCH_COMPARISON_REPORT.md) and
+[exploratory plan](docs/audits/EXPLORATORY_SEMANTIC_EVALUATION_PLAN.md).
+Original 216-test and package receipts were rehashed, not reexecuted.
+Exploratory evaluation: DESIGNED_NOT_EXECUTED. External Sonnet audit: PENDING.
+Remote publication outcome and final documentation identity are recorded outside
+Git in the release workspace; this paragraph alone does not establish a push.
+GATE_11 remains BLOCKED and RUN_002 NOT_READY. No main/src promotion.
+The earlier local-only descriptions below describe the candidate's history.
+
 ## Checkout and architecture
 
 Repository: `nahuelvillarroel05/package-g-op1-reusable`; checkout

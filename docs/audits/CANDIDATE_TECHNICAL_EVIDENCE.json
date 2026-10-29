@@ -1,0 +1,48 @@
+{
+  "schema": "pgop1.run002.streaming.test-results.v2",
+  "final_seven_suites": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "216",
+    "time": "37.918",
+    "timestamp": "2026-10-28T21:02:48.563107-03:00"
+  },
+  "files": [
+    "tests/test_swebench_claim_audit.py",
+    "tests/test_swebench_generalized.py",
+    "tests/test_swebench_generalized_bridge.py",
+    "tests/test_swebench_campaign.py",
+    "tests/test_swebench_attribution.py",
+    "tests/test_swebench_batching.py",
+    "tests/test_swebench_source_fragments.py"
+  ],
+  "implementation_sha256": {
+    "runtime/candidate/swebench_claim_audit/source_fragments.py": "858a4ef462923c176e0087f6314a57cfb98f9dae1c4eaaca54b5ef0da0126dea",
+    "runtime/candidate/swebench_claim_audit/generalized.py": "8ef5e25ad586cb56201209157cfe2278b81a0cc94dbd4af8852c3b5f605621e8",
+    "runtime/candidate/swebench_claim_audit/predicate_evidence.py": "5e82b05a3f9c2e92f1669f6fe765996f9a399fd7d26fc44fb3e56d14be750b6b",
+    "runtime/candidate/swebench_claim_audit/swebench_batching.py": "7dc9b26a92345e61a2afcd9b70af3342d24e5320453e9f86b1cd6e0fa51153ee",
+    "runtime/candidate/swebench_claim_audit/generalized_bridge.py": "e212d84f7b6cbca13f5e3095b3ee3b60a66b28a904e67530f873db8fea52adad",
+    "runtime/candidate/context_engine.py": "1fdbf50fe56e82ec86e96dff3039a0bf5d8cfbddc217d9f2d928b7a62bd62568"
+  },
+  "test_sha256": {
+    "tests/test_swebench_claim_audit.py": "aac6b90ff361b387d7f2a7002070178a1cee62625275c48d936fcebd7a134892",
+    "tests/test_swebench_generalized.py": "28e62f72b5b6b1a9dd5918405c1cf39bd78ee8bf0fdcb39d89dd70b0a1edc19c",
+    "tests/test_swebench_generalized_bridge.py": "ca777d7c93d0d6d61b7b05fcec61cf25073ffcfae8a6cd6b6ec41f90b9fce9a3",
+    "tests/test_swebench_campaign.py": "20c814b4705353cde4de298777a79eca6e38bf26dcc8c7216958d39df4c28fd1",
+    "tests/test_swebench_attribution.py": "8de5e82edc7f397acc4b131f18f023a464d8d6fcf04396f958597d8342608761",
+    "tests/test_swebench_batching.py": "0ebc24c09e236426992c32a23b84ba57a77b71b4c75d5681e112f03ead27336c",
+    "tests/test_swebench_source_fragments.py": "7565581ab9f7197f8efce7691150677d91cd2d3e258a7ce362bb855b727ab2f0"
+  },
+  "semantic_holdout_evaluated": false,
+  "RUN_002": "NOT_PERFORMED",
+  "code_commit": "676f2f08a7bb7602bb0bc6e66d845684e1833783",
+  "code_tree": "c81bb27122a011662e20e52a2645fd3ac119dc6f",
+  "publication_intervention_tests": "NOT_RERUN; exact original hashes verified",
+  "original_junit_sha256": "a1cd9d8dc31cb23a38fc273a15a8aa4aebddba0954484553a8c9bfc39170ca02",
+  "original_junit_publicly_distributed": false,
+  "original_package_sha256": "09dd9843fef464fe79a46a5d7263c7f7f57d2f3e1cd82e4536f1d1aa8e93d80b",
+  "package_checks_documented": "63/63; package integrity/usability, not semantic tests",
+  "original_package_publicly_distributed": false
+}
