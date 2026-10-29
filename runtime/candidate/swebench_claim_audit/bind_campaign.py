@@ -90,6 +90,7 @@ def bind_campaign(data_root, plan, campaign_root, context_parent, *, min_free_by
         if shutil.disk_usage(parent).free < min_free_bytes:
             raise AuditError("CONTEXT_DISK_RESERVE", "free storage reserve reached")
         payload = {"schema": "pgop1.swebench.generalized-audit.v1", "result_scope": "BATCH_AGGREGATE",
+                   "audit_contract_version": "pgop1.swebench.aggregate-storage.v1",
                    "batch_id": "batch-" + str(number), "run_id": plan["campaign_id"],
                    "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
                    "reason_codes": ["STORAGE_AGGREGATE_NOT_A_SEMANTIC_VERDICT"],

@@ -109,8 +109,11 @@ def execute(data,workspace,review_path):
     plan=json.loads((out/'PLAN_PREPARED_V2.json').read_bytes())
     review=json.loads(review_path.read_bytes())
     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,text=True).strip()
-    if review.get('candidate_commit')!=head or review.get('decision') not in {
-            'PASS_WITH_EXACT_SCOPE','PASS_WITH_NONMATERIAL_LIMITATIONS'} or review.get('effective_model')!='gpt-6-astra':
+    identity_evidence=review.get('runtime_identity_evidence')
+    if (review.get('candidate_commit')!=head or review.get('decision') not in {
+            'PASS_WITH_EXACT_SCOPE','PASS_WITH_NONMATERIAL_LIMITATIONS'}
+            or review.get('effective_model')!='gpt-6-astra'
+            or not isinstance(identity_evidence,str) or 'metadata-only' not in identity_evidence.lower()):
         raise RuntimeError('EXACT_ASTRA_REVIEW_REQUIRED')
     if subprocess.check_output(['git','status','--porcelain'],cwd=REPO,text=True).strip():
         raise RuntimeError('CANDIDATE_NOT_FROZEN')
@@ -118,7 +121,11 @@ def execute(data,workspace,review_path):
     plan['code_commit']=head
     plan['code_sha256']={p:digest(REPO/p) for p in paths}
     plan['independent_review']=dict(decision=review['decision'],candidate_commit=head,
-        model=review['effective_model'],audit_sha256=digest(review_path))
+        model=review['effective_model'],audit_sha256=digest(review_path),
+        invocation_audit=dict(declared_model='gpt-6-astra',observed_model=review['effective_model'],
+            observed_model_source='CALLER_SUPPLIED_REVIEW_RECORD',
+            metadata_evidence=identity_evidence,evidence_sha256=digest(review_path),
+            identity_attestation_status='NOT_CRYPTOGRAPHICALLY_AUTHENTICATED'))
     save(out/'EXECUTION_MANIFEST.json',plan)
     result=run_campaign(data,plan,out/'campaign',resume=(out/'campaign'/'binding.json').exists())
     record_campaign_execution(out,result)

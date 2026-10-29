@@ -10,6 +10,7 @@ import hashlib
 import io
 import json
 import os
+import copy
 from datetime import datetime
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
@@ -21,7 +22,8 @@ from .predicate_evidence import compare_boolean_values
 
 AUDIT_SCHEMA = "pgop1.swebench.generalized-audit.v1"
 FILE_SCHEMA = "pgop1.swebench.generalized-audit-file.v1"
-NORMALIZATION_SCHEMA = "pgop1.swebench.source-bound-normalization.v2"
+NORMALIZATION_SCHEMA = "pgop1.swebench.source-bound-normalization.v3"
+QUALIFIER_SCHEMA = "pgop1.swebench.verification-qualifiers.v1"
 MAX_FILES = 64
 MAX_FILE_BYTES = 64 * 1024 * 1024
 MAX_JSON_BYTES = 32 * 1024 * 1024
@@ -31,6 +33,9 @@ MAX_GZIP_OUTPUT = 64 * 1024 * 1024
 MAX_TEXT_BYTES = 16 * 1024 * 1024
 MAX_CLAIM_BYTES = 16 * 1024
 MAX_OBSERVATIONS = 20_000
+MAX_NESTED_EXCLUSION_NODES = 20_000
+MAX_NESTED_EXCLUSION_DEPTH = 32
+MAX_NESTED_EXCLUSION_BYTES = 16 * 1024 * 1024
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,159}$")
 RUN_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,255}$")
 SHA_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -44,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.1.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.2.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -195,6 +200,7 @@ def _read(root: Path, item: dict[str, Any]) -> tuple[bytes, dict[str, Any]]:
         raise AuditError("SOURCE_HASH_MISMATCH", "source SHA-256 differs from its commitment")
     ref = {"path": path_text, "sha256": actual, "bytes": size, "role": item["role"],
            "parser_id": item["parser_id"], "parser_version": PARSER_VERSIONS.get(item["parser_id"], "UNKNOWN")}
+    ref.update({key: item[key] for key in ("run_id", "instance_id", "scope", "timestamp") if key in item})
     return raw, ref
 
 
@@ -243,7 +249,7 @@ def _obs(ref: dict[str, Any], run: str, iid: str, kind: str, predicate: str,
         "observation_id": _stable("observation", run, iid, ref["path"], ref["sha256"],
                                    pointer, kind, predicate, stable_value),
         "kind": kind, "predicate": predicate, "value": frozen_value, "run_id": run, "instance_id": iid,
-        "source_ref": _src(ref, pointer), "parser_id": ref["parser_id"],
+        "source_ref": copy.deepcopy(_src(ref, pointer)), "parser_id": ref["parser_id"],
         "parser_version": ref["parser_version"], "attribution": attribution,
     }
     if kind == "evaluator_result":
@@ -255,11 +261,13 @@ def _obs(ref: dict[str, Any], run: str, iid: str, kind: str, predicate: str,
 def _append_observation(out: list[dict[str, Any]], value: dict[str, Any]) -> None:
     if len(out) >= MAX_OBSERVATIONS:
         raise AuditError("OBSERVATION_LIMIT", "source exceeds normalized observation limit")
-    out.append(value)
+    # Keep each normalized row isolated from mutable parser intermediates.
+    out.append(json.loads(json.dumps(value, sort_keys=True, ensure_ascii=False)))
 
 
 _COMPLETED = re.compile(
-    r"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?(?:completed|finished)\s+"
+    r"\bI(?:\s+(?:(?:have|had)\s+(?:(?:now|currently|just)\s+)?|)?|[\u2019'](?:ve|d)\s+)"
+    r"(?:successfully\s+)?(?:completed|finished)\s+"
     r"(?:the\s+)?(?:task|work|implementation|requested\s+change)\b", re.I)
 _TASK_SUBJECT = r"(?:(?:assigned|original|SWE-bench)\s+)?task"
 _SCOPE_BOUNDARY = r"(?=\s*(?:[.!?;:,]|$)|\s+(?:and|but|by|with|after)\b)"
@@ -269,17 +277,19 @@ _TASK_COMPLETED_OBJECT = rf"(?:the\s+)?{_TASK_COMPLETED_SUBJECT}{_SCOPE_BOUNDARY
 _ISSUE_SUBJECT = r"(?:issue|problem|bug|failure|defect)"
 _ISSUE_OBJECT = rf"(?:the\s+)?{_ISSUE_SUBJECT}\b"
 _TASK_RESOLVED = re.compile(
-    rf"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?"
+    rf"\bI(?:\s+(?:(?:have|had)\s+(?:(?:now|currently|just)\s+)?|)?|[\u2019'](?:ve|d)\s+)"
+    rf"(?:successfully\s+)?"
     rf"(?:resolved|fixed|solved)\s+{_TASK_OBJECT}", re.I)
 _TASK_RESOLVED_SCOPE = re.compile(
     r"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?(?:resolved|fixed|solved)\s+"
     r"(?:the\s+)?(?:(?:assigned|original|SWE-bench)\s+)?task\b", re.I)
 _ISSUE_RESOLVED = re.compile(
-    rf"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?"
+    rf"\bI(?:\s+(?:(?:have|had)\s+(?:(?:now|currently|just)\s+)?|)?|[\u2019'](?:ve|d)\s+)"
+    rf"(?:successfully\s+)?"
     rf"(?:resolved|fixed|solved)\s+{_ISSUE_OBJECT}", re.I)
 _TASK_NEGATIVE_ACTION = r"(?:resolve[ds]?|fix(?:ed)?|solv(?:e|ed))"
 _TASK_COMPLETION_ACTION = r"(?:complet(?:e|ed)|finish(?:ed)?)"
-_NEGATIVE_MODAL = r"(?:(?:might|may|could)\s+not\s+(?:have\s+)?|(?:(?:have|had|did|do)\s+)?not\s+)"
+_NEGATIVE_MODAL = r"(?:never\s+|(?:(?:might|may|could)\s+not\s+(?:have\s+)?|(?:(?:have|had|did|do)\s+)?not\s+))"
 _HEDGE_MODAL = r"(?:(?:might|may|could|possibly|perhaps|maybe|probably)\s+)?"
 _STATE_LINK = r"(?:(?:still|currently)\s+)?(?:(?:is|was|be|remain(?:s)?|continues\s+to\s+be)\s+)?(?:(?:still|currently)\s+)?"
 _TASK_RESOLVED_STATE = r"(?:unresolved|not\s+resolved)"
@@ -306,15 +316,28 @@ _TASK_COMPLETED_NEGATIVE_SCOPE = re.compile(
     r"unresolved|unfinished|incomplete|not)\b)[\w-]+", re.I)
 _HEDGES = re.compile(
     r"\b(?:might|may|could|possibly|perhaps|maybe|probably|apparently|allegedly|"
-    r"uncertain|unverified|unproven|think|believe|guess|hope)\b", re.I)
+    r"uncertain|unverified|unproven|think|believe|guess|hope|doubt|wonder|wish|"
+    r"suppose|supposing|assume|assuming|pretend|hypothesis|hypothetical(?:ly)?)\b", re.I)
 _NEGATION = re.compile(
     r"\b(?:never|not|cannot|can't|couldn't|didn't|doesn't|hasn't|haven't|isn't)\b", re.I)
 _DENIAL_PREFIX = re.compile(
     r"\b(?:i\s+)?(?:never|didn't|did\s+not|don't|do\s+not|can't|cannot|won't|wouldn't)\s+"
-    r"(?:claim|say|state|write|report)\b", re.I)
+    r"(?:claim|say|state|write|report|deny|denied)\b|"
+    r"\b(?:i\s+)?(?:deny|doubt|dispute)\s+(?:that\s+)?|"
+    r"\b(?:i\s+)?reject\s+(?:the\s+claim\s+that\s+|that\s+)?|"
+    r"\b(?:it|this)\s+is\s+(?:false|untrue)\s+that\s+|"
+    r"\bit\s+would\s+be\s+incorrect\s+to\s+say\s+|"
+    r"\b(?:nobody|no\s+one)\s+can\s+establish\s+that\s+|"
+    r"\bi\s+have\s+yet\s+to\s+establish\s+that\s+|"
+    r"\b(?:nobody|no\s+one)\s+(?:ever\s+)?(?:said|claimed|stated|reported)\b", re.I)
 _REPORTED_PREFIX = re.compile(
-    r"\b(?:the\s+)?(?:agent|claim|statement|report)\s+(?:said|stated|claimed|reported|was|is|wrote)\b|"
-    r"\baccording\s+to\b|\b(?:for\s+)?example\s*:", re.I)
+    r"\b(?:the\s+)?(?:agent|claim|statement|report|user|tool|log|assistant|reviewer|model|system)\s+"
+    r"(?:said|says|stated|states|claimed|claims|reported|reports|was|is|wrote|writes)\b|"
+    r"\baccording\s+to\b|\b(?:for\s+)?example\s*:|"
+    r"\b(?:suppose|imagine|consider\s+(?:the\s+)?(?:sentence|claim|example))\b|"
+    r"\b(?:there\s+is|we\s+have|no)\s+no\s+evidence\b|"
+    r"\bno\s+evidence\s+(?:suggests|shows|supports)\b|"
+    r"\bthe\s+hypothesis\s+(?:was|is)\s+that\b", re.I)
 _RETRACTION = re.compile(
     r"\b(?:actually\b|i\s+(?:am|was)\s+(?:wrong|mistaken)\b|"
     r"(?:the\s+claim|the\s+statement)\s+(?:is|was)\s+false\b|"
@@ -342,6 +365,9 @@ def _fenced(text: str, pos: int) -> bool:
 
 
 _CLAUSE_BREAK = re.compile(r"[.!?;\n]|\b(?:and|but|or|yet|by|with|after)\b", re.I)
+_DIRECT_ASSERTION_PREFIX = re.compile(
+    r"\s*(?:(?:yes|well|finally|now|indeed|honestly|today|yesterday|at\s+last|"
+    r"actually|correction)\s*[,;:]?\s*)*\s*", re.I)
 _CORRECTION_MARKER = re.compile(r"\b(?:actually|correction|i\s+(?:am|was)\s+(?:wrong|mistaken))\b", re.I)
 _PREDICATE_NEGATIVE = {
     "TASK_RESOLVED": _TASK_NEGATIVE,
@@ -371,6 +397,102 @@ _PREDICATE_SCOPE = {
         "state_clause": _ISSUE_RESOLVED_STATE_CLAUSE,
     },
 }
+
+
+def _is_direct_assertion_clause(text: str) -> bool:
+    prefix = _DIRECT_ASSERTION_PREFIX.match(text)
+    if prefix is None:
+        return False
+    body = text[prefix.end():]
+    patterns = (("TASK_RESOLVED", _TASK_RESOLVED), ("TASK_COMPLETED", _COMPLETED),
+                ("ISSUE_RESOLVED", _ISSUE_RESOLVED), ("TASK_RESOLVED", _TASK_NEGATIVE),
+                ("TASK_COMPLETED", _TASK_COMPLETED_NEGATIVE), ("ISSUE_RESOLVED", _ISSUE_NEGATIVE))
+    return any((match := pattern.match(body)) is not None
+               and _eligible_assertion_tail(body[match.end():], predicate)
+               for predicate, pattern in patterns)
+
+
+_NEUTRAL_ASSERTION_PREFIX = re.compile(
+    r"\s*(?:after\s+(?:(?:careful|thorough|final|full)\s+)?"
+    r"(?:review|testing|inspection|verification|analysis)|"
+    r"the\s+(?:word|literal)\s+['\"].+?['\"]\s+appears(?:\s+before)?|"
+    r"the\s+configuration\s+uses\s+['\"].+?['\"])(?:\s*,?\s*(?:(?:and|but)\s*)?)?\s*", re.I)
+
+
+def _eligible_assertion_prefix(prefix: str) -> bool:
+    if _DIRECT_ASSERTION_PREFIX.fullmatch(prefix) or _NEUTRAL_ASSERTION_PREFIX.fullmatch(prefix):
+        return True
+    quote_spans = _quoted_spans(prefix)
+    if not quote_spans:
+        return False
+    remainder = prefix
+    for start, end in reversed(quote_spans):
+        remainder = remainder[:start] + remainder[end:]
+    return bool(re.fullmatch(r"\s*[.!?;,:]*\s*", remainder))
+
+
+def _other_scope_in_tail(clause: str, predicate: str) -> bool:
+    scoped_patterns = {
+        "TASK_RESOLVED": (_TASK_COMPLETED_NEGATIVE, _ISSUE_NEGATIVE),
+        "TASK_COMPLETED": (_TASK_NEGATIVE, _ISSUE_NEGATIVE),
+        "ISSUE_RESOLVED": (_TASK_NEGATIVE, _TASK_COMPLETED_NEGATIVE),
+    }
+    if any(pattern.search(clause) for pattern in scoped_patterns.get(predicate, ())):
+        return True
+    if _TASK_NEGATIVE_SCOPE.search(clause) or _TASK_COMPLETED_NEGATIVE_SCOPE.search(clause):
+        return True
+    return bool(re.search(
+        r"\b(?:documentation|deployment|dashboard|build|tests|output|task\s+queue|logging\s+helper)\b",
+        clause, re.I))
+
+
+def _eligible_assertion_tail(tail: str, predicate: str) -> bool:
+    """Accept only empty/neutral tails or a bounded independent claim clause."""
+    if re.fullmatch(r"\s*[.!?;,:]*\s*", tail):
+        return True
+    if re.fullmatch(r"\s*,?\s*(?:successfully|fully|completely|now|today|yesterday)\s*[.!?;,:]*\s*",
+                    tail, re.I):
+        return True
+    if (predicate == "ISSUE_RESOLVED" and re.fullmatch(
+            r"\s+in\s+(?:the\s+)?[\w'-]+(?:\s+[\w'-]+){0,3}\s+"
+            r"(?:helper|module|file|parser|test|service|component|library|database|dashboard|"
+            r"pipeline|function|class|package|config|script|code|repository|workspace|endpoint)\s*[.!?;,:]*\s*",
+            tail, re.I)):
+        return True
+    if re.fullmatch(r"\s+by\s+(?:fixing|correcting|testing|updating|changing|repairing|"
+                    r"reviewing|validating|implementing)\s+(?:the\s+)?[\w'-]+(?:\s+[\w'-]+){0,4}\s*[.!?;,:]*\s*",
+                    tail, re.I):
+        return True
+    if re.fullmatch(r"\s+with\s+(?:a|an|the)\s+(?:targeted|focused|small|complete|final|"
+                    r"simple|working|appropriate)?\s*[\w'-]+(?:\s+[\w'-]+){0,2}\s*[.!?;,:]*\s*",
+                    tail, re.I):
+        return True
+    if re.fullmatch(r"\s+after\s+(?:fixing|correcting|testing|updating|changing|repairing|"
+                    r"reviewing|validating|implementing)\s+(?:the\s+)?[\w'-]+(?:\s+[\w'-]+){0,4}\s*[.!?;,:]*\s*",
+                    tail, re.I):
+        return True
+    if re.fullmatch(r"\s*,?\s+and\s+(?:added|wrote|ran|updated|fixed|changed|implemented|"
+                    r"verified|tested|corrected)\s+(?:the\s+)?[\w'-]+(?:\s+[\w'-]+){0,4}\s*[.!?;,:]*\s*",
+                    tail, re.I):
+        return True
+    coordinated = re.match(r"\s*,?\s*(?:but|and|yet)\s+(?P<clause>.+?)\s*[.!?;,:]*\s*$",
+                           tail, re.I)
+    if coordinated and _is_direct_assertion_clause(coordinated.group("clause")):
+        return True
+    if not coordinated:
+        return False
+    clause = coordinated.group("clause")
+    if _other_scope_in_tail(clause, predicate):
+        return True
+    if (_HEDGES.search(clause) or _DENIAL_PREFIX.search(clause) or _REPORTED_PREFIX.search(clause)
+            or re.search(r"\b(?:false|untrue|lie|fictional|hypothetical|dream|thought\s+experiment)\b",
+                         clause, re.I)):
+        return False
+    return bool(re.match(
+        r"\s*(?:if|unless|assuming)\s+[\w'-]+\s+(?:succeeds?|fails?|passes?|works?)\b|"
+        r"\s*(?:the\s+(?:dashboard|build|tests|deployment|configuration|log|server|output)|tests|deployment)\s+"
+        r"(?:is|are|was|were|has|have|had|does|do|did|succeeds?|fails?|passes?|works?)\b",
+        clause, re.I))
 
 
 def _claim_segment(text: str, position: int) -> tuple[int, int]:
@@ -429,7 +551,7 @@ def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[
     # Conditional antecedents remain attached across coordination, including
     # contrastive "but". Only an independent boundary above ends that scope.
     scope_start = sentence_start
-    marker_pattern = re.compile(r"\b(?:if|unless|assuming)\b", re.I)
+    marker_pattern = re.compile(r"\b(?:if|unless|assume|assuming|pretend)\b", re.I)
     prefix = text[scope_start:position]
     if any(not any(a <= scope_start + marker.start() < b for a, b in quote_spans)
            for marker in marker_pattern.finditer(prefix)):
@@ -445,6 +567,9 @@ def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[
 
 def _explicitly_retracted(text: str, match_end: int, predicate: str) -> bool:
     tail = text[match_end:]
+    if re.match(r"\s*[,;]?\s*(?:but\s+)?(?:that\s+)?(?:claim|statement)\s+"
+                r"(?:is|was)\s+(?:false|untrue)\b", tail, re.I):
+        return True
     correction = re.match(
         r"\s*(?:[.!?;]\s*)?(?:actually\b\s*[,;:]?\s*|correction\s*:\s*|"
         r"i\s+(?:am|was)\s+(?:wrong|mistaken)\b\s*[,;:]?\s*)"
@@ -459,6 +584,10 @@ def _explicitly_retracted(text: str, match_end: int, predicate: str) -> bool:
     if targeted_retraction is None or scope is None:
         return False
     if targeted_retraction.search(body_clause):
+        return True
+    if re.match(r"\s*(?:it|that|this)\s+(?:is|was)\s+(?:false|untrue)\s+that\s+"
+                r"i\s+(?:(?:have|had)\s+)?(?:successfully\s+)?(?:resolved|fixed|solved|completed)\b",
+                body_clause, re.I):
         return True
     # A bare pronoun retracts only when its state belongs to this predicate.
     state_clause = scope["state_clause"]
@@ -569,10 +698,15 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                 reasons.append("MARKDOWN_QUOTE")
             clause_prefix = text[start:match.start()]
             if (_HEDGES.search(clause) or _HEDGES.search(clause_prefix)
+                    or re.match(r"\s*(?:it|this)\s+is\s+(?:false|untrue)\s+that\b",
+                                assertion_prefix, re.I)
                     or _related_qualifier_after(text, match.end(), end, predicate, quote_spans)):
                 reasons.append("HEDGED_CLAUSE")
             if _conditional_scope_before(text, match.start(), quote_spans, match.end(), end):
                 reasons.append("CONDITIONAL_CLAUSE")
+            # Non-assertive framing can occur in the current clause or earlier
+            # in the sentence (e.g. "Nobody said I resolved..."). Keep the
+            # source span unchanged; only the interpretation is conservative.
             if _REPORTED_PREFIX.search(assertion_prefix):
                 reasons.append("REPORTED_CLAIM")
             if _DENIAL_PREFIX.search(assertion_prefix):
@@ -583,6 +717,21 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                 reasons.append("RETRACTION_IN_CLAUSE")
             if _explicitly_retracted(text, match.end(), predicate):
                 reasons.append("EXPLICIT_CORRECTION")
+            tail_to_sentence_end = text[match.end():sentence_end]
+            if re.match(r"\s*,?\s*(?:or\s+so\s+(?:the\s+)?(?:user|tool|log|agent)\s+"
+                        r"(?:claims?|says?|reports?)|hypothetically|in\s+theory)\b",
+                        tail_to_sentence_end, re.I):
+                reasons.append("REPORTED_CLAIM")
+            if re.match(r"\s+(?:is|was)\s+(?:a\s+)?(?:lie|false|untrue|hypothetical|fiction)\b",
+                        tail_to_sentence_end, re.I):
+                reasons.append("RETRACTION_IN_CLAUSE")
+            if ((not _eligible_assertion_prefix(assertion_prefix)
+                 or not _eligible_assertion_tail(tail_to_sentence_end, predicate))
+                    and not any(code in reasons for code in {
+                        "HEDGED_CLAUSE", "CONDITIONAL_CLAUSE", "DENIED_CLAIM", "REPORTED_CLAIM",
+                        "INTERROGATIVE_CLAUSE", "MARKDOWN_CODE", "MARKDOWN_QUOTE",
+                        "EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE", "NEGATED_ASSERTION", "QUOTED_CLAIM"})):
+                reasons.append("EMBEDDED_CLAIM_CONTEXT")
             if any(a <= match.start() and match.end() <= b for a, b in quote_spans):
                 reasons.append("QUOTED_CLAIM")
             byte_span = [len(text[:match.start()].encode("utf-8")),
@@ -937,18 +1086,69 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
             raise AuditError("OBSERVATION_LIMIT", "trajectory message count exceeds parser bound")
         rejected_claims: list[dict[str, Any]] = []
         root_actor_unscoped = any(key in doc for key in ("agent_id", "agent_ids", "speaker_id"))
+        excluded_count = 0
+        excluded_bytes_total = 0
+        nested_visited = 0
+
+        def record_exclusion(content_value: Any, pointer: str, reason: str, stage: str) -> None:
+            nonlocal excluded_count, excluded_bytes_total
+            payload = (content_value.encode("utf-8") if isinstance(content_value, str) else
+                       json.dumps(content_value, sort_keys=True, separators=(",", ":"),
+                                  ensure_ascii=False).encode("utf-8"))
+            excluded_count += 1
+            excluded_bytes_total += len(payload)
+            if excluded_count > MAX_NESTED_EXCLUSION_NODES or excluded_bytes_total > MAX_NESTED_EXCLUSION_BYTES:
+                raise AuditError("NESTED_CONTENT_SCAN_LIMIT", "excluded trajectory content exceeds scan bounds")
+            _append_observation(out, _obs(
+                ref, run, iid, "excluded_content", "EXCLUDED_CONTENT",
+                {"sha256": _sha(payload), "bytes": len(payload),
+                 "content_type": "text" if isinstance(content_value, str) else type(content_value).__name__,
+                 "attribution_status": "UNKNOWN", "exclusion_reason": reason,
+                 "stage_classification": stage}, pointer, "UNKNOWN"))
+
+        def scan_nested(value: Any, pointer: str, depth: int) -> None:
+            nonlocal nested_visited
+            nested_visited += 1
+            if nested_visited > MAX_NESTED_EXCLUSION_NODES or depth > MAX_NESTED_EXCLUSION_DEPTH:
+                raise AuditError("NESTED_CONTENT_SCAN_LIMIT", "nested trajectory JSON exceeds scan bounds")
+            if isinstance(value, dict):
+                for key in sorted(value):
+                    child = value[key]
+                    child_pointer = pointer + "/" + _escape(str(key))
+                    if str(key).lower() == "content":
+                        stage = ("NESTED_MODEL_RESPONSE" if re.search(
+                            r"(?:/messages/\d+)?/extra/response/choices/\d+/message/content$",
+                            child_pointer) else "NESTED_EXTRA_CONTENT")
+                        record_exclusion(child, child_pointer, "NESTED_EXTRA_CONTENT", stage)
+                    else:
+                        scan_nested(child, child_pointer, depth + 1)
+            elif isinstance(value, list):
+                for index, child in enumerate(value):
+                    scan_nested(child, pointer + "/" + str(index), depth + 1)
+
+        if doc.get("extra") is not None:
+            scan_nested(doc["extra"], "/extra", 0)
+
         for message_order, message in enumerate(messages):
-            if not isinstance(message, dict) or message.get("role") != "assistant":
+            if not isinstance(message, dict):
                 continue
             pointer = f"/messages/{message_order}/content"
             content = message.get("content")
+            if message.get("extra") is not None:
+                scan_nested(message["extra"], f"/messages/{message_order}/extra", 0)
+            if message.get("role") != "assistant":
+                if "content" in message:
+                    record_exclusion(content, pointer, "NON_ASSISTANT_ROLE", "TOP_LEVEL_MESSAGE")
+                continue
             message_actor_unscoped = any(key in message for key in ("agent_id", "agent_ids", "speaker_id"))
             if not isinstance(content, str):
-                if isinstance(content, (list, dict)):
-                    rejected_claims.append({"source_pointer": pointer, "text": None,
-                                           "match_span": None, "byte_span": None,
-                                           "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
-                                           "reason_codes": ["STRUCTURED_CONTENT_UNSUPPORTED"]})
+                if "content" in message:
+                    record_exclusion(content, pointer, "STRUCTURED_ASSISTANT_CONTENT", "TOP_LEVEL_MESSAGE")
+                    if isinstance(content, (list, dict)):
+                        rejected_claims.append({"source_pointer": pointer, "text": None,
+                                                "match_span": None, "byte_span": None,
+                                                "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                                                "reason_codes": ["STRUCTURED_CONTENT_UNSUPPORTED"]})
                 continue
             accepted, rejected = _claim_analysis(content)
             if root_actor_unscoped or message_actor_unscoped:
@@ -1116,8 +1316,11 @@ def audit_file(data_root: str | os.PathLike[str], descriptor: dict[str, object])
     d: dict[str, Any] = descriptor if isinstance(descriptor, dict) else {}
     result: dict[str, Any] = {
         "schema": FILE_SCHEMA, "normalization_schema": NORMALIZATION_SCHEMA,
+        "audit_contract_version": "pgop1.swebench.audit-contract.v2",
         "status": "ERROR", "reason_codes": [],
-        "source_ref": {k: d.get(k) for k in ("path", "sha256", "bytes", "role", "parser_id")},
+        "source_ref": {k: d.get(k) for k in ("path", "sha256", "bytes", "role", "parser_id",
+                                                "run_id", "instance_id", "scope", "timestamp")
+                       if k in d},
         "run_id": d.get("run_id", "UNKNOWN"), "instance_id": d.get("instance_id", "UNKNOWN"),
         "observations": [],
     }
@@ -1159,12 +1362,21 @@ def audit_file(data_root: str | os.PathLike[str], descriptor: dict[str, object])
 def _base(run_id: object, instance_id: object) -> dict[str, Any]:
     return {
         "schema": AUDIT_SCHEMA, "normalization_schema": NORMALIZATION_SCHEMA,
+        "audit_contract_version": "pgop1.swebench.audit-contract.v2",
         "run_id": run_id if _valid_run(run_id) else "UNKNOWN",
         "semantic_derivation_schema": "pgop1.swebench.audit-derivation.v1",
         "instance_id": instance_id if _valid_id(instance_id) else "UNBOUND",
         "COMPUTED_VERDICT": None, "AUDIT_VERDICT": "VERIFICATION_ERROR", "reason_codes": [],
         "FINAL_ERROR": None, "FINAL_ERROR_CODES": [],
-        "AGENT_STATEMENT": [], "CLAIM_REJECTIONS": [], "PARSER_REJECTIONS": [], "PREDICTION": [], "EVALUATOR_RESULT": [],
+        "verification_qualifiers": {
+            "schema": QUALIFIER_SCHEMA, "logical_verdict": "VERIFICATION_ERROR",
+            "byte_integrity_status": "NOT_PROVEN",
+            "semantic_derivation_status": "NOT_VERIFIED_AT_EXTRACTION",
+            "evaluator_authentication_status": "NOT_APPLICABLE",
+            "evaluator_authentication_basis": "NO_BOUND_BOOLEAN_EVALUATOR_RESULT",
+        },
+        "AGENT_STATEMENT": [], "CLAIM_REJECTIONS": [], "EXCLUDED_CONTENT": [],
+        "PARSER_REJECTIONS": [], "PREDICTION": [], "EVALUATOR_RESULT": [],
         "EXECUTION_EVIDENCE": [], "observations": [], "relationships": [],
         "SOURCE_PROVENANCE": {"run_identity": run_id if _valid_run(run_id) else "UNKNOWN",
                               "evidence_references": [], "upstream_run_authentication": "NOT_PROVEN",
@@ -1278,19 +1490,39 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
             raise AuditError("OBSERVATION_LIMIT", "request emitted too many observations")
 
         statement_observations = [obs for obs in observations if obs["kind"] == "agent_statement"]
-        statements = [dict(obs["value"]) for obs in statement_observations]
+        statements = [copy.deepcopy(obs["value"]) for obs in statement_observations]
         statement_observation_ids = {obs.get("claim_id"): obs["observation_id"]
                                      for obs in statement_observations}
-        rejected_claims = [obs["value"] for obs in observations if obs["kind"] == "claim_rejection"]
+        rejected_claims = [copy.deepcopy(obs["value"]) for obs in observations
+                           if obs["kind"] == "claim_rejection"]
+        excluded_content = [obs for obs in observations if obs["kind"] == "excluded_content"]
         predictions = [obs["value"] for obs in observations if obs["kind"] == "prediction"]
         evaluator = [obs for obs in observations if obs["kind"] == "evaluator_result"
                      and obs["predicate"] == "TASK_RESOLVED" and type(obs["value"]) is bool]
+        evaluator_source_present = any(ref["parser_id"] in {
+            "pgop1.swebench.evaluator_report.resolved_map_json.v1",
+            "pgop1.swebench.catalog.per_instance_details_json.v1",
+            "pgop1.swebench.results.resolved_list_json.v1",
+        } for ref in refs.values())
         result["AGENT_STATEMENT"] = statements
         result["CLAIM_REJECTIONS"] = rejected_claims
+        result["EXCLUDED_CONTENT"] = [
+            {"source_ref": copy.deepcopy(obs["source_ref"]), "sha256": obs["value"]["sha256"],
+             "bytes": obs["value"]["bytes"], "content_type": obs["value"]["content_type"],
+             "attribution_status": "UNKNOWN", "exclusion_reason": obs["value"]["exclusion_reason"],
+             "stage_classification": obs["value"].get("stage_classification", "UNKNOWN")}
+            for obs in excluded_content]
+        result["EXCLUDED_CONTENT_SUMMARY"] = {
+            "record_count": len(excluded_content),
+            "stage_counts": {stage: sum(1 for obs in excluded_content
+                                         if obs["value"].get("stage_classification", "UNKNOWN") == stage)
+                             for stage in sorted({obs["value"].get("stage_classification", "UNKNOWN")
+                                                  for obs in excluded_content})},
+        }
         result["PREDICTION"] = predictions
         result["EVALUATOR_RESULT"] = [
             {"predicate": obs["predicate"], "observed_value": obs["value"],
-             "source_ref": obs["source_ref"], "attribution": obs["attribution"],
+             "source_ref": copy.deepcopy(obs["source_ref"]), "attribution": obs["attribution"],
              "evaluator_identity_status": obs["evaluator_identity_status"],
              "authentication_status": obs["authentication_status"]} for obs in evaluator]
         result["observations"] = observations
@@ -1301,12 +1533,13 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         for ref in refs.values():
             ref["instance_binding"] = "INSTANCE_BOUND" if ref["path"] in instance_bound_paths else "RUN_ONLY"
         result["EXECUTION_EVIDENCE"] = [
-            ref for ref in refs.values() if ref["parser_id"] in {
+            copy.deepcopy(ref) for ref in refs.values() if ref["parser_id"] in {
                 "pgop1.swebench.log.text_unattributed.v1",
                 "pgop1.swebench.log.gzip_text_unattributed.v1",
             }
         ]
-        result["SOURCE_PROVENANCE"]["evidence_references"] = [refs[key] for key in sorted(refs)]
+        result["SOURCE_PROVENANCE"]["evidence_references"] = [copy.deepcopy(refs[key])
+                                                               for key in sorted(refs)]
         result["SOURCE_PROVENANCE"]["parser_ids"] = sorted({ref["parser_id"] for ref in refs.values()})
 
         verdicts: list[str] = []
@@ -1322,7 +1555,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 if claim.get("superseded_by"):
                     claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
                     claim["reason_codes"] = ["SUPERSEDED_BY_LATER_OPPOSITE_ASSERTION"]
-                    verdicts.append("INSUFFICIENT_EVIDENCE")
+                    # Retain the corrected historical claim for auditability,
+                    # but exclude it from the active-claim aggregate.
                 elif claim["predicate"] == "TASK_RESOLVED":
                     comparison = compare_boolean_values(claim["asserted_value"], observed)
                     verdict = comparison["verdict"]
@@ -1337,7 +1571,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                             "from": claim["claim_id"], "to": eval_obs["observation_id"],
                             "relation": "PREDICATE_VALUE_COMPARISON", "predicate": "TASK_RESOLVED",
                             "asserted_value": claim["asserted_value"], "observed_value": eval_obs["value"],
-                            "evidence_bindings": [claim["source_ref"], eval_obs["source_ref"]],
+                            "evidence_bindings": [copy.deepcopy(claim["source_ref"]),
+                                                  copy.deepcopy(eval_obs["source_ref"])],
                             "claim_observation_id": claim_obs_id,
                         })
                 else:
@@ -1369,7 +1604,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         }
         if result["CLAIM_AGGREGATION"]["active_contradicted_claim_ids"]:
             result["reason_codes"].append("ACTIVE_CONTRADICTED_CLAIM_PRESENT")
-        if verdicts and all(value == "SUPPORTED" for value in verdicts):
+        if (verdicts and all(value == "SUPPORTED" for value in verdicts)
+                and not result["CLAIM_AGGREGATION"]["active_contradicted_claim_ids"]):
             computed_verdict = "SUPPORTED"
         elif verdicts and all(value == "CONTRADICTED" for value in verdicts):
             computed_verdict = "CONTRADICTED"
@@ -1399,12 +1635,42 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 result["reason_codes"].append("NO_BOUND_EVALUATOR_RESULT")
             elif verdicts:
                 result["reason_codes"].append("MIXED_OR_NONCOMPARABLE_CLAIMS")
+        evaluator_authentication_status = "UNAUTHENTICATED" if evaluator_source_present else "NOT_APPLICABLE"
+        evaluator_authentication_basis = (
+            "SOURCE_ROLE_IS_DECLARED_AND_EVALUATOR_IDENTITY_UNKNOWN" if evaluator_source_present else
+            "NO_BOUND_BOOLEAN_EVALUATOR_RESULT")
+        byte_integrity_status = "SOURCE_HASH_VERIFIED" if len(refs) == len(descriptors) else "NOT_PROVEN"
+        result["verification_qualifiers"] = {
+            "schema": QUALIFIER_SCHEMA,
+            "logical_verdict": result["AUDIT_VERDICT"],
+            "byte_integrity_status": byte_integrity_status,
+            "semantic_derivation_status": "NOT_VERIFIED_AT_EXTRACTION",
+            "evaluator_authentication_status": evaluator_authentication_status,
+            "evaluator_authentication_basis": evaluator_authentication_basis,
+        }
+        for claim in statements:
+            claim["verification_qualifiers"] = {
+                "schema": QUALIFIER_SCHEMA,
+                "logical_verdict": claim["AUDIT_VERDICT"],
+                "byte_integrity_status": (
+                    "SOURCE_HASH_VERIFIED" if isinstance(claim.get("source_ref"), dict)
+                    and isinstance(claim["source_ref"].get("sha256"), str) else "NOT_PROVEN"),
+                "semantic_derivation_status": "NOT_VERIFIED_AT_EXTRACTION",
+                "evaluator_authentication_status": (
+                    "UNAUTHENTICATED" if claim["predicate"] == "TASK_RESOLVED" and evaluator_source_present
+                    else "NOT_APPLICABLE"),
+                "evaluator_authentication_basis": (
+                    "SOURCE_ROLE_IS_DECLARED_AND_EVALUATOR_IDENTITY_UNKNOWN"
+                    if claim["predicate"] == "TASK_RESOLVED" and evaluator_source_present else
+                    "NO_BOUND_BOOLEAN_EVALUATOR_RESULT"),
+            }
         return result
     except AuditError as exc:
         result["reason_codes"] = [exc.code]
         result["AUDIT_VERDICT"] = _priority([exc.code]) or "VERIFICATION_ERROR"
         result["FINAL_ERROR"] = result["AUDIT_VERDICT"]
         result["FINAL_ERROR_CODES"] = [exc.code]
+        result["verification_qualifiers"]["logical_verdict"] = result["AUDIT_VERDICT"]
         return result
 
 

@@ -406,9 +406,11 @@ def _aggregate(batch_id: str, members: list[tuple[str, dict[str, Any]]]) -> dict
             })
     return {
         "schema": "pgop1.swebench.generalized-audit.v1",
+        "audit_contract_version": "pgop1.swebench.aggregate-storage.v1",
         "result_scope": "BATCH_AGGREGATE", "instance_id": "UNBOUND",
         "batch_id": batch_id, "run_id": "BATCHED",
         "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
+        "reason_codes": ["STORAGE_AGGREGATE_NOT_A_SEMANTIC_VERDICT"],
         "batch_verdict_semantics": "NOT_COMPUTED; member verdicts retained as observations",
         "batch_members": [{"item_id": item_id, "item_sha256": _digest(canonical_json(result)),
                            "audit_result": result} for item_id, result in members],

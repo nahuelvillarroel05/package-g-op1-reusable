@@ -97,6 +97,8 @@ def test_aider_markdown_blocks_bind_exact_bytes_and_recover_engine(tmp_path: Pat
     assert (code["line_start"], code["line_end"]) == (3, 6)
     # Reuse the bridge's explicit batch contract for run-only observations.
     result = {"schema": "pgop1.swebench.generalized-audit.v1",
+                  "audit_contract_version": "pgop1.swebench.audit-contract.v2",
+                  "semantic_derivation_schema": "pgop1.swebench.audit-derivation.v1",
               "result_scope": "BATCH_AGGREGATE", "batch_id": "markdown-blocks-dev",
               "run_id": RUN, "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
               "SOURCE_PROVENANCE": {"evidence_references": [
@@ -234,6 +236,184 @@ def test_scoped_fix_then_unresolved_original_task_never_supports_task_resolution
 
 
 @pytest.mark.parametrize("text", [
+    "Nobody said I resolved the task.",
+    "Suppose I resolved the task.",
+    "There is no evidence I resolved the task.",
+    "There is no evidence that I resolved the task.",
+    "I doubt that I resolved the task.",
+    "I deny that I resolved the task.",
+    "It is false that I resolved the task.",
+    "It is untrue that I resolved the task.",
+    "I reject the claim that I resolved the task.",
+    "I dispute that I resolved the task.",
+    "The user said I resolved the task.",
+    "The tool reports I resolved the task.",
+    "The log says I resolved the task.",
+    "I resolved the task, or so the user claims.",
+    "I resolved the task, hypothetically.",
+    "I wonder whether I resolved the task.",
+    "Assume I resolved the task.",
+    "I wish I resolved the task.",
+    "It would be incorrect to say I resolved the task.",
+    "Consider the sentence: I resolved the task.",
+    "Pretend I resolved the task.",
+    "Nobody can establish that I resolved the task.",
+    "No evidence suggests I resolved the task.",
+    "I have yet to establish that I resolved the task.",
+    "The hypothesis was that I resolved the task.",
+    "I resolved the task, but that statement is false.",
+    "I resolved the task. Correction: I never resolved the task.",
+    "I resolved the task. Correction: it is untrue that I resolved the task.",
+    "I resolved the task, in a fictional scenario.",
+    "I resolved the task, in my dreams.",
+    "I resolved the task, only as a thought experiment.",
+    "I resolved the task, as a sentence to be quoted.",
+    "I resolved the task, but this is only a simulation.",
+    "I resolved the task, but this is incorrect.",
+])
+def test_doubt_denial_and_hypothetical_attribution_never_support(tmp_path: Path, text: str) -> None:
+    result = audit_evidence(tmp_path, _request(_trajectory(tmp_path, text), _report(tmp_path)))
+    if "Correction: I never resolved" in text:
+        assert result["AUDIT_VERDICT"] == "CONTRADICTED"
+    else:
+        assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert "SUPPORTED" not in {claim.get("AUDIT_VERDICT") for claim in result["AGENT_STATEMENT"]}
+    if "I resolved the task" in text:
+        assert any(row.get("matched_text") == "I resolved the task"
+                   for row in result["CLAIM_REJECTIONS"])
+    if any(marker in text for marker in ("fictional scenario", "my dreams", "thought experiment",
+                                         "sentence to be quoted", "simulation", "this is incorrect")):
+        assert any("EMBEDDED_CLAIM_CONTEXT" in row.get("reason_codes", [])
+                   for row in result["CLAIM_REJECTIONS"])
+
+
+def test_attribution_operator_scope_ends_at_independent_contrastive_clause(tmp_path: Path) -> None:
+    text = "Nobody said I resolved the task, but I have resolved the task."
+    result = audit_evidence(tmp_path, _request(_trajectory(tmp_path, text), _report(tmp_path)))
+    assert result["AUDIT_VERDICT"] == "SUPPORTED"
+    assert len(result["AGENT_STATEMENT"]) == 1
+    claim = result["AGENT_STATEMENT"][0]
+    assert claim["asserted_value"] is True
+    assert text[claim["match_span"][0]:claim["match_span"][1]] == "I have resolved the task"
+
+
+def test_direct_claim_survives_known_independent_assertion_tail(tmp_path: Path) -> None:
+    text = "I resolved the task, but I completed the work."
+    result = audit_evidence(tmp_path, _request(_trajectory(tmp_path, text), _report(tmp_path)))
+    task_claim = next(claim for claim in result["AGENT_STATEMENT"]
+                      if claim["predicate"] == "TASK_RESOLVED")
+    assert task_claim["asserted_value"] is True
+    assert not any(row.get("matched_text") == "I resolved the task"
+                   and "EMBEDDED_CLAIM_CONTEXT" in row.get("reason_codes", [])
+                   for row in result["CLAIM_REJECTIONS"])
+
+
+def test_active_opposite_claims_are_visible_and_cannot_aggregate_supported(tmp_path: Path) -> None:
+    trajectory = _json_file(tmp_path, "logs/trajs/" + INSTANCE + ".traj.json", {
+        "instance_id": INSTANCE, "messages": [
+            {"role": "assistant", "content": "I resolved the task."},
+            {"role": "assistant", "content": "The original task remains unresolved."},
+        ],
+    }, "AGENT_TRAJECTORY", TRAJECTORY_PARSER)
+    result = audit_evidence(tmp_path, _request(trajectory, _report(tmp_path, True)))
+    assert result["AUDIT_VERDICT"] != "SUPPORTED"
+    assert result["CLAIM_AGGREGATION"]["active_contradicted_claim_ids"]
+    assert "ACTIVE_CONTRADICTED_CLAIM_PRESENT" in result["reason_codes"]
+
+
+def test_explicit_correction_keeps_original_unicode_offsets_and_temporal_state(tmp_path: Path) -> None:
+    text = "✅ I resolved the task. Correction: the task remains unresolved."
+    result = audit_evidence(tmp_path, _request(_trajectory(tmp_path, text), _report(tmp_path, False)))
+    original = next(item for item in result["CLAIM_REJECTIONS"]
+                    if item.get("asserted_value") is True)
+    assert original["matched_text"] == "I resolved the task"
+    assert original["match_span"] == [2, 21]
+    assert text[original["match_span"][0]:original["match_span"][1]] == "I resolved the task"
+    assert original["byte_span"] == [len(text[:2].encode()), len(text[:21].encode())]
+    correction = next(claim for claim in result["AGENT_STATEMENT"] if claim["asserted_value"] is False)
+    assert correction["match_span"] == [35, 62]
+
+
+def test_correction_chain_keeps_latest_explicit_claim_active(tmp_path: Path) -> None:
+    text = "Actually, I have not resolved the task. Correction: I have now resolved the task."
+    result = audit_evidence(tmp_path, _request(_trajectory(tmp_path, text), _report(tmp_path, True)))
+    assert result["AUDIT_VERDICT"] == "SUPPORTED"
+    claims = result["AGENT_STATEMENT"]
+    active = [claim for claim in claims if claim["claim_state"] == "ACTIVE"]
+    corrected = [claim for claim in claims if claim["claim_state"] == "CORRECTED"]
+    assert len(active) == 1 and active[0]["asserted_value"] is True
+    assert len(corrected) == 1 and corrected[0]["asserted_value"] is False
+    assert corrected[0]["superseded_by"] == active[0]["claim_id"]
+
+
+def test_nested_and_non_assistant_content_is_hash_ledgered_with_unknown_attribution(tmp_path: Path) -> None:
+    secret_like = {"tool_result": "I resolved the task", "nested": [1, 2]}
+    trajectory = _json_file(tmp_path, "logs/trajs/" + INSTANCE + ".traj.json", {
+        "instance_id": INSTANCE, "messages": [
+            {"role": "assistant", "content": "I resolved the task."},
+            {"role": "tool", "content": secret_like},
+            {"role": "assistant", "content": [{"text": "I resolved the task"}]},
+            {"role": "user", "content": "outer", "extra": {"response": {"choices": [
+                {"message": {"content": "nested message extra"}}]}}},
+        ],
+        "extra": {"response": {"choices": [{"message": {"content": "I resolved the task"}}]}},
+    }, "AGENT_TRAJECTORY", TRAJECTORY_PARSER)
+    result = audit_evidence(tmp_path, _request(trajectory, _report(tmp_path)))
+    ledger = result["EXCLUDED_CONTENT"]
+    assert len(ledger) == 5
+    assert {item["source_ref"]["pointer"] for item in ledger} == {
+        "/messages/1/content", "/messages/2/content", "/messages/3/content",
+        "/messages/3/extra/response/choices/0/message/content",
+        "/extra/response/choices/0/message/content"}
+    assert all(item["attribution_status"] == "UNKNOWN" for item in ledger)
+    assert result["EXCLUDED_CONTENT_SUMMARY"] == {
+        "record_count": 5,
+        "stage_counts": {"NESTED_MODEL_RESPONSE": 2, "TOP_LEVEL_MESSAGE": 3},
+    }
+    expected = hashlib.sha256(json.dumps(secret_like, sort_keys=True, separators=(",", ":"),
+                                       ensure_ascii=False).encode()).hexdigest()
+    assert expected in {item["sha256"] for item in ledger}
+    assert "I resolved the task" not in json.dumps(ledger)
+
+
+def test_audit_output_nested_values_do_not_alias_across_claim_views(tmp_path: Path) -> None:
+    result = audit_evidence(tmp_path, _request(
+        _trajectory(tmp_path, 'I resolved the task. "I resolved the issue."'), _report(tmp_path)))
+    claim = result["AGENT_STATEMENT"][0]
+    observation = next(row for row in result["observations"] if row["kind"] == "agent_statement")
+    original_span = list(claim["match_span"])
+    original_source_hash = observation["value"]["source_ref"]["sha256"]
+    claim["match_span"][0] = 10_000
+    claim["reason_codes"].append("TAMPERED")
+    claim["source_ref"]["sha256"] = "0" * 64
+    assert observation["value"]["match_span"] == original_span
+    assert "reason_codes" not in observation["value"]
+    assert observation["value"]["source_ref"]["sha256"] == original_source_hash
+    rejection = result["CLAIM_REJECTIONS"][0]
+    rejection["match_span"][0] = 10_000
+    rejected_observation = next(row for row in result["observations"] if row["kind"] == "claim_rejection")
+    assert rejected_observation["value"]["match_span"][0] != 10_000
+    result["SOURCE_PROVENANCE"]["evidence_references"][0]["sha256"] = "1" * 64
+    assert observation["source_ref"]["sha256"] == original_source_hash
+
+
+def test_logical_verdict_is_separated_from_integrity_derivation_and_evaluator_auth(tmp_path: Path) -> None:
+    result = audit_evidence(tmp_path, _request(_trajectory(tmp_path), _report(tmp_path)))
+    claim = result["AGENT_STATEMENT"][0]
+    qualifiers = result["verification_qualifiers"]
+    assert qualifiers == {
+        "schema": "pgop1.swebench.verification-qualifiers.v1",
+        "logical_verdict": "SUPPORTED",
+        "byte_integrity_status": "SOURCE_HASH_VERIFIED",
+        "semantic_derivation_status": "NOT_VERIFIED_AT_EXTRACTION",
+        "evaluator_authentication_status": "UNAUTHENTICATED",
+        "evaluator_authentication_basis": "SOURCE_ROLE_IS_DECLARED_AND_EVALUATOR_IDENTITY_UNKNOWN",
+    }
+    assert claim["verification_qualifiers"]["logical_verdict"] == claim["AUDIT_VERDICT"]
+    assert claim["verification_qualifiers"]["evaluator_authentication_status"] == "UNAUTHENTICATED"
+
+
+@pytest.mark.parametrize("text", [
     "I have not resolved the issue.",
     "I think I resolved the issue.",
     "I never claimed that I resolved the task.",
@@ -242,6 +422,7 @@ def test_scoped_fix_then_unresolved_original_task_never_supports_task_resolution
     "The agent said: I resolved the issue.",
     "I resolved the issue is a false statement.",
     "I resolved the issue. I was wrong; it remains broken.",
+    "I resolved the task?",
     "> Quoted claim\nI resolved the issue.",
     "“I resolved the issue.”",
     "> I resolved the issue.",
@@ -336,9 +517,11 @@ def test_duplicate_json_keys_and_hash_mismatch_are_rejected(tmp_path: Path) -> N
     result = audit_evidence(tmp_path, _request(descriptor))
     assert result["AUDIT_VERDICT"] == "VERIFICATION_ERROR"
     assert result["reason_codes"] == ["DUPLICATE_JSON_KEY"]
+    assert result["verification_qualifiers"]["logical_verdict"] == "VERIFICATION_ERROR"
     result = audit_evidence(tmp_path, _request({**descriptor, "sha256": "0" * 64}))
     assert result["AUDIT_VERDICT"] == "INTEGRITY_FAILURE"
     assert result["reason_codes"] == ["SOURCE_HASH_MISMATCH"]
+    assert result["verification_qualifiers"]["logical_verdict"] == "INTEGRITY_FAILURE"
 
 
 def test_prediction_duplicates_are_rejected_and_prediction_is_not_success(tmp_path: Path) -> None:

@@ -405,8 +405,10 @@ def _manifest_audit(manifest: Mapping[str, Any], manifest_raw: bytes,
     batch_id = "origin-manifest-" + manifest_sha[:32]
     return {
         "schema": "pgop1.swebench.generalized-audit.v1", "result_scope": "BATCH_AGGREGATE",
+        "audit_contract_version": "pgop1.swebench.aggregate-storage.v1",
         "instance_id": "UNBOUND", "batch_id": batch_id, "run_id": run_id,
-        "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE", "observations": [
+        "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
+        "reason_codes": ["STORAGE_AGGREGATE_NOT_A_SEMANTIC_VERDICT"], "observations": [
             {"observation_id": "origin-manifest-" + manifest_sha[:24], "kind": "origin_source_manifest",
              "run_id": run_id, "instance_id": "UNKNOWN", "value": {"schema": MANIFEST_SCHEMA,
              "manifest_sha256": manifest_sha, "parent_source": manifest["parent_source"],
@@ -951,8 +953,10 @@ def _bind_rejection_ledger(root: Path, manifest: Mapping[str, Any]) -> dict[str,
            "role": "SOURCE_FRAGMENT_MAPPING_REJECTIONS", "parser_id": "source_fragment_rejections.v2",
            "parser_version": "1", "instance_binding": "RUN_ONLY"}
     audit = {"schema": "pgop1.swebench.generalized-audit.v1", "result_scope": "BATCH_AGGREGATE",
+             "audit_contract_version": "pgop1.swebench.aggregate-storage.v1",
              "instance_id": "UNBOUND", "batch_id": "mapping-rejections-" + digest[:32],
              "run_id": manifest["origin_id"], "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
+             "reason_codes": ["STORAGE_AGGREGATE_NOT_A_SEMANTIC_VERDICT"],
              "origin_manifest_sha256": manifest["origin_manifest_sha256"],
              "input_completion_sha256": digest,
              "observations": [{"observation_id": "mapping-rejections-" + digest[:24],

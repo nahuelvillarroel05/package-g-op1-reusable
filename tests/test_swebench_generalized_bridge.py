@@ -7,14 +7,21 @@ from pathlib import Path
 import pytest
 
 from runtime.candidate.swebench_claim_audit.adapter import AuditError
+from runtime.candidate.swebench_claim_audit.generalized import audit_evidence
 from runtime.candidate.swebench_claim_audit.generalized_bridge import (
-    bind_generalized_audit,
+    bind_generalized_audit as _bind_generalized_audit,
     recover_generalized_audit,
 )
 
 
 def _sha(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
+
+
+def bind_generalized_audit(audit_result: dict, data_root: Path, context_root: Path) -> dict:
+    """These fixtures model historical unversioned audits explicitly."""
+    return _bind_generalized_audit(
+        audit_result, data_root, context_root, allow_legacy_unmarked=True)
 
 
 def _audit(data_root: Path, *, verdict: str = "SUPPORTED") -> dict:
@@ -281,3 +288,199 @@ def test_batch_aggregate_requires_explicit_batch_scope(tmp_path: Path) -> None:
 
     assert bound["identity_kind"] == "BATCH_AGGREGATE"
     assert bound["identity"] == "batch-0001"
+
+
+@pytest.mark.parametrize("parser_id", [
+    "pgop1.swebench.trajectory.miniswe_role_attribution.v1",
+    "pgop1.swebench.transcript.role_export.v1",
+])
+def test_role_attribution_descriptor_bindings_rederive_from_committed_bytes(
+    tmp_path: Path, parser_id: str,
+) -> None:
+    instance_id, run_id = "example__repo-1", "run-a"
+    scope, timestamp = "task", "2026-10-28T12:00:00Z"
+    if parser_id.endswith("miniswe_role_attribution.v1"):
+        raw = json.dumps({"instance_id": instance_id, "messages": [
+            {"role": "assistant", "content": "I resolved the task."},
+        ]}, separators=(",", ":")).encode()
+        role = "AGENT_TRAJECTORY"
+    else:
+        text = "assistant transcript text"
+        content = text.encode()
+        raw = json.dumps({
+            "schema": "pgop1.swebench.transcript-role-export.v1",
+            "instance_id": instance_id, "run_id": run_id, "scope": scope,
+            "timestamp": timestamp,
+            "source": {"text": text, "bytes": len(content), "sha256": _sha(content)},
+            "messages": [{"message_id": "m-1", "speaker": "assistant", "byte_start": 0,
+                          "byte_end": len(content), "sha256": _sha(content)}],
+        }, separators=(",", ":")).encode()
+        role = "ROLE_EXPORT"
+    (tmp_path / "role.json").write_bytes(raw)
+    descriptor = {"path": "role.json", "sha256": _sha(raw), "bytes": len(raw),
+                  "role": role, "parser_id": parser_id, "run_id": run_id,
+                  "instance_id": instance_id, "scope": scope, "timestamp": timestamp}
+    audit = audit_evidence(tmp_path, {"run_id": run_id, "instance_id": instance_id,
+                                      "evidence": [descriptor]})
+
+    bound = _bind_generalized_audit(audit, tmp_path, tmp_path / "context")
+
+    assert bound["derivation"]["status"] == "DERIVATION_VERIFIED"
+    assert bound["bridge_qualifiers"]["logic_status"] == "SEMANTIC_VALIDATION_NOT_PROVEN"
+    from runtime.candidate.context_engine import Engine
+    queried = Engine(tmp_path / "context").query(
+        task_id=f"INSTANCE:{instance_id}", kind="audit_result")
+    assert queried[0]["value"]["verification_qualifiers"]["schema"] == (
+        "pgop1.swebench.verification-qualifiers.v1")
+
+
+def test_new_audit_rejects_removed_derivation_marker_and_legacy_requires_opt_in(tmp_path: Path) -> None:
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    audit = _audit(data_root)
+    audit["audit_contract_version"] = "pgop1.swebench.audit-contract.v2"
+    audit["semantic_derivation_schema"] = "pgop1.swebench.audit-derivation.v1"
+    audit.pop("semantic_derivation_schema")
+
+    with pytest.raises(AuditError, match="requires its semantic derivation marker"):
+        _bind_generalized_audit(audit, data_root, tmp_path / "context-new")
+    audit.pop("audit_contract_version")
+    with pytest.raises(AuditError, match="explicit storage-only opt-in"):
+        _bind_generalized_audit(audit, data_root, tmp_path / "context-legacy")
+
+
+def test_contract_v3_cannot_be_downgraded_by_stripping_both_markers(tmp_path: Path) -> None:
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    raw = json.dumps({"instance_id": "example__repo-1", "messages": []}).encode()
+    (data_root / "trajectory.json").write_bytes(raw)
+    descriptor = {"path": "trajectory.json", "sha256": _sha(raw), "bytes": len(raw),
+                  "role": "AGENT_TRAJECTORY",
+                  "parser_id": "pgop1.swebench.trajectory.miniswe_role_attribution.v1",
+                  "instance_id": "example__repo-1", "scope": "task",
+                  "timestamp": "2026-10-28T12:00:00Z"}
+    audit = audit_evidence(data_root, {"run_id": "run-a", "instance_id": "example__repo-1",
+                                       "evidence": [descriptor]})
+    audit.pop("audit_contract_version")
+    audit.pop("semantic_derivation_schema")
+
+    with pytest.raises(AuditError, match="normalization v3 requires"):
+        _bind_generalized_audit(audit, data_root, tmp_path / "context")
+
+
+@pytest.mark.parametrize(("field", "value"), [
+    ("run_id", "different-run"),
+    ("instance_id", "other__repo-9"),
+    ("scope", "run"),
+    ("timestamp", "2026-10-28T13:00:00Z"),
+    ("scope", None),
+])
+def test_role_attribution_rejects_tampered_or_incomplete_descriptor_bindings(
+    tmp_path: Path, field: str, value: str | None,
+) -> None:
+    instance_id, run_id = "example__repo-1", "run-a"
+    timestamp = "2026-10-28T12:00:00Z"
+    raw = json.dumps({"instance_id": instance_id, "messages": [
+        {"role": "assistant", "content": "I resolved the task."},
+    ]}, separators=(",", ":")).encode()
+    (tmp_path / "role.json").write_bytes(raw)
+    descriptor = {"path": "role.json", "sha256": _sha(raw), "bytes": len(raw),
+                  "role": "AGENT_TRAJECTORY",
+                  "parser_id": "pgop1.swebench.trajectory.miniswe_role_attribution.v1",
+                  "run_id": run_id, "instance_id": instance_id, "scope": "task",
+                  "timestamp": timestamp}
+    audit = audit_evidence(tmp_path, {"run_id": run_id, "instance_id": instance_id,
+                                      "evidence": [descriptor]})
+    ref = audit["SOURCE_PROVENANCE"]["evidence_references"][0]
+    if value is None:
+        ref.pop(field)
+    else:
+        ref[field] = value
+
+    with pytest.raises(AuditError):
+        _bind_generalized_audit(audit, tmp_path, tmp_path / "context")
+
+
+def test_bridge_qualifiers_are_committed_and_queryable(tmp_path: Path) -> None:
+    from runtime.candidate.context_engine import Engine
+
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    audit = _audit(data_root)
+    bound = bind_generalized_audit(audit, data_root, tmp_path / "context")
+    context_root = tmp_path / "context"
+    qualifiers = bound["bridge_qualifiers"]
+    assert qualifiers["schema"] == "pgop1.swebench.bridge-qualifiers.v1"
+    assert qualifiers["evaluator_authentication_status"] == "UNAUTHENTICATED"
+    assert qualifiers["derivation_status"] == "DERIVATION_NOT_VERIFIED"
+    receipt = json.loads((context_root / "generalized-bridge-receipt.json").read_bytes())
+    assert receipt["bridge_qualifiers"] == qualifiers
+    audit_rows = Engine(context_root).query(task_id="INSTANCE:example__repo-1", kind="audit_result")
+    assert len(audit_rows) == 1
+    assert audit_rows[0]["bridge_qualifiers"] == qualifiers
+    assert recover_generalized_audit(context_root)["bridge_qualifiers"] == qualifiers
+
+
+def test_recovery_requires_qualifiers_for_new_contract(tmp_path: Path) -> None:
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    raw = json.dumps({"instance_id": "example__repo-1", "messages": []}).encode()
+    (data_root / "trajectory.json").write_bytes(raw)
+    descriptor = {"path": "trajectory.json", "sha256": _sha(raw), "bytes": len(raw),
+                  "role": "AGENT_TRAJECTORY",
+                  "parser_id": "pgop1.swebench.trajectory.miniswe_role_attribution.v1",
+                  "instance_id": "example__repo-1", "scope": "task",
+                  "timestamp": "2026-10-28T12:00:00Z"}
+    audit = audit_evidence(data_root, {"run_id": "run-a", "instance_id": "example__repo-1",
+                                       "evidence": [descriptor]})
+    context_root = tmp_path / "context"
+    _bind_generalized_audit(audit, data_root, context_root)
+    receipt_path = context_root / "generalized-bridge-receipt.json"
+    receipt = json.loads(receipt_path.read_bytes())
+    receipt.pop("bridge_qualifiers")
+    receipt_path.write_bytes(json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode())
+
+    with pytest.raises(AuditError, match="both retain bridge qualifiers"):
+        recover_generalized_audit(context_root)
+
+
+def test_unversioned_result_is_snapshotted_before_graph_binding(tmp_path: Path) -> None:
+    from runtime.candidate.context_engine import Engine
+
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    audit = _audit(data_root)
+    expected_claim = json.loads(json.dumps(audit["AGENT_STATEMENT"]))
+    context_root = tmp_path / "context"
+    bind_generalized_audit(audit, data_root, context_root)
+    audit["AGENT_STATEMENT"][0]["text"] = "mutated after bind"
+    rows = Engine(context_root).query(task_id="INSTANCE:example__repo-1", kind="audit_result")
+    assert rows[0]["value"]["AGENT_STATEMENT"] == expected_claim
+
+
+def test_explicit_aggregate_storage_contract_is_batch_only_and_unverified(tmp_path: Path) -> None:
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    audit = _audit(data_root)
+    audit.pop("instance_id")
+    audit.update({"instance_id": "UNBOUND", "batch_id": "batch-1",
+                  "result_scope": "BATCH_AGGREGATE",
+                  "audit_contract_version": "pgop1.swebench.aggregate-storage.v1",
+                  "reason_codes": ["STORAGE_AGGREGATE_NOT_A_SEMANTIC_VERDICT"]})
+
+    bound = _bind_generalized_audit(audit, data_root, tmp_path / "context-batch")
+
+    assert bound["derivation"]["status"] == "DERIVATION_NOT_VERIFIED"
+    assert bound["derivation"]["scope"] == "BATCH_AGGREGATE_STORAGE_ONLY"
+    assert bound["bridge_qualifiers"]["adapter_verdict_status"] == "ADVISORY_UNVERIFIED"
+    receipt_path = tmp_path / "context-batch" / "generalized-bridge-receipt.json"
+    receipt = json.loads(receipt_path.read_bytes())
+    receipt.pop("bridge_qualifiers")
+    receipt_path.write_bytes(json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode())
+    with pytest.raises(AuditError, match="both retain bridge qualifiers"):
+        recover_generalized_audit(tmp_path / "context-batch")
+    wrong_scope = dict(audit, instance_id="example__repo-1")
+    wrong_scope.pop("batch_id")
+    wrong_scope.pop("result_scope")
+    with pytest.raises(AuditError, match="batch-only scope"):
+        _bind_generalized_audit(wrong_scope, data_root, tmp_path / "context-instance")

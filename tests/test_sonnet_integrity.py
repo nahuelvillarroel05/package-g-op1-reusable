@@ -114,8 +114,13 @@ def test_bridge_recovery_rederives_versioned_result_and_labels_unverified_semant
 
 def test_unmarked_legacy_result_keeps_integrity_scope_without_derivation_claim(tmp_path: Path) -> None:
     result = _derived_audit(tmp_path, claim="The original task remains unresolved.", resolved=False)
+    # Model an actual historical v2 result. Removing only the derivation marker
+    # from a current v3 contract is a downgrade attempt and must be rejected.
     result.pop("semantic_derivation_schema")
-    bound = bind_generalized_audit(result, tmp_path, tmp_path / "context")
+    result.pop("audit_contract_version")
+    result["normalization_schema"] = "pgop1.swebench.source-bound-normalization.v2"
+    bound = bind_generalized_audit(
+        result, tmp_path, tmp_path / "context", allow_legacy_unmarked=True)
     recovered = recover_generalized_audit(tmp_path / "context")
 
     assert bound["context_engine"]["status"] == "PASS"

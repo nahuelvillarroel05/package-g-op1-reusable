@@ -3,7 +3,28 @@
 Updated 2026-10-29. Mutable index, not primary authority. Read [AGENTS.md](AGENTS.md)
 and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence prevail.
 
-## Sonnet remediation publication and next review
+## Second Sonnet convergence (2026-10-29)
+
+Prospective engineering addresses Owner-supplied N-01..N-10 against `e0115476`.
+The full second external report was unavailable; no missing detail is inferred.
+Experimental branch: `feat/pgop1-second-sonnet-remediation-001`.
+New extraction uses bounded direct English assertion context, original UTF-8 spans,
+explicit correction history, active contradiction qualifiers and nested exclusion
+hash ledgers. Audit-contract v2 / normalization v3 requires derivation markers;
+historical receipt reading retains byte/derivation/authentication distinctions.
+PID validation, stable campaign locks and caller-supplied review metadata have
+prospective tests. Frozen components and prior evidence remain unchanged.
+
+Internal review and current-candidate regression receipts are external engineering
+evidence, separate from the historical 312 PASS below. Independent expanded Astra
+review and publication require exact frozen Git identity; no PASS is inferred here.
+See [contracts](docs/audits/SECOND_SONNET_CONTRACTS.md) and
+[next action](docs/engineering/NEXT_STEP.md).
+`SONNET_THIRD_EXTERNAL_AUDIT=PENDING`; `F16=DEFERRED_LINUX_VALIDATION_PENDING`;
+`GATE_11=BLOCKED`; `RUN_002=NOT_READY`;
+`INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`. No mass campaign or RUN-002 execution.
+
+## Previous Sonnet remediation publication and next review
 
 Code candidate: `e0115476ed46dde3bd583f67f767c501df7979f3`; tree
 `418b76fe58e5a3160f3d353b9270b82b288aaa67`. Experimental branch:

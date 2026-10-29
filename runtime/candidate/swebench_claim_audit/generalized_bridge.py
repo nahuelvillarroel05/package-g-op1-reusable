@@ -31,6 +31,11 @@ RECEIPT_SCHEMA_V1 = "pgop1.swebench.generalized-bridge-receipt.v1"
 RECEIPT_SCHEMA_V2 = "pgop1.swebench.generalized-bridge-receipt.v2"
 DERIVATION_SCHEMA = "pgop1.swebench.audit-derivation.v1"
 DERIVATION_MARKER = "semantic_derivation_schema"
+AUDIT_CONTRACT_VERSION = "pgop1.swebench.audit-contract.v2"
+NORMALIZATION_SCHEMA_V2 = "pgop1.swebench.source-bound-normalization.v2"
+NORMALIZATION_SCHEMA_V3 = "pgop1.swebench.source-bound-normalization.v3"
+AGGREGATE_STORAGE_CONTRACT = "pgop1.swebench.aggregate-storage.v1"
+QUALIFIERS_SCHEMA = "pgop1.swebench.bridge-qualifiers.v1"
 MAX_SOURCE_REFERENCES = 64
 MAX_SOURCE_BYTES = 64 * 1024 * 1024
 MAX_CAPSULE_BYTES = 8 * 1024 * 1024
@@ -129,6 +134,15 @@ def _source_references(audit_result: dict[str, Any]) -> list[dict[str, Any]]:
         normalized = {"path": path, "sha256": digest, "bytes": size,
                       "role": role, "parser_id": parser_id, "parser_version": parser_version,
                       "instance_binding": instance_binding}
+        descriptor_bindings: dict[str, str] = {}
+        for key in ("run_id", "instance_id", "scope", "timestamp"):
+            if key in item:
+                value = item[key]
+                if not isinstance(value, str) or not value or len(value) > 256:
+                    raise AuditError("BRIDGE_EVIDENCE_MALFORMED", f"evidence {key} binding must be a bounded nonempty string")
+                descriptor_bindings[key] = value
+        if descriptor_bindings:
+            normalized["descriptor_bindings"] = descriptor_bindings
         path_key = path.casefold() if os.name == "nt" else path
         old = by_path.get(path_key)
         if old is not None and old["path"] != path:
@@ -148,6 +162,8 @@ def _source_references(audit_result: dict[str, Any]) -> list[dict[str, Any]]:
             bindings = set(old["instance_bindings"])
             bindings.add(instance_binding)
             old["instance_bindings"] = sorted(bindings)
+            if old.get("descriptor_bindings", {}) != normalized.get("descriptor_bindings", {}):
+                raise AuditError("BRIDGE_EVIDENCE_CONFLICT", "same source path has conflicting descriptor bindings")
         else:
             by_path[path_key] = {**normalized, "roles": [role], "parser_ids": [parser_id],
                                  "parser_versions": [parser_version],
@@ -165,6 +181,25 @@ def _validate_audit(audit_result: dict[str, Any]) -> tuple[str, str, str]:
             }):
         raise AuditError("BRIDGE_AUDIT_RESULT_INVALID", "bridge requires a versioned generalized audit result")
     identity = _identity(audit_result)
+    contract = audit_result.get("audit_contract_version")
+    marker = audit_result.get(DERIVATION_MARKER)
+    historical_marked = (contract is None
+                         and audit_result.get("normalization_schema") == NORMALIZATION_SCHEMA_V2
+                         and marker == DERIVATION_SCHEMA)
+    if (audit_result.get("normalization_schema") == NORMALIZATION_SCHEMA_V3
+            and (contract != AUDIT_CONTRACT_VERSION or marker != DERIVATION_SCHEMA)):
+        raise AuditError("BRIDGE_AUDIT_CONTRACT_INVALID", "normalization v3 requires the versioned derivation contract and marker")
+    if contract == AGGREGATE_STORAGE_CONTRACT:
+        if (identity[0] != "BATCH_AGGREGATE" or marker is not None
+                or audit_result.get("reason_codes") != ["STORAGE_AGGREGATE_NOT_A_SEMANTIC_VERDICT"]):
+            raise AuditError("BRIDGE_AGGREGATE_STORAGE_CONTRACT_INVALID", "aggregate storage contract requires its exact batch-only scope and reason")
+    elif contract not in {None, AUDIT_CONTRACT_VERSION}:
+        raise AuditError("BRIDGE_AUDIT_CONTRACT_INVALID", "audit contract version is unsupported")
+    if contract == AUDIT_CONTRACT_VERSION and marker != DERIVATION_SCHEMA:
+        raise AuditError("BRIDGE_DERIVATION_MARKER_REQUIRED", "audit contract v2 requires its semantic derivation marker")
+    if marker is not None and not historical_marked and (
+            contract != AUDIT_CONTRACT_VERSION or marker != DERIVATION_SCHEMA):
+        raise AuditError("BRIDGE_AUDIT_CONTRACT_INVALID", "semantic derivation marker requires the matching versioned audit contract")
     encoded = canonical_json(audit_result)
     if len(encoded) > MAX_AUDIT_BYTES:
         raise AuditError("BRIDGE_AUDIT_TOO_LARGE", "normalized audit result exceeds its byte bound")
@@ -312,9 +347,15 @@ def _derive_from_engine_sources(
     aggregates lack one instance scope and likewise remain unverified.
     """
     marker = audit_result.get(DERIVATION_MARKER)
+    if (audit_result.get("audit_contract_version") is None
+            and audit_result.get("normalization_schema") == NORMALIZATION_SCHEMA_V2
+            and marker == DERIVATION_SCHEMA):
+        return {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_NOT_VERIFIED",
+                "scope": "LEGACY_MARKED_INPUT_STORAGE_ONLY", "source_objects_read": 0}
     if marker is None:
         return {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_NOT_VERIFIED",
-                "scope": "LEGACY_UNMARKED_INPUT", "source_objects_read": 0}
+                "scope": "BATCH_AGGREGATE_STORAGE_ONLY" if audit_result.get("audit_contract_version") == AGGREGATE_STORAGE_CONTRACT
+                else "LEGACY_UNMARKED_INPUT", "source_objects_read": 0}
     if marker != DERIVATION_SCHEMA:
         raise AuditError("BRIDGE_DERIVATION_SCHEMA_UNSUPPORTED", "audit result declares an unsupported semantic derivation schema")
     if identity_kind != "INSTANCE":
@@ -357,6 +398,17 @@ def _derive_from_engine_sources(
             role, parser_id = ref.get("role"), ref.get("parser_id")
             if not isinstance(role, str) or not role or not isinstance(parser_id, str) or not parser_id:
                 raise AuditError("BRIDGE_DERIVATION_SOURCES_INVALID", "marked source descriptor lacks its parser and role")
+            bindings = ref.get("descriptor_bindings", {
+                key: ref[key] for key in ("run_id", "instance_id", "scope", "timestamp") if key in ref
+            })
+            if not isinstance(bindings, dict):
+                raise AuditError("BRIDGE_DERIVATION_SOURCES_INVALID", "source descriptor bindings are malformed")
+            if parser_id in {"pgop1.swebench.trajectory.miniswe_role_attribution.v1",
+                             "pgop1.swebench.transcript.role_export.v1"}:
+                if (set(("run_id", "instance_id", "scope", "timestamp")) - bindings.keys()
+                        or bindings.get("run_id") != run_id
+                        or bindings.get("instance_id") != identity_value):
+                    raise AuditError("BRIDGE_DERIVATION_SOURCES_INVALID", "role attribution source requires committed matching run, instance, scope, and timestamp bindings")
             raw = engine.read_source(source["source_id"])
             if len(raw) != size or _sha(raw) != digest:
                 raise AuditError("BRIDGE_DERIVATION_SOURCE_MISMATCH", "Engine-admitted bytes differ from the derivation source commitment")
@@ -364,8 +416,10 @@ def _derive_from_engine_sources(
             target.parent.mkdir(parents=True, exist_ok=True)
             with target.open("xb") as stream:
                 stream.write(raw)
-            descriptors.append({"path": path, "sha256": digest, "bytes": size,
-                                "role": role, "parser_id": parser_id})
+            descriptor = {"path": path, "sha256": digest, "bytes": size,
+                          "role": role, "parser_id": parser_id}
+            descriptor.update(bindings)
+            descriptors.append(descriptor)
         from .generalized import audit_evidence
         derived = audit_evidence(data_root, {"run_id": run_id, "instance_id": identity_value,
                                              "evidence": descriptors})
@@ -376,10 +430,26 @@ def _derive_from_engine_sources(
             "source_objects_read": len(descriptors), "source_commitments": len(seen)}
 
 
+def _bridge_qualifiers(audit_result: dict[str, Any], derivation: dict[str, Any]) -> dict[str, str]:
+    """Machine-readable limits for logic, bytes, derivation, and evaluator authority."""
+    return {
+        "schema": QUALIFIERS_SCHEMA,
+        "logic_status": "SEMANTIC_VALIDATION_NOT_PROVEN",
+        "integrity_status": "BYTE_INTEGRITY_VERIFIED",
+        "derivation_status": derivation["status"],
+        # A report's own declaration cannot authenticate its evaluator.
+        "evaluator_authentication_status": "UNAUTHENTICATED",
+        "evaluator_identity_status": "UNKNOWN",
+        "adapter_verdict_status": "ADVISORY_UNVERIFIED" if derivation["status"] != "DERIVATION_VERIFIED"
+        else "DERIVED_ADVISORY_ONLY",
+    }
+
+
 def bind_generalized_audit(
     audit_result: dict[str, Any],
     data_root: str | os.PathLike[str],
     context_root: str | os.PathLike[str],
+    *, allow_legacy_unmarked: bool = False,
 ) -> dict[str, Any]:
     """Bind one normalized audit result and its cited bytes to a fresh Engine.
 
@@ -387,7 +457,14 @@ def bind_generalized_audit(
     owner of parsing, statement attribution, predicate matching, and verdict
     semantics. Evidence paths are treated as untrusted data and never executed.
     """
+    # Freeze nested caller data before any source reads or graph construction.
+    # The canonical round trip gives observations, claims, spans, rejections,
+    # source descriptors, and verdicts one stable snapshot for this operation.
+    audit_result = strict_json_loads(canonical_json(audit_result))
     identity_kind, identity_value, run_id = _validate_audit(audit_result)
+    if (audit_result.get("audit_contract_version") is None
+            and not allow_legacy_unmarked):
+        raise AuditError("BRIDGE_LEGACY_OPT_IN_REQUIRED", "unversioned historical audits require explicit storage-only opt-in")
     root = _checked_root(data_root)
     output_root = _assert_new_root(Path(context_root))
     references = _source_references(audit_result)
@@ -418,17 +495,22 @@ def bind_generalized_audit(
 
     derivation = _derive_from_engine_sources(
         audit_result, identity_kind, identity_value, run_id, admitted, engine, output_root)
+    qualifiers = _bridge_qualifiers(audit_result, derivation)
     capsule = {
         "schema": CAPSULE_SCHEMA_V2,
+        "audit_contract_version": audit_result.get("audit_contract_version", "LEGACY_UNVERSIONED_STORAGE_ONLY"),
         "identity_kind": identity_kind,
         "identity": identity_value,
         "run_id": run_id,
         "audit_result": audit_result,
-        "source_refs": [{key: row[key] for key in
-                         ("path", "sha256", "bytes", "roles", "parser_ids", "parser_versions",
-                          "instance_bindings", "source_id", "scope")}
+        "source_refs": [{**{key: row[key] for key in
+                             ("path", "sha256", "bytes", "roles", "parser_ids", "parser_versions",
+                              "instance_bindings", "source_id", "scope")},
+                         **({"descriptor_bindings": row["descriptor_bindings"]}
+                            if "descriptor_bindings" in row else {})}
                         for row in admitted],
         "derivation": derivation,
+        "bridge_qualifiers": qualifiers,
         "responsibility": {
             "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN",
             "storage_and_graph_binding": "CONTEXT_ENGINE_OWNED",
@@ -576,6 +658,7 @@ def bind_generalized_audit(
         "id": result_id, "kind": "audit_result", "task_id": task_id, "run_id": run_id,
         "finding_id": identity_value, "source_id": capsule_id,
         "evidence_pointer": "/audit_result", "value": audit_result,
+        "bridge_qualifiers": qualifiers,
     })
     if len(observations) > MAX_OBSERVATIONS:
         raise AuditError("BRIDGE_OBSERVATION_LIMIT", "derived graph exceeds its observation bound")
@@ -622,6 +705,7 @@ def bind_generalized_audit(
     receipt = {
         "schema": RECEIPT_SCHEMA_V2,
         "bridge_schema": BRIDGE_SCHEMA,
+        "audit_contract_version": capsule["audit_contract_version"],
         "identity_kind": identity_kind,
         "identity": identity_value,
         "task_id": task_id,
@@ -634,6 +718,7 @@ def bind_generalized_audit(
         "adapter_verdict": audit_result["AUDIT_VERDICT"],
         "byte_integrity_status": "BYTE_INTEGRITY_VERIFIED",
         "derivation": derivation,
+        "bridge_qualifiers": qualifiers,
         "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN",
         "engine_status": "PASS",
         "dispatch": "NOT_PERFORMED",
@@ -646,6 +731,7 @@ def bind_generalized_audit(
         "identity": identity_value,
         "adapter_verdict": audit_result["AUDIT_VERDICT"],
         "derivation": derivation,
+        "bridge_qualifiers": qualifiers,
         "context_engine": {"status": "PASS", "manifest": manifest,
                            "verification": verification, "queried_observations": len(found_ids),
                            "observation_ids": expected_ids, "source_objects_admitted": len(admitted),
@@ -713,6 +799,21 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
 
     audit_result = capsule.get("audit_result")
     identity_kind, identity_value, run_id = _validate_audit(audit_result)
+    expected_contract = audit_result.get("audit_contract_version", "LEGACY_UNVERSIONED_STORAGE_ONLY")
+    if (("audit_contract_version" in capsule and capsule.get("audit_contract_version") != expected_contract)
+            or (audit_result.get("audit_contract_version") is not None
+                and "audit_contract_version" not in capsule)):
+        raise AuditError("BRIDGE_RECOVERY_AUDIT_CONTRACT_MISMATCH", "capsule audit contract differs from its immutable audit result")
+    qualifiers_persisted = "bridge_qualifiers" in receipt or "bridge_qualifiers" in capsule
+    qualifiers_required = audit_result.get("audit_contract_version") in {
+        AUDIT_CONTRACT_VERSION, AGGREGATE_STORAGE_CONTRACT,
+    }
+    if (qualifiers_required and (not qualifiers_persisted
+                                 or "audit_contract_version" not in capsule
+                                 or "audit_contract_version" not in receipt)):
+        raise AuditError("BRIDGE_RECOVERY_QUALIFIERS_MISMATCH", "versioned audit contract requires retained bridge qualifiers and contract bindings")
+    if qualifiers_persisted and ("bridge_qualifiers" not in receipt or "bridge_qualifiers" not in capsule):
+        raise AuditError("BRIDGE_RECOVERY_QUALIFIERS_MISMATCH", "receipt and capsule must both retain bridge qualifiers")
     task_id = f"{identity_kind}:{identity_value}"
     if (capsule.get("identity_kind") != identity_kind
             or capsule.get("identity") != identity_value
@@ -740,12 +841,15 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
     expected_receipt_refs = []
     for ref in source_refs:
         source_id = _stable_id("source", ref["path"] + "\0" + ref["sha256"])
-        expected_capsule_refs.append({
+        capsule_ref = {
             "path": ref["path"], "sha256": ref["sha256"], "bytes": ref["bytes"],
             "roles": ref["roles"], "parser_ids": ref["parser_ids"],
             "parser_versions": ref["parser_versions"], "instance_bindings": ref["instance_bindings"],
             "source_id": source_id, "scope": "ENGINEERING_RESULT",
-        })
+        }
+        if "descriptor_bindings" in ref:
+            capsule_ref["descriptor_bindings"] = ref["descriptor_bindings"]
+        expected_capsule_refs.append(capsule_ref)
         expected_receipt_refs.append({"source_id": source_id, "sha256": ref["sha256"], "bytes": ref["bytes"]})
     if capsule_source_refs != expected_capsule_refs or receipt.get("source_refs") != expected_receipt_refs:
         raise AuditError("BRIDGE_RECOVERY_SOURCES_MISMATCH", "source commitments differ from immutable audit result")
@@ -759,16 +863,53 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
         if len(source_raw) != expected["bytes"] or _sha(source_raw) != expected["sha256"]:
             raise AuditError("BRIDGE_RECOVERY_SOURCE_MISMATCH", "admitted source object differs from immutable audit commitment")
 
-    if is_v2:
+    historical_derivation = None
+    historical_marked_v2 = (
+        is_v2 and not qualifiers_persisted
+        and audit_result.get("audit_contract_version") is None
+        and audit_result.get("normalization_schema") == NORMALIZATION_SCHEMA_V2
+        and audit_result.get(DERIVATION_MARKER) == DERIVATION_SCHEMA
+    )
+    if historical_marked_v2:
+        historical_derivation = receipt.get("derivation")
+        if (not isinstance(historical_derivation, dict)
+                or capsule.get("derivation") != historical_derivation):
+            raise AuditError("BRIDGE_RECOVERY_DERIVATION_MISMATCH", "historical receipt and capsule derivation declarations differ")
+        derivation = {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_NOT_VERIFIED",
+                      "scope": "LEGACY_MARKED_INPUT_STORAGE_ONLY", "source_objects_read": 0}
+        qualifiers = {
+            "schema": QUALIFIERS_SCHEMA,
+            "logic_status": "SEMANTIC_VALIDATION_NOT_PROVEN",
+            "integrity_status": "BYTE_INTEGRITY_VERIFIED" if verification.get("status") == "PASS" else "NOT_PROVEN",
+            "derivation_status": "DERIVATION_NOT_VERIFIED",
+            "evaluator_authentication_status": "UNAUTHENTICATED",
+            "evaluator_identity_status": "UNKNOWN",
+            "adapter_verdict_status": "ADVISORY_UNVERIFIED",
+        }
+    elif is_v2:
         derivation = _derive_from_engine_sources(
             audit_result, identity_kind, identity_value, run_id, capsule_source_refs, engine, root)
+        qualifiers = _bridge_qualifiers(audit_result, derivation)
         if (receipt.get("byte_integrity_status") != "BYTE_INTEGRITY_VERIFIED"
                 or receipt.get("derivation") != derivation
-                or capsule.get("derivation") != derivation):
+                or capsule.get("derivation") != derivation
+                or (qualifiers_persisted and (receipt.get("bridge_qualifiers") != qualifiers
+                                               or capsule.get("bridge_qualifiers") != qualifiers))
+                or ("audit_contract_version" in receipt
+                    and receipt.get("audit_contract_version") != expected_contract)):
             raise AuditError("BRIDGE_RECOVERY_DERIVATION_MISMATCH", "receipt or capsule derivation scope differs from Engine-byte rederivation")
     else:
         derivation = {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_NOT_VERIFIED",
                       "scope": "LEGACY_RECEIPT_V1_UNVERIFIED", "source_objects_read": 0}
+        qualifiers = {
+            "schema": QUALIFIERS_SCHEMA,
+            "logic_status": "SEMANTIC_VALIDATION_NOT_PROVEN",
+            "integrity_status": "BYTE_INTEGRITY_VERIFIED" if verification.get("status") == "PASS" else "NOT_PROVEN",
+            "derivation_status": "DERIVATION_NOT_VERIFIED",
+            "evaluator_authentication_status": "UNAUTHENTICATED",
+            "evaluator_identity_status": "UNKNOWN",
+            "adapter_verdict_status": "ADVISORY_UNVERIFIED",
+        }
 
     expected_by_id = _expected_observation_tasks(
         audit_result, identity_kind, identity_value, run_id, source_refs, _sha(capsule_raw))
@@ -787,11 +928,19 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
         if not expected_task_ids.issubset(task_found):
             raise AuditError("BRIDGE_RECOVERY_OBSERVATIONS_MISSING", "verified graph lacks capsule-derived observation identities")
         found.update(task_found)
+    audit_graph_id = _stable_id("normalized-audit", task_id + "\0" + _sha(capsule_raw))
+    audit_rows = engine.query(task_id=task_id, identifier=audit_graph_id, limit=1)
+    if (len(audit_rows) != 1
+            or (qualifiers_persisted and audit_rows[0].get("bridge_qualifiers") != qualifiers)):
+        raise AuditError("BRIDGE_RECOVERY_QUALIFIERS_MISMATCH", "queryable audit qualifiers differ from capsule derivation")
     return {
         "schema": "pgop1.swebench.generalized-bridge-recovery.v1",
         "status": "PASS" if verification.get("status") == "PASS" else "NOT_PROVEN",
         "byte_integrity_status": "BYTE_INTEGRITY_VERIFIED" if verification.get("status") == "PASS" else "NOT_PROVEN",
         "derivation": derivation,
+        **({"historical_derivation": historical_derivation}
+           if historical_derivation is not None else {}),
+        "bridge_qualifiers": qualifiers,
         "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN",
         "identity_kind": identity_kind,
         "identity": identity_value,

@@ -52,6 +52,9 @@ def _write_new(path, value):
 
 
 def _alive(pid):
+    # Validate before ctypes can convert an untrusted JSON value to a DWORD.
+    if type(pid) is not int or not 1 <= pid <= 0xFFFFFFFF:
+        raise ValueError("writer PID must be an integer in the Windows DWORD range")
     if os.name == "nt":
         import ctypes
         from ctypes import wintypes
@@ -79,6 +82,89 @@ def _alive(pid):
         return True
 
 
+def _acquire_campaign_writer_lock(path, *, resume):
+    """Atomically create or OS-lock the stable writer record.
+
+    An empty existing lock can mean interruption before ownership was written.
+    Recovery is manual: stop all campaign processes, preserve/hash the bytes,
+    review unfinished journal START records, then archive the empty lock under
+    exclusive maintenance. Never infer a retry from PID or file age alone.
+    """
+    created = False
+    try:
+        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_RDWR, 0o600)
+        created = True
+    except FileExistsError:
+        fd = os.open(path, os.O_RDWR)
+    stream = os.fdopen(fd, "r+b", buffering=0)
+    try:
+        if os.name == "nt":
+            import msvcrt
+            stream.seek(0)
+            try:
+                msvcrt.locking(stream.fileno(), msvcrt.LK_NBLCK, 1)
+            except OSError as exc:
+                raise AuditError("CAMPAIGN_WRITER_PRESENT", "writer lock is held by another process") from exc
+        else:
+            import fcntl
+            try:
+                fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except OSError as exc:
+                raise AuditError("CAMPAIGN_WRITER_PRESENT", "writer lock is held by another process") from exc
+        stream.seek(0)
+        raw = stream.read()
+        if created:
+            if raw:
+                raise AuditError("CAMPAIGN_WRITER_LOCK_INVALID", "new writer lock unexpectedly contains data")
+        else:
+            if not raw:
+                raise AuditError("CAMPAIGN_WRITER_LOCK_EMPTY", "empty writer lock requires documented manual recovery")
+            try:
+                previous = json.loads(raw.decode("utf-8"))
+                pid = previous["pid"]
+                if type(pid) is not int or not 1 <= pid <= 0xFFFFFFFF:
+                    raise ValueError("invalid PID")
+                state = previous.get("state", "ACTIVE")
+                if state not in {"ACTIVE", "RELEASED"}:
+                    raise ValueError("invalid state")
+                alive = state == "ACTIVE" and _alive(pid)
+            except Exception as exc:
+                raise AuditError("CAMPAIGN_WRITER_LOCK_INVALID", "malformed writer lock requires documented manual recovery") from exc
+            if alive or (state == "ACTIVE" and not resume):
+                raise AuditError("CAMPAIGN_WRITER_PRESENT", "existing writer requires dead-process resume")
+        stream.seek(0)
+        stream.truncate()
+        stream.write(_raw({"pid": os.getpid(), "time_ns": time.time_ns(), "state": "ACTIVE"}) + b"\n")
+        os.fsync(stream.fileno())
+        return stream
+    except BaseException:
+        stream.close()
+        raise
+
+
+def _release_campaign_writer_lock(stream):
+    try:
+        try:
+            stream.seek(0)
+            owner = json.loads(stream.read().decode("utf-8"))
+            owner["state"] = "RELEASED"
+            stream.seek(0)
+            stream.truncate()
+            stream.write(_raw(owner) + b"\n")
+            os.fsync(stream.fileno())
+        except Exception:
+            pass
+        if os.name == "nt":
+            import msvcrt
+            stream.seek(0)
+            msvcrt.locking(stream.fileno(), msvcrt.LK_UNLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
+    finally:
+        stream.close()
+
+
 def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=MIN_FREE_BYTES,
                  development=False):
     """Process every plan entry, preserving exact failures and completed units.
@@ -92,12 +178,23 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
         raise AuditError("CAMPAIGN_PLAN_INVALID", "recognized versioned engineering plan required")
     if plan["campaign_id"] == POST_SONNET_CAMPAIGN:
         review = plan.get("independent_review", {})
+        if not isinstance(review, dict):
+            raise AuditError("CAMPAIGN_ASTRA_REVIEW_REQUIRED", "review record must be an object")
+        invocation = review.get("invocation_audit", {})
+        if not isinstance(invocation, dict):
+            raise AuditError("CAMPAIGN_ASTRA_REVIEW_REQUIRED", "invocation audit must be an object")
         if (review.get("decision") not in {"PASS_WITH_EXACT_SCOPE", "PASS_WITH_NONMATERIAL_LIMITATIONS"}
                 or review.get("candidate_commit") != plan.get("code_commit")
-                or review.get("model") != "gpt-6-astra"
+                or invocation.get("declared_model") != "gpt-6-astra"
+                or invocation.get("observed_model") != "gpt-6-astra"
+                or invocation.get("identity_attestation_status") != "NOT_CRYPTOGRAPHICALLY_AUTHENTICATED"
+                or not isinstance(invocation.get("metadata_evidence"), str)
+                or "metadata-only" not in invocation["metadata_evidence"].lower()
+                or not isinstance(invocation.get("evidence_sha256"), str)
+                or len(invocation["evidence_sha256"]) != 64
                 or not isinstance(review.get("audit_sha256"), str)
                 or len(review["audit_sha256"]) != 64):
-            raise AuditError("CAMPAIGN_ASTRA_REVIEW_REQUIRED", "Astra approval of the exact candidate required")
+            raise AuditError("CAMPAIGN_ASTRA_REVIEW_REQUIRED", "Astra approval requires exact review and metadata-only invocation audit")
     sources = plan.get("sources")
     requests = plan.get("requests")
     if not isinstance(sources, list) or not isinstance(requests, list):
@@ -157,12 +254,7 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
     if shutil.disk_usage(out).free < min_free_bytes:
         raise AuditError("CAMPAIGN_DISK_RESERVE", "free storage reserve would be violated")
     lock = out / "writer.json"
-    if lock.exists():
-        previous = json.loads(lock.read_text(encoding="utf-8"))
-        if not resume or _alive(previous["pid"]):
-            raise AuditError("CAMPAIGN_WRITER_PRESENT", "existing writer requires a dead-process resume")
-        lock.rename(out / ("abandoned-writer-" + str(time.time_ns()) + ".json"))
-    _write_new(lock, {"pid": os.getpid(), "time_ns": time.time_ns()})
+    lock_stream = _acquire_campaign_writer_lock(lock, resume=resume)
     try:
         code_hashes = plan.get("code_sha256", {})
         repo = Path(__file__).resolve().parents[3]
@@ -240,11 +332,16 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
             _append(journal, {"event": "COMPLETE", "unit": unit, "attempt": attempt,
                               "result_path": result_path, "sha256": _digest(path)})
             counts["executed"] += 1
-        return {"schema": "pgop1.swebench.campaign-execution.v1", "campaign_id": plan["campaign_id"],
-                **pin, **counts, "status": "COMPLETED_PLAN_UNITS",
-                "dispatch": "NOT_PERFORMED", "independent_custody": "NOT_PROVEN"}
+        result = {"schema": "pgop1.swebench.campaign-execution.v1", "campaign_id": plan["campaign_id"],
+                  **pin, **counts, "status": "COMPLETED_PLAN_UNITS",
+                  "dispatch": "NOT_PERFORMED", "independent_custody": "NOT_PROVEN"}
+        if plan["campaign_id"] == POST_SONNET_CAMPAIGN:
+            result["review_invocation_assessment"] = "CALLER_SUPPLIED_METADATA_AUDIT_ONLY"
+            result["review_identity_authentication"] = "NOT_CRYPTOGRAPHICALLY_AUTHENTICATED"
+            result["review_metadata_verification"] = "NOT_INDEPENDENTLY_VERIFIED"
+        return result
     finally:
-        lock.unlink()
+        _release_campaign_writer_lock(lock_stream)
 
 
 def main():
