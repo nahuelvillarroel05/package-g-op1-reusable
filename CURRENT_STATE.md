@@ -12,8 +12,10 @@ Coverage engineering was consolidated without byte changes in
 `ad06438454fb4dd8124907cc828399e5d870571d`), after exact manifest/patch verification
 and 138 passing regressions. GitHub API independently verified the published
 RUN-001 branch at `ee0eab0b0673dfb29322d2cd07f82535475a4f90` after Git's Schannel
-route failed. New engineering remains local; no push. Final candidate identity
-is recorded outside Git in the preparation workspace's CODE_REFERENCE.json.
+route failed. Initial preparation candidate:
+`e96dce5297fcfae773d7c33118f7ad885f7c4db5`. Subsequent streaming engineering
+remains local; no push. Current candidate identity is recorded outside Git in
+the continuation workspace's CODE_REFERENCE.json.
 
 `src/package_g/` is the consolidated historical core. Experimental engineering
 remains in `runtime/candidate/`; no promotion. Context Engine v0.1 stores immutable
@@ -90,8 +92,11 @@ No full campaign, RUN-002, Docker/patch execution or operational qualification.
 ## RUN-002 preparation
 
 Result: `PGOP1_RUN_002_PREPARATION_PARTIAL_WITH_EXACT_LIMITATIONS`;
-readiness `NOT_READY`. Workspace `../../../PGOP1_RUN_002_PREPARATION/` from
-checkout (outside Git; Windows denied creation inside Engineering).
+readiness `NOT_READY`. Initial sealed workspace:
+`../../../PGOP1_RUN_002_PREPARATION/`; its ZIP remains byte-identical at
+`0105ee648a863ae54c96d0ecf88795ba8d773e6ac45e929651599cf6ac0d0575`.
+Current continuation: `../../../PGOP1_RUN_002_PREPARATION_STREAMING_001/`
+from checkout (outside Git; Windows denied creation inside Engineering).
 Read FINAL_HANDOFF.md, ENGINEERING_REPORT.md, CODE_REFERENCE.json,
 TECHNICAL_AUDIT.md, TEST_RESULTS.json and run-002-preparation/ there.
 
@@ -105,14 +110,28 @@ abstentions and missing extractions. The narrow TASK_RESOLVED comparison is not
 a universal completion/test/file-modification verifier. Other concrete predicate
 contracts are explicitly NOT_IMPLEMENTED, pending appropriate source evidence.
 
-Bounded streaming chunks and checkpointed composition reuse the existing Engine
-and bridge, with durable identities, hash chains, rejection records, recovery
-and explicit NO_REDISPATCH on orphan output. Exact tested volume, process
-interruption coverage and remaining original-source memory bounds are in
-BATCHING_REPORT.md and TECHNICAL_AUDIT.md; do not infer unlimited ingestion.
+Bounded chunks and checkpointed composition reuse the existing Engine/bridge.
+Source-fragment V2 adds bounded original reads, separate original/fragment
+hashes, multi-fragment BYTE_SPAN mappings, immutable input-completion hashes
+and complete mapped/rejected ordinal conservation. Original parent bytes and
+all input records must recover; byte reconstruction alone cannot yield PASS.
+Before-read excluded-path rules are preserved, including case-insensitive
+holdout/secrets/.aws ancestors; path location is hashed, not disclosed.
+Orphan output blocks NO_REDISPATCH. Prior failed/V1 attempts remain archived.
 
-Independent protocol frozen before new public-source research. Only metadata
-and documentation were consulted; no heldout bodies or labels were evaluated.
+Seven suites: 216 passed. Actual 20,000-row synthetic composition and isolated
+8/32 MiB source probes verify bounded storage/reconstruction; exact hashes,
+resource/volume results and final review are in TEST_RESULTS.json,
+STREAMING_V2_REPORT.md and TECHNICAL_AUDIT.md. On the same authentic source,
+V1 mapped 113/119 spans with six boundary rejects; V2 maps 119/119, with no
+semantic claims. This explicit composition API does not make the legacy
+audit_file parsers streaming; their bounded whole-file behavior is unchanged.
+
+Independent protocol frozen before new public-source research. New public
+research consulted metadata/documentation only; no heldout bodies or labels
+were evaluated. Seven additional source families remain unqualified; see
+INDEPENDENT_REFERENCE_ELIGIBILITY_REVIEW.json for exact reasons, including an
+advertised annotation CSV absent from the pinned public repository metadata.
 `INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`: independent adjudicated claim-span
 references are missing. Synthetic tests and five authentic development files
 cannot establish precision. Comparison is 5/5 accepted before and after, with
@@ -131,6 +150,6 @@ are distinguished from project agents. Cached/reasoning tokens are subsets;
 observed usage is not `/goal`, billing or global provider coverage. Cache unchanged.
 
 Next objective prepared, not executed:
-`PGOP1_RUN_002_BLOCKER_CLOSURE`.
+`PGOP1_RUN_002_INDEPENDENT_REFERENCE_QUALIFICATION`.
 See [NEXT_STEP](docs/engineering/NEXT_STEP.md). No RUN-002 execution until the
 material blockers close and a new explicit execution authorization is supplied.

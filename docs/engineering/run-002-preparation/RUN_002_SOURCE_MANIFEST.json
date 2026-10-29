@@ -58,5 +58,18 @@
   "independent_reference_status": "INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE",
   "public_candidates": "SOURCE_RESEARCH.json; metadata leads only, not eligible reserved sources",
   "eligibility": "Exact source commitment and parser shape; development role declarations only, no semantic independence",
-  "historical_sources": "V1/RUN001 families excluded from independent evaluation"
+  "historical_sources": "V1/RUN001 families excluded from independent evaluation",
+  "composition_profiles": {
+    "legacy_bounded": "Existing explicit parsers/bridge remain available; they may read complete bounded files. No universal streaming parser claim.",
+    "streamed_source_v2": {
+      "module": "runtime.candidate.swebench_claim_audit/source_fragments.py",
+      "original_read_chunk_bytes": 1048576,
+      "origin_identity": "Original path + source SHA/size plus hashed location; never substitute fragment hash for parent",
+      "observation_mapping": "Explicit original BYTE_SPAN; multi-fragment intersections count/digest; first reference ROUTING_ANCHOR_ONLY",
+      "completion": "Immutable total/per-fragment/global original input identities; every mapped/rejected ordinal conserved",
+      "protected_components": "holdout, secrets, .aws rejected before source open; existing Engine rule preserved",
+      "qualification_evidence": "TECHNICAL_AUDIT.md and final source/resource/volume reports, exact tested scope only"
+    }
+  },
+  "semantic_reference_eligibility_review": "INDEPENDENT_REFERENCE_ELIGIBILITY_REVIEW.json; no new eligible cases acquired"
 }
