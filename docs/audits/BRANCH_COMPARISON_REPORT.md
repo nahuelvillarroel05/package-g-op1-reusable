@@ -24,7 +24,7 @@ The allowed difference classifications are applied per path below; compatibility
 
 ## Complete file differences
 
-Status is relative to main. Added runtime/tests/docs/runs files are INTENTIONAL_EXPERIMENTAL_SCOPE; deleted main-only workflow/client/PUBLIC documents are BASELINE_DIVERGENCE with MISSING_INTEGRATION; the client rename is BASELINE_DIVERGENCE with MISSING_INTEGRATION; other modifications are BASELINE_DIVERGENCE with integration risk UNKNOWN until separately tested.
+Status is relative to main. Added runtime/tests/docs/runs files are INTENTIONAL_EXPERIMENTAL_SCOPE; deleted main-only workflow/PUBLIC documents are BASELINE_DIVERGENCE with MISSING_INTEGRATION; the client is an exact-content rename, classified as BASELINE_DIVERGENCE with MISSING_INTEGRATION; other modifications are BASELINE_DIVERGENCE with integration risk UNKNOWN until separately tested.
 
 ```text
 D	.github/workflows/public-ci.yml
