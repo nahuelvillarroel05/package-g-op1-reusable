@@ -14,6 +14,7 @@ import re
 import stat
 import subprocess
 import sys
+import tempfile
 from typing import Any
 
 from runtime.candidate.context_engine import Engine, canonical_json, strict_json_loads
@@ -21,8 +22,15 @@ from runtime.candidate.context_engine import Engine, canonical_json, strict_json
 from .adapter import AuditError, _checked_root, _read_bytes, _safe_path, _sha
 
 
-BRIDGE_SCHEMA = "pgop1.swebench.generalized-context-bridge.v1"
+LEGACY_BRIDGE_SCHEMA = "pgop1.swebench.generalized-context-bridge.v1"
+BRIDGE_SCHEMA = "pgop1.swebench.generalized-context-bridge.v2"
 AUDIT_SCHEMA = "pgop1.swebench.generalized-audit.v1"
+CAPSULE_SCHEMA_V1 = "pgop1.swebench.generalized-audit-capsule.v1"
+CAPSULE_SCHEMA_V2 = "pgop1.swebench.generalized-audit-capsule.v2"
+RECEIPT_SCHEMA_V1 = "pgop1.swebench.generalized-bridge-receipt.v1"
+RECEIPT_SCHEMA_V2 = "pgop1.swebench.generalized-bridge-receipt.v2"
+DERIVATION_SCHEMA = "pgop1.swebench.audit-derivation.v1"
+DERIVATION_MARKER = "semantic_derivation_schema"
 MAX_SOURCE_REFERENCES = 64
 MAX_SOURCE_BYTES = 64 * 1024 * 1024
 MAX_CAPSULE_BYTES = 8 * 1024 * 1024
@@ -44,7 +52,7 @@ def _safe_relative(value: str) -> str:
     if (posix.is_absolute() or windows.is_absolute() or windows.drive
             or any(part in {"", ".", ".."} for part in parts)):
         raise AuditError("BRIDGE_PATH_INVALID", "source path must be a normalized relative path")
-    reserved = re.compile(r"(?i)^(?:CON|PRN|AUX|NUL|COM[1-9¹²³]|LPT[1-9¹²³])$")
+    reserved = re.compile(r"(?i)^(?:CON|PRN|AUX|NUL|COM[1-9\u00b9\u00b2\u00b3]|LPT[1-9\u00b9\u00b2\u00b3])$")
     for part in parts:
         stem = part.split(".", 1)[0]
         if ":" in part or part.endswith((".", " ")) or reserved.fullmatch(stem):
@@ -245,24 +253,35 @@ def _write_receipt(context_root: Path, receipt: dict[str, Any]) -> None:
 
 
 def _fresh_process_readback(context_root: Path, expected_manifest: dict[str, Any],
-                            expected_by_task: dict[str, list[str]]) -> dict[str, Any]:
+                            expected_by_task: dict[str, list[str]], expected_derivation: dict[str, Any],
+                            capsule_source_id: str, capsule_sha256: str) -> dict[str, Any]:
     repo_root = Path(__file__).resolve().parents[3]
     code = (
         "import json,sys; from pathlib import Path; sys.path.insert(0,sys.argv[1]); "
         "from runtime.candidate.context_engine import Engine; "
+        "from runtime.candidate.swebench_claim_audit.generalized_bridge import _derive_from_engine_sources; "
         "e=Engine(Path(sys.argv[2])); v=e.verify(); m=e.latest(); "
+        "capsule_raw=e.read_source(sys.argv[5]); "
+        "import hashlib; capsule=json.loads(capsule_raw.decode('utf-8')); "
+        "capsule_ok=(hashlib.sha256(capsule_raw).hexdigest()==sys.argv[6]); "
+        "audit=capsule['audit_result']; derivation=_derive_from_engine_sources(audit,capsule['identity_kind'],"
+        "capsule['identity'],capsule['run_id'],capsule['source_refs'],e,Path(sys.argv[2])); "
         "expected_map=json.loads(sys.argv[4]); found=set(); "
         "[(found.update(r['id'] for r in e.query(task_id=t,limit=1000))) for t in expected_map]; "
         "expected={i for ids in expected_map.values() for i in ids}; "
-        "ok=(v['status']=='PASS' and m==json.loads(sys.argv[3]) and expected.issubset(found)); "
+        "ok=(v['status']=='PASS' and m==json.loads(sys.argv[3]) and expected.issubset(found) "
+        "and capsule_ok and derivation==json.loads(sys.argv[7])); "
         "print(json.dumps({'status':'PASS' if ok else 'NOT_PROVEN','verification':v,"
         "'manifest':m,'expected_observations_found':len(expected & found),"
+        "'derivation':derivation,"
         "'dispatch':'NOT_PERFORMED','redispatch':'NOT_PERFORMED',"
         "'index_reconstruction':'POSSIBLE'},sort_keys=True)); sys.exit(0 if ok else 3)"
     )
     args = [sys.executable, "-I", "-B", "-c", code, str(repo_root), str(context_root),
             json.dumps(expected_manifest, sort_keys=True, separators=(",", ":")),
-            json.dumps(expected_by_task, sort_keys=True, separators=(",", ":"))]
+            json.dumps(expected_by_task, sort_keys=True, separators=(",", ":")),
+            capsule_source_id, capsule_sha256,
+            json.dumps(expected_derivation, sort_keys=True, separators=(",", ":"))]
     try:
         result = subprocess.run(args, shell=False, capture_output=True, text=True, timeout=45)
     except (OSError, subprocess.TimeoutExpired):
@@ -280,6 +299,81 @@ def _fresh_process_readback(context_root: Path, expected_manifest: dict[str, Any
         return {"status": "NOT_PROVEN", "reason_code": "FRESH_PROCESS_VERIFY_FAILED",
                 "dispatch": "NOT_PERFORMED", "redispatch": "NOT_PERFORMED"}
     return value
+
+
+def _derive_from_engine_sources(
+    audit_result: dict[str, Any], identity_kind: str, identity_value: str, run_id: str,
+    admitted: list[dict[str, Any]], engine: Engine, scratch_parent: Path,
+) -> dict[str, Any]:
+    """Rerun the prospective adapter only from Engine-admitted source bytes.
+
+    Unmarked v1 inputs are retained as historical-compatible storage inputs,
+    but their caller-supplied verdict is never reported as derived. Batch
+    aggregates lack one instance scope and likewise remain unverified.
+    """
+    marker = audit_result.get(DERIVATION_MARKER)
+    if marker is None:
+        return {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_NOT_VERIFIED",
+                "scope": "LEGACY_UNMARKED_INPUT", "source_objects_read": 0}
+    if marker != DERIVATION_SCHEMA:
+        raise AuditError("BRIDGE_DERIVATION_SCHEMA_UNSUPPORTED", "audit result declares an unsupported semantic derivation schema")
+    if identity_kind != "INSTANCE":
+        return {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_NOT_VERIFIED",
+                "scope": "BATCH_AGGREGATE_NOT_DERIVED", "source_objects_read": 0}
+
+    provenance = audit_result.get("SOURCE_PROVENANCE")
+    source_rows = provenance.get("evidence_references") if isinstance(provenance, dict) else None
+    if not isinstance(source_rows, list) or not source_rows:
+        raise AuditError("BRIDGE_DERIVATION_SOURCES_INVALID", "marked audit result lacks source descriptors for rederivation")
+    observation_order: dict[str, int] = {}
+    observations = audit_result.get("observations", [])
+    if not isinstance(observations, list):
+        raise AuditError("BRIDGE_DERIVATION_OBSERVATIONS_INVALID", "marked audit observations are malformed")
+    for index, observation in enumerate(observations):
+        source_ref = observation.get("source_ref") if isinstance(observation, dict) else None
+        path = source_ref.get("path") if isinstance(source_ref, dict) else None
+        if isinstance(path, str):
+            observation_order.setdefault(path, index)
+    source_rows = sorted(source_rows, key=lambda ref: (
+        observation_order.get(ref.get("path"), MAX_OBSERVATIONS), ref.get("path", "")))
+    admitted_by_commitment = {(row["path"], row["sha256"], row["bytes"]): row for row in admitted}
+    descriptors: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, int]] = set()
+    with tempfile.TemporaryDirectory(prefix=".bridge-derive-", dir=scratch_parent) as temp_name:
+        data_root = Path(temp_name)
+        for ref in source_rows:
+            if not isinstance(ref, dict):
+                raise AuditError("BRIDGE_DERIVATION_SOURCES_INVALID", "marked source descriptor is malformed")
+            path = _safe_relative(ref.get("path"))
+            digest, size = ref.get("sha256"), ref.get("bytes")
+            commitment = (path, digest, size)
+            if (not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest)
+                    or type(size) is not int or size < 0 or commitment in seen):
+                raise AuditError("BRIDGE_DERIVATION_SOURCES_INVALID", "marked source commitment is malformed or duplicated")
+            seen.add(commitment)
+            source = admitted_by_commitment.get(commitment)
+            if source is None:
+                raise AuditError("BRIDGE_DERIVATION_SOURCE_UNBOUND", "marked source is not admitted by the Context Engine")
+            role, parser_id = ref.get("role"), ref.get("parser_id")
+            if not isinstance(role, str) or not role or not isinstance(parser_id, str) or not parser_id:
+                raise AuditError("BRIDGE_DERIVATION_SOURCES_INVALID", "marked source descriptor lacks its parser and role")
+            raw = engine.read_source(source["source_id"])
+            if len(raw) != size or _sha(raw) != digest:
+                raise AuditError("BRIDGE_DERIVATION_SOURCE_MISMATCH", "Engine-admitted bytes differ from the derivation source commitment")
+            target = data_root.joinpath(*PurePosixPath(path).parts)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with target.open("xb") as stream:
+                stream.write(raw)
+            descriptors.append({"path": path, "sha256": digest, "bytes": size,
+                                "role": role, "parser_id": parser_id})
+        from .generalized import audit_evidence
+        derived = audit_evidence(data_root, {"run_id": run_id, "instance_id": identity_value,
+                                             "evidence": descriptors})
+    if canonical_json(derived) != canonical_json(audit_result):
+        raise AuditError("BRIDGE_SEMANTIC_DERIVATION_MISMATCH", "adapter result differs from rederivation over Engine-admitted source bytes")
+    return {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_VERIFIED",
+            "scope": "INSTANCE_ADAPTER_REDERIVED_FROM_ENGINE_BYTES",
+            "source_objects_read": len(descriptors), "source_commitments": len(seen)}
 
 
 def bind_generalized_audit(
@@ -314,8 +408,18 @@ def bind_generalized_audit(
         admitted.append(row)
         grants.append({"path": str(source_path), "sha256": ref["sha256"], "scope": "ENGINEERING_RESULT"})
 
+    output_root.mkdir(parents=True, exist_ok=False)
+    engine = Engine(output_root, grants=grants)
+    for row in admitted:
+        descriptor = engine.admit_source(row["absolute_path"], row["sha256"],
+                                         scope=row["scope"], source_id=row["source_id"])
+        if descriptor.get("sha256") != row["sha256"] or descriptor.get("byte_length") != row["bytes"]:
+            raise AuditError("BRIDGE_SOURCE_ADMISSION_MISMATCH", "Context Engine admitted different source bytes")
+
+    derivation = _derive_from_engine_sources(
+        audit_result, identity_kind, identity_value, run_id, admitted, engine, output_root)
     capsule = {
-        "schema": "pgop1.swebench.generalized-audit-capsule.v1",
+        "schema": CAPSULE_SCHEMA_V2,
         "identity_kind": identity_kind,
         "identity": identity_value,
         "run_id": run_id,
@@ -324,8 +428,9 @@ def bind_generalized_audit(
                          ("path", "sha256", "bytes", "roles", "parser_ids", "parser_versions",
                           "instance_bindings", "source_id", "scope")}
                         for row in admitted],
+        "derivation": derivation,
         "responsibility": {
-            "semantic_claim_validation": "ADAPTER_OWNED",
+            "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN",
             "storage_and_graph_binding": "CONTEXT_ENGINE_OWNED",
             "upstream_actor_provider_authentication": "NOT_PROVEN",
             "producer_execution_or_redispatch": "NOT_PERFORMED",
@@ -335,8 +440,6 @@ def bind_generalized_audit(
     capsule_raw = canonical_json(capsule)
     if len(capsule_raw) > MAX_CAPSULE_BYTES:
         raise AuditError("BRIDGE_CAPSULE_TOO_LARGE", "capsule exceeds its configured byte bound")
-
-    output_root.mkdir(parents=True, exist_ok=False)
     capsule_path = output_root / "normalized-audit-capsule.json"
     with capsule_path.open("xb") as stream:
         stream.write(capsule_raw)
@@ -344,13 +447,6 @@ def bind_generalized_audit(
         os.fsync(stream.fileno())
     capsule_hash = _sha(capsule_raw)
     capsule_id = "source-capsule-" + capsule_hash
-
-    engine = Engine(output_root, grants=grants)
-    for row in admitted:
-        descriptor = engine.admit_source(row["absolute_path"], row["sha256"],
-                                         scope=row["scope"], source_id=row["source_id"])
-        if descriptor.get("sha256") != row["sha256"] or descriptor.get("byte_length") != row["bytes"]:
-            raise AuditError("BRIDGE_SOURCE_ADMISSION_MISMATCH", "Context Engine admitted different source bytes")
     descriptor = engine.admit_source(capsule_path, capsule_hash, scope="ENGINEERING_RESULT", source_id=capsule_id)
     if descriptor.get("sha256") != capsule_hash or descriptor.get("byte_length") != len(capsule_raw):
         raise AuditError("BRIDGE_CAPSULE_ADMISSION_MISMATCH", "Context Engine admitted a different capsule")
@@ -518,12 +614,13 @@ def bind_generalized_audit(
     expected_by_task_lists: dict[str, list[str]] = {}
     for observation_id, expected_task in expected_by_task.items():
         expected_by_task_lists.setdefault(expected_task, []).append(observation_id)
-    fresh = _fresh_process_readback(output_root, manifest, expected_by_task_lists)
+    fresh = _fresh_process_readback(output_root, manifest, expected_by_task_lists,
+                                    derivation, capsule_id, capsule_hash)
     if fresh.get("status") != "PASS":
         raise AuditError("BRIDGE_FRESH_PROCESS_READBACK_FAILED", "fresh process did not verify graph and query bindings")
 
     receipt = {
-        "schema": "pgop1.swebench.generalized-bridge-receipt.v1",
+        "schema": RECEIPT_SCHEMA_V2,
         "bridge_schema": BRIDGE_SCHEMA,
         "identity_kind": identity_kind,
         "identity": identity_value,
@@ -535,7 +632,9 @@ def bind_generalized_audit(
                          "bytes": row["bytes"]} for row in admitted],
         "expected_observation_ids": expected_ids,
         "adapter_verdict": audit_result["AUDIT_VERDICT"],
-        "semantic_claim_validation": "ADAPTER_OWNED",
+        "byte_integrity_status": "BYTE_INTEGRITY_VERIFIED",
+        "derivation": derivation,
+        "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN",
         "engine_status": "PASS",
         "dispatch": "NOT_PERFORMED",
         "redispatch": "NOT_PERFORMED",
@@ -546,12 +645,15 @@ def bind_generalized_audit(
         "identity_kind": identity_kind,
         "identity": identity_value,
         "adapter_verdict": audit_result["AUDIT_VERDICT"],
+        "derivation": derivation,
         "context_engine": {"status": "PASS", "manifest": manifest,
                            "verification": verification, "queried_observations": len(found_ids),
                            "observation_ids": expected_ids, "source_objects_admitted": len(admitted),
                            "source_bytes_admitted": sum(row["bytes"] for row in admitted),
                            "capsule_sha256": capsule_hash,
-                           "semantic_claim_validation": "ADAPTER_OWNED",
+                           "byte_integrity_status": "BYTE_INTEGRITY_VERIFIED",
+                           "derivation": derivation,
+                           "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN",
                            "index_reconstruction": bool(engine.metrics.get("RECONSTRUCTION_REQUIRED")),
                            "fresh_process_readback": fresh},
         "fixed_i7_provider_dispatch": "NOT_PERFORMED",
@@ -562,11 +664,11 @@ def bind_generalized_audit(
 
 
 def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str, Any]:
-    """Verify a committed bridge receipt and graph without source rereads.
+    """Verify a committed bridge receipt and graph from Engine objects.
 
-    Engine initialization may reconstruct its disposable SQLite index. This
-    routine does not run the adapter, read the original data root, or dispatch
-    a producer/evaluator.
+    Legacy v1 receipts verify storage only. Prospective v2 receipts rerun the
+    marked adapter against Engine-admitted source bytes. Neither path reads the
+    original data root or dispatches a producer/evaluator.
     """
     root = Path(context_root).resolve(strict=True)
     receipt_path = root / "generalized-bridge-receipt.json"
@@ -578,9 +680,12 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
     if canonical_json(receipt) != raw:
         raise AuditError("BRIDGE_RECEIPT_INVALID", "saved receipt is not canonical JSON")
     if (not isinstance(receipt, dict)
-            or receipt.get("schema") != "pgop1.swebench.generalized-bridge-receipt.v1"
-            or receipt.get("bridge_schema") != BRIDGE_SCHEMA):
+            or receipt.get("schema") not in {RECEIPT_SCHEMA_V1, RECEIPT_SCHEMA_V2}
+            or receipt.get("bridge_schema") not in {LEGACY_BRIDGE_SCHEMA, BRIDGE_SCHEMA}):
         raise AuditError("BRIDGE_RECEIPT_INVALID", "saved bridge receipt has an unsupported schema")
+    is_v2 = receipt["schema"] == RECEIPT_SCHEMA_V2
+    if is_v2 != (receipt.get("bridge_schema") == BRIDGE_SCHEMA):
+        raise AuditError("BRIDGE_RECEIPT_INVALID", "receipt and bridge schema versions are inconsistent")
     engine = Engine(root)
     verification = engine.verify()
     latest = engine.latest()
@@ -601,8 +706,10 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
     except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
         raise AuditError("BRIDGE_RECOVERY_CAPSULE_INVALID", "stored capsule is not valid JSON") from exc
     if (canonical_json(capsule) != capsule_raw or not isinstance(capsule, dict)
-            or capsule.get("schema") != "pgop1.swebench.generalized-audit-capsule.v1"):
+            or capsule.get("schema") not in {CAPSULE_SCHEMA_V1, CAPSULE_SCHEMA_V2}):
         raise AuditError("BRIDGE_RECOVERY_CAPSULE_INVALID", "stored capsule has an unsupported schema")
+    if is_v2 != (capsule.get("schema") == CAPSULE_SCHEMA_V2):
+        raise AuditError("BRIDGE_RECOVERY_CAPSULE_INVALID", "receipt and capsule schema versions are inconsistent")
 
     audit_result = capsule.get("audit_result")
     identity_kind, identity_value, run_id = _validate_audit(audit_result)
@@ -617,7 +724,7 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
         "task_id": task_id,
         "run_id": run_id,
         "adapter_verdict": audit_result["AUDIT_VERDICT"],
-        "semantic_claim_validation": "ADAPTER_OWNED",
+        "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN" if is_v2 else "ADAPTER_OWNED",
         "engine_status": "PASS",
         "dispatch": "NOT_PERFORMED",
         "redispatch": "NOT_PERFORMED",
@@ -652,6 +759,17 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
         if len(source_raw) != expected["bytes"] or _sha(source_raw) != expected["sha256"]:
             raise AuditError("BRIDGE_RECOVERY_SOURCE_MISMATCH", "admitted source object differs from immutable audit commitment")
 
+    if is_v2:
+        derivation = _derive_from_engine_sources(
+            audit_result, identity_kind, identity_value, run_id, capsule_source_refs, engine, root)
+        if (receipt.get("byte_integrity_status") != "BYTE_INTEGRITY_VERIFIED"
+                or receipt.get("derivation") != derivation
+                or capsule.get("derivation") != derivation):
+            raise AuditError("BRIDGE_RECOVERY_DERIVATION_MISMATCH", "receipt or capsule derivation scope differs from Engine-byte rederivation")
+    else:
+        derivation = {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_NOT_VERIFIED",
+                      "scope": "LEGACY_RECEIPT_V1_UNVERIFIED", "source_objects_read": 0}
+
     expected_by_id = _expected_observation_tasks(
         audit_result, identity_kind, identity_value, run_id, source_refs, _sha(capsule_raw))
     expected_ids = sorted(expected_by_id)
@@ -672,6 +790,9 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
     return {
         "schema": "pgop1.swebench.generalized-bridge-recovery.v1",
         "status": "PASS" if verification.get("status") == "PASS" else "NOT_PROVEN",
+        "byte_integrity_status": "BYTE_INTEGRITY_VERIFIED" if verification.get("status") == "PASS" else "NOT_PROVEN",
+        "derivation": derivation,
+        "semantic_claim_validation": "SEMANTIC_VALIDATION_NOT_PROVEN",
         "identity_kind": identity_kind,
         "identity": identity_value,
         "manifest": latest,
@@ -680,7 +801,7 @@ def recover_generalized_audit(context_root: str | os.PathLike[str]) -> dict[str,
         "capsule_sha256": _sha(capsule_raw),
         "source_objects_verified": len(expected_receipt_refs),
         "source_reread": "NOT_PERFORMED",
-        "adapter_rerun": "NOT_PERFORMED",
+        "adapter_rerun": "PERFORMED_FROM_ENGINE_BYTES" if derivation["status"] == "DERIVATION_VERIFIED" else "NOT_PERFORMED",
         "producer_redispatch": "NOT_PERFORMED",
         "index_reconstruction": bool(engine.metrics.get("RECONSTRUCTION_REQUIRED")),
         "authority": "ADVISORY_ENGINEERING_ONLY; NO_OP1_AUTHORITY_EFFECT",

@@ -6,11 +6,21 @@ import os
 import re
 import shutil
 import sqlite3
+import stat
 import tempfile
 import time
+import uuid
 from contextlib import contextmanager, closing
 from copy import deepcopy
 from pathlib import Path
+
+if os.name == 'nt':
+    import msvcrt
+else:
+    import fcntl
+
+_WRITER_LOCK_SCHEMA = 'pgop1.context-engine-writer-lock.v1'
+_WRITER_LOCK_INITIALIZED = b'PGOP1_WRITER_LOCK_INITIALIZED_V1'
 
 RELATIONSHIPS = {'VERIFIED_CAUSAL', 'VERIFIED_ASSOCIATION', 'DERIVED_ASSOCIATION', 'HYPOTHESIS', 'UNKNOWN'}
 SCOPES = {'AUTHORIZED_METADATA', 'ENGINEERING_RESULT', 'SYNTHETIC', 'HISTORICAL_COMPATIBILITY'}
@@ -90,16 +100,129 @@ class Engine:
     @contextmanager
     def _lock(self):
         path = self.root / 'writer.lock'
+        created = False
         try:
-            fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-        except FileExistsError as exc:
-            raise EngineError('writer lock exists; concurrent write or interrupted writer requires explicit recovery') from exc
+            fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_RDWR, 0o600)
+            created = True
+        except FileExistsError:
+            try:
+                fd = os.open(path, os.O_RDWR)
+            except OSError as exc:
+                raise EngineError('writer lock could not be opened for ownership verification') from exc
+
+        locked = False
         try:
-            os.write(fd, str(os.getpid()).encode())
-            os.close(fd)
+            path_stat = path.lstat()
+            handle_stat = os.fstat(fd)
+            is_junction = getattr(path, 'is_junction', lambda: False)()
+            if (stat.S_ISLNK(path_stat.st_mode) or is_junction
+                    or not stat.S_ISREG(handle_stat.st_mode)
+                    or not os.path.samestat(path_stat, handle_stat)):
+                raise EngineError('writer lock must be a regular file owned by this Engine root')
+            if created:
+                os.write(fd, _WRITER_LOCK_INITIALIZED)
+                os.fsync(fd)
+            os.lseek(fd, 0, os.SEEK_SET)
+            try:
+                if os.name == 'nt':
+                    msvcrt.locking(fd, msvcrt.LK_NBLCK, 1)
+                else:
+                    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                locked = True
+            except OSError as exc:
+                raise EngineError('writer lock is held by another process') from exc
+
+            if not created:
+                os.lseek(fd, 0, os.SEEK_SET)
+                previous = os.read(fd, 4096).strip(b' \t\r\n')
+                if not previous:
+                    raise EngineError('writer lock owner is empty; explicit recovery is required')
+                if previous != _WRITER_LOCK_INITIALIZED and not self._recognized_writer_lock(previous):
+                    owner_pid = self._legacy_writer_pid(previous)
+                    if owner_pid is None:
+                        raise EngineError('writer lock owner is malformed; explicit recovery is required')
+                    if self._process_is_alive(owner_pid):
+                        raise EngineError('legacy writer lock owner is still alive')
+
+            record = canonical_json({
+                'schema': _WRITER_LOCK_SCHEMA,
+                'pid': os.getpid(),
+                'token': uuid.uuid4().hex,
+            })
+            os.lseek(fd, 0, os.SEEK_SET)
+            written = 0
+            while written < len(record):
+                count = os.write(fd, record[written:])
+                if count <= 0:
+                    raise EngineError('writer lock owner record could not be written completely')
+                written += count
+            os.ftruncate(fd, len(record))
+            os.fsync(fd)
             yield
         finally:
-            path.unlink(missing_ok=True)
+            try:
+                if locked:
+                    os.lseek(fd, 0, os.SEEK_SET)
+                    if os.name == 'nt':
+                        msvcrt.locking(fd, msvcrt.LK_UNLCK, 1)
+                    else:
+                        fcntl.flock(fd, fcntl.LOCK_UN)
+            finally:
+                os.close(fd)
+
+    @staticmethod
+    def _recognized_writer_lock(raw):
+        try:
+            record = strict_json_loads(raw)
+        except (EngineError, json.JSONDecodeError, UnicodeDecodeError):
+            return False
+        return isinstance(record, dict) and record.get('schema') == _WRITER_LOCK_SCHEMA
+
+    @staticmethod
+    def _legacy_writer_pid(raw):
+        try:
+            pid = int(raw.decode('ascii'))
+        except (UnicodeDecodeError, ValueError):
+            return None
+        return pid if pid > 0 else None
+
+    @staticmethod
+    def _process_is_alive(pid):
+        if os.name == 'nt':
+            import ctypes
+            from ctypes import wintypes
+
+            kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
+            kernel32.OpenProcess.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
+            kernel32.OpenProcess.restype = wintypes.HANDLE
+            kernel32.WaitForSingleObject.argtypes = (wintypes.HANDLE, wintypes.DWORD)
+            kernel32.WaitForSingleObject.restype = wintypes.DWORD
+            kernel32.CloseHandle.argtypes = (wintypes.HANDLE,)
+            handle = kernel32.OpenProcess(0x00100000, False, pid)  # SYNCHRONIZE
+            if not handle:
+                error = ctypes.get_last_error()
+                if error == 87:  # ERROR_INVALID_PARAMETER means no such process.
+                    return False
+                return True  # Access denied or an unknown result fails closed.
+            try:
+                result = kernel32.WaitForSingleObject(handle, 0)
+                if result == 0x00000102:  # WAIT_TIMEOUT: process is still running.
+                    return True
+                if result == 0x00000000:  # WAIT_OBJECT_0: process has exited.
+                    return False
+                return True
+            finally:
+                kernel32.CloseHandle(handle)
+
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True
+        except OSError:
+            return True
+        return True
 
     @staticmethod
     def _immutable(path, raw):
@@ -299,8 +422,9 @@ class Engine:
             if len(prov['records']) != len(graph['observations']):
                 raise EngineError('duplicate provenance observation identity')
             source_rows = {r['source_id']: r for r in graph['sources']}
+            observation_rows = {r['id']: r for r in graph['observations']}
             for item in prov['records']:
-                node = next(r for r in graph['observations'] if r['id'] == item['observation_id'])
+                node = observation_rows[item['observation_id']]
                 if item['graph_version'] != number or item['graph_sha256'] != manifest['graph_sha256'] or item['evidence_binding'] != node['evidence_binding']:
                     raise EngineError('provenance record graph/source binding differs')
                 source_id = node['evidence_binding']['source_id']

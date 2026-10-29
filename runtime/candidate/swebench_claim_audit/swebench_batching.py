@@ -195,12 +195,48 @@ def _source_refs(result: Mapping[str, Any]) -> list[dict[str, Any]]:
     execution = result.get("EXECUTION_EVIDENCE", [])
     if not isinstance(refs, list) or not isinstance(execution, list):
         raise AuditError("BATCH_INPUT_INVALID", "audit source references must be arrays")
-    unique: list[dict[str, Any]] = []
+    by_path: dict[str, dict[str, Any]] = {}
     for ref in [*refs, *execution]:
         if not isinstance(ref, dict) or not isinstance(ref.get("path"), str):
             raise AuditError("BATCH_INPUT_INVALID", "audit source reference is malformed")
-        unique.append(dict(ref))
-    return unique
+        path = ref["path"]
+        path_key = path.casefold() if os.name == "nt" else path
+        old = by_path.get(path_key)
+        if old is not None and old["path"] != path:
+            raise AuditError("BATCH_SOURCE_PATH_ALIAS", "source paths collide under Windows case folding")
+        if old is not None and (old.get("sha256"), old.get("bytes")) != (ref.get("sha256"), ref.get("bytes")):
+            raise AuditError("BATCH_SOURCE_CONFLICT", "same source path has conflicting byte commitments")
+
+        role = ref.get("role", "UNKNOWN")
+        parser_id = ref.get("parser_id", "UNKNOWN")
+        parser_version = ref.get("parser_version", "UNKNOWN")
+        binding = ref.get("instance_binding", "INSTANCE_BOUND")
+        if (not isinstance(role, str) or not role or len(role) > 128
+                or not isinstance(parser_id, str) or not parser_id or len(parser_id) > 256
+                or not isinstance(parser_version, str) or not parser_version or len(parser_version) > 128
+                or binding not in {"INSTANCE_BOUND", "RUN_ONLY"}):
+            raise AuditError("BATCH_SOURCE_REFERENCE_INVALID", "source role, parser identity, or binding is invalid")
+
+        if old is None:
+            by_path[path_key] = {
+                **ref,
+                "role": role,
+                "parser_id": parser_id,
+                "parser_version": parser_version,
+                "instance_binding": binding,
+                "roles": [role],
+                "parser_ids": [parser_id],
+                "parser_versions": [parser_version],
+                "instance_bindings": [binding],
+            }
+        else:
+            old["roles"] = sorted(set(old["roles"]) | {role})
+            old["parser_ids"] = sorted(set(old["parser_ids"]) | {parser_id})
+            old["parser_versions"] = sorted(set(old["parser_versions"]) | {parser_version})
+            old["instance_bindings"] = sorted(set(old["instance_bindings"]) | {binding})
+            if binding == "RUN_ONLY":
+                old["instance_binding"] = "RUN_ONLY"
+    return [by_path[path] for path in sorted(by_path)]
 
 
 def _validate_member_shape(item_id: str, result: dict[str, Any]) -> None:
@@ -225,6 +261,8 @@ def _validate_member_shape(item_id: str, result: dict[str, Any]) -> None:
     observations = result.get("observations", [])
     if not isinstance(observations, list):
         raise AuditError("BATCH_INPUT_INVALID", "member observations must be an array")
+    if len(observations) + 1 > _MAX_BATCH_OBSERVATIONS:
+        raise AuditError("BATCH_MEMBER_TOO_LARGE", "member observations exceed bridge batch capacity; split through the bounded chunker")
     for obs in observations:
         if not isinstance(obs, dict) or not isinstance(obs.get("run_id", result.get("run_id", "UNKNOWN")), str):
             raise AuditError("BATCH_INPUT_INVALID", "observation run identity is malformed")

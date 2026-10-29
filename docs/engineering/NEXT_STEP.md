@@ -1,5 +1,22 @@
 # PGOP1 next objective: independent reference qualification
 
+## Active Owner-authorized engineering objective (2026-10-29)
+
+`PGOP1_SONNET_FINDINGS_REMEDIATION_AND_FULL_ENGINEERING_RUN` supersedes preparation
+as the immediate engineering task. Preserve the independent-reference gate below.
+Use the separate `PGOP1_SONNET_REMEDIATION_001` workspace and prospective remediation
+branch. Finish each finding's reproduction/resolution, focused/adversarial tests and
+internal review; freeze exact code commit/tree; obtain actual independent Astra
+review with no material blockers; only then execute the exhaustive post-Sonnet
+engineering campaign and fresh-process recovery. See its external FINAL_HANDOFF.md
+for the current terminal or continuation status, rather than inferring completion
+from this workflow. No push, models, Docker, private GOLD or formal RUN-002.
+
+After engineering, independent adjudicated references remain the next separate
+qualification task. A successful engineering campaign cannot close GATE_11.
+
+## Earlier prepared objective and retained gate
+
 PREPARED_NOT_EXECUTED.
 Objective: `PGOP1_RUN_002_INDEPENDENT_REFERENCE_QUALIFICATION`.
 Read AGENTS.md and CURRENT_STATE.md, then the current external handoff:

@@ -15,6 +15,7 @@ from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
 import sqlite3
 import stat
+import tempfile
 from typing import Any, Iterable, Mapping
 
 from .adapter import AuditError, _checked_root, _safe_path
@@ -28,6 +29,7 @@ VERIFICATION_SCHEMA = "pgop1.swebench.source-fragment-verification.v1"
 SPOOL_SCHEMA = "pgop1.swebench.source-fragment-observation-spool.v1"
 REJECTION_SCHEMA = "pgop1.swebench.source-fragment-rejections.v2"
 MAPPING_SCHEMA = "BYTE_SPAN_HALF_OPEN_V2_PIECE_DIGEST"
+CONTENT_ASSERTION_SCHEMA = "pgop1.swebench.source-span-text-assertion.v1"
 INPUT_EXCLUSION_POLICY_VERSION = "CONTEXT_ENGINE_SOURCE_EXCLUSION_V1"
 INPUT_EXCLUSION_POLICY_RESULT = "PASS_BEFORE_ORIGINAL_READ"
 _HASH_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -48,6 +50,7 @@ _RESERVED_MAPPED_FIELDS = frozenset({
     "origin_fragment_index", "origin_fragment_range", "origin_mapping_status",
     "origin_input_ordinal", "origin_input_sha256", "origin_piece_count",
     "origin_piece_sha256", "origin_source_ref_role",
+    "origin_content_verification",
 })
 
 
@@ -78,6 +81,41 @@ def _piece_digest(start: int, end: int, fragments: list[Mapping[str, Any]]) -> t
         _update_framed(digest, canonical_json(piece))
         count += 1
     return count, digest.hexdigest(), first_index
+
+
+def _text_assertion_bytes(row: Mapping[str, Any]) -> bytes | None:
+    """Return bytes only for an explicit exact UTF-8 source-span assertion."""
+    assertion = row.get("source_text_assertion")
+    if assertion is None:
+        return None
+    if (not isinstance(assertion, dict)
+            or assertion.get("schema") != CONTENT_ASSERTION_SCHEMA
+            or assertion.get("association") != "EXACT_BYTE_SPAN"
+            or assertion.get("encoding") != "utf-8"
+            or not isinstance(assertion.get("text"), str)):
+        raise AuditError("BYTE_SPAN_CONTENT_MISMATCH", "source text assertion must declare exact UTF-8 byte-span content")
+    try:
+        return assertion["text"].encode("utf-8", errors="strict")
+    except UnicodeEncodeError as exc:
+        raise AuditError("BYTE_SPAN_CONTENT_MISMATCH", "source text assertion is not valid UTF-8 text") from exc
+
+
+def _read_staged_span(root: Path, manifest: Mapping[str, Any], start: int, end: int) -> bytes:
+    """Read at most one observation-sized source span from staged fragments."""
+    pieces: list[bytes] = []
+    for fragment in manifest["fragments"]:
+        left = max(start, fragment["offset_start"])
+        right = min(end, fragment["offset_end"])
+        if left >= right:
+            continue
+        path = root / fragment["path"]
+        with path.open("rb") as stream:
+            stream.seek(left - fragment["offset_start"])
+            piece = stream.read(right - left)
+        if len(piece) != right - left:
+            raise AuditError("FRAGMENT_STAGED_BYTES_MISMATCH", "staged fragment span is truncated")
+        pieces.append(piece)
+    return b"".join(pieces)
 
 
 def _hash_file_bounded(path: Path, block_bytes: int) -> tuple[str, int]:
@@ -512,7 +550,8 @@ def _spool_existing_bytes(db: sqlite3.Connection) -> int:
 
 def _map_observation(row: Mapping[str, Any], manifest: Mapping[str, Any], manifest_sha: str,
                      expected_run_id: str | None, input_ordinal: int,
-                     input_sha256: str) -> tuple[dict[str, Any] | None, int | None, str | None]:
+                     input_sha256: str, source_span_bytes: bytes | None = None
+                     ) -> tuple[dict[str, Any] | None, int | None, str | None]:
     parent = manifest["parent_source"]
     source_ref = row.get("source_ref")
     if not isinstance(source_ref, dict) or source_ref.get("path") != parent["path"] or source_ref.get("sha256") != parent["sha256"]:
@@ -530,6 +569,16 @@ def _map_observation(row: Mapping[str, Any], manifest: Mapping[str, Any], manife
     start, end = span.get("start"), span.get("end")
     if type(start) is not int or type(end) is not int or not 0 <= start < end <= parent["bytes"]:
         return None, None, "BYTE_SPAN_INVALID"
+    try:
+        asserted_text = _text_assertion_bytes(row)
+    except AuditError as exc:
+        return None, None, exc.code
+    content_status = "CONTENT_NOT_VERIFIED"
+    if asserted_text is not None:
+        if (len(asserted_text) != end - start or source_span_bytes is None
+                or len(source_span_bytes) != end - start or source_span_bytes != asserted_text):
+            return None, None, "BYTE_SPAN_CONTENT_MISMATCH"
+        content_status = "CONTENT_VERIFIED"
     piece_count, piece_sha, first_index = _piece_digest(start, end, manifest["fragments"])
     if not piece_count or first_index < 0:
         return None, None, "BYTE_SPAN_UNMAPPED"
@@ -546,6 +595,7 @@ def _map_observation(row: Mapping[str, Any], manifest: Mapping[str, Any], manife
     mapped["origin_source_ref_role"] = "ROUTING_ANCHOR_ONLY"
     mapped["origin_piece_count"] = piece_count
     mapped["origin_piece_sha256"] = piece_sha
+    mapped["origin_content_verification"] = content_status
     mapped["origin_input_ordinal"] = input_ordinal
     mapped["origin_input_sha256"] = input_sha256
     return mapped, fragment["index"], None
@@ -618,6 +668,7 @@ def spool_fragment_observations(
     root = Path(output_root).absolute()
     _check_path(root)
     manifest, manifest_raw, _, _ = _strict_manifest(root)
+    _verify_staged_fragments(root, manifest)
     manifest_sha = _sha(manifest_raw)
     spool_path = root / "observation-spool.sqlite"
     _check_path(spool_path)
@@ -678,8 +729,18 @@ def spool_fragment_observations(
                         or not isinstance(kind, str) or not kind or len(kind) > 128):
                     status, frag_index, mapped_text, reason = "REJECTED", None, None, "OBSERVATION_NORMALIZED_SCHEMA_INVALID"
                 else:
+                    source_span_bytes = None
+                    span = record.get("source_byte_span")
+                    if (isinstance(span, dict) and type(span.get("start")) is int
+                            and type(span.get("end")) is int):
+                        try:
+                            if _text_assertion_bytes(record) is not None:
+                                source_span_bytes = _read_staged_span(root, manifest, span["start"], span["end"])
+                        except AuditError:
+                            pass
                     mapped, frag_index, reason = _map_observation(record, manifest, manifest_sha,
-                                                                  expected_run_id, ordinal, _sha(raw))
+                                                                  expected_run_id, ordinal, _sha(raw),
+                                                                  source_span_bytes)
                     status = "MAPPED" if mapped is not None else "REJECTED"
                     mapped_text = canonical_json(mapped).decode("utf-8") if mapped is not None else None
         if ordinal < existing_count:
@@ -1039,6 +1100,7 @@ def _completion_scratch() -> sqlite3.Connection:
     db = sqlite3.connect("")
     db.execute("PRAGMA temp_store=FILE")
     db.execute("CREATE TABLE recovered_input (ordinal INTEGER PRIMARY KEY, record_kind TEXT NOT NULL, record_id TEXT NOT NULL, input_sha256 TEXT NOT NULL, status TEXT NOT NULL, fragment_index INTEGER, reason_code TEXT)")
+    db.execute("CREATE TABLE content_checks (ordinal INTEGER PRIMARY KEY, start INTEGER NOT NULL, end INTEGER NOT NULL, expected BLOB NOT NULL)")
     return db
 
 
@@ -1129,6 +1191,9 @@ def recover_fragmented_source(output_root: str | os.PathLike[str]) -> dict[str, 
     bound_observation_count = 0
     bound_fragment_count = 0
     completion_db = _completion_scratch()
+    reconstructed_parent = tempfile.TemporaryFile(mode="w+b")
+    content_verified_count = 0
+    content_not_verified_count = 0
     mapped_by_fragment_count = [0 for _ in manifest["fragments"]]
     mapped_by_fragment_digest = [hashlib.sha256() for _ in manifest["fragments"]]
     mapped_last_ordinal = [-1 for _ in manifest["fragments"]]
@@ -1172,6 +1237,8 @@ def recover_fragmented_source(output_root: str | os.PathLike[str]) -> dict[str, 
             raw_fragment = engine.read_source(refs[0]["source_id"])
             if len(raw_fragment) != fragment["bytes"] or _sha(raw_fragment) != fragment["sha256"]:
                 raise AuditError("FRAGMENT_ENGINE_BYTES_MISMATCH", "Engine-admitted fragment differs from manifest")
+            reconstructed_parent.seek(parent_total)
+            reconstructed_parent.write(raw_fragment)
             parent_hasher.update(raw_fragment)
             parent_total += len(raw_fragment)
             del raw_fragment
@@ -1242,6 +1309,21 @@ def recover_fragmented_source(output_root: str | os.PathLike[str]) -> dict[str, 
                     or source_ref.get("sha256") != fragment["sha256"]
                     or source_ref.get("mapping_role") != "ROUTING_ANCHOR_ONLY"):
                 raise AuditError("FRAGMENT_OBSERVATION_MAPPING_INVALID", "routing anchor source differs from primary fragment")
+            try:
+                expected_text = _text_assertion_bytes(observation)
+            except AuditError as exc:
+                raise AuditError("BYTE_SPAN_CONTENT_MISMATCH", "recovered source text assertion is malformed") from exc
+            content_status = observation.get("origin_content_verification", "CONTENT_NOT_VERIFIED")
+            if expected_text is None:
+                if content_status != "CONTENT_NOT_VERIFIED":
+                    raise AuditError("FRAGMENT_CONTENT_STATUS_MISMATCH", "observation claims text verification without an exact source text assertion")
+                content_not_verified_count += 1
+            else:
+                if (content_status != "CONTENT_VERIFIED" or len(expected_text) != span["end"] - span["start"]):
+                    raise AuditError("FRAGMENT_CONTENT_STATUS_MISMATCH", "exact source text assertion lacks a matching verification status")
+                completion_db.execute("INSERT INTO content_checks VALUES (?,?,?,?)",
+                                      (observation.get("origin_input_ordinal"), span["start"], span["end"], expected_text))
+                content_verified_count += 1
             original_raw = _restore_mapped_input(observation)
             input_sha = observation.get("origin_input_sha256")
             if _sha(original_raw) != input_sha:
@@ -1264,6 +1346,13 @@ def recover_fragmented_source(output_root: str | os.PathLike[str]) -> dict[str, 
         raise AuditError("FRAGMENT_COVERAGE_INCOMPLETE", "not all fragments have an Engine-admitted batch")
     if parent_total != parent["bytes"] or parent_hasher.hexdigest() != parent["sha256"]:
         raise AuditError("FRAGMENT_PARENT_RECONSTRUCTION_MISMATCH", "Engine fragments do not reconstruct parent SHA-256/size")
+    for _, start, end, expected_text in completion_db.execute(
+            "SELECT ordinal,start,end,expected FROM content_checks ORDER BY ordinal"):
+        reconstructed_parent.seek(start)
+        actual_text = reconstructed_parent.read(end - start)
+        if actual_text != expected_text:
+            raise AuditError("BYTE_SPAN_CONTENT_MISMATCH", "Engine-admitted parent bytes differ from the mapped exact text assertion")
+    reconstructed_parent.close()
     if bound_observation_count != completion["mapped_observation_count"]:
         raise AuditError("FRAGMENT_INPUT_COVERAGE_MISMATCH", "Engine capsules omit accepted mapped input observations")
     expected_fragment_digests = completion["fragments"]
@@ -1308,6 +1397,8 @@ def recover_fragmented_source(output_root: str | os.PathLike[str]) -> dict[str, 
             "parent_bytes": parent_total, "fragment_count": len(manifest["fragments"]),
             "engine_admitted_fragments_verified": bound_fragment_count,
             "mapped_observations_verified": bound_observation_count,
+            "content_verified_observations": content_verified_count,
+            "content_not_verified_observations": content_not_verified_count,
             "rejected_records_recovered": len(rejection_ledger.get("rejections", [])),
             "reconstruction_source": "ENGINE_IMMUTABLE_FRAGMENT_OBJECTS",
             "original_file_read": "NOT_PERFORMED", "staged_fragment_read": "NOT_PERFORMED",

@@ -193,7 +193,7 @@ def test_local_bug_fix_does_not_claim_the_benchmark_task_was_resolved(tmp_path: 
     "The original task remains unresolved.",
     "Correction: the issue remains unresolved.",
 ])
-def test_later_opposite_assistant_assertion_supersedes_earlier_positive(tmp_path: Path, later: str) -> None:
+def test_later_opposite_assistant_assertion_does_not_implicitly_supersede(tmp_path: Path, later: str) -> None:
     trajectory = _json_file(tmp_path, "logs/trajs/" + INSTANCE + ".traj.json", {
         "instance_id": INSTANCE,
         "messages": [
@@ -205,8 +205,10 @@ def test_later_opposite_assistant_assertion_supersedes_earlier_positive(tmp_path
     assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
     earlier = next(claim for claim in result["AGENT_STATEMENT"]
                    if claim["predicate"] == "TASK_RESOLVED" and claim["asserted_value"] is True)
-    assert earlier["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
-    assert earlier["reason_codes"] == ["SUPERSEDED_BY_LATER_OPPOSITE_ASSERTION"]
+    # Baseline marked any later opposite assertion as superseding; now only an
+    # explicit correction of the same predicate may do so.
+    assert earlier["AUDIT_VERDICT"] == "CONTRADICTED"
+    assert "superseded_by" not in earlier
 
 
 def test_explicit_negative_task_assertion_can_match_unresolved_evaluator(tmp_path: Path) -> None:
@@ -302,8 +304,13 @@ def test_conflicting_evaluator_observations_fail_as_integrity_error(tmp_path: Pa
                          "EVALUATOR_CATALOG", CATALOG_PARSER)
     result = audit_evidence(tmp_path, _request(_trajectory(tmp_path), report, catalog))
     assert result["AUDIT_VERDICT"] == "INTEGRITY_FAILURE"
+    assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
     assert "EVALUATOR_RECORD_CONFLICT" in result["reason_codes"]
-    assert all(claim["AUDIT_VERDICT"] == "INTEGRITY_FAILURE" for claim in result["AGENT_STATEMENT"])
+    assert all(claim["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+               and claim["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+               and claim["reason_codes"] == ["EVALUATOR_RECORD_CONFLICT"]
+               and claim["FINAL_ERROR"] == "INTEGRITY_FAILURE"
+               for claim in result["AGENT_STATEMENT"])
 
 
 def test_content_instance_mismatch_fails_closed(tmp_path: Path) -> None:
@@ -459,7 +466,11 @@ def test_nontrivial_parser_error_cannot_be_overridden_by_a_matching_claim(tmp_pa
                      "pgop1.swebench.log.gzip_text_unattributed.v1")
     result = audit_evidence(tmp_path, _request(trajectory, report, bad_log))
     assert result["AUDIT_VERDICT"] == "VERIFICATION_ERROR"
-    assert result["AGENT_STATEMENT"][0]["AUDIT_VERDICT"] == "VERIFICATION_ERROR"
+    assert result["COMPUTED_VERDICT"] == "SUPPORTED"
+    assert result["AGENT_STATEMENT"][0]["AUDIT_VERDICT"] == "SUPPORTED"
+    assert result["AGENT_STATEMENT"][0]["COMPUTED_VERDICT"] == "SUPPORTED"
+    assert result["AGENT_STATEMENT"][0]["FINAL_ERROR"] == "VERIFICATION_ERROR"
+    assert result["FINAL_ERROR"] == "VERIFICATION_ERROR"
 
 
 def test_yaml_subset_is_safe_and_parser_registry_is_versioned(tmp_path: Path) -> None:

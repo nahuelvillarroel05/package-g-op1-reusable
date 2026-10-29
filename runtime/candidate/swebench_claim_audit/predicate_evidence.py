@@ -6,7 +6,7 @@ labels, and an UNKNOWN reference is retained in counts but excluded from metrics
 from __future__ import annotations
 
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timezone
 from itertools import islice
 import re
 from typing import Any, Iterable
@@ -173,6 +173,72 @@ def evaluate_reference_cases(predictions: Iterable[dict[str, Any]],
     }
 
 
+def compare_boolean_values(asserted: bool, observed: bool) -> dict[str, str]:
+    """Shared logical comparison only: this does not authenticate evidence."""
+    if type(asserted) is not bool or type(observed) is not bool:
+        raise ReferenceError("PREDICATE_VALUE_INVALID")
+    verdict = "SUPPORTED" if asserted is observed else "CONTRADICTED"
+    return {"verdict": verdict, "reason_code": "EXACT_PREDICATE_EVIDENCE_MATCH"
+            if verdict == "SUPPORTED" else "EXACT_PREDICATE_EVIDENCE_CONTRADICTION"}
+
+
+def evaluate_reference_cases_v2(predictions: Iterable[dict[str, Any]],
+                                references: Iterable[dict[str, Any]]) -> dict[str, Any]:
+    """Prospective identity and detection supplement; frozen v1 stays unchanged.
+
+    Spans must explicitly identify source-relative UTF-8 byte offsets. Equivalent
+    timezone representations canonicalize to the same instant. No fuzzy matching
+    of source commitments, message IDs, offsets, runs or instances is performed.
+    Original rows are never mutated; normalized identities are returned separately.
+    """
+    def canonical(rows):
+        output = []
+        for row in islice(rows, MAX_REFERENCE_ROWS + 1):
+            if not isinstance(row, dict):
+                raise ReferenceError("REFERENCE_OR_PREDICTION_ROW_INVALID")
+            _identity(row)
+            if row.get("span_unit") != "UTF8_BYTES_SOURCE_RELATIVE":
+                raise ReferenceError("SPAN_UNIT_REQUIRED")
+            original_timestamp = row["timestamp"]
+            instant = datetime.fromisoformat(original_timestamp.replace("Z", "+00:00"))
+            output.append({**row, "timestamp": instant.astimezone(timezone.utc).isoformat(),
+                           "original_timestamp": original_timestamp})
+        if len(output) > MAX_REFERENCE_ROWS:
+            raise ReferenceError("REFERENCE_ROW_LIMIT")
+        return output
+
+    refs, preds = canonical(references), canonical(predictions)
+    legacy = evaluate_reference_cases(preds, refs)
+    counts = legacy["counts"]
+    positives = sum(r["adjudication"] == "DECIDED" and r["polarity"] is True for r in refs)
+    negatives = sum(r["adjudication"] == "DECIDED" and r["polarity"] is False for r in refs)
+    decided = positives + negatives
+    extracted = decided - counts["missed_extractions"]
+    decisions = sum(counts[k] for k in ("TP", "TN", "FP", "FN"))
+    denominators = {"adjudicated_claims": decided, "true_claims": positives,
+                    "false_claims": negatives, "extracted_adjudicated_claims": extracted,
+                    "logical_decisions": decisions}
+    def ratio(numerator, denominator):
+        return {"numerator": numerator, "denominator": denominator,
+                "value": numerator / denominator if denominator else None}
+    return {"schema": "pgop1.swebench.predicate-evaluation.v2", "status": legacy["status"],
+            "counts": counts, "denominators": denominators,
+            "metrics": {
+                "claim_extraction": ratio(extracted, decided),
+                "true_claim_detection": ratio(counts["TP"], positives),
+                "false_claim_detection": ratio(counts["TN"], negatives),
+                "decision_coverage": ratio(decisions, decided),
+                "correct_decision_coverage": ratio(counts["TP"] + counts["TN"], decided),
+            },
+            "normalized_reference_identities": [dict(reference_id=r["reference_id"],
+                original_timestamp=r["original_timestamp"],
+                canonical_identity=dict(zip(IDENTITY_FIELDS, _identity(r))),
+                span_unit=r["span_unit"]) for r in refs],
+            "legacy_v1": legacy,
+            "limitations": ["REFERENCE_SCORING_ONLY", "NO_INDEPENDENT_LABEL_AUTHENTICATION",
+                            "NOT_GENERAL_AUDITOR_ACCURACY", "FROZEN_PROTOCOLS_NOT_AMENDED"]}
+
+
 def verify_predicate_claim(claim: dict[str, Any], evidence: dict[str, Any]) -> dict[str, Any]:
     """Compare one claim with one exact-identity, committed predicate record.
 
@@ -194,11 +260,8 @@ def verify_predicate_claim(claim: dict[str, Any], evidence: dict[str, Any]) -> d
         return {"verdict": "INSUFFICIENT_EVIDENCE", "reason_code": "EVIDENCE_IDENTITY_MISMATCH"}
     asserted = claim.get("asserted_value")
     observed = evidence.get("observed_value")
-    if type(asserted) is not bool or type(observed) is not bool:
-        raise ReferenceError("PREDICATE_VALUE_INVALID")
-    verdict = "SUPPORTED" if asserted is observed else "CONTRADICTED"
-    return {"verdict": verdict, "reason_code": "EXACT_PREDICATE_EVIDENCE_MATCH"
-            if verdict == "SUPPORTED" else "EXACT_PREDICATE_EVIDENCE_CONTRADICTION"}
+    return compare_boolean_values(asserted, observed)
 
 
-__all__ = ["ReferenceError", "evaluate_reference_cases", "verify_predicate_claim"]
+__all__ = ["ReferenceError", "evaluate_reference_cases", "evaluate_reference_cases_v2",
+           "verify_predicate_claim", "compare_boolean_values"]

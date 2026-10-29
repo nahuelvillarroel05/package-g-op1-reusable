@@ -65,10 +65,11 @@ def test_generalized_bind_commits_source_and_recovers_without_adapter(tmp_path: 
 
     bound = bind_generalized_audit(result, data_root, context_root)
 
-    assert bound["schema"] == "pgop1.swebench.generalized-context-bridge.v1"
+    assert bound["schema"] == "pgop1.swebench.generalized-context-bridge.v2"
     assert bound["adapter_verdict"] == "SUPPORTED"
     assert bound["context_engine"]["status"] == "PASS"
-    assert bound["context_engine"]["semantic_claim_validation"] == "ADAPTER_OWNED"
+    assert bound["context_engine"]["semantic_claim_validation"] == "SEMANTIC_VALIDATION_NOT_PROVEN"
+    assert bound["derivation"]["status"] == "DERIVATION_NOT_VERIFIED"
     assert bound["fixed_i7_provider_dispatch"] == "NOT_PERFORMED"
     assert bound["context_engine"]["fresh_process_readback"]["status"] == "PASS"
 

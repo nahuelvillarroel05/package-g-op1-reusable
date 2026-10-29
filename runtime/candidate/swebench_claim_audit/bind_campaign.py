@@ -70,12 +70,12 @@ def bind_campaign(data_root, plan, campaign_root, context_parent, *, min_free_by
         observations.append({"observation_id": "unit-" + hashlib.sha256(event["unit"].encode()).hexdigest(),
                              "kind": "adapter_file_result" if kind == "file" else "adapter_claim_audit",
                              "predicate": "ADAPTER_OUTPUT_RECORDED", "value": result,
-                             "run_id": "PGOP1_RUN_001", "instance_id": "UNKNOWN",
+                             "run_id": plan["campaign_id"], "instance_id": "UNKNOWN",
                              "source_ref": {"path": derived["path"], "sha256": derived["sha256"], "pointer": ""}})
         size += value_size
     if observations:
         batches.append((refs, observations))
-    summary = {"schema": "pgop1.run001.context-coverage.v1", "campaign_id": "PGOP1_RUN_001",
+    summary = {"schema": "pgop1.run001.context-coverage.v1", "campaign_id": plan["campaign_id"],
                "code_commit": plan["code_commit"], "plan_sha256": binding["plan_sha256"],
                "units": len(done), "batches": len(batches), "bound_units": 0, "recovered_units": 0,
                "semantic_checks": "ADAPTER_OWNED", "provider_dispatch": "NOT_PERFORMED", "results": []}
@@ -90,7 +90,7 @@ def bind_campaign(data_root, plan, campaign_root, context_parent, *, min_free_by
         if shutil.disk_usage(parent).free < min_free_bytes:
             raise AuditError("CONTEXT_DISK_RESERVE", "free storage reserve reached")
         payload = {"schema": "pgop1.swebench.generalized-audit.v1", "result_scope": "BATCH_AGGREGATE",
-                   "batch_id": "batch-" + str(number), "run_id": "PGOP1_RUN_001",
+                   "batch_id": "batch-" + str(number), "run_id": plan["campaign_id"],
                    "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
                    "reason_codes": ["STORAGE_AGGREGATE_NOT_A_SEMANTIC_VERDICT"],
                    "SOURCE_PROVENANCE": {"evidence_references": list(batch_refs.values())},

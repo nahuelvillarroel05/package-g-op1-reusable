@@ -119,6 +119,10 @@ def _safe_path(root: Path, relative: str | Path, *, expected_file: bool = True) 
             or any(part in {"", ".", ".."} for part in posix.parts)
             or "\x00" in value):
         raise AuditError("PATH_TRAVERSAL", "evidence path must be a normalized relative path")
+    for part in posix.parts:
+        if (part.endswith((' ', '.')) or ':' in part
+                or re.fullmatch(r'(?:CON|PRN|AUX|NUL|COM[1-9\u00b9\u00b2\u00b3]|LPT[1-9\u00b9\u00b2\u00b3])(?:\..*)?', part, re.I)):
+            raise AuditError("PATH_TRAVERSAL", "evidence path uses a Windows device or alias")
     path = root
     for part in posix.parts:
         path = path / part

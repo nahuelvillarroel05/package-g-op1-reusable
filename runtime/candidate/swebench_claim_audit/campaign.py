@@ -19,6 +19,8 @@ from .generalized import audit_evidence, audit_file
 
 
 SCHEMA = "pgop1.swebench.campaign-plan.v1"
+POST_SONNET_CAMPAIGN = "PGOP1_POST_SONNET_REMEDIATION_FULL_ENGINEERING_RUN_001"
+CAMPAIGN_IDS = {"PGOP1_RUN_001", POST_SONNET_CAMPAIGN}
 MIN_FREE_BYTES = 70_000_000_000
 
 
@@ -86,8 +88,16 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
     change or corrupt completed result blocks recovery instead of starting over.
     """
     root = _checked_root(data_root)
-    if plan.get("schema") != SCHEMA or plan.get("campaign_id") != "PGOP1_RUN_001":
-        raise AuditError("CAMPAIGN_PLAN_INVALID", "versioned RUN-001 plan required")
+    if plan.get("schema") != SCHEMA or plan.get("campaign_id") not in CAMPAIGN_IDS:
+        raise AuditError("CAMPAIGN_PLAN_INVALID", "recognized versioned engineering plan required")
+    if plan["campaign_id"] == POST_SONNET_CAMPAIGN:
+        review = plan.get("independent_review", {})
+        if (review.get("decision") not in {"PASS_WITH_EXACT_SCOPE", "PASS_WITH_NONMATERIAL_LIMITATIONS"}
+                or review.get("candidate_commit") != plan.get("code_commit")
+                or review.get("model") != "gpt-6-astra"
+                or not isinstance(review.get("audit_sha256"), str)
+                or len(review["audit_sha256"]) != 64):
+            raise AuditError("CAMPAIGN_ASTRA_REVIEW_REQUIRED", "Astra approval of the exact candidate required")
     sources = plan.get("sources")
     requests = plan.get("requests")
     if not isinstance(sources, list) or not isinstance(requests, list):
@@ -179,13 +189,29 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
                 raise AuditError("CAMPAIGN_SOURCE_CHANGED", "source differs from frozen commitment")
         journal = out / "attempts.jsonl"
         completed = {}
+        pending = {}
         if journal.exists():
             for line in journal.read_bytes().splitlines():
                 event = json.loads(line)
-                if event["event"] == "COMPLETE":
+                if event["event"] == "START":
+                    if event["unit"] in pending or event["unit"] in completed:
+                        raise AuditError("CAMPAIGN_AMBIGUOUS_ATTEMPT", "unit has multiple or unfinished attempts; no redispatch")
+                    pending[event["unit"]] = event["attempt"]
+                elif event["event"] == "COMPLETE":
                     if event["unit"] in completed:
                         raise AuditError("CAMPAIGN_DUPLICATE_COMPLETION", "duplicate completed unit")
+                    if pending.get(event["unit"]) != event["attempt"]:
+                        raise AuditError("CAMPAIGN_AMBIGUOUS_ATTEMPT", "completion is not paired with its exact start")
+                    pending.pop(event["unit"])
                     completed[event["unit"]] = event
+                else:
+                    raise AuditError("CAMPAIGN_JOURNAL_INVALID", "unknown journal event")
+        if pending:
+            raise AuditError("CAMPAIGN_AMBIGUOUS_ATTEMPT", "unfinished attempt preserved; no automatic restart or redispatch")
+        committed_paths = {event["result_path"] for event in completed.values()}
+        if any(path.name not in committed_paths for pattern in ("file-*.json", "audit-*.json")
+               for path in out.glob(pattern)):
+            raise AuditError("CAMPAIGN_ORPHAN_RESULT", "uncommitted result preserved; no redispatch")
         for event in completed.values():
             path = _safe_path(out, event["result_path"])
             if _digest(path) != event["sha256"]:
@@ -214,7 +240,7 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
             _append(journal, {"event": "COMPLETE", "unit": unit, "attempt": attempt,
                               "result_path": result_path, "sha256": _digest(path)})
             counts["executed"] += 1
-        return {"schema": "pgop1.swebench.campaign-execution.v1", "campaign_id": "PGOP1_RUN_001",
+        return {"schema": "pgop1.swebench.campaign-execution.v1", "campaign_id": plan["campaign_id"],
                 **pin, **counts, "status": "COMPLETED_PLAN_UNITS",
                 "dispatch": "NOT_PERFORMED", "independent_custody": "NOT_PROVEN"}
     finally:
