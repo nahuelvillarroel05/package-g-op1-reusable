@@ -51,6 +51,206 @@ def test_invalid_unhashable_path_returns_audit_error(tmp_path: Path) -> None:
     assert result["reason_codes"] == ["PATH_INVALID"]
 
 
+def test_conditional_claims_are_rejected_across_conjunctions(tmp_path: Path) -> None:
+    conditional = (
+        "If the deployment succeeds and I resolved the task, we can ship.",
+        "Unless the tests fail and I resolved the task, we should wait.",
+        "Assuming the tests pass and I resolved the task, we can ship.",
+        "If the deployment succeeds or I resolved the task, we can ship.",
+    )
+    for content in conditional:
+        for evaluator_value in (True, False):
+            trajectory = _trajectory(tmp_path, [{"role": "assistant", "content": content}])
+            result = audit_evidence(tmp_path, _request(trajectory, _report(tmp_path, evaluator_value)))
+            assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+            assert result["AGENT_STATEMENT"] == []
+            rejection = next(item for item in result["CLAIM_REJECTIONS"]
+                             if "CONDITIONAL_CLAUSE" in item["reason_codes"])
+            assert content[rejection["match_span"][0]:rejection["match_span"][1]] == "I resolved the task"
+            assert rejection["byte_span"] == rejection["match_span"]
+
+
+def test_conditionals_end_before_independent_claims_and_quoted_if_is_not_a_condition(tmp_path: Path) -> None:
+    safe = (
+        "If the deployment succeeds, we can ship; I resolved the task.",
+        "If the deployment succeeds, we can ship. I resolved the task.",
+        "The word 'if' appears, and I resolved the task.",
+        "The word 'if' appears before I resolved the task.",
+        "Perhaps the deployment is delayed, but I resolved the task.",
+    )
+    for content in safe:
+        result = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            _report(tmp_path, True),
+        ))
+        assert result["COMPUTED_VERDICT"] == "SUPPORTED"
+        assert len(result["AGENT_STATEMENT"]) == 1
+        assert result["AGENT_STATEMENT"][0]["predicate"] == "TASK_RESOLVED"
+        assert "CONDITIONAL_CLAUSE" not in result["AGENT_STATEMENT"][0]["reason_codes"]
+
+
+def test_inline_and_trailing_conditionals_are_rejected_for_each_supported_predicate(tmp_path: Path) -> None:
+    inline_claims = (
+        "I resolved the task", "I did not resolve the task",
+        "I have completed the task", "the task remains incomplete",
+        "I resolved the issue", "the issue remains unresolved",
+    )
+    for marker in ("if", "unless", "assuming"):
+        for claim in inline_claims:
+            content = f"We can proceed {marker} deployment succeeds and {claim}."
+            for evaluator_value in (True, False):
+                result = audit_evidence(tmp_path, _request(
+                    _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+                    _report(tmp_path, evaluator_value),
+                ))
+                assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+                assert result["AGENT_STATEMENT"] == []
+                assert any("CONDITIONAL_CLAUSE" in item["reason_codes"]
+                           for item in result["CLAIM_REJECTIONS"])
+
+    trailing_claims = (
+        "I resolved the task", "I have completed the task", "I resolved the issue",
+    )
+    for marker in ("if", "unless", "assuming"):
+        for claim in trailing_claims:
+            content = f"{claim}, {marker} deployment succeeds."
+            for evaluator_value in (True, False):
+                result = audit_evidence(tmp_path, _request(
+                    _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+                    _report(tmp_path, evaluator_value),
+                ))
+                assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+                assert result["AGENT_STATEMENT"] == []
+                assert any("CONDITIONAL_CLAUSE" in item["reason_codes"]
+                           for item in result["CLAIM_REJECTIONS"])
+
+
+def test_conditional_scope_ignores_quoted_punctuation_and_finds_noninitial_operators(tmp_path: Path) -> None:
+    conditional = (
+        'If the log contains "version 1.0" and I resolved the task, we can ship.',
+        "Only if the deployment succeeds and I resolved the task, we can ship.",
+        "For this check, assuming deployment succeeds and I resolved the task, we can ship.",
+    )
+    for content in conditional:
+        result = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            _report(tmp_path, True),
+        ))
+        assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+        assert result["AGENT_STATEMENT"] == []
+        assert any("CONDITIONAL_CLAUSE" in item["reason_codes"]
+                   for item in result["CLAIM_REJECTIONS"])
+
+    for content in (
+        'The literal "if version 1.0" appears, but I resolved the task.',
+        'The configuration uses "if" and I resolved the task.',
+        "If the deployment succeeds, we can ship; I resolved the task.",
+        "If the deployment succeeds. I resolved the task.",
+        "Perhaps deployment is delayed, but I resolved the task.",
+        "I resolved the task, but if deployment succeeds we can ship.",
+    ):
+        result = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            _report(tmp_path, True),
+        ))
+        assert result["COMPUTED_VERDICT"] == "SUPPORTED"
+        assert len(result["AGENT_STATEMENT"]) == 1
+        assert "CONDITIONAL_CLAUSE" not in result["AGENT_STATEMENT"][0]["reason_codes"]
+
+
+def test_conditional_boundaries_keep_absolute_offsets_after_multiple_buts(tmp_path: Path) -> None:
+    content = ("Deployment is ready, but tests fail, but if deployment succeeds "
+               "and I resolved the task, we can ship.")
+    result = audit_evidence(tmp_path, _request(
+        _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+        _report(tmp_path, True),
+    ))
+    assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] == []
+    rejection = next(item for item in result["CLAIM_REJECTIONS"]
+                     if item["predicate"] == "TASK_RESOLVED")
+    assert "CONDITIONAL_CLAUSE" in rejection["reason_codes"]
+    assert content[rejection["match_span"][0]:rejection["match_span"][1]] == "I resolved the task"
+
+
+def test_quoted_question_punctuation_does_not_make_an_assertion_interrogative(tmp_path: Path) -> None:
+    result = audit_evidence(tmp_path, _request(
+        _trajectory(tmp_path, [{"role": "assistant", "content":
+                                'I resolved the task, and the output is "why?".'}]),
+        _report(tmp_path, True),
+    ))
+    assert result["COMPUTED_VERDICT"] == "SUPPORTED"
+    assert len(result["AGENT_STATEMENT"]) == 1
+    assert "INTERROGATIVE_CLAUSE" not in result["AGENT_STATEMENT"][0]["reason_codes"]
+
+    for content in (
+        "I resolved the task?",
+        'I resolved the task, and the output is "why?"?',
+    ):
+        result = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            _report(tmp_path, True),
+        ))
+        assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+        assert result["AGENT_STATEMENT"] == []
+        assert any("INTERROGATIVE_CLAUSE" in item["reason_codes"]
+                   for item in result["CLAIM_REJECTIONS"])
+
+    outer_conditional = 'If the log prints "ok?" and I resolved the task, we ship.'
+    result = audit_evidence(tmp_path, _request(
+        _trajectory(tmp_path, [{"role": "assistant", "content": outer_conditional}]),
+        _report(tmp_path, True),
+    ))
+    assert result["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] == []
+    assert any("CONDITIONAL_CLAUSE" in item["reason_codes"]
+               for item in result["CLAIM_REJECTIONS"])
+
+
+def test_report_and_denial_prefixes_stop_at_semicolon_or_contrast_but(tmp_path: Path) -> None:
+    positive = (
+        "The report claimed deployment was ready; I resolved the task.",
+        "I did not claim deployment was ready; I resolved the task.",
+        "The report claimed deployment was ready, but I resolved the task.",
+        "I did not claim deployment was ready, but I resolved the task.",
+    )
+    for content in positive:
+        for evaluator_value, expected_verdict in ((True, "SUPPORTED"), (False, "CONTRADICTED")):
+            result = audit_evidence(tmp_path, _request(
+                _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+                _report(tmp_path, evaluator_value),
+            ))
+            assert len(result["AGENT_STATEMENT"]) == 1
+            assert result["AGENT_STATEMENT"][0]["predicate"] == "TASK_RESOLVED"
+            assert result["COMPUTED_VERDICT"] == expected_verdict
+
+    reported = audit_file(tmp_path, {
+        **_trajectory(tmp_path, [{"role": "assistant", "content": "The report claimed I resolved the task."}]),
+        "run_id": RUN, "instance_id": INSTANCE,
+    })
+    denied = audit_file(tmp_path, {
+        **_trajectory(tmp_path, [{"role": "assistant", "content": "I did not claim that I resolved the task."}]),
+        "run_id": RUN, "instance_id": INSTANCE,
+    })
+    for parsed, reason in ((reported, "REPORTED_CLAIM"), (denied, "DENIED_CLAIM")):
+        assert not [o for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        assert any(reason in o["value"]["reason_codes"]
+                   for o in parsed["observations"] if o["kind"] == "claim_rejection")
+
+    for content, reason in (
+        ("The report claimed deployment was ready and I resolved the task.", "REPORTED_CLAIM"),
+        ("I did not claim deployment was ready and I resolved the task.", "DENIED_CLAIM"),
+        ("The report claimed 'I resolved the task.'", "REPORTED_CLAIM"),
+    ):
+        parsed = audit_file(tmp_path, {
+            **_trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            "run_id": RUN, "instance_id": INSTANCE,
+        })
+        assert not [o for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        assert any(reason in o["value"]["reason_codes"]
+                   for o in parsed["observations"] if o["kind"] == "claim_rejection")
+
+
 def test_question_in_later_sentence_does_not_drop_assertion(tmp_path: Path) -> None:
     result = audit_evidence(tmp_path, _request(
         _trajectory(tmp_path, [{"role": "assistant", "content":

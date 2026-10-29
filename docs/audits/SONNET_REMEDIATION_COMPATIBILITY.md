@@ -41,6 +41,14 @@ cannot suppress another. Whole-task object boundaries exclude `task queue`
 actions from target-task resolution. Shared predicate fragments retain the same
 subject, action, state and modifier grammar across extraction and scope guards.
 
+Known conditional operators `if`, `unless` and `assuming` retain their scope
+across coordination, including inline and claim-clause suffix forms. Independent
+unquoted sentence/semicolon boundaries end that scope. Recognized quoted content
+does not introduce conditional operators or question punctuation. Report/denial
+prefix scope resets at an independent semicolon or contrastive `but`, with original
+offsets computed against an immutable scan base. These remain bounded English
+rules, not general natural-language understanding or an accuracy guarantee.
+
 Bridge v2 receipts distinguish `BYTE_INTEGRITY_VERIFIED` from derivation. Marked
 instance audits are rederived from exact Engine-admitted bytes and compared with
 the full normalized result, including claim outcomes and relationships. A mismatch

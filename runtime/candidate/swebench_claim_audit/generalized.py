@@ -306,7 +306,7 @@ _TASK_COMPLETED_NEGATIVE_SCOPE = re.compile(
     r"unresolved|unfinished|incomplete|not)\b)[\w-]+", re.I)
 _HEDGES = re.compile(
     r"\b(?:might|may|could|possibly|perhaps|maybe|probably|apparently|allegedly|"
-    r"uncertain|unverified|unproven|think|believe|guess|hope|if|unless|assuming)\b", re.I)
+    r"uncertain|unverified|unproven|think|believe|guess|hope)\b", re.I)
 _NEGATION = re.compile(
     r"\b(?:never|not|cannot|can't|couldn't|didn't|doesn't|hasn't|haven't|isn't)\b", re.I)
 _DENIAL_PREFIX = re.compile(
@@ -384,9 +384,14 @@ def _claim_segment(text: str, position: int) -> tuple[int, int]:
     return start, end
 
 
-def _sentence_segment(text: str, position: int) -> tuple[int, int]:
+def _sentence_segment(text: str, position: int,
+                      quote_spans: list[tuple[int, int]] | None = None) -> tuple[int, int]:
     start, end = 0, len(text)
+    if quote_spans is None:
+        quote_spans = _quoted_spans(text)
     for match in re.finditer(r"[.!?\n]", text):
+        if any(a <= match.start() < b for a, b in quote_spans):
+            continue
         if match.end() <= position:
             start = match.end()
         elif match.start() >= position:
@@ -399,6 +404,49 @@ def _quoted_spans(text: str) -> list[tuple[int, int]]:
     quote = re.compile(r'"[^"\n]*"|(?<!\w)\'[^\'\n]+\'(?!\w)|'
                        r'\u201c[^\u201d\n]*\u201d|\u2018[^\u2019\n]*\u2019|`[^`\n]*`')
     return [(match.start(), match.end()) for match in quote.finditer(text)]
+
+
+def _assertion_prefix(text: str, sentence_start: int, claim_start: int,
+                       quote_spans: list[tuple[int, int]]) -> str:
+    scope_start = sentence_start
+    for match in re.finditer(r";|\bbut\b", text[sentence_start:claim_start], re.I):
+        absolute = sentence_start + match.start()
+        if not any(a <= absolute < b for a, b in quote_spans):
+            scope_start = sentence_start + match.end()
+    return text[scope_start:claim_start]
+
+
+def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[int, int]],
+                              match_end: int, clause_end: int) -> bool:
+    """Find known conditional operators in the claim's active prefix or clause tail."""
+    sentence_start = 0
+    for offset, char in enumerate(text[:position]):
+        if any(a <= offset < b for a, b in quote_spans):
+            continue
+        if char in ".!?\n;":
+            sentence_start = offset + 1
+
+    # A contrastive clause can stand independently. Keep antecedents attached
+    # across and/or, while starting a fresh scope after an unquoted "but".
+    prefix_start = sentence_start
+    scope_start = sentence_start
+    prefix = text[prefix_start:position]
+    for boundary in re.finditer(r"\bbut\b", prefix, re.I):
+        absolute = prefix_start + boundary.start()
+        if not any(a <= absolute < b for a, b in quote_spans):
+            scope_start = prefix_start + boundary.end()
+    marker_pattern = re.compile(r"\b(?:if|unless|assuming)\b", re.I)
+    prefix = text[scope_start:position]
+    if any(not any(a <= scope_start + marker.start() < b for a, b in quote_spans)
+           for marker in marker_pattern.finditer(prefix)):
+        return True
+
+    # A conditional appended to the claim ("I resolved the task, if...") is
+    # also part of its clause. _claim_segment bounds this scan before and/but.
+    suffix = text[match_end:clause_end]
+    suffix_start = match_end
+    return any(not any(a <= suffix_start + marker.start() < b for a, b in quote_spans)
+               for marker in marker_pattern.finditer(suffix))
 
 
 def _explicitly_retracted(text: str, match_end: int, predicate: str) -> bool:
@@ -424,8 +472,9 @@ def _explicitly_retracted(text: str, match_end: int, predicate: str) -> bool:
         rf"\s*(?:it|that)\s+{state_clause}\b{_SCOPE_BOUNDARY}", body_clause, re.I))
 
 
-def _related_qualifier_after(text: str, match_end: int, clause_end: int, predicate: str) -> bool:
-    sentence_end = _sentence_segment(text, match_end)[1]
+def _related_qualifier_after(text: str, match_end: int, clause_end: int, predicate: str,
+                             quote_spans: list[tuple[int, int]]) -> bool:
+    sentence_end = _sentence_segment(text, match_end, quote_spans)[1]
     tail = text[clause_end:sentence_end]
     qualifier = re.match(r"\s*,?\s*(?:but|although|though)\b(?P<body>.*)", tail, re.I)
     scope = _PREDICATE_SCOPE.get(predicate)
@@ -496,10 +545,11 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
     for predicate, asserted, pattern in patterns:
         for match in pattern.finditer(text):
             start, end = _claim_segment(text, match.start())
-            sentence_start, sentence_end = _sentence_segment(text, match.start())
+            sentence_start, sentence_end = _sentence_segment(text, match.start(), quote_spans)
             clause = text[start:end]
             sentence = text[sentence_start:sentence_end]
             prefix = text[sentence_start:match.start()]
+            assertion_prefix = _assertion_prefix(text, sentence_start, match.start(), quote_spans)
             line_start = text.rfind("\n", 0, match.start()) + 1
             line = text[line_start:match.start()]
             full_line_end = text.find("\n", match.start())
@@ -513,7 +563,11 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                     in_lazy_quote = True
                     break
             reasons: list[str] = []
-            if "?" in sentence or text[sentence_end:sentence_end + 1] == "?":
+            sentence_has_unquoted_question = any(
+                text[offset] == "?" and not any(a <= offset < b for a, b in quote_spans)
+                for offset in range(sentence_start, sentence_end)
+            )
+            if sentence_has_unquoted_question or text[sentence_end:sentence_end + 1] == "?":
                 reasons.append("INTERROGATIVE_CLAUSE")
             if full_line.startswith(("    ", "\t")) or _fenced(text, match.start()):
                 reasons.append("MARKDOWN_CODE")
@@ -521,11 +575,13 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                 reasons.append("MARKDOWN_QUOTE")
             clause_prefix = text[start:match.start()]
             if (_HEDGES.search(clause) or _HEDGES.search(clause_prefix)
-                    or _related_qualifier_after(text, match.end(), end, predicate)):
+                    or _related_qualifier_after(text, match.end(), end, predicate, quote_spans)):
                 reasons.append("HEDGED_CLAUSE")
-            if _REPORTED_PREFIX.search(prefix):
+            if _conditional_scope_before(text, match.start(), quote_spans, match.end(), end):
+                reasons.append("CONDITIONAL_CLAUSE")
+            if _REPORTED_PREFIX.search(assertion_prefix):
                 reasons.append("REPORTED_CLAIM")
-            if _DENIAL_PREFIX.search(prefix):
+            if _DENIAL_PREFIX.search(assertion_prefix):
                 reasons.append("DENIED_CLAIM")
             if asserted and _NEGATION.search(clause):
                 reasons.append("NEGATED_ASSERTION")
