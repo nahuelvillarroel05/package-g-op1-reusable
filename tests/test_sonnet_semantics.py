@@ -140,6 +140,17 @@ def test_single_quoted_claim_and_example_prefix_are_rejected_but_contraction_is_
     contraction = _trajectory(tmp_path, [{"role": "assistant", "content": "I’ve resolved the task."}])
     parsed = audit_file(tmp_path, {**contraction, "run_id": RUN, "instance_id": INSTANCE})
     assert len([o for o in parsed["observations"] if o["kind"] == "agent_statement"]) == 1
+    for content, predicate in (
+        ("I\u2019ve resolved the task.", "TASK_RESOLVED"),
+        ("I\u2019ve fixed the issue.", "ISSUE_RESOLVED"),
+        ("I\u2019ve completed the task.", "TASK_COMPLETED"),
+        ("I\u2019d resolved the task.", "TASK_RESOLVED"),
+    ):
+        trajectory = _trajectory(tmp_path, [{"role": "assistant", "content": content}])
+        parsed = audit_file(tmp_path, {**trajectory, "run_id": RUN, "instance_id": INSTANCE})
+        claims = [o["value"] for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        assert len(claims) == 1
+        assert claims[0]["predicate"] == predicate
 
 
 def test_adjacent_explicit_retraction_still_rejects_claim(tmp_path: Path) -> None:
@@ -213,6 +224,211 @@ def test_unrelated_hedged_clause_does_not_drop_assertion_but_self_doubt_does(tmp
         if not expected_count:
             assert any("HEDGED_CLAUSE" in o["value"]["reason_codes"]
                        for o in parsed["observations"] if o["kind"] == "claim_rejection")
+
+
+def test_astra_unrelated_actions_and_other_predicate_hedges_do_not_suppress_task(tmp_path: Path) -> None:
+    texts = (
+        "I resolved the task. Actually I did not update the documentation.",
+        "Perhaps the deployment is delayed, but I resolved the task.",
+        "I resolved the task, but the issue might remain unresolved.",
+    )
+    for content in texts:
+        result = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            _report(tmp_path, True),
+        ))
+        assert result["COMPUTED_VERDICT"] == "SUPPORTED"
+        assert result["AUDIT_VERDICT"] == "SUPPORTED"
+        assert len(result["AGENT_STATEMENT"]) == 1
+        assert result["AGENT_STATEMENT"][0]["predicate"] == "TASK_RESOLVED"
+        assert result["AGENT_STATEMENT"][0]["asserted_value"] is True
+
+
+def test_astra_same_predicate_correction_and_hedge_controls_remain_conservative(tmp_path: Path) -> None:
+    corrected = audit_evidence(tmp_path, _request(
+        _trajectory(tmp_path, [{"role": "assistant", "content":
+                                "I resolved the task. Actually, I did not resolve the task."}]),
+        _report(tmp_path, False),
+    ))
+    assert corrected["COMPUTED_VERDICT"] == "SUPPORTED"
+    assert len(corrected["AGENT_STATEMENT"]) == 1
+    assert corrected["AGENT_STATEMENT"][0]["predicate"] == "TASK_RESOLVED"
+    assert corrected["AGENT_STATEMENT"][0]["asserted_value"] is False
+    assert any("EXPLICIT_CORRECTION" in rejection["reason_codes"]
+               for rejection in corrected["CLAIM_REJECTIONS"])
+
+    for content in ("Perhaps I resolved the task.",
+                    "I resolved the task, but the task might remain unresolved.",
+                    "I resolved the task, but I may be wrong."):
+        parsed = audit_file(tmp_path, {
+            **_trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            "run_id": RUN, "instance_id": INSTANCE,
+        })
+        assert not [o for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        assert any("HEDGED_CLAUSE" in o["value"]["reason_codes"]
+                   for o in parsed["observations"] if o["kind"] == "claim_rejection")
+
+
+def test_qualifier_scope_tracks_task_predicate_and_ignores_other_topics(tmp_path: Path) -> None:
+    positive_cases = (
+        ("I resolved the task, but I might not update the documentation.", "TASK_RESOLVED", None),
+        ("I resolved the task, but the claim about deployment might be false.", "TASK_RESOLVED", None),
+        ("I resolved the task, but maybe the task queue remains unresolved.", "TASK_RESOLVED", None),
+        ("I resolved the task, but maybe the documentation task remains incomplete.", "TASK_RESOLVED", None),
+        ("I resolved the task, but maybe the issue remains unresolved.", "TASK_RESOLVED", "ISSUE_RESOLVED"),
+        ("I resolved the task, but I might not have completed the task.", "TASK_RESOLVED", "TASK_COMPLETED"),
+        ("I have completed the task, but I might not have resolved the task.", "TASK_COMPLETED", "TASK_RESOLVED"),
+        ("I resolved the task, but the task might remain unfinished.", "TASK_RESOLVED", "TASK_COMPLETED"),
+        ("I resolved the task, but perhaps the task remains unfinished.", "TASK_RESOLVED", "TASK_COMPLETED"),
+        ("I have completed the task, but the task might remain unresolved.", "TASK_COMPLETED", "TASK_RESOLVED"),
+        ("I resolved the task, but I might not have completed the work.", "TASK_RESOLVED", "TASK_COMPLETED"),
+    )
+    for content, expected_predicate, expected_rejected_predicate in positive_cases:
+        parsed = audit_file(tmp_path, {
+            **_trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            "run_id": RUN, "instance_id": INSTANCE,
+        })
+        claims = [o["value"] for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        assert any(claim["predicate"] == expected_predicate and claim["asserted_value"] is True
+                   for claim in claims)
+        if expected_rejected_predicate:
+            rejected = [o["value"] for o in parsed["observations"]
+                        if o["kind"] == "claim_rejection"]
+            assert any(item["predicate"] == expected_rejected_predicate
+                       and item["asserted_value"] is False
+                       and "HEDGED_CLAUSE" in item["reason_codes"] for item in rejected)
+
+    uncertain_texts = (
+        "I resolved the task, but maybe the task remains unresolved.",
+        "I resolved the task, but maybe the task remains still unresolved.",
+        "I resolved the task, but the task may remain currently unresolved.",
+        "I resolved the task, but the task might still be unresolved.",
+        "I have completed the task, but maybe the task remains still unfinished.",
+        "I have completed the task, but maybe the original task remains incomplete.",
+        "I have completed the task, but perhaps the assigned task remains unfinished.",
+        "I have completed the task, but perhaps the SWE-bench task remains unfinished.",
+        "I have completed the task, but maybe the task might still be incomplete.",
+        "I resolved the issue, but maybe the issue remains unresolved.",
+        "I resolved the issue, but maybe the issue remains still unresolved.",
+        "I resolved the task, but maybe I did not resolve it.",
+        "I resolved the task, but maybe it remains unresolved.",
+        "I have completed the task, but perhaps the task remains incomplete.",
+        "I resolved the task, but maybe I am wrong.",
+        "I resolved the task, but I might not have resolved the task.",
+        "I have completed the task, but I might not have completed it.",
+        "I have completed the work, but I might not have completed the work.",
+        "I have completed the implementation, but I might not have completed the implementation.",
+        "I have completed the requested change, but I might not have completed the requested change.",
+    )
+    for content in uncertain_texts:
+        parsed = audit_file(tmp_path, {
+            **_trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            "run_id": RUN, "instance_id": INSTANCE,
+        })
+        claims = [o for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        rejected = [o["value"] for o in parsed["observations"] if o["kind"] == "claim_rejection"]
+        assert not [o for o in claims if o["value"]["asserted_value"] is True]
+        assert any("HEDGED_CLAUSE" in item["reason_codes"] for item in rejected)
+
+    preclaim = audit_file(tmp_path, {
+        **_trajectory(tmp_path, [{"role": "assistant", "content": "Maybe I resolved the task."}]),
+        "run_id": RUN, "instance_id": INSTANCE,
+    })
+    assert not [o for o in preclaim["observations"] if o["kind"] == "agent_statement"]
+    assert any("HEDGED_CLAUSE" in o["value"]["reason_codes"]
+               for o in preclaim["observations"] if o["kind"] == "claim_rejection")
+
+    for content in ("The task remains unfinished.", "The task is incomplete.", "Task incomplete."):
+        parsed = audit_file(tmp_path, {
+            **_trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            "run_id": RUN, "instance_id": INSTANCE,
+        })
+        claims = [o["value"] for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        assert [(claim["predicate"], claim["asserted_value"]) for claim in claims] == [
+            ("TASK_COMPLETED", False)]
+
+    audited = audit_evidence(tmp_path, _request(
+        _trajectory(tmp_path, [{"role": "assistant", "content":
+                                "I resolved the task, but maybe the task remains unfinished."}]),
+        _report(tmp_path, False),
+    ))
+    resolved_claim = next(c for c in audited["AGENT_STATEMENT"]
+                          if c["predicate"] == "TASK_RESOLVED")
+    completion_rejection = next(r for r in audited["CLAIM_REJECTIONS"]
+                                if r["predicate"] == "TASK_COMPLETED")
+    assert resolved_claim["asserted_value"] is True
+    assert resolved_claim["AUDIT_VERDICT"] == "CONTRADICTED"
+    assert "HEDGED_CLAUSE" in completion_rejection["reason_codes"]
+    assert audited["COMPUTED_VERDICT"] == "CONTRADICTED"
+
+    for evaluator_value in (True, False):
+        uncompleted = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": "The task remains unfinished."}]),
+            _report(tmp_path, evaluator_value),
+        ))
+        assert len(uncompleted["AGENT_STATEMENT"]) == 1
+        assert uncompleted["AGENT_STATEMENT"][0]["predicate"] == "TASK_COMPLETED"
+        assert uncompleted["AGENT_STATEMENT"][0]["asserted_value"] is False
+        assert uncompleted["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+
+    for content in ("The task remains unresolved.", "The task is not resolved.", "Task not resolved."):
+        unresolved = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            _report(tmp_path, False),
+        ))
+        assert unresolved["AGENT_STATEMENT"][0]["predicate"] == "TASK_RESOLVED"
+        assert unresolved["AGENT_STATEMENT"][0]["AUDIT_VERDICT"] == "SUPPORTED"
+
+    for content, expected_predicate in (
+        ("I resolved the task. Actually I did not complete the task.", "TASK_RESOLVED"),
+        ("I completed the task. Actually I did not resolve the task.", "TASK_COMPLETED"),
+    ):
+        corrected = audit_file(tmp_path, {
+            **_trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            "run_id": RUN, "instance_id": INSTANCE,
+        })
+        claims = [o["value"] for o in corrected["observations"] if o["kind"] == "agent_statement"]
+        assert any(c["predicate"] == expected_predicate and c["asserted_value"] is True
+                   for c in claims)
+        assert not any("EXPLICIT_CORRECTION" in o["value"]["reason_codes"]
+                       for o in corrected["observations"] if o["kind"] == "claim_rejection")
+
+def test_task_queue_negative_actions_are_noncomparable_and_do_not_retract_task(tmp_path: Path) -> None:
+    cases = (
+        ("I resolved the task, but I might not have resolved the task queue.", "TASK_RESOLVED"),
+        ("I resolved the task. Actually I did not resolve the task queue.", "TASK_RESOLVED"),
+        ("I have completed the task, but I might not have completed the task queue.", "TASK_COMPLETED"),
+        ("I have completed the task. Actually I did not complete the task queue.", "TASK_COMPLETED"),
+    )
+    for content, expected_predicate in cases:
+        parsed = audit_file(tmp_path, {
+            **_trajectory(tmp_path, [{"role": "assistant", "content": content}]),
+            "run_id": RUN, "instance_id": INSTANCE,
+        })
+        claims = [o["value"] for o in parsed["observations"] if o["kind"] == "agent_statement"]
+        assert any(c["predicate"] == expected_predicate and c["asserted_value"] is True
+                   for c in claims)
+        rejected = [o["value"] for o in parsed["observations"] if o["kind"] == "claim_rejection"]
+        assert any(r.get("candidate_predicate") == expected_predicate
+                   and r["asserted_value"] is False
+                   and r["reason_codes"] == ["NONCOMPARABLE_TASK_SCOPE"] for r in rejected)
+        assert not any("EXPLICIT_CORRECTION" in r["reason_codes"] for r in rejected)
+
+    direct = audit_file(tmp_path, {
+        **_trajectory(tmp_path, [{"role": "assistant", "content": "I did not resolve the task queue."}]),
+        "run_id": RUN, "instance_id": INSTANCE,
+    })
+    assert not [o for o in direct["observations"] if o["kind"] == "agent_statement"]
+    direct_rejections = [o["value"] for o in direct["observations"] if o["kind"] == "claim_rejection"]
+    assert len(direct_rejections) == 1
+    assert direct_rejections[0]["reason_codes"] == ["NONCOMPARABLE_TASK_SCOPE"]
+
+    audited = audit_evidence(tmp_path, _request(
+        _trajectory(tmp_path, [{"role": "assistant", "content": "I did not resolve the task queue."}]),
+        _report(tmp_path, False),
+    ))
+    assert audited["AGENT_STATEMENT"] == []
+    assert audited["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
 
 
 def test_actor_metadata_rejects_only_its_message_and_preserves_reason(tmp_path: Path) -> None:

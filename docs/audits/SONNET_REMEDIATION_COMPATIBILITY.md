@@ -32,6 +32,15 @@ unavailable root yield `VERIFICATION_ERROR` with specific `FINAL_ERROR_CODES`.
 They are distinct from semantic `INSUFFICIENT_EVIDENCE` with no infrastructure
 error. Already computed claim comparisons remain in `COMPUTED_VERDICT`.
 
+The predicate boundary also applies to negative claims and qualifiers:
+`unfinished`, `incomplete` and negated completion actions belong to
+`TASK_COMPLETED=false`; `unresolved` and negated resolution actions belong to
+`TASK_RESOLVED=false`. A `resolved` evaluator boolean supplies no completion
+contract, for either polarity. Corrections and uncertainty about one predicate
+cannot suppress another. Whole-task object boundaries exclude `task queue`
+actions from target-task resolution. Shared predicate fragments retain the same
+subject, action, state and modifier grammar across extraction and scope guards.
+
 Bridge v2 receipts distinguish `BYTE_INTEGRITY_VERIFIED` from derivation. Marked
 instance audits are rederived from exact Engine-admitted bytes and compared with
 the full normalized result, including claim outcomes and relationships. A mismatch

@@ -259,28 +259,51 @@ def _append_observation(out: list[dict[str, Any]], value: dict[str, Any]) -> Non
 
 
 _COMPLETED = re.compile(
-    r"\bI(?:\s+(?:(?:have|had)\s+)?|[’'](?:ve|d)\s+)(?:successfully\s+)?(?:completed|finished)\s+"
+    r"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?(?:completed|finished)\s+"
     r"(?:the\s+)?(?:task|work|implementation|requested\s+change)\b", re.I)
+_TASK_SUBJECT = r"(?:(?:assigned|original|SWE-bench)\s+)?task"
+_SCOPE_BOUNDARY = r"(?=\s*(?:[.!?;:,]|$)|\s+(?:and|but|by|with|after)\b)"
+_TASK_OBJECT = rf"(?:the\s+)?{_TASK_SUBJECT}{_SCOPE_BOUNDARY}"
+_TASK_COMPLETED_SUBJECT = rf"(?:{_TASK_SUBJECT}|work|implementation|requested\s+change)"
+_TASK_COMPLETED_OBJECT = rf"(?:the\s+)?{_TASK_COMPLETED_SUBJECT}{_SCOPE_BOUNDARY}"
+_ISSUE_SUBJECT = r"(?:issue|problem|bug|failure|defect)"
+_ISSUE_OBJECT = rf"(?:the\s+)?{_ISSUE_SUBJECT}\b"
 _TASK_RESOLVED = re.compile(
-    r"\bI(?:\s+(?:(?:have|had)\s+)?|[’'](?:ve|d)\s+)(?:successfully\s+)?(?:resolved|fixed|solved)\s+"
-    r"(?:the\s+)?(?:(?:assigned|original|SWE-bench)\s+)?task\b"
-    r"(?=\s*(?:[.!?;:,]|$)|\s+(?:and|but|by|with|after)\b)", re.I)
+    rf"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?"
+    rf"(?:resolved|fixed|solved)\s+{_TASK_OBJECT}", re.I)
 _TASK_RESOLVED_SCOPE = re.compile(
-    r"\bI(?:\s+(?:(?:have|had)\s+)?|[’'](?:ve|d)\s+)(?:successfully\s+)?(?:resolved|fixed|solved)\s+"
+    r"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?(?:resolved|fixed|solved)\s+"
     r"(?:the\s+)?(?:(?:assigned|original|SWE-bench)\s+)?task\b", re.I)
 _ISSUE_RESOLVED = re.compile(
-    r"\bI(?:\s+(?:(?:have|had)\s+)?|[’'](?:ve|d)\s+)(?:successfully\s+)?(?:resolved|fixed|solved)\s+"
-    r"(?:the\s+)?(?:issue|problem|bug|failure|defect)\b", re.I)
+    rf"\bI(?:\s+(?:(?:have|had)\s+)?|[\u2019'](?:ve|d)\s+)(?:successfully\s+)?"
+    rf"(?:resolved|fixed|solved)\s+{_ISSUE_OBJECT}", re.I)
+_TASK_NEGATIVE_ACTION = r"(?:resolve[ds]?|fix(?:ed)?|solv(?:e|ed))"
+_TASK_COMPLETION_ACTION = r"(?:complet(?:e|ed)|finish(?:ed)?)"
+_NEGATIVE_MODAL = r"(?:(?:might|may|could)\s+not\s+(?:have\s+)?|(?:(?:have|had|did|do)\s+)?not\s+)"
+_HEDGE_MODAL = r"(?:(?:might|may|could|possibly|perhaps|maybe|probably)\s+)?"
+_STATE_LINK = r"(?:(?:still|currently)\s+)?(?:(?:is|was|be|remain(?:s)?|continues\s+to\s+be)\s+)?(?:(?:still|currently)\s+)?"
+_TASK_RESOLVED_STATE = r"(?:unresolved|not\s+resolved)"
+_TASK_COMPLETED_STATE = r"(?:unfinished|incomplete|not\s+(?:complete|completed|finished))"
+_ISSUE_RESOLVED_STATE = r"(?:unresolved|not\s+resolved|unfixed|not\s+fixed|broken)"
+_TASK_RESOLVED_STATE_CLAUSE = rf"{_HEDGE_MODAL}{_STATE_LINK}{_TASK_RESOLVED_STATE}"
+_TASK_COMPLETED_STATE_CLAUSE = rf"{_HEDGE_MODAL}{_STATE_LINK}{_TASK_COMPLETED_STATE}"
+_ISSUE_RESOLVED_STATE_CLAUSE = rf"{_HEDGE_MODAL}{_STATE_LINK}{_ISSUE_RESOLVED_STATE}"
 _TASK_NEGATIVE = re.compile(
-    r"\bI\s+(?:(?:have|had)\s+)?not\s+(?:resolved|fixed|solved)\s+"
-    r"(?:the\s+)?(?:(?:assigned|original|SWE-bench)\s+)?task\b|"
-    r"\b(?:the\s+)?(?:(?:assigned|original|SWE-bench)\s+)?task\s+"
-    r"(?:is|remains|continues\s+to\s+be)\s+(?:(?:still|currently)\s+)?"
-    r"(?:unresolved|not\s+resolved|unfinished|incomplete)\b", re.I)
+    rf"\bI\s+{_NEGATIVE_MODAL}{_TASK_NEGATIVE_ACTION}\s+{_TASK_OBJECT}|"
+    rf"\b(?:the\s+)?{_TASK_SUBJECT}\s+{_TASK_RESOLVED_STATE_CLAUSE}\b{_SCOPE_BOUNDARY}", re.I)
+_TASK_COMPLETED_NEGATIVE = re.compile(
+    rf"\bI\s+{_NEGATIVE_MODAL}{_TASK_COMPLETION_ACTION}\s+{_TASK_COMPLETED_OBJECT}|"
+    rf"\b(?:the\s+)?{_TASK_COMPLETED_SUBJECT}\s+{_TASK_COMPLETED_STATE_CLAUSE}\b{_SCOPE_BOUNDARY}", re.I)
 _ISSUE_NEGATIVE = re.compile(
-    r"\b(?:the\s+)?(?:issue|problem|bug|failure|defect)\s+"
-    r"(?:is|remains|continues\s+to\s+be)\s+(?:(?:still|currently)\s+)?"
-    r"(?:unresolved|not\s+resolved|unfixed|not\s+fixed|broken)\b", re.I)
+    rf"\b(?:the\s+)?{_ISSUE_SUBJECT}\s+{_ISSUE_RESOLVED_STATE_CLAUSE}\b{_SCOPE_BOUNDARY}", re.I)
+_TASK_NEGATIVE_SCOPE = re.compile(
+    rf"\bI\s+{_NEGATIVE_MODAL}{_TASK_NEGATIVE_ACTION}\s+(?:the\s+)?{_TASK_SUBJECT}"
+    r"\s+(?!(?:and|but|by|with|after|is|remains|remain|continues|still|currently|"
+    r"unresolved|unfinished|incomplete|not)\b)[\w-]+", re.I)
+_TASK_COMPLETED_NEGATIVE_SCOPE = re.compile(
+    rf"\bI\s+{_NEGATIVE_MODAL}{_TASK_COMPLETION_ACTION}\s+(?:the\s+)?{_TASK_COMPLETED_SUBJECT}"
+    r"\s+(?!(?:and|but|by|with|after|is|remains|remain|continues|still|currently|"
+    r"unresolved|unfinished|incomplete|not)\b)[\w-]+", re.I)
 _HEDGES = re.compile(
     r"\b(?:might|may|could|possibly|perhaps|maybe|probably|apparently|allegedly|"
     r"uncertain|unverified|unproven|think|believe|guess|hope|if|unless|assuming)\b", re.I)
@@ -320,10 +343,34 @@ def _fenced(text: str, pos: int) -> bool:
 
 _CLAUSE_BREAK = re.compile(r"[.!?;\n]|\b(?:and|but|or|yet|by|with|after)\b", re.I)
 _CORRECTION_MARKER = re.compile(r"\b(?:actually|correction|i\s+(?:am|was)\s+(?:wrong|mistaken))\b", re.I)
-_CORRECTION_STATE = re.compile(
-    r"\b(?:remains|is|was|continues\s+to\s+be)\s+(?:still\s+)?(?:unresolved|unfinished|incomplete|unfixed|broken)\b|"
-    r"\b(?:not\s+(?:done|complete|resolved|fixed|solved)|never\s+(?:completed|resolved|fixed|solved))\b|"
-    r"\b(?:the\s+)?(?:task|issue|problem|bug)\s+(?:is|remains)\s+(?:not\s+)?(?:done|complete|resolved|fixed|solved|broken)\b", re.I)
+_PREDICATE_NEGATIVE = {
+    "TASK_RESOLVED": _TASK_NEGATIVE,
+    "TASK_COMPLETED": _TASK_COMPLETED_NEGATIVE,
+    "ISSUE_RESOLVED": _ISSUE_NEGATIVE,
+}
+_PREDICATE_SCOPE = {
+    "TASK_RESOLVED": {
+        "subject": _TASK_SUBJECT,
+        "object": _TASK_OBJECT,
+        "actions": _TASK_NEGATIVE_ACTION,
+        "states": _TASK_RESOLVED_STATE,
+        "state_clause": _TASK_RESOLVED_STATE_CLAUSE,
+    },
+    "TASK_COMPLETED": {
+        "subject": _TASK_COMPLETED_SUBJECT,
+        "object": _TASK_COMPLETED_OBJECT,
+        "actions": _TASK_COMPLETION_ACTION,
+        "states": _TASK_COMPLETED_STATE,
+        "state_clause": _TASK_COMPLETED_STATE_CLAUSE,
+    },
+    "ISSUE_RESOLVED": {
+        "subject": _ISSUE_SUBJECT,
+        "object": _ISSUE_OBJECT,
+        "actions": r"(?:resolve[ds]?|fix(?:ed)?|solv(?:e|ed))",
+        "states": _ISSUE_RESOLVED_STATE,
+        "state_clause": _ISSUE_RESOLVED_STATE_CLAUSE,
+    },
+}
 
 
 def _claim_segment(text: str, position: int) -> tuple[int, int]:
@@ -365,30 +412,67 @@ def _explicitly_retracted(text: str, match_end: int, predicate: str) -> bool:
     body = correction.group("body")
     body_clause_end = _claim_segment(body, 0)[1]
     body_clause = body[:body_clause_end]
-    if re.match(r"\s*i\s+(?:have|had|did|do)\s+(?:not|n't)\b", body_clause, re.I):
-        return True
-    targeted_retraction = _TASK_NEGATIVE if predicate == "TASK_RESOLVED" else _ISSUE_NEGATIVE
+    targeted_retraction = _PREDICATE_NEGATIVE.get(predicate)
+    scope = _PREDICATE_SCOPE.get(predicate)
+    if targeted_retraction is None or scope is None:
+        return False
     if targeted_retraction.search(body_clause):
         return True
-    # A bare pronoun is sufficient only when it is the immediate correction
-    # payload. Named unrelated subjects (for example, a schedule or deployment)
-    # cannot retract a task or issue claim.
-    return bool(re.match(r"\s*(?:it|that)\s+", body_clause, re.I)
-                and _CORRECTION_STATE.search(body_clause))
+    # A bare pronoun retracts only when its state belongs to this predicate.
+    state_clause = scope["state_clause"]
+    return bool(re.match(
+        rf"\s*(?:it|that)\s+{state_clause}\b{_SCOPE_BOUNDARY}", body_clause, re.I))
 
 
-def _related_qualifier_after(text: str, match_end: int, clause_end: int) -> bool:
+def _related_qualifier_after(text: str, match_end: int, clause_end: int, predicate: str) -> bool:
     sentence_end = _sentence_segment(text, match_end)[1]
     tail = text[clause_end:sentence_end]
     qualifier = re.match(r"\s*,?\s*(?:but|although|though)\b(?P<body>.*)", tail, re.I)
-    if not qualifier:
+    scope = _PREDICATE_SCOPE.get(predicate)
+    if not qualifier or scope is None:
         return False
     body = qualifier.group("body")
     body_end = _claim_segment(body, 0)[1]
     body_clause = body[:body_end]
-    related_subject = re.search(r"\b(?:i|it|that|task|issue|problem|bug|claim|statement)\b", body_clause, re.I)
-    return bool(related_subject and _HEDGES.search(body_clause))
+    hedge = r"(?:might|may|could|possibly|perhaps|maybe|probably)"
+    if not _HEDGES.search(body_clause):
+        return False
 
+    subject = scope["subject"]
+    actions = scope["actions"]
+    state_clause = scope["state_clause"]
+    # Anchor target states at the clause start so task-queue and documentation
+    # subtask clauses cannot be mistaken for the audited task itself.
+    if re.match(
+        rf"\s*(?:{hedge}\s+)?(?:the\s+)?{subject}\s+{state_clause}\b{_SCOPE_BOUNDARY}",
+        body_clause, re.I,
+    ):
+        return True
+
+    negative_action = (
+        rf"\s*(?:{hedge}\s+)?i\s+(?:(?:might|may|could)\s+not\s+(?:have\s+)?|"
+        rf"(?:(?:do|did|have|had)\s+)?not\s+){actions}\s+"
+    )
+    if re.match(negative_action + scope["object"], body_clause, re.I):
+        return True
+    if re.match(negative_action + r"(?:it|that)\b", body_clause, re.I):
+        return True
+
+    # A bare pronoun state is useful only when its state has the same predicate
+    # meaning as the claim currently being checked.
+    if re.match(
+        rf"\s*(?:{hedge}\s+)?(?:it|that)\s+{state_clause}\b{_SCOPE_BOUNDARY}",
+        body_clause, re.I,
+    ):
+        return True
+
+    # A short first-person self-doubt statement qualifies any current assertion;
+    # extra complements remain outside this bounded form.
+    return bool(re.match(
+        rf"\s*(?:{hedge}\s+)?i\s+(?:(?:might|may|could|perhaps|maybe|probably)\s+be\s+|"
+        rf"(?:am|was)\s+)(?:wrong|mistaken|incorrect|uncertain)\b\s*[.!?]?\s*$",
+        body_clause, re.I,
+    ))
 
 def _has_explicit_correction(text: str, span: list[int]) -> bool:
     clause_start, _ = _claim_segment(text, span[0])
@@ -403,6 +487,7 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
     quote_spans = _quoted_spans(text)
     patterns = (
         ("TASK_RESOLVED", False, _TASK_NEGATIVE),
+        ("TASK_COMPLETED", False, _TASK_COMPLETED_NEGATIVE),
         ("ISSUE_RESOLVED", False, _ISSUE_NEGATIVE),
         ("TASK_COMPLETED", True, _COMPLETED),
         ("TASK_RESOLVED", True, _TASK_RESOLVED),
@@ -434,8 +519,9 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                 reasons.append("MARKDOWN_CODE")
             if re.match(r" {0,3}>", line) or in_lazy_quote:
                 reasons.append("MARKDOWN_QUOTE")
-            if (_HEDGES.search(clause) or _HEDGES.search(prefix)
-                    or _related_qualifier_after(text, match.end(), end)):
+            clause_prefix = text[start:match.start()]
+            if (_HEDGES.search(clause) or _HEDGES.search(clause_prefix)
+                    or _related_qualifier_after(text, match.end(), end, predicate)):
                 reasons.append("HEDGED_CLAUSE")
             if _REPORTED_PREFIX.search(prefix):
                 reasons.append("REPORTED_CLAIM")
@@ -470,6 +556,16 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                                        len(text[:span[1]].encode("utf-8"))],
                          "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
                          "reason_codes": ["NONCOMPARABLE_TASK_SCOPE"]})
+    for predicate, pattern in (("TASK_RESOLVED", _TASK_NEGATIVE_SCOPE),
+                               ("TASK_COMPLETED", _TASK_COMPLETED_NEGATIVE_SCOPE)):
+        for match in pattern.finditer(text):
+            span = [match.start(), match.end()]
+            rejected.append({"candidate_predicate": predicate, "asserted_value": False,
+                             "matched_text": match.group(0), "match_span": span,
+                             "byte_span": [len(text[:span[0]].encode("utf-8")),
+                                           len(text[:span[1]].encode("utf-8"))],
+                             "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                             "reason_codes": ["NONCOMPARABLE_TASK_SCOPE"]})
     rejected.sort(key=lambda item: item["match_span"][0] if item["match_span"] else -1)
     return sorted(found, key=lambda row: row[3][0]), rejected
 
