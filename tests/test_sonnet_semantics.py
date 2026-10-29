@@ -631,6 +631,22 @@ def test_task_queue_negative_actions_are_noncomparable_and_do_not_retract_task(t
     assert audited["COMPUTED_VERDICT"] == "INSUFFICIENT_EVIDENCE"
 
 
+def test_conditional_antecedent_keeps_contrast_coordination_scope(tmp_path: Path) -> None:
+    for marker in ("If", "Unless", "Assuming"):
+        content = marker + " deployment failed but I resolved the task, we can ship."
+        result = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]), _report(tmp_path, True)))
+        assert result["AGENT_STATEMENT"] == []
+        assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+        assert any("CONDITIONAL_CLAUSE" in r["reason_codes"] for r in result["CLAIM_REJECTIONS"])
+    for content in ("Perhaps deployment failed, but I resolved the task.",
+                    "I resolved the task, but if deployment fails we will wait."):
+        result = audit_evidence(tmp_path, _request(
+            _trajectory(tmp_path, [{"role": "assistant", "content": content}]), _report(tmp_path, False)))
+        assert result["AUDIT_VERDICT"] == "CONTRADICTED"
+        assert len(result["AGENT_STATEMENT"]) == 1
+
+
 def test_actor_metadata_rejects_only_its_message_and_preserves_reason(tmp_path: Path) -> None:
     trajectory = _trajectory(tmp_path, [
         {"role": "assistant", "content": "I have resolved the task."},

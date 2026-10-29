@@ -426,15 +426,9 @@ def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[
         if char in ".!?\n;":
             sentence_start = offset + 1
 
-    # A contrastive clause can stand independently. Keep antecedents attached
-    # across and/or, while starting a fresh scope after an unquoted "but".
-    prefix_start = sentence_start
+    # Conditional antecedents remain attached across coordination, including
+    # contrastive "but". Only an independent boundary above ends that scope.
     scope_start = sentence_start
-    prefix = text[prefix_start:position]
-    for boundary in re.finditer(r"\bbut\b", prefix, re.I):
-        absolute = prefix_start + boundary.start()
-        if not any(a <= absolute < b for a, b in quote_spans):
-            scope_start = prefix_start + boundary.end()
     marker_pattern = re.compile(r"\b(?:if|unless|assuming)\b", re.I)
     prefix = text[scope_start:position]
     if any(not any(a <= scope_start + marker.start() < b for a, b in quote_spans)
