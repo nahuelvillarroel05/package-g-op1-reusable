@@ -307,4 +307,4 @@ def test_multiline_utf8_quote_rejection_preserves_character_and_byte_spans(tmp_p
     assert text[start:end] == "I resolved the task"
     assert len(text[:start].encode("utf-8")) == byte_start
     assert len(text[:end].encode("utf-8")) == byte_end
-    assert PARSER_VERSIONS[TRAJECTORY] == "1.10.0"
+    assert PARSER_VERSIONS[TRAJECTORY] == "1.11.0"

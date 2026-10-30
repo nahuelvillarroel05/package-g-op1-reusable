@@ -166,7 +166,7 @@ def test_explicitly_terminated_operator_and_closed_frames_allow_later_claim(tmp_
 
 
 def test_trajectory_parser_version_is_bumped_for_round002_semantics() -> None:
-    assert PARSER_VERSIONS[TRAJECTORY] == "1.10.0"
+    assert PARSER_VERSIONS[TRAJECTORY] == "1.11.0"
 
 
 @pytest.mark.parametrize("text,reason", [

@@ -40,7 +40,7 @@ remain separate work. See the third-review handoff for exact candidate reference
 
 New normalized instance audits use `pgop1.swebench.audit-contract.v2` and
 `pgop1.swebench.source-bound-normalization.v3`; MiniSwe JSON parser version is
-`1.10.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
+`1.11.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
 both markers while normalization v3 remains also fails. An explicit legacy
 storage opt-in exposes byte integrity and `DERIVATION_NOT_VERIFIED`, never new
 semantic approval. Exact batch storage contracts cannot be used for instances.
@@ -161,6 +161,14 @@ All prior operational, authenticity, Windows-only and bounded-language limits re
 
 Candidate `575a11f783ba0f5795aa32a9a728a027702c31d9` was rejected by actual Astra review.
 Repairs A-009 with one shared outer-quote closure proof across standalone and reported paths, and A-010 through whole balanced literal pairs independent of payload punctuation or claim-shaped words. Preserves active contradictions, comparable correction history, original source offsets and prior A-001 through A-008 and S-003 controls.
+Original negative reports and source commits are preserved. This repair requires
+independent review of its next exact frozen Git identity; no PASS is predeclared.
+All prior operational, authenticity, Windows-only and bounded-language limits remain.
+
+## Independent round-007 and prospective parser 1.11.0
+
+Candidate `1533eafd82c7f11141a37f45caff73427bf5ab6b` was rejected by actual Astra review.
+Repairs residual A-010 through shared opaque Markdown code spans and complete directionally paired typed literal objects, independent of payload whitespace, punctuation or claim-shaped content. Repairs A-011 with typed-opener closure proof under the common outer-close gate, preserving completed-sentence corrections, active contradictions, source positions and earlier controls.
 Original negative reports and source commits are preserved. This repair requires
 independent review of its next exact frozen Git identity; no PASS is predeclared.
 All prior operational, authenticity, Windows-only and bounded-language limits remain.

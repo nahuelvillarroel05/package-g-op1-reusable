@@ -233,4 +233,4 @@ def test_a010_claim_words_inside_explicit_literal_do_not_hide_opposite_claims(
 
 
 def test_round6_parser_version() -> None:
-    assert PARSER_VERSIONS[TRAJECTORY] == "1.10.0"
+    assert PARSER_VERSIONS[TRAJECTORY] == "1.11.0"

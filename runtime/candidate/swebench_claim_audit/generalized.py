@@ -49,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.10.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.11.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -662,42 +662,75 @@ def _markdown_fence_spans(text: str) -> list[tuple[int, int]]:
     return spans
 
 
-def _quoted_spans(text: str) -> list[tuple[int, int]]:
-    pairs = {'"': '"', "'": "'", "\u201c": "\u201d", "\u2018": "\u2019"}
-    spans: list[tuple[int, int]] = []
+def _markdown_code_spans(text: str) -> list[tuple[int, int]]:
+    """Return opaque fenced and inline code spans with original character offsets."""
     fences = _markdown_fence_spans(text)
+    spans = list(fences)
     fence_index = 0
     index = 0
     while index < len(text):
         while fence_index < len(fences) and fences[fence_index][1] <= index:
             fence_index += 1
-        if fence_index < len(fences) and fences[fence_index][0] <= index < fences[fence_index][1]:
-            a, b = fences[fence_index]
+        if (fence_index < len(fences)
+                and fences[fence_index][0] <= index < fences[fence_index][1]):
+            index = fences[fence_index][1]
+            continue
+        if text[index] != "`":
+            index += 1
+            continue
+        run_end = index + 1
+        while run_end < len(text) and text[run_end] == "`":
+            run_end += 1
+        run_length = run_end - index
+        cursor = run_end
+        close_end = None
+        while cursor < len(text):
+            while fence_index < len(fences) and fences[fence_index][1] <= cursor:
+                fence_index += 1
+            if (fence_index < len(fences)
+                    and fences[fence_index][0] <= cursor < fences[fence_index][1]):
+                cursor = fences[fence_index][1]
+                continue
+            candidate = text.find("`", cursor)
+            if candidate < 0:
+                break
+            while fence_index < len(fences) and fences[fence_index][1] <= candidate:
+                fence_index += 1
+            if (fence_index < len(fences)
+                    and fences[fence_index][0] <= candidate < fences[fence_index][1]):
+                cursor = fences[fence_index][1]
+                continue
+            candidate_end = candidate + 1
+            while candidate_end < len(text) and text[candidate_end] == "`":
+                candidate_end += 1
+            if candidate_end - candidate == run_length:
+                close_end = candidate_end
+                break
+            cursor = candidate_end
+        if close_end is None:
+            spans.append((index, len(text)))
+            break
+        spans.append((index, close_end))
+        index = close_end
+    return sorted(spans)
+
+
+def _quoted_spans(text: str) -> list[tuple[int, int]]:
+    pairs = {'"': '"', "'": "'", "\u201c": "\u201d", "\u2018": "\u2019"}
+    spans: list[tuple[int, int]] = []
+    code_spans = _markdown_code_spans(text)
+    code_index = 0
+    index = 0
+    while index < len(text):
+        while code_index < len(code_spans) and code_spans[code_index][1] <= index:
+            code_index += 1
+        if (code_index < len(code_spans)
+                and code_spans[code_index][0] <= index < code_spans[code_index][1]):
+            a, b = code_spans[code_index]
             spans.append((a, b))
             index = b
             continue
         opening = text[index]
-        if opening == "`":
-            end_run = index + 1
-            while end_run < len(text) and text[end_run] == "`":
-                end_run += 1
-            run_length = end_run - index
-            cursor = end_run
-            closing_span = None
-            while cursor < len(text):
-                candidate = text.find("`", cursor)
-                if candidate < 0:
-                    break
-                candidate_end = candidate + 1
-                while candidate_end < len(text) and text[candidate_end] == "`":
-                    candidate_end += 1
-                if candidate_end - candidate == run_length:
-                    closing_span = (index, candidate_end)
-                    break
-                cursor = candidate_end
-            spans.append(closing_span if closing_span else (index, len(text)))
-            index = closing_span[1] if closing_span else len(text)
-            continue
         closing = pairs.get(opening)
         if closing is None or (opening == "'" and index and text[index - 1].isalnum()):
             index += 1
@@ -784,7 +817,20 @@ def _has_typed_literal_context_after_quote(
     return False
 
 
-def _has_later_external_quote_close(text: str, closing: str, start: int) -> bool:
+def _has_typed_literal_context_before_quote(
+        text: str, opening: int, prior_spans: list[tuple[int, int]]) -> bool:
+    prefix = _mask_quoted_context(text[:opening], prior_spans)
+    return re.search(r"\b(?:the\s+)?(?:word|literal)\s*$", prefix.rstrip(), re.I) is not None
+
+
+def _has_later_external_quote_close(
+        text: str, closing: str, start: int, opening: int,
+        prior_spans: list[tuple[int, int]]) -> bool:
+    code_spans = _markdown_code_spans(text)
+    typed_spans = _typed_literal_spans(
+        text, start + 1, code_spans, prior_spans + [(opening, start + 1)])
+    opaque_spans = sorted(code_spans + typed_spans)
+    opaque_index = 0
     cursor = start + 1
     balanced_literal_open: tuple[int, bool] | None = None
     claim_patterns = (
@@ -795,6 +841,13 @@ def _has_later_external_quote_close(text: str, closing: str, start: int) -> bool
         found = text.find(closing, cursor)
         if found < 0:
             return False
+        while opaque_index < len(opaque_spans) and opaque_spans[opaque_index][1] <= found:
+            opaque_index += 1
+        if (opaque_index < len(opaque_spans)
+                and opaque_spans[opaque_index][0] <= found < opaque_spans[opaque_index][1]):
+            cursor = opaque_spans[opaque_index][1]
+            balanced_literal_open = None
+            continue
         before = text[found - 1] if found else ""
         after = text[found + 1] if found + 1 < len(text) else ""
         if closing in ("'", "\u2019") and before.isalnum() and after.isalnum():
@@ -827,6 +880,74 @@ def _has_later_external_quote_close(text: str, closing: str, start: int) -> bool
         cursor = found + 1
 
 
+def _typed_literal_spans(
+        text: str, start: int, code_spans: list[tuple[int, int]],
+        context_spans: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    """Find complete, explicitly typed quote objects without inspecting their payload."""
+    pairs = {'"': '"', "'": "'", "\u201c": "\u201d", "\u2018": "\u2019"}
+    context = re.compile(r"\b(?:the\s+)?(?:word|literal)\s*$", re.I)
+    spans: list[tuple[int, int]] = []
+    code_index = 0
+    index = start
+    while index < len(text):
+        while code_index < len(code_spans) and code_spans[code_index][1] <= index:
+            code_index += 1
+        if (code_index < len(code_spans)
+                and code_spans[code_index][0] <= index < code_spans[code_index][1]):
+            index = code_spans[code_index][1]
+            continue
+        closing = pairs.get(text[index])
+        if closing is None:
+            index += 1
+            continue
+        prior_code_spans = [(a, min(b, index)) for a, b in code_spans if a < index]
+        masked = _mask_quoted_context(
+            text[:index], prior_code_spans + context_spans + spans)
+        if context.search(masked.rstrip()) is None:
+            index += 1
+            continue
+        close = _find_typed_literal_close(text, closing, index + 1, code_spans)
+        if close < 0:
+            index += 1
+            continue
+        spans.append((index, close + 1))
+        index = close + 1
+    return spans
+
+
+def _find_typed_literal_close(
+        text: str, closing: str, start: int,
+        code_spans: list[tuple[int, int]]) -> int:
+    cursor = start
+    code_index = 0
+    while cursor < len(text):
+        while code_index < len(code_spans) and code_spans[code_index][1] <= cursor:
+            code_index += 1
+        if (code_index < len(code_spans)
+                and code_spans[code_index][0] <= cursor < code_spans[code_index][1]):
+            cursor = code_spans[code_index][1]
+            continue
+        found = text.find(closing, cursor)
+        if found < 0:
+            return -1
+        while code_index < len(code_spans) and code_spans[code_index][1] <= found:
+            code_index += 1
+        if (code_index < len(code_spans)
+                and code_spans[code_index][0] <= found < code_spans[code_index][1]):
+            cursor = code_spans[code_index][1]
+            continue
+        before = text[found - 1] if found else ""
+        after = text[found + 1] if found + 1 < len(text) else ""
+        if closing in ("'", "\u2019") and before.isalnum() and after.isalnum():
+            cursor = found + 1
+            continue
+        if (_has_external_quote_close_token(text, found + 1)
+                or _has_external_quote_close_before(text, found)):
+            return found
+        cursor = found + 1
+    return -1
+
+
 def _has_outer_quote_close_proof(
         text: str, closing: str, opening: int, candidate: int,
         prior_spans: list[tuple[int, int]], reported: bool, ambiguous: bool) -> bool:
@@ -840,9 +961,13 @@ def _has_outer_quote_close_proof(
         direct_claim_boundary = _has_direct_assertion_after_quote(text, candidate + 1)
         typed_literal_boundary = _has_typed_literal_context_after_quote(
             text, opening, candidate, prior_spans)
+        typed_literal_boundary = (
+            typed_literal_boundary
+            or _has_typed_literal_context_before_quote(text, opening, prior_spans))
     if not (external_boundary or direct_claim_boundary or typed_literal_boundary):
         return False
-    return not _has_later_external_quote_close(text, closing, candidate)
+    return not _has_later_external_quote_close(
+        text, closing, candidate, opening, prior_spans)
 
 
 def _has_reported_quote_introducer(
