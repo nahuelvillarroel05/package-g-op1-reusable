@@ -40,7 +40,7 @@ remain separate work. See the third-review handoff for exact candidate reference
 
 New normalized instance audits use `pgop1.swebench.audit-contract.v2` and
 `pgop1.swebench.source-bound-normalization.v3`; MiniSwe JSON parser version is
-`1.7.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
+`1.9.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
 both markers while normalization v3 remains also fails. An explicit legacy
 storage opt-in exposes byte integrity and `DERIVATION_NOT_VERIFIED`, never new
 semantic approval. Exact batch storage contracts cannot be used for instances.
@@ -145,6 +145,14 @@ All prior operational, authenticity, Windows-only and bounded-language limits re
 
 Candidate `4532f1985a4f00a25036fb8311ee1fab49a3c3bf` was rejected by actual Astra review.
 Closes adjacent possessive quote-scope bypass A-007 and internal S-003 numeric-unit, decade and English case-equivalent quote ambiguity through the shared bounded closure proof. Source bytes and character/UTF-8 offsets remain original.
+Original negative reports and source commits are preserved. This repair requires
+independent review of its next exact frozen Git identity; no PASS is predeclared.
+All prior operational, authenticity, Windows-only and bounded-language limits remain.
+
+## Independent round-005 and prospective parser 1.9.0
+
+Candidate `507acbbca78f6237c34b89e6b1b772206fca9d57` was rejected by actual Astra review.
+Repairs A-008 lexical elisions through a shared non-recursive quote-close proof for reported and standalone text. Preserves typed literal objects, direct assertions, balanced later quote objects, correction history, masked report headers and prior A-007/S-003 protections.
 Original negative reports and source commits are preserved. This repair requires
 independent review of its next exact frozen Git identity; no PASS is predeclared.
 All prior operational, authenticity, Windows-only and bounded-language limits remain.

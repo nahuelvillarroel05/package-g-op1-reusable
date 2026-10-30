@@ -154,7 +154,7 @@ def test_later_direct_own_correction_still_supersedes_prior_negative(tmp_path: P
 
 
 def test_trajectory_parser_version_is_bumped_for_round004_quote_scope() -> None:
-    assert PARSER_VERSIONS[TRAJECTORY] == "1.7.0"
+    assert PARSER_VERSIONS[TRAJECTORY] == "1.9.0"
 
 
 NUMERIC_QUOTE_AMBIGUITIES = [

@@ -49,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.7.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.9.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -702,7 +702,7 @@ def _quoted_spans(text: str) -> list[tuple[int, int]]:
         if closing is None or (opening == "'" and index and text[index - 1].isalnum()):
             index += 1
             continue
-        end = _find_quote_close(text, closing, index + 1, index)
+        end = _find_quote_close(text, closing, index + 1, index, spans)
         if end < 0:
             spans.append((index, len(text)))
             break
@@ -711,23 +711,136 @@ def _quoted_spans(text: str) -> list[tuple[int, int]]:
     return sorted(spans)
 
 
-def _possessive_quote_continuation_is_ambiguous(text: str, start: int) -> bool:
-    """Keep a possessive quote open unless following punctuation proves closure."""
+def _has_external_quote_close_token(text: str, start: int) -> bool:
     while start < len(text) and text[start].isspace():
         start += 1
     if start >= len(text):
+        return True
+    if text[start] not in ".!?;:":
         return False
-    if text[start] in ".!?;:":
-        token_end = start + 1
-        return token_end < len(text) and not text[token_end].isspace()
-    # Only a single external terminal mark followed by whitespace can prove
-    # closure. Commas, closers, wrappers, and unfamiliar continuations remain
-    # ambiguous; punctuation within a wrapper is not an outer boundary.
-    return True
+    end = start + 1
+    return end == len(text) or text[end].isspace()
 
 
-def _find_quote_close(text: str, closing: str, start: int, opening: int) -> int:
+def _last_external_clause_start(text: str) -> int:
+    clause_start = 0
+    for index, character in enumerate(text):
+        if (character in ".?!;"
+                and (index == 0 or text[index - 1] not in ".?!;:")
+                and _has_external_quote_close_token(text, index)):
+            clause_start = index + 1
+    return clause_start
+
+
+def _has_external_quote_close_before(text: str, closing: int) -> bool:
+    if closing <= 0 or text[closing - 1] not in ".!?;:":
+        return False
+    punctuation = closing - 1
+    if punctuation > 0 and text[punctuation - 1] in ".!?;:":
+        return False
+    after = closing + 1
+    return after == len(text) or text[after].isspace() or text[after] in ".!?;:"
+
+
+def _has_direct_assertion_after_quote(text: str, start: int) -> bool:
+    while start < len(text) and text[start].isspace():
+        start += 1
+    prefix = _DIRECT_ASSERTION_PREFIX.match(text, start)
+    if prefix:
+        start = prefix.end()
+    patterns = (
+        ("TASK_RESOLVED", _TASK_RESOLVED),
+        ("TASK_COMPLETED", _COMPLETED),
+        ("ISSUE_RESOLVED", _ISSUE_RESOLVED),
+        ("TASK_RESOLVED", _TASK_NEGATIVE),
+        ("TASK_COMPLETED", _TASK_COMPLETED_NEGATIVE),
+        ("ISSUE_RESOLVED", _ISSUE_NEGATIVE),
+    )
+    return any(
+        (match := pattern.match(text, start)) is not None
+        and re.fullmatch(r"\s*[.!?;,:]*\s*", text[match.end():])
+        for predicate, pattern in patterns
+    )
+
+
+def _has_typed_literal_context_after_quote(
+        text: str, opening: int, closing: int, prior_spans: list[tuple[int, int]]) -> bool:
+    context_prefix = _mask_quoted_context(text[:opening], prior_spans)
+    clause_start = _last_external_clause_start(context_prefix)
+    patterns = (
+        ("TASK_RESOLVED", _TASK_RESOLVED),
+        ("TASK_COMPLETED", _COMPLETED),
+        ("ISSUE_RESOLVED", _ISSUE_RESOLVED),
+        ("TASK_RESOLVED", _TASK_NEGATIVE),
+        ("TASK_COMPLETED", _TASK_COMPLETED_NEGATIVE),
+        ("ISSUE_RESOLVED", _ISSUE_NEGATIVE),
+    )
+    for predicate, pattern in patterns:
+        for match in pattern.finditer(text, closing + 1):
+            prefix = text[clause_start:match.start()]
+            if (_NEUTRAL_ASSERTION_PREFIX.fullmatch(prefix)
+                    and re.fullmatch(r"\s*[.!?;,:]*\s*", text[match.end():])):
+                return True
+    return False
+
+
+def _has_later_external_quote_close(text: str, closing: str, start: int) -> bool:
+    cursor = start + 1
+    while True:
+        found = text.find(closing, cursor)
+        if found < 0:
+            return False
+        before = text[found - 1] if found else ""
+        after = text[found + 1] if found + 1 < len(text) else ""
+        if closing in ("'", "\u2019") and before.isalnum() and after.isalnum():
+            cursor = found + 1
+            continue
+        if not before.isalnum():
+            nested_close = found + 1
+            while True:
+                candidate = text.find(closing, nested_close)
+                if candidate < 0:
+                    nested_close = -1
+                    break
+                nested_before = text[candidate - 1] if candidate else ""
+                nested_after = text[candidate + 1] if candidate + 1 < len(text) else ""
+                if (closing in ("'", "\u2019")
+                        and nested_before.isalnum() and nested_after.isalnum()):
+                    nested_close = candidate + 1
+                    continue
+                if (not nested_after.isalnum()
+                        and not _has_external_quote_close_before(text, candidate)):
+                    nested_close = candidate
+                    break
+                nested_close = candidate + 1
+            if nested_close >= 0:
+                cursor = nested_close + 1
+                continue
+        if (_has_external_quote_close_token(text, found + 1)
+                or _has_external_quote_close_before(text, found)):
+            return True
+        cursor = found + 1
+
+
+def _has_reported_quote_introducer(
+        text: str, opening: int, prior_spans: list[tuple[int, int]]) -> bool:
+    prefix = _mask_quoted_context(text[:opening], prior_spans)
+    header_end = len(prefix.rstrip())
+    if (header_end and prefix[header_end - 1] == ":"
+            and _REPORTED_PREFIX.search(prefix[:header_end])):
+        # A colon-introduced reported frame keeps its scope through data
+        # punctuation inside the header (for example, an abbreviated title).
+        return True
+    clause_start = _last_external_clause_start(prefix)
+    return bool(_REPORTED_PREFIX.search(prefix[clause_start:]))
+
+
+def _find_quote_close(text: str, closing: str, start: int, opening: int,
+                      prior_spans: list[tuple[int, int]]) -> int:
     cursor = start
+    pending_elision_start: int | None = None
+    ambiguous_elision_context = False
+    reported_quote_context = _has_reported_quote_introducer(text, opening, prior_spans)
     while True:
         found = text.find(closing, cursor)
         if found < 0:
@@ -735,6 +848,82 @@ def _find_quote_close(text: str, closing: str, start: int, opening: int) -> int:
         before = text[found - 1] if found else ""
         after = text[found + 1] if found + 1 < len(text) else ""
         if closing in ("'", "\u2019") and before.isalnum() and after.isalnum():
+            cursor = found + 1
+            continue
+        if closing in ("'", "\u2019"):
+            if (pending_elision_start is not None and before.isalpha() and not after.isalnum()
+                    and all(char.isalpha() for char in text[pending_elision_start + 1:found])):
+                # A paired lexical apostrophe such as rock 'n' roll is data
+                # inside the already-open report, not its closing boundary.
+                pending_elision_start = None
+                ambiguous_elision_context = True
+                cursor = found + 1
+                continue
+            if reported_quote_context:
+                token = (text[pending_elision_start + 1:found]
+                         if pending_elision_start is not None else "")
+                if pending_elision_start is not None and not all(
+                        char.isalpha() or char.isspace() for char in token):
+                    # A markup or punctuation-bearing continuation cannot be
+                    # promoted to an outer close by its own trailing semicolon.
+                    pending_elision_start = None
+                    ambiguous_elision_context = True
+                    cursor = found + 1
+                    continue
+                if (_has_external_quote_close_token(text, found + 1)
+                        or _has_external_quote_close_before(text, found)):
+                    if (before.isalpha() or before.isnumeric()) and _has_later_external_quote_close(text, closing, found):
+                        ambiguous_elision_context = True
+                        cursor = found + 1
+                        continue
+                    return found
+                if not before.isalnum():
+                    pending_elision_start = found
+                ambiguous_elision_context = True
+                cursor = found + 1
+                continue
+            if ambiguous_elision_context:
+                if _has_external_quote_close_token(text, found + 1):
+                    return found
+                if not before.isalnum():
+                    pending_elision_start = found
+                cursor = found + 1
+                continue
+            if (_has_external_quote_close_token(text, found + 1)
+                    or _has_external_quote_close_before(text, found)):
+                return found
+            if before.isalnum():
+                if _has_direct_assertion_after_quote(text, found + 1):
+                    return found
+                if _has_typed_literal_context_after_quote(
+                        text, opening, found, prior_spans):
+                    return found
+                if _has_later_external_quote_close(text, closing, found):
+                    # Keep an ambiguous internal apostrophe from taking the
+                    # outer close when a later, externally bounded close exists.
+                    ambiguous_elision_context = True
+                    cursor = found + 1
+                    continue
+                # A standalone word-final apostrophe without a complete
+                # continuation proof remains ambiguous.
+                ambiguous_elision_context = True
+                cursor = found + 1
+                continue
+            # Apostrophes before words or markup can introduce elided
+            # lexical content. An unfamiliar continuation is not proof
+            # that this or a later apostrophe closes the outer report.
+            pending_elision_start = found
+            ambiguous_elision_context = True
+            cursor = found + 1
+            continue
+        if reported_quote_context and closing not in ("'", "\u2019"):
+            if (_has_external_quote_close_token(text, found + 1)
+                    or _has_external_quote_close_before(text, found)):
+                if ((before.isalpha() or before.isnumeric())
+                        and _has_later_external_quote_close(text, closing, found)):
+                    cursor = found + 1
+                    continue
+                return found
             cursor = found + 1
             continue
         # The apostrophe before a decade digit is an opening-style mark, not
@@ -751,7 +940,7 @@ def _find_quote_close(text: str, closing: str, start: int, opening: int) -> int:
             lookahead = found + 1
             while lookahead < len(text) and text[lookahead].isspace():
                 lookahead += 1
-            if _possessive_quote_continuation_is_ambiguous(text, lookahead):
+            if not _has_external_quote_close_token(text, lookahead):
                 # Preserve the quoted frame until a clear external boundary.
                 lead = text[:opening]
                 if not re.search(r"\bthe\s+(?:word|literal)\s*$", lead, re.I):

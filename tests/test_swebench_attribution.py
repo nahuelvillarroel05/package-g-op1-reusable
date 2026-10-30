@@ -145,7 +145,7 @@ def test_legacy_miniswe_fails_closed_on_code_nested_payload_unscoped_agent_and_e
     descriptor["instance_id"] = INSTANCE
     parsed = audit_file(tmp_path, {**descriptor, "run_id": RUN})
     assert parsed["status"] == "SUPPORTED"
-    assert parsed["source_ref"]["parser_version"] == "1.7.0"
+    assert parsed["source_ref"]["parser_version"] == "1.9.0"
     assert parsed["normalization_schema"] == "pgop1.swebench.source-bound-normalization.v3"
     result = audit_evidence(tmp_path, {"run_id": RUN, "instance_id": INSTANCE,
                                        "evidence": [descriptor]})

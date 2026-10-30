@@ -3,12 +3,12 @@
 Updated 2026-10-29. Mutable index, not primary authority. Read [AGENTS.md](AGENTS.md)
 and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence prevail.
 
-## Second Sonnet convergence (2026-10-29)
+## Second Sonnet convergence (2026-10-30)
 
-Actual independent round-004 rejected `4532f1985a4f00a25036fb8311ee1fab49a3c3bf`; original negative
+Actual independent round-005 rejected `507acbbca78f6237c34b89e6b1b772206fca9d57`; original negative
 reports and all prior rejected candidates remain preserved. Prospective MiniSwe
-parser1.7.0: Closes adjacent possessive quote-scope bypass A-007 and internal S-003 numeric-unit, decade and English case-equivalent quote ambiguity through the shared bounded closure proof. Source bytes and character/UTF-8 offsets remain original.
-Fresh repaired adapter regression 584 PASS.331-core PASS retained on
+parser1.9.0: Repairs A-008 lexical elisions through a shared non-recursive quote-close proof for reported and standalone text. Preserves typed literal objects, direct assertions, balanced later quote objects, correction history, masked report headers and prior A-007/S-003 protections.
+Fresh repaired adapter regression 628 PASS.331-core PASS retained on
 identical source/test/config from62b38f2, not freshly rerun. Exact next commit/tree
 requires its separate receipt and an independent expanded Astra re-audit.
 No PASS, publication or general semantic accuracy is predeclared.
