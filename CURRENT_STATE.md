@@ -5,21 +5,23 @@ and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence p
 
 ## Second Sonnet convergence (2026-10-29)
 
-Prospective engineering addresses Owner-supplied N-01..N-10 against `e0115476`.
-The full second external report was unavailable; no missing detail is inferred.
-Experimental branch: `feat/pgop1-second-sonnet-remediation-001`.
-New extraction uses bounded direct English assertion context, original UTF-8 spans,
-explicit correction history, active contradiction qualifiers and nested exclusion
-hash ledgers. Audit-contract v2 / normalization v3 requires derivation markers;
-historical receipt reading retains byte/derivation/authentication distinctions.
-PID validation, stable campaign locks and caller-supplied review metadata have
-prospective tests. Frozen components and prior evidence remain unchanged.
+Original review target: `e0115476`. First prospective candidate `62b38f2` was
+rejected by actual expanded Astra audit: four material findings A-001..A-004.
+The original negative report and bytes remain preserved. Prospective MiniSwe
+parser 1.3.0 repairs outer-clause scope, multiline framing, temporal supersession
+and Markdown fence closure; it retains normalization v3/audit-contract v2.
+Internal review passed 101 independent checks; repaired adapter suites passed
+472 fresh tests. Historical core331 PASS is retained with unchanged
+source/test/config bytes, not presented as a fresh repaired-candidate rerun.
+New frozen commit identity and independent re-audit require separate exact receipts;
+no independent PASS or publication is predeclared here.
 
-Internal review and current-candidate regression receipts are external engineering
-evidence, separate from the historical 312 PASS below. Independent expanded Astra
-review and publication require exact frozen Git identity; no PASS is inferred here.
-See [contracts](docs/audits/SECOND_SONNET_CONTRACTS.md) and
-[next action](docs/engineering/NEXT_STEP.md).
+Branch: `feat/pgop1-second-sonnet-remediation-001`. See
+[contracts](docs/audits/SECOND_SONNET_CONTRACTS.md) and
+[next action](docs/engineering/NEXT_STEP.md). Full second external Sonnet report
+was unavailable; Owner N-01..N-10 details control reproduction. Canonical MiniSwe
+roles/evaluator files remain source-declared and unauthenticated. Deep coordination
+can fail closed with a processing error. No general semantic accuracy claim.
 `SONNET_THIRD_EXTERNAL_AUDIT=PENDING`; `F16=DEFERRED_LINUX_VALIDATION_PENDING`;
 `GATE_11=BLOCKED`; `RUN_002=NOT_READY`;
 `INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`. No mass campaign or RUN-002 execution.

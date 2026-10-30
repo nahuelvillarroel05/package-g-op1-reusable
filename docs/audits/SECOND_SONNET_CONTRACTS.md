@@ -40,7 +40,7 @@ remain separate work. See the third-review handoff for exact candidate reference
 
 New normalized instance audits use `pgop1.swebench.audit-contract.v2` and
 `pgop1.swebench.source-bound-normalization.v3`; MiniSwe JSON parser version is
-`1.2.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
+`1.3.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
 both markers while normalization v3 remains also fails. An explicit legacy
 storage opt-in exposes byte integrity and `DERIVATION_NOT_VERIFIED`, never new
 semantic approval. Exact batch storage contracts cannot be used for instances.
@@ -84,3 +84,31 @@ exclusive maintenance. A dead-owner resume still checks journals and commitments
 neither PID age nor process death grants redispatch authority. Linux qualification
 is pending. Caller-supplied review metadata remains `NOT_INDEPENDENTLY_VERIFIED`
 and `NOT_CRYPTOGRAPHICALLY_AUTHENTICATED`.
+
+## Expanded independent audit and prospective repair
+
+The initial candidate `62b38f2b9d9535ddc5652d4f91e1beadb443e643` was rejected by
+expanded independent Astra review: A-001 outer-clause scope, A-002 multiline
+framing, A-003 cross-time supersession, A-004 Markdown fence closure. Its negative
+report and original bytes remain preserved. This prospective repair is subject to
+a new independent audit; this paragraph does not predeclare its acceptance.
+
+Parser 1.3.0 admits typed complete unrelated clauses, preserves report/example/
+conditional colon blocks across interior punctuation and blank lines, and keeps
+ordinary correction words inside an unclosed report frame. Quoted text and fence
+scope use original source positions. A closing fence must have a matching marker
+and sufficient length with only optional whitespace. Conjunctions retain direct
+opposite/noncomparable claims; reported or conditional conjunctions do not acquire
+agent attribution merely from an `and` boundary.
+
+Correction supersession compares explicit local temporal labels in both prefix
+and postfix positions, including within one message. Incompatible or one-sided
+historical scopes do not silently supersede. Unqualified current-to-now corrections
+remain available. No absolute calendar date or independently adjudicated temporal
+truth is inferred from those labels.
+
+The 16 KiB claim-text byte cap is not a guarantee of arbitrary grammatical depth.
+A measured 600-clause/14,395-byte coordination returns PARSER_INTERNAL_ERROR from
+file processing and final VERIFICATION_ERROR with zero claims at the audit API.
+This is an explicit fail-closed complexity limitation; it is not semantic absence
+or a successful verdict. General semantic precision and recall remain unproven.

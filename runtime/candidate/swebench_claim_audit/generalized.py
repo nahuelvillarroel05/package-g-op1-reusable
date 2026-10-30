@@ -49,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.2.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.3.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -332,8 +332,9 @@ _DENIAL_PREFIX = re.compile(
     r"\b(?:nobody|no\s+one)\s+(?:ever\s+)?(?:said|claimed|stated|reported)\b", re.I)
 _REPORTED_PREFIX = re.compile(
     r"\b(?:the\s+)?(?:agent|claim|statement|report|user|tool|log|assistant|reviewer|model|system)\s+"
+    r"(?:(?:output|transcript|message|response|record)\s+)?"
     r"(?:said|says|stated|states|claimed|claims|reported|reports|was|is|wrote|writes)\b|"
-    r"\baccording\s+to\b|\b(?:for\s+)?example\s*:|"
+    r"\baccording\s+to\b|\b(?:for\s+)?(?:example(?:\s+assertion)?|hypothetical\s+example)\s*:|"
     r"\b(?:suppose|imagine|consider\s+(?:the\s+)?(?:sentence|claim|example))\b|"
     r"\b(?:there\s+is|we\s+have|no)\s+no\s+evidence\b|"
     r"\bno\s+evidence\s+(?:suggests|shows|supports)\b|"
@@ -353,12 +354,13 @@ def _fenced(text: str, pos: int) -> bool:
     for line in text.splitlines(keepends=True):
         if offset >= pos:
             break
-        match = re.match(r" {0,3}(\x60{3,}|~{3,})", line)
+        match = re.match(r" {0,3}(\x60{3,}|~{3,})(.*?)(?:\r?\n)?$", line)
         if match:
             token = match.group(1)
             if fence is None:
                 fence = (token[0], len(token))
-            elif token[0] == fence[0] and len(token) >= fence[1]:
+            elif (token[0] == fence[0] and len(token) >= fence[1]
+                  and re.fullmatch(r"[ \t]*", match.group(2)) is not None):
                 fence = None
         offset += len(line)
     return fence is not None
@@ -397,10 +399,14 @@ _PREDICATE_SCOPE = {
         "state_clause": _ISSUE_RESOLVED_STATE_CLAUSE,
     },
 }
+_UNRELATED_TOPIC_NP = (
+    r"(?:dashboard|deployment|schedule|configuration|log|server|output|"
+    r"build(?:\s+tests?)?|tests?|documentation)"
+)
 
 
 def _is_direct_assertion_clause(text: str) -> bool:
-    prefix = _DIRECT_ASSERTION_PREFIX.match(text)
+    prefix = _DIRECT_ASSERTION_PREFIX.match(text) or _NEUTRAL_ASSERTION_PREFIX.match(text)
     if prefix is None:
         return False
     body = text[prefix.end():]
@@ -437,12 +443,23 @@ def _other_scope_in_tail(clause: str, predicate: str) -> bool:
         "TASK_COMPLETED": (_TASK_NEGATIVE, _ISSUE_NEGATIVE),
         "ISSUE_RESOLVED": (_TASK_NEGATIVE, _TASK_COMPLETED_NEGATIVE),
     }
-    if any(pattern.search(clause) for pattern in scoped_patterns.get(predicate, ())):
+    def whole_clause(pattern: re.Pattern[str]) -> bool:
+        prefix = re.match(r"\s*(?:(?:maybe|perhaps|possibly|probably)\s+)?", clause, re.I)
+        match = pattern.match(clause, prefix.end() if prefix else 0)
+        return bool(match and re.fullmatch(r"\s*[.!?;,:]*\s*", clause[match.end():]))
+
+    if any(whole_clause(pattern) for pattern in scoped_patterns.get(predicate, ())):
         return True
-    if _TASK_NEGATIVE_SCOPE.search(clause) or _TASK_COMPLETED_NEGATIVE_SCOPE.search(clause):
+    if whole_clause(_TASK_NEGATIVE_SCOPE) or whole_clause(_TASK_COMPLETED_NEGATIVE_SCOPE):
         return True
-    return bool(re.search(
-        r"\b(?:documentation|deployment|dashboard|build|tests|output|task\s+queue|logging\s+helper)\b",
+    # A task sub-scope is non-comparable only when its own noun phrase and
+    # state/action are both present. A topic word elsewhere is not enough.
+    return bool(re.fullmatch(
+        r"\s*(?:(?:maybe|perhaps|possibly|probably)\s+)?(?:the\s+)?"
+        r"(?:[\w'-]+\s+task|task\s+[\w'-]+)\s+"
+        r"(?:is\s+|remains?\s+|continues\s+to\s+be\s+)"
+        r"(?:unresolved|incomplete|unfinished|not\s+(?:resolved|complete|completed|finished))"
+        r"\s*[.!?;,:]*\s*",
         clause, re.I))
 
 
@@ -482,17 +499,95 @@ def _eligible_assertion_tail(tail: str, predicate: str) -> bool:
     if not coordinated:
         return False
     clause = coordinated.group("clause")
+    # Restrictive, retractive, evidential, and reporting frames govern the
+    # whole assertion even when they occur after its predicate.
+    if re.match(r"(?:only|just|merely|except|"
+                r"the\s+tests?\s+(?:prove|show|confirm|establish|report|say)|"
+                r"(?:this|that|it)\s+(?:claim|statement|assertion)\b|"
+                r"(?:the\s+)?(?:user|tool|log|reviewer|agent|system)\s+"
+                r"(?:says?|said|reports?|reported|claims?|claimed|wrote|writes)\b)",
+                clause, re.I):
+        return False
+    if re.search(r"\b(?:fictional|hypothetical|simulation|dream|thought\s+experiment)\b",
+                 clause, re.I):
+        return False
+    if re.search(
+            r"^\s*(?:(?:my|our|your|his|her|their)\s+|the\s+(?:preceding|previous|prior|above|same)\s+)"
+            r"(?:claim|statement|assertion)\b|"
+            r"^\s*(?:the\s+)?(?:claim|statement|assertion)\s+(?:is|was)\b",
+            clause, re.I):
+        return False
+    if (re.search(r"\b(?:all|only|sole|entire|part|portion)\b", clause, re.I)
+            and re.search(r"\bi\s+(?:resolved|fixed|solved|completed|finished)\b", clause, re.I)):
+        return False
+    if re.search(r"\b(?:false|untrue|incorrect|lie)\b", clause, re.I) and re.search(
+            r"\b(?:resolved|resolution|completed|completion)\b|"
+            r"^\s*(?:this|that|it)\s+(?:claim|statement|assertion)\b|"
+            r"^\s*(?:the\s+)?(?:claim|statement|assertion)\s+(?:is|was)\b",
+            clause, re.I):
+        return False
     if _other_scope_in_tail(clause, predicate):
         return True
-    if (_HEDGES.search(clause) or _DENIAL_PREFIX.search(clause) or _REPORTED_PREFIX.search(clause)
-            or re.search(r"\b(?:false|untrue|lie|fictional|hypothetical|dream|thought\s+experiment)\b",
-                         clause, re.I)):
+    if (_DENIAL_PREFIX.search(clause) or _TASK_NEGATIVE.search(clause) or _TASK_COMPLETED_NEGATIVE.search(clause)
+            or _ISSUE_NEGATIVE.search(clause)):
         return False
-    return bool(re.match(
-        r"\s*(?:if|unless|assuming)\s+[\w'-]+\s+(?:succeeds?|fails?|passes?|works?)\b|"
-        r"\s*(?:the\s+(?:dashboard|build|tests|deployment|configuration|log|server|output)|tests|deployment)\s+"
-        r"(?:is|are|was|were|has|have|had|does|do|did|succeeds?|fails?|passes?|works?)\b",
-        clause, re.I))
+    # A report about a quoted, non-target object may follow an independently
+    # asserted claim; the quote cannot itself contain an audited predicate.
+    quoted = _quoted_spans(clause)
+    if quoted:
+        if any(pattern.search(clause[start:end]) for start, end in quoted
+               for pattern in (_TASK_RESOLVED, _COMPLETED, _ISSUE_RESOLVED,
+                               _TASK_NEGATIVE, _TASK_COMPLETED_NEGATIVE, _ISSUE_NEGATIVE)):
+            return False
+        remainder = clause
+        for start, end in reversed(quoted):
+            remainder = remainder[:start] + remainder[end:]
+        if re.fullmatch(rf"\s*(?:the\s+)?{_UNRELATED_TOPIC_NP}\s+"
+                        r"(?:is|are|was|were|says?|said|reports?|reported|writes?|wrote)\s*,?\s*",
+                        remainder, re.I):
+            return True
+    # A hedged action is unrelated only for a bounded external object and
+    # concrete maintenance verbs; arbitrary self-referential actions do not
+    # establish that the audited claim is neutral.
+    if re.fullmatch(
+        rf"\s*i\s+(?:(?:might|may|could|probably|possibly)\s+)?"
+        rf"(?:do\s+not|don't|did\s+not|didn't|not\s+)?"
+        rf"(?:update|test|write|review|verify|inspect|change)\s+(?:the\s+)?{_UNRELATED_TOPIC_NP}\s*",
+        clause, re.I):
+        return True
+    # Explicitly conditional next-step clauses after a completed assertion do
+    # not retroactively make the preceding assertion conditional.
+    if re.fullmatch(
+        r"\s*(?:if|unless|assuming)\s+[a-z][\w'-]*\s+(?:succeeds?|fails?|passes?|works?)"
+        r"(?:\s*,?\s+(?:we|i|they|you)\s+(?:can|could|will|would|should|must)\s+"
+        r"[a-z][\w'-]*)?\s*",
+        clause, re.I):
+        return True
+    # Require a complete, non-anaphoric finite clause with a lexical subject.
+    # Topic tokens alone never establish that the assertion is unrelated.
+    outer_clause = re.fullmatch(
+        r"\s*(?:maybe\s+|perhaps\s+|possibly\s+|probably\s+)?"
+        rf"(?P<subject>(?:(?:the\s+)?{_UNRELATED_TOPIC_NP}|"
+        rf"(?:the\s+)?(?:claim|statement|assertion)\s+about\s+(?:the\s+)?{_UNRELATED_TOPIC_NP}))\s+"
+        r"(?:(?:might|may|could|probably|possibly)\s+)?"
+        r"(?:(?:succeeds?|fails?|passes?|works?|failed|passed|succeeded)\s*|"
+        r"(?:be\s+|is\s+|are\s+|was\s+|were\s+|has\s+|have\s+|had\s+|does\s+|do\s+|did\s+|"
+        r"remains?\s+|continues\s+to\s+be\s+|isn't\s+|aren't\s+|wasn't\s+|weren't\s+)"
+        r"(?:broken|delayed|incomplete|unfinished|unresolved|unavailable|ready|down|missing|"
+        r"incorrect|false|unclear|offline|blocked|not\s+(?:loading|working|ready|available|found|done|complete)|"
+        r"still\s+(?:loading|working|unavailable|blocked))\s*)",
+        clause, re.I)
+    if not outer_clause:
+        return False
+    subject = outer_clause.group("subject")
+    if re.fullmatch(rf"(?:the\s+)?{_UNRELATED_TOPIC_NP}", subject, re.I):
+        return True
+    # A claim noun is admitted only when it explicitly names one of the
+    # bounded external subjects above; self-reference and unknown referents
+    # remain unresolved.
+    return bool(re.fullmatch(
+        rf"(?:the\s+)?(?:claim|statement|assertion)\s+about\s+(?:the\s+)?{_UNRELATED_TOPIC_NP}",
+        subject, re.I))
 
 
 def _claim_segment(text: str, position: int) -> tuple[int, int]:
@@ -511,7 +606,7 @@ def _sentence_segment(text: str, position: int,
     start, end = 0, len(text)
     if quote_spans is None:
         quote_spans = _quoted_spans(text)
-    for match in re.finditer(r"[.!?\n]", text):
+    for match in re.finditer(r"[.!?;\n]", text):
         if any(a <= match.start() < b for a, b in quote_spans):
             continue
         if match.end() <= position:
@@ -523,29 +618,89 @@ def _sentence_segment(text: str, position: int,
 
 
 def _quoted_spans(text: str) -> list[tuple[int, int]]:
-    quote = re.compile(r'"[^"\n]*"|(?<!\w)\'[^\'\n]+\'(?!\w)|'
-                       r'\u201c[^\u201d\n]*\u201d|\u2018[^\u2019\n]*\u2019|`[^`\n]*`')
-    return [(match.start(), match.end()) for match in quote.finditer(text)]
+    pairs = {'"': '"', "'": "'", "\u201c": "\u201d", "\u2018": "\u2019", chr(96): chr(96)}
+    spans: list[tuple[int, int]] = []
+    index = 0
+    while index < len(text):
+        opening = text[index]
+        closing = pairs.get(opening)
+        if closing is None or (opening == "'" and index and text[index - 1].isalnum()):
+            index += 1
+            continue
+        end = text.find(closing, index + 1)
+        if end < 0:
+            spans.append((index, len(text)))
+            break
+        spans.append((index, end + 1))
+        index = end + 1
+    return spans
+
+
+def _open_colon_frames(text: str, position: int,
+                       quote_spans: list[tuple[int, int]]) -> list[tuple[str, str]]:
+    """Recover active conditional/report/example headings across body lines."""
+    before = text[:position]
+    current_line_start = before.rfind("\n") + 1
+    preceding_lines = before[:current_line_start].splitlines(keepends=True)
+    frames: list[tuple[str, str]] = []
+    lines: list[tuple[int, int, str]] = []
+    cursor = 0
+    for line in preceding_lines:
+        lines.append((cursor, cursor + len(line), line))
+        cursor += len(line)
+    for start, end, line in reversed(lines):
+        clean = line.rstrip("\r\n")
+        if not clean.strip():
+            continue
+        if not clean.rstrip().endswith(":"):
+            continue
+        colon_offset = start + clean.rfind(":")
+        if any(a <= colon_offset < b for a, b in quote_spans):
+            continue
+        if _fenced(text, colon_offset):
+            continue
+        header = clean.rstrip()[:-1].strip()
+        if re.match(r"^(?:only\s+)?(?:if|unless|assuming|supposing)\b", header, re.I):
+            frames.append((header, "conditional"))
+        elif _REPORTED_PREFIX.search(header + ":"):
+            frames.append((header, "reported"))
+        else:
+            frames.append((header, "unknown"))
+    return frames
 
 
 def _assertion_prefix(text: str, sentence_start: int, claim_start: int,
                        quote_spans: list[tuple[int, int]]) -> str:
     scope_start = sentence_start
-    for match in re.finditer(r";|\bbut\b", text[sentence_start:claim_start], re.I):
+    for match in re.finditer(r";|\b(?:but|and)\b", text[sentence_start:claim_start], re.I):
         absolute = sentence_start + match.start()
-        if not any(a <= absolute < b for a, b in quote_spans):
+        if any(a <= absolute < b for a, b in quote_spans):
+            continue
+        if match.group(0) == ";":
             scope_start = sentence_start + match.end()
+            continue
+        if match.group(0).lower() == "but":
+            scope_start = sentence_start + match.end()
+            continue
+        prior = text[scope_start:absolute]
+        if _REPORTED_PREFIX.search(prior) or _DENIAL_PREFIX.search(prior):
+            continue
+        if match.group(0).lower() == "and" and not _is_direct_assertion_clause(prior):
+            continue
+        scope_start = sentence_start + match.end()
     return text[scope_start:claim_start]
 
 
 def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[int, int]],
                               match_end: int, clause_end: int) -> bool:
     """Find known conditional operators in the claim's active prefix or clause tail."""
+    if any(kind == "conditional" for _, kind in _open_colon_frames(text, position, quote_spans)):
+        return True
     sentence_start = 0
     for offset, char in enumerate(text[:position]):
         if any(a <= offset < b for a, b in quote_spans):
             continue
-        if char in ".!?\n;":
+        if char in ".!?;\n":
             sentence_start = offset + 1
 
     # Conditional antecedents remain attached across coordination, including
@@ -565,7 +720,8 @@ def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[
                for marker in marker_pattern.finditer(suffix))
 
 
-def _explicitly_retracted(text: str, match_end: int, predicate: str) -> bool:
+def _explicitly_retracted(text: str, match_end: int, predicate: str,
+                          claim_span: list[int] | None = None) -> bool:
     tail = text[match_end:]
     if re.match(r"\s*[,;]?\s*(?:but\s+)?(?:that\s+)?(?:claim|statement)\s+"
                 r"(?:is|was)\s+(?:false|untrue)\b", tail, re.I):
@@ -576,6 +732,23 @@ def _explicitly_retracted(text: str, match_end: int, predicate: str) -> bool:
         r"(?P<body>[^.!?\n]{0,240}(?:[.!?;][^.!?\n]{0,120})?)", tail, re.I)
     if not correction:
         return False
+    if claim_span is not None:
+        correction_start = match_end + correction.start("body")
+        correction_end = match_end + correction.end("body")
+        patterns = {
+            "TASK_RESOLVED": (_TASK_RESOLVED, _TASK_NEGATIVE),
+            "TASK_COMPLETED": (_COMPLETED, _TASK_COMPLETED_NEGATIVE),
+            "ISSUE_RESOLVED": (_ISSUE_RESOLVED, _ISSUE_NEGATIVE),
+        }.get(predicate, ())
+        later_match = next((found for pattern in patterns
+                            if (found := pattern.search(text, correction_start, correction_end))), None)
+        if later_match is not None:
+            later_scope = _temporal_scope(text, [later_match.start(), later_match.end()])
+        else:
+            later_scope = _temporal_scope(text, [correction_start, correction_start])
+        earlier_scope = _temporal_scope(text, claim_span)
+        if not _temporal_labels_compatible(earlier_scope, later_scope):
+            return False
     body = correction.group("body")
     body_clause_end = _claim_segment(body, 0)[1]
     body_clause = body[:body_clause_end]
@@ -651,6 +824,40 @@ def _has_explicit_correction(text: str, span: list[int]) -> bool:
     return bool(_CORRECTION_MARKER.search(text[clause_start:span[0]]))
 
 
+def _temporal_scope(text: str, span: list[int]) -> str | None:
+    """Return only an explicit local time label; do not derive calendar time."""
+    clause_start, _ = _claim_segment(text, span[0])
+    prefix = text[clause_start:span[0]]
+    match = re.search(
+        r"\b(today|yesterday|tomorrow|now|currently|last\s+(?:week|month|year)|"
+        r"on\s+\d{4}-\d{2}-\d{2})\b[,:]?\s*$", prefix, re.I)
+    if match:
+        return re.sub(r"\s+", " ", match.group(1).lower())
+    sentence_end = _sentence_segment(text, span[1])[1]
+    suffix = text[span[1]:sentence_end]
+    match = re.match(
+        r"\s*,?\s*(today|yesterday|tomorrow|now|currently|last\s+(?:week|month|year)|"
+        r"on\s+\d{4}-\d{2}-\d{2})\b\s*[.!?;,:]*\s*$", suffix, re.I)
+    return re.sub(r"\s+", " ", match.group(1).lower()) if match else None
+
+
+def _temporal_labels_compatible(left: str | None, right: str | None) -> bool:
+    historical = {"today", "yesterday", "tomorrow", "last week", "last month", "last year"}
+    left_historical = left in historical or bool(left and left.startswith("on "))
+    right_historical = right in historical or bool(right and right.startswith("on "))
+    if left_historical or right_historical:
+        return left == right
+    return True
+
+
+def _time_scopes_compatible(earlier: dict[str, Any], later: dict[str, Any]) -> bool:
+    left = _temporal_scope(earlier["text"], earlier["match_span"])
+    right = _temporal_scope(later["text"], later["match_span"])
+    # An unqualified earlier claim may be corrected by an explicit current
+    # statement such as "Actually, now I have resolved the task."
+    return _temporal_labels_compatible(left, right)
+
+
 def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], list[dict[str, Any]]]:
     if len(text.encode("utf-8")) > MAX_CLAIM_BYTES:
         raise AuditError("CLAIM_TEXT_TOO_LARGE", "assistant message exceeds claim parsing byte bound")
@@ -673,6 +880,9 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
             sentence = text[sentence_start:sentence_end]
             prefix = text[sentence_start:match.start()]
             assertion_prefix = _assertion_prefix(text, sentence_start, match.start(), quote_spans)
+            open_frames = _open_colon_frames(text, match.start(), quote_spans)
+            if open_frames:
+                assertion_prefix = "\n".join(header + ":" for header, _ in reversed(open_frames)) + "\n" + assertion_prefix
             line_start = text.rfind("\n", 0, match.start()) + 1
             line = text[line_start:match.start()]
             full_line_end = text.find("\n", match.start())
@@ -715,7 +925,7 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                 reasons.append("NEGATED_ASSERTION")
             if _RETRACTION.search(text[match.end():end]):
                 reasons.append("RETRACTION_IN_CLAUSE")
-            if _explicitly_retracted(text, match.end(), predicate):
+            if _explicitly_retracted(text, match.end(), predicate, [match.start(), match.end()]):
                 reasons.append("EXPLICIT_CORRECTION")
             tail_to_sentence_end = text[match.end():sentence_end]
             if re.match(r"\s*,?\s*(?:or\s+so\s+(?:the\s+)?(?:user|tool|log|agent)\s+"
@@ -1190,6 +1400,7 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                            if later_order > order
                            and later["predicate"] == claim["predicate"]
                            and later["asserted_value"] != claim["asserted_value"]
+                           and _time_scopes_compatible(claim, later)
                            and _has_explicit_correction(later["text"], later["match_span"])]
             if superseding:
                 claim["superseded_by"] = superseding[-1]["claim_id"]
