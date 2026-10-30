@@ -49,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.9.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.10.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -786,6 +786,11 @@ def _has_typed_literal_context_after_quote(
 
 def _has_later_external_quote_close(text: str, closing: str, start: int) -> bool:
     cursor = start + 1
+    balanced_literal_open: tuple[int, bool] | None = None
+    claim_patterns = (
+        _TASK_RESOLVED, _COMPLETED, _ISSUE_RESOLVED,
+        _TASK_NEGATIVE, _TASK_COMPLETED_NEGATIVE, _ISSUE_NEGATIVE,
+    )
     while True:
         found = text.find(closing, cursor)
         if found < 0:
@@ -795,31 +800,49 @@ def _has_later_external_quote_close(text: str, closing: str, start: int) -> bool
         if closing in ("'", "\u2019") and before.isalnum() and after.isalnum():
             cursor = found + 1
             continue
-        if not before.isalnum():
-            nested_close = found + 1
-            while True:
-                candidate = text.find(closing, nested_close)
-                if candidate < 0:
-                    nested_close = -1
-                    break
-                nested_before = text[candidate - 1] if candidate else ""
-                nested_after = text[candidate + 1] if candidate + 1 < len(text) else ""
-                if (closing in ("'", "\u2019")
-                        and nested_before.isalnum() and nested_after.isalnum()):
-                    nested_close = candidate + 1
-                    continue
-                if (not nested_after.isalnum()
-                        and not _has_external_quote_close_before(text, candidate)):
-                    nested_close = candidate
-                    break
-                nested_close = candidate + 1
-            if nested_close >= 0:
-                cursor = nested_close + 1
+        if balanced_literal_open is not None:
+            opener, is_typed_literal = balanced_literal_open
+            payload = text[opener + 1:found]
+            # An explicitly typed literal remains data even when its payload
+            # contains claim-shaped words or terminal punctuation. Other pairs
+            # are skipped only when their payload contains no audited claim.
+            if (is_typed_literal
+                    or not any(pattern.search(payload) for pattern in claim_patterns)):
+                balanced_literal_open = None
+                cursor = found + 1
                 continue
+            if (_has_external_quote_close_token(text, found + 1)
+                    or _has_external_quote_close_before(text, found)):
+                return True
+            balanced_literal_open = None
+        if (not before.isalnum() and after and not after.isspace()
+                and before not in ".!?;"):
+            typed_literal = bool(re.search(r"\b(?:the\s+)?(?:word|literal)\s*$", text[:found], re.I))
+            balanced_literal_open = (found, typed_literal)
+            cursor = found + 1
+            continue
         if (_has_external_quote_close_token(text, found + 1)
                 or _has_external_quote_close_before(text, found)):
             return True
         cursor = found + 1
+
+
+def _has_outer_quote_close_proof(
+        text: str, closing: str, opening: int, candidate: int,
+        prior_spans: list[tuple[int, int]], reported: bool, ambiguous: bool) -> bool:
+    external_boundary = (
+        _has_external_quote_close_token(text, candidate + 1)
+        or _has_external_quote_close_before(text, candidate)
+    )
+    direct_claim_boundary = False
+    typed_literal_boundary = False
+    if not reported and not ambiguous:
+        direct_claim_boundary = _has_direct_assertion_after_quote(text, candidate + 1)
+        typed_literal_boundary = _has_typed_literal_context_after_quote(
+            text, opening, candidate, prior_spans)
+    if not (external_boundary or direct_claim_boundary or typed_literal_boundary):
+        return False
+    return not _has_later_external_quote_close(text, closing, candidate)
 
 
 def _has_reported_quote_introducer(
@@ -850,103 +873,22 @@ def _find_quote_close(text: str, closing: str, start: int, opening: int,
         if closing in ("'", "\u2019") and before.isalnum() and after.isalnum():
             cursor = found + 1
             continue
-        if closing in ("'", "\u2019"):
-            if (pending_elision_start is not None and before.isalpha() and not after.isalnum()
-                    and all(char.isalpha() for char in text[pending_elision_start + 1:found])):
-                # A paired lexical apostrophe such as rock 'n' roll is data
-                # inside the already-open report, not its closing boundary.
-                pending_elision_start = None
-                ambiguous_elision_context = True
-                cursor = found + 1
-                continue
-            if reported_quote_context:
-                token = (text[pending_elision_start + 1:found]
-                         if pending_elision_start is not None else "")
-                if pending_elision_start is not None and not all(
-                        char.isalpha() or char.isspace() for char in token):
-                    # A markup or punctuation-bearing continuation cannot be
-                    # promoted to an outer close by its own trailing semicolon.
-                    pending_elision_start = None
-                    ambiguous_elision_context = True
-                    cursor = found + 1
-                    continue
-                if (_has_external_quote_close_token(text, found + 1)
-                        or _has_external_quote_close_before(text, found)):
-                    if (before.isalpha() or before.isnumeric()) and _has_later_external_quote_close(text, closing, found):
-                        ambiguous_elision_context = True
-                        cursor = found + 1
-                        continue
-                    return found
-                if not before.isalnum():
-                    pending_elision_start = found
-                ambiguous_elision_context = True
-                cursor = found + 1
-                continue
-            if ambiguous_elision_context:
-                if _has_external_quote_close_token(text, found + 1):
-                    return found
-                if not before.isalnum():
-                    pending_elision_start = found
-                cursor = found + 1
-                continue
-            if (_has_external_quote_close_token(text, found + 1)
-                    or _has_external_quote_close_before(text, found)):
-                return found
-            if before.isalnum():
-                if _has_direct_assertion_after_quote(text, found + 1):
-                    return found
-                if _has_typed_literal_context_after_quote(
-                        text, opening, found, prior_spans):
-                    return found
-                if _has_later_external_quote_close(text, closing, found):
-                    # Keep an ambiguous internal apostrophe from taking the
-                    # outer close when a later, externally bounded close exists.
-                    ambiguous_elision_context = True
-                    cursor = found + 1
-                    continue
-                # A standalone word-final apostrophe without a complete
-                # continuation proof remains ambiguous.
-                ambiguous_elision_context = True
-                cursor = found + 1
-                continue
-            # Apostrophes before words or markup can introduce elided
-            # lexical content. An unfamiliar continuation is not proof
-            # that this or a later apostrophe closes the outer report.
-            pending_elision_start = found
+        if (closing in ("'", "\u2019") and pending_elision_start is not None
+                and before.isalpha() and not after.isalnum()
+                and all(char.isalpha() for char in text[pending_elision_start + 1:found])):
+            pending_elision_start = None
             ambiguous_elision_context = True
             cursor = found + 1
             continue
-        if reported_quote_context and closing not in ("'", "\u2019"):
-            if (_has_external_quote_close_token(text, found + 1)
-                    or _has_external_quote_close_before(text, found)):
-                if ((before.isalpha() or before.isnumeric())
-                        and _has_later_external_quote_close(text, closing, found)):
-                    cursor = found + 1
-                    continue
-                return found
-            cursor = found + 1
-            continue
-        # The apostrophe before a decade digit is an opening-style mark, not
-        # a candidate close for an already-open reported quotation.
-        if closing in ("'", "\u2019") and not before.isalnum() and after.isnumeric():
-            cursor = found + 1
-            continue
-        # Apostrophes after plural s and quote marks after a digit can be
-        # possessive/unit marks. Require the same explicit external-boundary
-        # proof for both; punctuation followed by whitespace remains a valid
-        # close, while wrappers and other continuations remain ambiguous.
-        if ((before.casefold() == "s" and closing in ("'", "\u2019"))
-                or (before.isnumeric() and closing in ("'", '"', "\u2019", "\u201d"))):
-            lookahead = found + 1
-            while lookahead < len(text) and text[lookahead].isspace():
-                lookahead += 1
-            if not _has_external_quote_close_token(text, lookahead):
-                # Preserve the quoted frame until a clear external boundary.
-                lead = text[:opening]
-                if not re.search(r"\bthe\s+(?:word|literal)\s*$", lead, re.I):
-                    cursor = found + 1
-                    continue
-        return found
+        if _has_outer_quote_close_proof(
+                text, closing, opening, found, prior_spans,
+                reported_quote_context, ambiguous_elision_context):
+            return found
+        if closing in ("'", "\u2019"):
+            if not before.isalnum():
+                pending_elision_start = found
+            ambiguous_elision_context = True
+        cursor = found + 1
 
 
 def _mask_quoted_context(text: str, quote_spans: list[tuple[int, int]]) -> str:

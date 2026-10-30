@@ -5,10 +5,10 @@ and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence p
 
 ## Second Sonnet convergence (2026-10-30)
 
-Actual independent round-005 rejected `507acbbca78f6237c34b89e6b1b772206fca9d57`; original negative
+Actual independent round-006 rejected `575a11f783ba0f5795aa32a9a728a027702c31d9`; original negative
 reports and all prior rejected candidates remain preserved. Prospective MiniSwe
-parser1.9.0: Repairs A-008 lexical elisions through a shared non-recursive quote-close proof for reported and standalone text. Preserves typed literal objects, direct assertions, balanced later quote objects, correction history, masked report headers and prior A-007/S-003 protections.
-Fresh repaired adapter regression 628 PASS.331-core PASS retained on
+parser1.10.0: Repairs A-009 with one shared outer-quote closure proof across standalone and reported paths, and A-010 through whole balanced literal pairs independent of payload punctuation or claim-shaped words. Preserves active contradictions, comparable correction history, original source offsets and prior A-001 through A-008 and S-003 controls.
+Fresh repaired adapter regression 663 PASS.331-core PASS retained on
 identical source/test/config from62b38f2, not freshly rerun. Exact next commit/tree
 requires its separate receipt and an independent expanded Astra re-audit.
 No PASS, publication or general semantic accuracy is predeclared.

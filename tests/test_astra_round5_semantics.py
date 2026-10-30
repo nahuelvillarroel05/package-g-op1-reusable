@@ -209,7 +209,7 @@ def test_direct_own_correction_still_supersedes_prior_claim(tmp_path: Path) -> N
 
 
 def test_version_is_bumped_for_round005_elision_scope() -> None:
-    assert PARSER_VERSIONS[TRAJECTORY] == "1.9.0"
+    assert PARSER_VERSIONS[TRAJECTORY] == "1.10.0"
 
 def test_historical_reported_correction_keeps_noncomparable_time_claims(tmp_path: Path) -> None:
     messages = [

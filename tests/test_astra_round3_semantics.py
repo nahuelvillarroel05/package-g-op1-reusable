@@ -250,4 +250,4 @@ def test_closed_single_quoted_literal_allows_following_direct_claim(tmp_path: Pa
 
 
 def test_trajectory_parser_version_is_bumped_for_quote_scope_change() -> None:
-    assert PARSER_VERSIONS[TRAJECTORY] == "1.9.0"
+    assert PARSER_VERSIONS[TRAJECTORY] == "1.10.0"
