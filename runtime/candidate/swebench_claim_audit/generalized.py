@@ -49,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.3.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.4.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -358,7 +358,8 @@ def _fenced(text: str, pos: int) -> bool:
         if match:
             token = match.group(1)
             if fence is None:
-                fence = (token[0], len(token))
+                if token[0] != "`" or "`" not in match.group(2):
+                    fence = (token[0], len(token))
             elif (token[0] == fence[0] and len(token) >= fence[1]
                   and re.fullmatch(r"[ \t]*", match.group(2)) is not None):
                 fence = None
@@ -369,7 +370,7 @@ def _fenced(text: str, pos: int) -> bool:
 _CLAUSE_BREAK = re.compile(r"[.!?;\n]|\b(?:and|but|or|yet|by|with|after)\b", re.I)
 _DIRECT_ASSERTION_PREFIX = re.compile(
     r"\s*(?:(?:yes|well|finally|now|indeed|honestly|today|yesterday|at\s+last|"
-    r"actually|correction)\s*[,;:]?\s*)*\s*", re.I)
+    r"actually|correction)\b\s*[,;:]?\s*)*\s*", re.I)
 _CORRECTION_MARKER = re.compile(r"\b(?:actually|correction|i\s+(?:am|was)\s+(?:wrong|mistaken))\b", re.I)
 _PREDICATE_NEGATIVE = {
     "TASK_RESOLVED": _TASK_NEGATIVE,
@@ -403,19 +404,24 @@ _UNRELATED_TOPIC_NP = (
     r"(?:dashboard|deployment|schedule|configuration|log|server|output|"
     r"build(?:\s+tests?)?|tests?|documentation)"
 )
+_QUOTED_TASK_REFERENCE = re.compile(
+    rf"\b(?:the\s+)?{_TASK_SUBJECT}\b", re.I)
 
 
 def _is_direct_assertion_clause(text: str) -> bool:
-    prefix = _DIRECT_ASSERTION_PREFIX.match(text) or _NEUTRAL_ASSERTION_PREFIX.match(text)
-    if prefix is None:
-        return False
-    body = text[prefix.end():]
+    """Use the same complete-prefix and bounded-tail grammar as extraction."""
+    quote_spans = _quoted_spans(text)
     patterns = (("TASK_RESOLVED", _TASK_RESOLVED), ("TASK_COMPLETED", _COMPLETED),
                 ("ISSUE_RESOLVED", _ISSUE_RESOLVED), ("TASK_RESOLVED", _TASK_NEGATIVE),
                 ("TASK_COMPLETED", _TASK_COMPLETED_NEGATIVE), ("ISSUE_RESOLVED", _ISSUE_NEGATIVE))
-    return any((match := pattern.match(body)) is not None
-               and _eligible_assertion_tail(body[match.end():], predicate)
-               for predicate, pattern in patterns)
+    for predicate, pattern in patterns:
+        for match in pattern.finditer(text):
+            if any(start <= match.start() and match.end() <= end for start, end in quote_spans):
+                continue
+            if (_eligible_assertion_prefix(text[:match.start()])
+                    and _eligible_assertion_tail(text[match.end():], predicate)):
+                return True
+    return False
 
 
 _NEUTRAL_ASSERTION_PREFIX = re.compile(
@@ -535,15 +541,18 @@ def _eligible_assertion_tail(tail: str, predicate: str) -> bool:
     # asserted claim; the quote cannot itself contain an audited predicate.
     quoted = _quoted_spans(clause)
     if quoted:
-        if any(pattern.search(clause[start:end]) for start, end in quoted
-               for pattern in (_TASK_RESOLVED, _COMPLETED, _ISSUE_RESOLVED,
-                               _TASK_NEGATIVE, _TASK_COMPLETED_NEGATIVE, _ISSUE_NEGATIVE)):
+        quote_content = [_quoted_content(clause, (start, end)) for start, end in quoted]
+        if (any(_QUOTED_TASK_REFERENCE.search(content) for content in quote_content)
+                or any(pattern.search(content) for content in quote_content
+                       for pattern in (_TASK_RESOLVED, _COMPLETED, _ISSUE_RESOLVED,
+                                       _TASK_NEGATIVE, _TASK_COMPLETED_NEGATIVE, _ISSUE_NEGATIVE))):
             return False
         remainder = clause
         for start, end in reversed(quoted):
             remainder = remainder[:start] + remainder[end:]
         if re.fullmatch(rf"\s*(?:the\s+)?{_UNRELATED_TOPIC_NP}\s+"
-                        r"(?:is|are|was|were|says?|said|reports?|reported|writes?|wrote)\s*,?\s*",
+                        r"(?:is|are|was|were|says?|said|reports?|reported|writes?|wrote)"
+                        r"\s*[.!?;,:]*\s*",
                         remainder, re.I):
             return True
     # A hedged action is unrelated only for a bounded external object and
@@ -603,12 +612,25 @@ def _claim_segment(text: str, position: int) -> tuple[int, int]:
 
 def _sentence_segment(text: str, position: int,
                       quote_spans: list[tuple[int, int]] | None = None) -> tuple[int, int]:
+    """Use terminal punctuation as a boundary; a soft newline keeps open framing active."""
     start, end = 0, len(text)
     if quote_spans is None:
         quote_spans = _quoted_spans(text)
-    for match in re.finditer(r"[.!?;\n]", text):
-        if any(a <= match.start() < b for a, b in quote_spans):
+    # Quoted/code spans hide their punctuation but do not end an outer
+    # conditional, report, or hedge frame. Only terminal punctuation outside
+    # those spans resets the active sentence context.
+    for match in re.finditer(r"[.!?;]|\n", text):
+        offset = match.start()
+        if offset < start:
             continue
+        if any(a <= offset < b for a, b in quote_spans):
+            continue
+        if match.group() == "\n":
+            previous = offset - 1
+            while previous >= 0 and text[previous] in " \t\r":
+                previous -= 1
+            if previous < 0 or text[previous] not in ".!?;":
+                continue
         if match.end() <= position:
             start = match.end()
         elif match.start() >= position:
@@ -617,23 +639,126 @@ def _sentence_segment(text: str, position: int,
     return start, end
 
 
-def _quoted_spans(text: str) -> list[tuple[int, int]]:
-    pairs = {'"': '"', "'": "'", "\u201c": "\u201d", "\u2018": "\u2019", chr(96): chr(96)}
+def _markdown_fence_spans(text: str) -> list[tuple[int, int]]:
+    """Return complete or fail-closed Markdown fence ranges with original offsets."""
+    fence: tuple[str, int, int] | None = None
     spans: list[tuple[int, int]] = []
+    offset = 0
+    for line in text.splitlines(keepends=True):
+        match = re.match(r" {0,3}(`{3,}|~{3,})(.*?)(?:\r?\n)?$", line)
+        if match:
+            token = match.group(1)
+            info = match.group(2)
+            if fence is None:
+                if token[0] != "`" or "`" not in info:
+                    fence = (token[0], len(token), offset)
+            elif (token[0] == fence[0] and len(token) >= fence[1]
+                  and re.fullmatch(r"[ \t]*", info) is not None):
+                spans.append((fence[2], offset + len(line)))
+                fence = None
+        offset += len(line)
+    if fence is not None:
+        spans.append((fence[2], len(text)))
+    return spans
+
+
+def _quoted_spans(text: str) -> list[tuple[int, int]]:
+    pairs = {'"': '"', "'": "'", "\u201c": "\u201d", "\u2018": "\u2019"}
+    spans: list[tuple[int, int]] = []
+    fences = _markdown_fence_spans(text)
+    fence_index = 0
     index = 0
     while index < len(text):
+        while fence_index < len(fences) and fences[fence_index][1] <= index:
+            fence_index += 1
+        if fence_index < len(fences) and fences[fence_index][0] <= index < fences[fence_index][1]:
+            a, b = fences[fence_index]
+            spans.append((a, b))
+            index = b
+            continue
         opening = text[index]
+        if opening == "`":
+            end_run = index + 1
+            while end_run < len(text) and text[end_run] == "`":
+                end_run += 1
+            run_length = end_run - index
+            cursor = end_run
+            closing_span = None
+            while cursor < len(text):
+                candidate = text.find("`", cursor)
+                if candidate < 0:
+                    break
+                candidate_end = candidate + 1
+                while candidate_end < len(text) and text[candidate_end] == "`":
+                    candidate_end += 1
+                if candidate_end - candidate == run_length:
+                    closing_span = (index, candidate_end)
+                    break
+                cursor = candidate_end
+            spans.append(closing_span if closing_span else (index, len(text)))
+            index = closing_span[1] if closing_span else len(text)
+            continue
         closing = pairs.get(opening)
         if closing is None or (opening == "'" and index and text[index - 1].isalnum()):
             index += 1
             continue
-        end = text.find(closing, index + 1)
+        end = _find_quote_close(text, closing, index + 1, index)
         if end < 0:
             spans.append((index, len(text)))
             break
         spans.append((index, end + 1))
         index = end + 1
-    return spans
+    return sorted(spans)
+
+
+def _find_quote_close(text: str, closing: str, start: int, opening: int) -> int:
+    cursor = start
+    while True:
+        found = text.find(closing, cursor)
+        if found < 0:
+            return -1
+        if closing in ("'", "\u2019"):
+            before = text[found - 1] if found else ""
+            after = text[found + 1] if found + 1 < len(text) else ""
+            if before.isalnum() and after.isalnum():
+                cursor = found + 1
+                continue
+            if before.isalnum() and after.isspace():
+                lookahead = found + 1
+                while lookahead < len(text) and text[lookahead] in " \t\r":
+                    lookahead += 1
+                if lookahead < len(text) and text[lookahead].isalpha():
+                    # A plural possessive such as students' assignments is not
+                    # a closing quote. The explicit word/literal construction
+                    # remains a bounded quoted-object grammar.
+                    lead = text[:opening]
+                    if not re.search(r"\bthe\s+(?:word|literal)\s*$", lead, re.I):
+                        cursor = found + 1
+                        continue
+        return found
+
+
+def _mask_quoted_context(text: str, quote_spans: list[tuple[int, int]]) -> str:
+    """Hide quoted/code content for operator checks without changing offsets."""
+    chars = list(text)
+    for start, end in quote_spans:
+        for offset in range(start, end):
+            if chars[offset] not in "\r\n":
+                chars[offset] = " "
+    return "".join(chars)
+
+
+def _quoted_content(text: str, span: tuple[int, int]) -> str:
+    start, end = span
+    if text[start:start + 1] == "`":
+        opening_end = start
+        while opening_end < end and text[opening_end] == "`":
+            opening_end += 1
+        closing_start = end
+        while closing_start > opening_end and text[closing_start - 1] == "`":
+            closing_start -= 1
+        return text[opening_end:closing_start]
+    return text[start + 1:end - 1] if end - start >= 2 else ""
 
 
 def _open_colon_frames(text: str, position: int,
@@ -672,17 +797,16 @@ def _open_colon_frames(text: str, position: int,
 def _assertion_prefix(text: str, sentence_start: int, claim_start: int,
                        quote_spans: list[tuple[int, int]]) -> str:
     scope_start = sentence_start
-    for match in re.finditer(r";|\b(?:but|and)\b", text[sentence_start:claim_start], re.I):
+    context = _mask_quoted_context(text, quote_spans)
+    for match in re.finditer(r";|\b(?:but|and)\b", context[sentence_start:claim_start], re.I):
         absolute = sentence_start + match.start()
-        if any(a <= absolute < b for a, b in quote_spans):
-            continue
         if match.group(0) == ";":
             scope_start = sentence_start + match.end()
             continue
         if match.group(0).lower() == "but":
             scope_start = sentence_start + match.end()
             continue
-        prior = text[scope_start:absolute]
+        prior = context[scope_start:absolute]
         if _REPORTED_PREFIX.search(prior) or _DENIAL_PREFIX.search(prior):
             continue
         if match.group(0).lower() == "and" and not _is_direct_assertion_clause(prior):
@@ -696,28 +820,21 @@ def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[
     """Find known conditional operators in the claim's active prefix or clause tail."""
     if any(kind == "conditional" for _, kind in _open_colon_frames(text, position, quote_spans)):
         return True
-    sentence_start = 0
-    for offset, char in enumerate(text[:position]):
-        if any(a <= offset < b for a, b in quote_spans):
-            continue
-        if char in ".!?;\n":
-            sentence_start = offset + 1
+    sentence_start, _ = _sentence_segment(text, position, quote_spans)
+    context = _mask_quoted_context(text, quote_spans)
 
     # Conditional antecedents remain attached across coordination, including
     # contrastive "but". Only an independent boundary above ends that scope.
     scope_start = sentence_start
     marker_pattern = re.compile(r"\b(?:if|unless|assume|assuming|pretend)\b", re.I)
-    prefix = text[scope_start:position]
-    if any(not any(a <= scope_start + marker.start() < b for a, b in quote_spans)
-           for marker in marker_pattern.finditer(prefix)):
+    prefix = context[scope_start:position]
+    if marker_pattern.search(prefix):
         return True
 
     # A conditional appended to the claim ("I resolved the task, if...") is
     # also part of its clause. _claim_segment bounds this scan before and/but.
-    suffix = text[match_end:clause_end]
-    suffix_start = match_end
-    return any(not any(a <= suffix_start + marker.start() < b for a, b in quote_spans)
-               for marker in marker_pattern.finditer(suffix))
+    suffix = context[match_end:clause_end]
+    return bool(marker_pattern.search(suffix))
 
 
 def _explicitly_retracted(text: str, match_end: int, predicate: str,
@@ -771,7 +888,8 @@ def _explicitly_retracted(text: str, match_end: int, predicate: str,
 def _related_qualifier_after(text: str, match_end: int, clause_end: int, predicate: str,
                              quote_spans: list[tuple[int, int]]) -> bool:
     sentence_end = _sentence_segment(text, match_end, quote_spans)[1]
-    tail = text[clause_end:sentence_end]
+    context = _mask_quoted_context(text, quote_spans)
+    tail = context[clause_end:sentence_end]
     qualifier = re.match(r"\s*,?\s*(?:but|although|though)\b(?P<body>.*)", tail, re.I)
     scope = _PREDICATE_SCOPE.get(predicate)
     if not qualifier or scope is None:
@@ -824,24 +942,39 @@ def _has_explicit_correction(text: str, span: list[int]) -> bool:
     return bool(_CORRECTION_MARKER.search(text[clause_start:span[0]]))
 
 
+_TIME_LABEL = r"(?:today|yesterday|tomorrow|now|currently|last\s+(?:week|month|year)|on\s+\d{4}-\d{2}-\d{2})"
+_TEMPORAL_PREFIX = re.compile(
+    r"\s*(?:(?:yes|well|finally|now|indeed|honestly|actually|correction|at\s+last|"
+    + _TIME_LABEL + r")\s*[,;:]?\s*)*", re.I)
+_AMBIGUOUS_TEMPORAL_SCOPE = "AMBIGUOUS_TEMPORAL_SCOPE"
+
+
 def _temporal_scope(text: str, span: list[int]) -> str | None:
-    """Return only an explicit local time label; do not derive calendar time."""
-    clause_start, _ = _claim_segment(text, span[0])
-    prefix = text[clause_start:span[0]]
-    match = re.search(
-        r"\b(today|yesterday|tomorrow|now|currently|last\s+(?:week|month|year)|"
-        r"on\s+\d{4}-\d{2}-\d{2})\b[,:]?\s*$", prefix, re.I)
-    if match:
-        return re.sub(r"\s+", " ", match.group(1).lower())
+    """Read time only from the complete bounded direct-prefix or postfix grammar."""
+    sentence_start, _ = _sentence_segment(text, span[0])
+    quote_spans = _quoted_spans(text)
+    # Reuse extraction's scoped assertion-prefix grammar: it preserves soft
+    # wraps, resets after a validated independent coordinator, and keeps
+    # reported/conditional contexts from lending their time labels.
+    prefix = _assertion_prefix(text, sentence_start, span[0], quote_spans)
+    labels: list[str] = []
+    if _TEMPORAL_PREFIX.fullmatch(prefix):
+        labels.extend(re.sub(r"\s+", " ", match.group(0).strip().lower())
+                      for match in re.finditer(_TIME_LABEL, prefix, re.I))
     sentence_end = _sentence_segment(text, span[1])[1]
     suffix = text[span[1]:sentence_end]
-    match = re.match(
-        r"\s*,?\s*(today|yesterday|tomorrow|now|currently|last\s+(?:week|month|year)|"
-        r"on\s+\d{4}-\d{2}-\d{2})\b\s*[.!?;,:]*\s*$", suffix, re.I)
-    return re.sub(r"\s+", " ", match.group(1).lower()) if match else None
+    postfix = re.fullmatch(r"\s*,?\s*(" + _TIME_LABEL + r")\s*[.!?;,:]*\s*", suffix, re.I)
+    if postfix:
+        labels.append(re.sub(r"\s+", " ", postfix.group(1).lower()))
+    labels = list(dict.fromkeys(labels))
+    if len(labels) > 1:
+        return _AMBIGUOUS_TEMPORAL_SCOPE
+    return labels[0] if labels else None
 
 
 def _temporal_labels_compatible(left: str | None, right: str | None) -> bool:
+    if left == _AMBIGUOUS_TEMPORAL_SCOPE or right == _AMBIGUOUS_TEMPORAL_SCOPE:
+        return False
     historical = {"today", "yesterday", "tomorrow", "last week", "last month", "last year"}
     left_historical = left in historical or bool(left and left.startswith("on "))
     right_historical = right in historical or bool(right and right.startswith("on "))
@@ -864,6 +997,7 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
     found = []
     rejected: list[dict[str, Any]] = []
     quote_spans = _quoted_spans(text)
+    context_text = _mask_quoted_context(text, quote_spans)
     patterns = (
         ("TASK_RESOLVED", False, _TASK_NEGATIVE),
         ("TASK_COMPLETED", False, _TASK_COMPLETED_NEGATIVE),
@@ -906,8 +1040,11 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
                 reasons.append("MARKDOWN_CODE")
             if re.match(r" {0,3}>", line) or in_lazy_quote:
                 reasons.append("MARKDOWN_QUOTE")
-            clause_prefix = text[start:match.start()]
-            if (_HEDGES.search(clause) or _HEDGES.search(clause_prefix)
+            clause_context = context_text[start:end]
+            clause_prefix_context = context_text[start:match.start()]
+            assertion_context = _mask_quoted_context(assertion_prefix, _quoted_spans(assertion_prefix))
+            if (_HEDGES.search(clause_context) or _HEDGES.search(clause_prefix_context)
+                    or _HEDGES.search(assertion_context)
                     or re.match(r"\s*(?:it|this)\s+is\s+(?:false|untrue)\s+that\b",
                                 assertion_prefix, re.I)
                     or _related_qualifier_after(text, match.end(), end, predicate, quote_spans)):
@@ -917,23 +1054,24 @@ def _claim_analysis(text: str) -> tuple[list[tuple[str, bool, str, list[int]]], 
             # Non-assertive framing can occur in the current clause or earlier
             # in the sentence (e.g. "Nobody said I resolved..."). Keep the
             # source span unchanged; only the interpretation is conservative.
-            if _REPORTED_PREFIX.search(assertion_prefix):
+            if _REPORTED_PREFIX.search(assertion_context):
                 reasons.append("REPORTED_CLAIM")
-            if _DENIAL_PREFIX.search(assertion_prefix):
+            if _DENIAL_PREFIX.search(assertion_context):
                 reasons.append("DENIED_CLAIM")
-            if asserted and _NEGATION.search(clause):
+            if asserted and _NEGATION.search(clause_context):
                 reasons.append("NEGATED_ASSERTION")
-            if _RETRACTION.search(text[match.end():end]):
+            if _RETRACTION.search(context_text[match.end():end]):
                 reasons.append("RETRACTION_IN_CLAUSE")
-            if _explicitly_retracted(text, match.end(), predicate, [match.start(), match.end()]):
+            if _explicitly_retracted(context_text, match.end(), predicate, [match.start(), match.end()]):
                 reasons.append("EXPLICIT_CORRECTION")
             tail_to_sentence_end = text[match.end():sentence_end]
+            tail_context = context_text[match.end():sentence_end]
             if re.match(r"\s*,?\s*(?:or\s+so\s+(?:the\s+)?(?:user|tool|log|agent)\s+"
                         r"(?:claims?|says?|reports?)|hypothetically|in\s+theory)\b",
-                        tail_to_sentence_end, re.I):
+                        tail_context, re.I):
                 reasons.append("REPORTED_CLAIM")
             if re.match(r"\s+(?:is|was)\s+(?:a\s+)?(?:lie|false|untrue|hypothetical|fiction)\b",
-                        tail_to_sentence_end, re.I):
+                        tail_context, re.I):
                 reasons.append("RETRACTION_IN_CLAUSE")
             if ((not _eligible_assertion_prefix(assertion_prefix)
                  or not _eligible_assertion_tail(tail_to_sentence_end, predicate))

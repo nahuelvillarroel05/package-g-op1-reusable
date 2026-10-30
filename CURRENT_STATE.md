@@ -5,26 +5,26 @@ and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence p
 
 ## Second Sonnet convergence (2026-10-29)
 
-Original review target: `e0115476`. First prospective candidate `62b38f2` was
-rejected by actual expanded Astra audit: four material findings A-001..A-004.
-The original negative report and bytes remain preserved. Prospective MiniSwe
-parser 1.3.0 repairs outer-clause scope, multiline framing, temporal supersession
-and Markdown fence closure; it retains normalization v3/audit-contract v2.
-Internal review passed 101 independent checks; repaired adapter suites passed
-472 fresh tests. Historical core331 PASS is retained with unchanged
-source/test/config bytes, not presented as a fresh repaired-candidate rerun.
-New frozen commit identity and independent re-audit require separate exact receipts;
-no independent PASS or publication is predeclared here.
+Original target `e0115476`. Independent Astra rejected `62b38f2` (A-001..A-004),
+then `345bd29` (residualA-002/A-003 plus newA-005/A-006). A-001/A-004 exact
+repairs were independently verified. Original negative reports and code remain
+preserved. The next prospective MiniSwe parser1.4.0 repairs temporal prefix/suffix,
+soft-wrap context, variable delimiter runs and quoted-target interpretation.
+Normalizationv3/audit-contractv2 and source-declared unauthenticated roles remain.
 
-Branch: `feat/pgop1-second-sonnet-remediation-001`. See
+Fresh repaired adapter suites: 511 passed. Historical331-core PASS
+is retained with identical source/test/config bytes, not claimed freshly rerun.
+Exact Git identity and independent re-audit require separate receipts; no independent
+PASS or publication is predeclared here. No general semantic accuracy claim.
+
+Branch `feat/pgop1-second-sonnet-remediation-001`; see
 [contracts](docs/audits/SECOND_SONNET_CONTRACTS.md) and
 [next action](docs/engineering/NEXT_STEP.md). Full second external Sonnet report
-was unavailable; Owner N-01..N-10 details control reproduction. Canonical MiniSwe
-roles/evaluator files remain source-declared and unauthenticated. Deep coordination
-can fail closed with a processing error. No general semantic accuracy claim.
+was unavailable; explicit Owner N-01..N-10 details control reproduction.
+Deep coordination can fail closed with a processing/final verification error.
 `SONNET_THIRD_EXTERNAL_AUDIT=PENDING`; `F16=DEFERRED_LINUX_VALIDATION_PENDING`;
 `GATE_11=BLOCKED`; `RUN_002=NOT_READY`;
-`INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`. No mass campaign or RUN-002 execution.
+`INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE`. No mass campaign/RUN-002 execution.
 
 ## Previous Sonnet remediation publication and next review
 

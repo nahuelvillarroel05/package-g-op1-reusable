@@ -40,7 +40,7 @@ remain separate work. See the third-review handoff for exact candidate reference
 
 New normalized instance audits use `pgop1.swebench.audit-contract.v2` and
 `pgop1.swebench.source-bound-normalization.v3`; MiniSwe JSON parser version is
-`1.3.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
+`1.4.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
 both markers while normalization v3 remains also fails. An explicit legacy
 storage opt-in exposes byte integrity and `DERIVATION_NOT_VERIFIED`, never new
 semantic approval. Exact batch storage contracts cannot be used for instances.
@@ -112,3 +112,23 @@ A measured 600-clause/14,395-byte coordination returns PARSER_INTERNAL_ERROR fro
 file processing and final VERIFICATION_ERROR with zero claims at the audit API.
 This is an explicit fail-closed complexity limitation; it is not semantic absence
 or a successful verdict. General semantic precision and recall remain unproven.
+
+## Second independent round and parser 1.4.0
+
+The next candidate `345bd291bec512bcb536333ec8275add63b7f6ab` was also rejected:
+residual A-002/A-003 and new A-005 variable-length inline-code delimiters and A-006
+quoted-target boundary handling. A-001/A-004 exact repairs were independently
+verified. Both original negative reviews and code identities remain preserved.
+
+The prospective parser1.4.0 uses complete admitted temporal-prefix/postfix grammar,
+source-position-aware quote/code spans and target-reference checks inside quoted
+content. Soft line wrapping does not establish a new speaker or erase unfinished
+outer report/denial/conditional scope. Literal delimiters are data boundaries, not
+proof of an independent enclosing clause. Contractions and ambiguous quote closure
+remain subject to conservative source-scope guards. No date authentication or
+general language-understanding guarantee is supplied by these rules.
+
+The repaired code requires another independent audit of its exact frozen commit.
+Internal checks and fresh adapter regressions do not predeclare that audit result.
+Normalizationv3/audit-contractv2, mandatory result qualifications, retained history,
+the documented fail-closed depth limitation and all operational gates stay in force.
