@@ -49,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.4.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.5.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -711,6 +711,21 @@ def _quoted_spans(text: str) -> list[tuple[int, int]]:
     return sorted(spans)
 
 
+def _possessive_quote_continuation_is_ambiguous(text: str, start: int) -> bool:
+    """Keep a possessive quote open unless following punctuation proves closure."""
+    while start < len(text) and text[start].isspace():
+        start += 1
+    if start >= len(text):
+        return False
+    if text[start] in ".!?;:":
+        token_end = start + 1
+        return token_end < len(text) and not text[token_end].isspace()
+    # Only a single external terminal mark followed by whitespace can prove
+    # closure. Commas, closers, wrappers, and unfamiliar continuations remain
+    # ambiguous; punctuation within a wrapper is not an outer boundary.
+    return True
+
+
 def _find_quote_close(text: str, closing: str, start: int, opening: int) -> int:
     cursor = start
     while True:
@@ -723,11 +738,11 @@ def _find_quote_close(text: str, closing: str, start: int, opening: int) -> int:
             if before.isalnum() and after.isalnum():
                 cursor = found + 1
                 continue
-            if before.isalnum() and after.isspace():
+            if before.lower() == "s" and after.isspace():
                 lookahead = found + 1
-                while lookahead < len(text) and text[lookahead] in " \t\r":
+                while lookahead < len(text) and text[lookahead].isspace():
                     lookahead += 1
-                if lookahead < len(text) and text[lookahead].isalpha():
+                if _possessive_quote_continuation_is_ambiguous(text, lookahead):
                     # A plural possessive such as students' assignments is not
                     # a closing quote. The explicit word/literal construction
                     # remains a bounded quoted-object grammar.

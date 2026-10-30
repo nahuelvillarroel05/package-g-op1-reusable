@@ -40,7 +40,7 @@ remain separate work. See the third-review handoff for exact candidate reference
 
 New normalized instance audits use `pgop1.swebench.audit-contract.v2` and
 `pgop1.swebench.source-bound-normalization.v3`; MiniSwe JSON parser version is
-`1.4.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
+`1.5.0`. `semantic_derivation_schema` is mandatory for that contract. Removing
 both markers while normalization v3 remains also fails. An explicit legacy
 storage opt-in exposes byte integrity and `DERIVATION_NOT_VERIFIED`, never new
 semantic approval. Exact batch storage contracts cannot be used for instances.
@@ -132,3 +132,11 @@ The repaired code requires another independent audit of its exact frozen commit.
 Internal checks and fresh adapter regressions do not predeclare that audit result.
 Normalizationv3/audit-contractv2, mandatory result qualifications, retained history,
 the documented fail-closed depth limitation and all operational gates stay in force.
+
+## Independent round-003 and prospective parser 1.5.0
+
+Candidate `ad00cc756c77bcdb77088eb53e5ddd41fee39d87` was rejected by actual Astra review.
+Preserves reported quote scope across plural possessives, Unicode whitespace, blank paragraphs and ambiguous Markdown or punctuation continuations. A complete external terminal token is required to establish quote closure.
+Original negative reports and source commits are preserved. This repair requires
+independent review of its next exact frozen Git identity; no PASS is predeclared.
+All prior operational, authenticity, Windows-only and bounded-language limits remain.
