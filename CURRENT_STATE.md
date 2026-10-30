@@ -1,14 +1,14 @@
-# PGOP1 â€” Current State
+# PGOP1 — Current State
 
 Updated 2026-10-29. Mutable index, not primary authority. Read [AGENTS.md](AGENTS.md)
 and [NEXT_STEP.md](docs/engineering/NEXT_STEP.md); original contracts/evidence prevail.
 
 ## Second Sonnet convergence (2026-10-29)
 
-Actual independent round-003 rejected `ad00cc756c77bcdb77088eb53e5ddd41fee39d87`; original negative
+Actual independent round-004 rejected `4532f1985a4f00a25036fb8311ee1fab49a3c3bf`; original negative
 reports and all prior rejected candidates remain preserved. Prospective MiniSwe
-parser1.5.0: Preserves reported quote scope across plural possessives, Unicode whitespace, blank paragraphs and ambiguous Markdown or punctuation continuations. A complete external terminal token is required to establish quote closure.
-Fresh repaired adapter regression 556 PASS.331-core PASS retained on
+parser1.7.0: Closes adjacent possessive quote-scope bypass A-007 and internal S-003 numeric-unit, decade and English case-equivalent quote ambiguity through the shared bounded closure proof. Source bytes and character/UTF-8 offsets remain original.
+Fresh repaired adapter regression 584 PASS.331-core PASS retained on
 identical source/test/config from62b38f2, not freshly rerun. Exact next commit/tree
 requires its separate receipt and an independent expanded Astra re-audit.
 No PASS, publication or general semantic accuracy is predeclared.

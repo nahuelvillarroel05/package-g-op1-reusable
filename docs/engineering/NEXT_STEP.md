@@ -1,8 +1,8 @@
-# Next step: independent audit of parser1.5.0
+# Next step: independent audit of parser1.7.0
 
 Read AGENTS.md, CURRENT_STATE.md and ../audits/SECOND_SONNET_CONTRACTS.md.
-Preserve the original negative Astra round-003 report and exact prior commit.
-Re-audit all N-01..N-10 and every material A-XXX on the new frozen candidate, using
+Preserve the original negative Astra round-004 report and exact prior commit.
+Re-audit all N-01..N-10, every material A-XXX and internal material S-003 on the new frozen candidate, using
 independent original hypotheses in addition to retests. Internal Sol checks and
 engineering tests do not substitute Astra. Do not edit a frozen candidate.
 Any material new defect requires prospective repair/tests/commit/re-audit.

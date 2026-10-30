@@ -49,7 +49,7 @@ class AuditError(ValueError):
 
 PARSER_VERSIONS = {
     "pgop1.swebench.prediction.miniswe_jsonl.v1": "1.0.0",
-    "pgop1.swebench.trajectory.miniswe_json.v1": "1.5.0",
+    "pgop1.swebench.trajectory.miniswe_json.v1": "1.7.0",
     "pgop1.swebench.trajectory.miniswe_role_attribution.v1": "1.0.0",
     "pgop1.swebench.evaluator_report.resolved_map_json.v1": "1.0.0",
     "pgop1.swebench.catalog.per_instance_details_json.v1": "1.1.0",
@@ -732,24 +732,31 @@ def _find_quote_close(text: str, closing: str, start: int, opening: int) -> int:
         found = text.find(closing, cursor)
         if found < 0:
             return -1
-        if closing in ("'", "\u2019"):
-            before = text[found - 1] if found else ""
-            after = text[found + 1] if found + 1 < len(text) else ""
-            if before.isalnum() and after.isalnum():
-                cursor = found + 1
-                continue
-            if before.lower() == "s" and after.isspace():
-                lookahead = found + 1
-                while lookahead < len(text) and text[lookahead].isspace():
-                    lookahead += 1
-                if _possessive_quote_continuation_is_ambiguous(text, lookahead):
-                    # A plural possessive such as students' assignments is not
-                    # a closing quote. The explicit word/literal construction
-                    # remains a bounded quoted-object grammar.
-                    lead = text[:opening]
-                    if not re.search(r"\bthe\s+(?:word|literal)\s*$", lead, re.I):
-                        cursor = found + 1
-                        continue
+        before = text[found - 1] if found else ""
+        after = text[found + 1] if found + 1 < len(text) else ""
+        if closing in ("'", "\u2019") and before.isalnum() and after.isalnum():
+            cursor = found + 1
+            continue
+        # The apostrophe before a decade digit is an opening-style mark, not
+        # a candidate close for an already-open reported quotation.
+        if closing in ("'", "\u2019") and not before.isalnum() and after.isnumeric():
+            cursor = found + 1
+            continue
+        # Apostrophes after plural s and quote marks after a digit can be
+        # possessive/unit marks. Require the same explicit external-boundary
+        # proof for both; punctuation followed by whitespace remains a valid
+        # close, while wrappers and other continuations remain ambiguous.
+        if ((before.casefold() == "s" and closing in ("'", "\u2019"))
+                or (before.isnumeric() and closing in ("'", '"', "\u2019", "\u201d"))):
+            lookahead = found + 1
+            while lookahead < len(text) and text[lookahead].isspace():
+                lookahead += 1
+            if _possessive_quote_continuation_is_ambiguous(text, lookahead):
+                # Preserve the quoted frame until a clear external boundary.
+                lead = text[:opening]
+                if not re.search(r"\bthe\s+(?:word|literal)\s*$", lead, re.I):
+                    cursor = found + 1
+                    continue
         return found
 
 
