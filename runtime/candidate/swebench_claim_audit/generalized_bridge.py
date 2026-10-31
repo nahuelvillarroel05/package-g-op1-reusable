@@ -30,6 +30,7 @@ CAPSULE_SCHEMA_V2 = "pgop1.swebench.generalized-audit-capsule.v2"
 RECEIPT_SCHEMA_V1 = "pgop1.swebench.generalized-bridge-receipt.v1"
 RECEIPT_SCHEMA_V2 = "pgop1.swebench.generalized-bridge-receipt.v2"
 DERIVATION_SCHEMA = "pgop1.swebench.audit-derivation.v1"
+ATTRIBUTION_AMBIGUITY_CONTRACT = "pgop1.swebench.attribution-ambiguity.v1"
 DERIVATION_MARKER = "semantic_derivation_schema"
 AUDIT_CONTRACT_VERSION = "pgop1.swebench.audit-contract.v2"
 NORMALIZATION_SCHEMA_V2 = "pgop1.swebench.source-bound-normalization.v2"
@@ -180,6 +181,9 @@ def _validate_audit(audit_result: dict[str, Any]) -> tuple[str, str, str]:
                 "INTEGRITY_FAILURE", "VERIFICATION_ERROR",
             }):
         raise AuditError("BRIDGE_AUDIT_RESULT_INVALID", "bridge requires a versioned generalized audit result")
+    attribution_contract = audit_result.get("claim_attribution_contract")
+    if attribution_contract not in (None, ATTRIBUTION_AMBIGUITY_CONTRACT):
+        raise AuditError("BRIDGE_ATTRIBUTION_CONTRACT_INVALID", "audit result declares an unsupported claim attribution contract")
     identity = _identity(audit_result)
     contract = audit_result.get("audit_contract_version")
     marker = audit_result.get(DERIVATION_MARKER)
@@ -421,8 +425,11 @@ def _derive_from_engine_sources(
             descriptor.update(bindings)
             descriptors.append(descriptor)
         from .generalized import audit_evidence
-        derived = audit_evidence(data_root, {"run_id": run_id, "instance_id": identity_value,
-                                             "evidence": descriptors})
+        audit_request = {"run_id": run_id, "instance_id": identity_value,
+                         "evidence": descriptors}
+        if audit_result.get("claim_attribution_contract") is not None:
+            audit_request["claim_attribution_contract"] = audit_result["claim_attribution_contract"]
+        derived = audit_evidence(data_root, audit_request)
     if canonical_json(derived) != canonical_json(audit_result):
         raise AuditError("BRIDGE_SEMANTIC_DERIVATION_MISMATCH", "adapter result differs from rederivation over Engine-admitted source bytes")
     return {"schema": DERIVATION_SCHEMA, "status": "DERIVATION_VERIFIED",

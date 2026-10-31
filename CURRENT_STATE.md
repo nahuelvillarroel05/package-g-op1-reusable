@@ -1,3 +1,11 @@
+# A-010 prospective contract candidate (2026-10-31)
+
+Owner-authorized explicit pgop1.swebench.attribution-ambiguity.v1 is implemented in the experimental adapter, preserving the legacy default. See [contract](docs/swebench-claim-audit/ATTRIBUTION_AMBIGUITY_V1.md). Current exact commit, fresh regression receipts and independent audit are maintained outside this checkout in Engineering/PGOP1_A010_ATTRIBUTION_CONVERGENCE_001. This is the freeze-time continuity snapshot: independent Astra acceptance is pending at freeze; the later commit-bound external audit decision supersedes this pending label. Historical negative outcomes below remain immutable evidence and do not describe the new contract.
+
+A-010=UNRESOLVED_PENDING_INDEPENDENT_AUDIT. No publication, src promotion, RUN-002 or operational authority change. F16=DEFERRED_LINUX_VALIDATION_PENDING; GATE_11=BLOCKED; RUN_002=NOT_READY. I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED; OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED; INDEPENDENT_CUSTODY=NOT_PROVEN; PHYSICAL_C2=DEFERRED_NOT_WAIVED.
+
+The retained continuity follows.
+
 # PGOP1 — Current State
 
 Updated 2026-10-29. Mutable index, not primary authority. Read [AGENTS.md](AGENTS.md)

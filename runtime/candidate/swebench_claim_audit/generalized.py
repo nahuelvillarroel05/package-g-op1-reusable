@@ -33,9 +33,11 @@ MAX_GZIP_OUTPUT = 64 * 1024 * 1024
 MAX_TEXT_BYTES = 16 * 1024 * 1024
 MAX_CLAIM_BYTES = 16 * 1024
 MAX_OBSERVATIONS = 20_000
+MAX_ATTRIBUTION_SCENARIO_STATES = 256
 MAX_NESTED_EXCLUSION_NODES = 20_000
 MAX_NESTED_EXCLUSION_DEPTH = 32
 MAX_NESTED_EXCLUSION_BYTES = 16 * 1024 * 1024
+ATTRIBUTION_AMBIGUITY_CONTRACT = "pgop1.swebench.attribution-ambiguity.v1"
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,159}$")
 RUN_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,255}$")
 SHA_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -1399,6 +1401,263 @@ def _claims(text: str) -> list[tuple[str, bool, str, list[int]]]:
     """Compatibility view of accepted claims; _parse also retains rejections."""
     return _claim_analysis(text)[0]
 
+
+def _apply_attribution_ambiguity_contract(
+    text: str,
+    source_pointer: str,
+    accepted: list[tuple[str, bool, str, list[int]]],
+    rejected: list[dict[str, Any]],
+    source_message_id: object = None,
+) -> tuple[list[tuple[str, bool, str, list[int]]], list[dict[str, Any]]]:
+    """Retain claims covered by competing local-close and outer-close parses.
+
+    The trigger requires a source-reported quote opener, a locally paired quote
+    close, a later unmatched terminal quote delimiter, and a separately paired
+    quote span inside the competing outer frame. Punctuation or first-person
+    wording alone never creates attribution ambiguity.
+    """
+    quote_spans = _quoted_spans(text)
+    ambiguous_spans: dict[tuple[str, bool, tuple[int, int]], dict[str, Any]] = {}
+    frames: list[tuple[int, int, dict[str, Any]]] = []
+    code_spans = _markdown_code_spans(text)
+    local_pairs: list[tuple[int, int, str, str]] = []
+    unmatched: list[tuple[int, str]] = []
+    for delimiter in ("'", '"'):
+        tokens = [index for index, char in enumerate(text)
+                  if char == delimiter and not any(a <= index < b for a, b in code_spans)
+                  and not (delimiter == "'" and index > 0 and index + 1 < len(text)
+                           and text[index - 1].isalnum() and text[index + 1].isalnum())]
+        local_pairs.extend((tokens[index], tokens[index + 1] + 1, delimiter, delimiter)
+                           for index in range(0, len(tokens) - 1, 2))
+        if len(tokens) % 2:
+            unmatched.append((tokens[-1], delimiter))
+    for opening, closing in (("\u2018", "\u2019"), ("\u201c", "\u201d")):
+        openings = [index for index, char in enumerate(text)
+                    if char == opening and not any(a <= index < b for a, b in code_spans)]
+        closings = [index for index, char in enumerate(text)
+                    if char == closing and not any(a <= index < b for a, b in code_spans)]
+        pending: list[int] = []
+        for index in sorted(openings + closings):
+            if text[index] == opening:
+                pending.append(index)
+            elif pending:
+                local_pairs.append((pending.pop(), index + 1, opening, closing))
+            else:
+                unmatched.append((index, closing))
+        unmatched.extend((index, closing) for index in pending)
+    local_pairs.sort()
+    local_quote_spans = [(a, b) for a, b, _open_char, _close_char in local_pairs]
+    local_context_text = _mask_quoted_context(text, local_quote_spans)
+    locally_accepted, locally_rejected = _claim_analysis(local_context_text)
+    local_acceptance = {(predicate, asserted, tuple(span))
+                        for predicate, asserted, _matched, span in locally_accepted}
+    local_rejection_reasons = {
+        (row.get("predicate"), row.get("asserted_value"), tuple(row.get("match_span", []))):
+        set(row.get("reason_codes", [])) for row in locally_rejected
+        if isinstance(row.get("match_span"), list)
+    }
+
+    def local_candidate_state(predicate: str, asserted: bool, span: list[int]) -> str:
+        match_end = span[1]
+        key = (predicate, asserted, tuple(span))
+        local_reasons = local_rejection_reasons.get(key, set())
+        direct_prefix_match = False
+        completed = sorted(((a, b) for a, b, _o, _c in local_pairs if b <= span[0]),
+                           key=lambda pair: pair[1])
+        if completed:
+            start, end = completed[-1]
+            prefix = text[end:span[0]]
+            quote_body = text[start + 1:end - 1].rstrip()
+            direct_prefix_match = (
+                (bool(re.fullmatch(r"\s*[;.!?]\s*", prefix))
+                 or (bool(re.search(r"[.!?]['\"\u2019\u201d]?$", quote_body))
+                     and bool(re.fullmatch(r"\s*", prefix))))
+                and _eligible_assertion_prefix(prefix)
+            )
+        parser_eligible = key in local_acceptance or (
+            key in local_rejection_reasons
+            and local_reasons.issubset({"QUOTED_CLAIM", "REPORTED_CLAIM", "EMBEDDED_CLAIM_CONTEXT"})
+            and direct_prefix_match
+        )
+        if not parser_eligible:
+            if local_reasons.intersection({"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"}):
+                return "EXPLICIT_RETRACTION"
+            return "INELIGIBLE"
+        tail = local_context_text[match_end:]
+        sentence_terminator = re.search(r"[.!?](?=\s|$)", tail)
+        if sentence_terminator:
+            tail = tail[:sentence_terminator.end()]
+        retracted = _explicitly_retracted(local_context_text, match_end, predicate, span)
+        # Keep the established lexical retraction detector in play over the
+        # local-close view as well; the legacy outer-close mask can hide it.
+        retracted = retracted or bool(_RETRACTION.search(tail))
+        retracted = retracted or bool(re.search(
+            r"\b(?:that|it)\s+(?:was|is)\s+(?:false|untrue)\b",
+            tail, re.I))
+        if retracted:
+            return "EXPLICIT_RETRACTION"
+        if _has_explicit_correction(local_context_text, span):
+            return "CORRECTION"
+        return "ACTIVE_ASSERTION"
+    # Keep both the legacy parser's outer-closer interpretation and the
+    # alternative local-pair interpretation. An unmatched terminal delimiter
+    # plus an independently paired inner quote is the competing-closure
+    # witness; delimiter balance is derived from original character offsets.
+    terminal, terminal_char = max(unmatched) if unmatched else (None, None)
+    if terminal is not None and text[terminal] in {terminal_char, "\u2019", "\u201d"} and not text[terminal + 1:].strip(" .!?\t\r\n"):
+        report_matches = list(_REPORTED_PREFIX.finditer(text[:terminal]))
+        for reported in report_matches:
+            opens = [(a, b, opening_char, closing_char) for a, b, opening_char, closing_char in local_pairs
+                     if reported.end() <= a <= reported.end() + 4 and b <= terminal
+                     and closing_char == terminal_char]
+            for opening, local_close, opening_char, _closing_char in opens:
+                paired_inside = [[a, b] for a, b, _open_char, _close_char in local_pairs
+                                 if opening < a < b <= terminal]
+                if paired_inside:
+                    frames.append((opening, terminal + 1, {
+                        "reported_prefix_span": [reported.start(), reported.end()],
+                        "outer_open_delimiter": [opening, opening + 1],
+                        "local_close_delimiter": [local_close - 1, local_close],
+                        "local_quote_span": [opening, local_close],
+                        "quote_delimiter_type": opening_char,
+                        "terminal_close_candidate": [terminal, terminal + 1],
+                        "nested_paired_quote_spans": paired_inside,
+                        "legacy_outer_quote_spans": [[a, b] for a, b in quote_spans
+                                                      if a <= opening and terminal < b],
+                        "ambiguity_group_id": _stable(
+                            "attribution-frame", source_pointer, str(opening),
+                            str(local_close), str(terminal)),
+                    }))
+
+    def frame_witness(span: list[int]) -> dict[str, Any] | None:
+        for opening, end, witness in frames:
+            if (witness["local_quote_span"][1] <= span[0] and span[1] <= end
+                    and not any(a <= span[0] and span[1] <= b
+                                for a, b in witness["nested_paired_quote_spans"])):
+                return {**witness, "candidate_span": list(span)}
+        return None
+
+    for predicate, asserted, _matched, span in accepted:
+        witness = frame_witness(span)
+        if witness is not None:
+            witness["candidate_state"] = local_candidate_state(predicate, asserted, span)
+            ambiguous_spans[(predicate, asserted, tuple(span))] = witness
+    kept_accepted = [row for row in accepted
+                     if (row[0], row[1], tuple(row[3])) not in ambiguous_spans]
+    promoted: list[tuple[str, bool, str, list[int]]] = []
+    converted: list[dict[str, Any]] = []
+    kept_rejected: list[dict[str, Any]] = []
+    for row in rejected:
+        predicate = row.get("predicate")
+        asserted = row.get("asserted_value")
+        span = row.get("match_span")
+        if (isinstance(predicate, str) and type(asserted) is bool
+                and isinstance(span, list) and len(span) == 2
+                and frame_witness(span) is not None):
+            witness = frame_witness(span) or {}
+            witness["candidate_state"] = local_candidate_state(predicate, asserted, span)
+            ambiguous_spans[(predicate, asserted, tuple(span))] = witness
+            continue
+        reasons = set(row.get("reason_codes", []))
+        span_is_quoted = any(a <= span[0] and span[1] <= b for a, b, _o, _c in local_pairs)
+        completed_quote_precedes = sorted(
+            ((a, b) for a, b, _o, _c in local_pairs if b <= span[0]),
+            key=lambda pair: pair[1],
+        )
+        quote_start, quote_end = completed_quote_precedes[-1] if completed_quote_precedes else (0, 0)
+        direct_prefix = text[quote_end:span[0]] if completed_quote_precedes else ""
+        quote_body = text[quote_start + 1:quote_end - 1].rstrip() if completed_quote_precedes else ""
+        explicit_separator = bool(re.fullmatch(r"\s*[;.!?]\s*", direct_prefix))
+        quoted_sentence_end = bool(re.search(r"[.!?]['\"\u2019\u201d]?$", quote_body))
+        direct_after_quote = (
+            bool(completed_quote_precedes)
+            and (explicit_separator or (quoted_sentence_end and bool(re.fullmatch(r"\s*", direct_prefix))))
+            and _eligible_assertion_prefix(direct_prefix)
+            and bool(re.match(r"\s*I\b", row.get("matched_text", ""), re.I))
+        )
+        promotable_reasons = {"QUOTED_CLAIM", "REPORTED_CLAIM", "EMBEDDED_CLAIM_CONTEXT"}
+        if (isinstance(predicate, str) and type(asserted) is bool
+                and isinstance(span, list) and len(span) == 2
+                and not span_is_quoted and frame_witness(span) is None
+                and direct_after_quote and reasons
+                and reasons.issubset(promotable_reasons)):
+            promoted.append((predicate, asserted, row["matched_text"], span))
+            continue
+        row = dict(row)
+        row["attribution_status"] = (
+            "QUOTED" if span_is_quoted or reasons.intersection({"QUOTED_CLAIM", "MARKDOWN_QUOTE", "REPORTED_CLAIM"}) else
+            "RETRACTION" if reasons.intersection({"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"}) else
+            "UNKNOWN")
+        row["claim_classification"] = row["attribution_status"]
+        if reasons.intersection({"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"}):
+            row["claim_state"] = "EXPLICIT_RETRACTION"
+        kept_rejected.append(row)
+    for predicate, asserted, span in sorted(ambiguous_spans, key=lambda item: item[2][0]):
+        matched = text[span[0]:span[1]]
+        witness = ambiguous_spans[(predicate, asserted, span)]
+        reported = witness["reported_prefix_span"]
+        converted.append({
+            "predicate": predicate,
+            "candidate_predicate": predicate,
+            "asserted_value": None,
+            "candidate_asserted_value": asserted,
+            "candidate_state": witness.get("candidate_state", "ACTIVE_ASSERTION"),
+            "ambiguity_group_id": witness["ambiguity_group_id"],
+            "matched_text": matched,
+            "match_span": list(span),
+            "byte_span": [len(text[:span[0]].encode("utf-8")),
+                          len(text[:span[1]].encode("utf-8"))],
+            "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+            "content_sha256": _sha(text.encode("utf-8")),
+            "source_pointer": source_pointer,
+            "source_message_id": source_message_id if isinstance(source_message_id, str) else "UNKNOWN",
+            "message_identity_status": (
+                "SOURCE_DECLARED_UNVERIFIED" if isinstance(source_message_id, str) and source_message_id else "UNKNOWN"),
+            "text": text,
+            "attribution_status": "AMBIGUOUS_ATTRIBUTION",
+            "attribution": "UNKNOWN",
+            "claim_classification": "UNKNOWN",
+            "claim_state": (
+                "RETRACTED" if witness.get("candidate_state") == "EXPLICIT_RETRACTION" else
+                "CORRECTION_CANDIDATE" if witness.get("candidate_state") == "CORRECTION" else
+                "INELIGIBLE" if witness.get("candidate_state") == "INELIGIBLE" else "ACTIVE"),
+            "AUDIT_VERDICT": "INSUFFICIENT_EVIDENCE",
+            "comparison_consequence": {
+                "EXPLICIT_RETRACTION": "LOCAL_PARSE_EXPLICITLY_RETRACTS_CANDIDATE",
+                "CORRECTION": "LOCAL_PARSE_MAY_SUPERSEDE_PRIOR_ACTIVE_CLAIM",
+                "INELIGIBLE": "LOCAL_PARSE_GRAMMAR_EXCLUDES_CANDIDATE",
+                "ACTIVE_ASSERTION": "OWNER_ASSIGNMENT_CHANGES_COMPARABILITY",
+            }.get(witness.get("candidate_state"), "OWNER_UNKNOWN_CANDIDATE_NOT_COMPARABLE"),
+            "incompatibility_reason": "LOCAL_QUOTE_CLOSE_AND_OUTER_TERMINAL_CLOSE_ASSIGN_DIFFERENT_OWNERS",
+            "available_evidence": {
+                "reported_prefix_span": reported,
+                "outer_open_delimiter": witness["outer_open_delimiter"],
+                "local_close_delimiter": witness["local_close_delimiter"],
+                "local_quote_span": witness["local_quote_span"],
+                "quote_delimiter_type": witness["quote_delimiter_type"],
+                "terminal_close_candidate": witness["terminal_close_candidate"],
+            "nested_paired_quote_spans": witness["nested_paired_quote_spans"],
+                "legacy_outer_quote_spans": witness["legacy_outer_quote_spans"],
+            },
+            "owner_alternatives": [
+                {"owner": "ASSISTANT_ROLE_IN_TRAJECTORY_CONTENT",
+                 "interpretation": "local_quote_closes_before_candidate_and_candidate_is_assistant_content",
+                 "witness_spans": {"local_close_delimiter": witness["local_close_delimiter"],
+                                   "candidate": list(span)}},
+                {"owner": "REPORTED_OR_QUOTE_DELIMITED_CONTENT",
+                 "interpretation": "outer_quote_closes_at_terminal_candidate_and_contains_candidate",
+                 "witness_spans": {"reported_prefix": reported,
+                                   "outer_open_delimiter": witness["outer_open_delimiter"],
+                                   "terminal_close_candidate": witness["terminal_close_candidate"],
+                                   "candidate": list(span)}},
+            ],
+            "reason_codes": (
+                ["REPORT_FRAME_OWNER_UNRESOLVED", "CANDIDATE_NOT_ASSERTION_ELIGIBLE_IN_LOCAL_PARSE"]
+                if witness.get("candidate_state") == "INELIGIBLE"
+                else ["REPORT_FRAME_OWNER_UNRESOLVED"]),
+        })
+    return kept_accepted + promoted, kept_rejected + converted
+
 def _assistant_messages(doc: dict[str, Any]) -> list[tuple[str, str]]:
     messages = doc.get("messages")
     if not isinstance(messages, list):
@@ -1777,6 +2036,9 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                                                 "reason_codes": ["STRUCTURED_CONTENT_UNSUPPORTED"]})
                 continue
             accepted, rejected = _claim_analysis(content)
+            if desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_CONTRACT:
+                accepted, rejected = _apply_attribution_ambiguity_contract(
+                    content, pointer, accepted, rejected, message.get("message_id"))
             if root_actor_unscoped or message_actor_unscoped:
                 attribution_code = ("ROOT_ACTOR_SCOPE_UNVERIFIED" if root_actor_unscoped
                                     else "MESSAGE_ACTOR_SCOPE_UNVERIFIED")
@@ -1805,6 +2067,9 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                     "authentication_status": "UNAUTHENTICATED",
                     "source_ref": _src(ref, pointer),
                 }
+                if desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_CONTRACT:
+                    claim["attribution_status"] = "DIRECT"
+                    claim["claim_classification"] = "DIRECT"
                 if len(candidate_claims) >= MAX_OBSERVATIONS:
                     raise AuditError("OBSERVATION_LIMIT", "trajectory emitted too many candidate claims")
                 sequence = message_order * 65_536 + span[0]
@@ -1820,6 +2085,9 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                            and _has_explicit_correction(later["text"], later["match_span"])]
             if superseding:
                 claim["superseded_by"] = superseding[-1]["claim_id"]
+                if desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_CONTRACT:
+                    claim["attribution_status"] = "SUPERSEDED"
+                    claim["claim_classification"] = "SUPERSEDED"
         for rejected_claim in rejected_claims:
             rejection_id = _stable("claim-rejection", run, iid, ref["path"], ref["sha256"],
                                    rejected_claim["source_pointer"],
@@ -2029,7 +2297,8 @@ def _priority(codes: list[str]) -> str | None:
                     "MALFORMED_YAML", "PATCH_ENCODING_INVALID", "LOG_ENCODING_INVALID",
                     "SOURCE_COMMITMENT_INVALID", "PARSER_INTERNAL_ERROR", "JSON_POINTER_UNSUPPORTED",
                     "JSON_POINTER_INVALID", "RUN_ID_REQUIRED", "INSTANCE_ID_INVALID",
-                    "METADATA_ENCODING_INVALID", "CLAIM_TEXT_TOO_LARGE", "OBSERVATION_LIMIT"}
+                    "METADATA_ENCODING_INVALID", "CLAIM_TEXT_TOO_LARGE", "OBSERVATION_LIMIT",
+                    "ATTRIBUTION_SCENARIO_LIMIT"}
     if any(code in integrity for code in codes):
         return "INTEGRITY_FAILURE"
     if any(code in verification for code in codes):
@@ -2045,6 +2314,11 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
     try:
         if not isinstance(request, dict) or not _valid_run(run_id) or not _valid_id(instance_id):
             raise AuditError("REQUEST_SCOPE_INVALID", "request needs valid run_id and instance_id")
+        attribution_contract = request.get("claim_attribution_contract")
+        if attribution_contract not in (None, ATTRIBUTION_AMBIGUITY_CONTRACT):
+            raise AuditError("ATTRIBUTION_CONTRACT_UNSUPPORTED", "claim attribution contract is not registered")
+        if attribution_contract is not None:
+            result["claim_attribution_contract"] = attribution_contract
         descriptors = request.get("evidence")
         if not isinstance(descriptors, list) or not 1 <= len(descriptors) <= MAX_FILES:
             raise AuditError("EVIDENCE_COUNT_INVALID", "evidence must contain 1..64 descriptors")
@@ -2083,6 +2357,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 "pgop1.swebench.results.resolved_list_json.v1",
             }
             parse_descriptor = {**item, "run_id": run_id}
+            if attribution_contract is not None:
+                parse_descriptor["claim_attribution_contract"] = attribution_contract
             if scoped_parser:
                 parse_descriptor["instance_id"] = instance_id
             parsed = audit_file(root, parse_descriptor)
@@ -2122,6 +2398,46 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                                      for obs in statement_observations}
         rejected_claims = [copy.deepcopy(obs["value"]) for obs in observations
                            if obs["kind"] == "claim_rejection"]
+        rejection_sources = {
+            obs.get("rejection_id"): obs.get("source_ref") for obs in observations
+            if obs["kind"] == "claim_rejection"
+        }
+
+        def message_order(pointer: object, span: object) -> tuple[int, int] | None:
+            if not isinstance(pointer, str):
+                return None
+            match = re.fullmatch(r"/messages/(\d+)/content", pointer)
+            if not match or not isinstance(span, list) or len(span) != 2 or type(span[0]) is not int:
+                return None
+            return int(match.group(1)), span[0]
+
+        for row in rejected_claims:
+            if (row.get("attribution_status") != "AMBIGUOUS_ATTRIBUTION"
+                    or row.get("candidate_state") != "CORRECTION"):
+                continue
+            source_ref = rejection_sources.get(row.get("rejection_id"))
+            path = source_ref.get("path") if isinstance(source_ref, dict) else None
+            current_order = message_order(row.get("source_pointer"), row.get("match_span"))
+            if not isinstance(path, str) or current_order is None:
+                continue
+            superseded_ids: list[str] = []
+            for prior in statements:
+                prior_ref = prior.get("source_ref")
+                prior_order = message_order(prior.get("source_pointer"), prior.get("match_span"))
+                if (not isinstance(prior_ref, dict) or prior_ref.get("path") != path
+                        or prior_order is None or prior_order >= current_order
+                        or prior.get("predicate") != row.get("candidate_predicate")
+                        or prior.get("asserted_value") == row.get("candidate_asserted_value")
+                        or prior.get("superseded_by")):
+                    continue
+                if _time_scopes_compatible(prior, row):
+                    claim_id = prior.get("claim_id")
+                    if isinstance(claim_id, str):
+                        superseded_ids.append(claim_id)
+            row["supersedes_claim_ids"] = sorted(set(superseded_ids))
+            for prior in statements:
+                if prior.get("claim_id") in row["supersedes_claim_ids"]:
+                    prior.setdefault("possible_superseded_by", []).append(row["rejection_id"])
         excluded_content = [obs for obs in observations if obs["kind"] == "excluded_content"]
         predictions = [obs["value"] for obs in observations if obs["kind"] == "prediction"]
         evaluator = [obs for obs in observations if obs["kind"] == "evaluator_result"
@@ -2170,6 +2486,118 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         result["SOURCE_PROVENANCE"]["parser_ids"] = sorted({ref["parser_id"] for ref in refs.values()})
 
         verdicts: list[str] = []
+        ambiguity_groups: dict[str, list[dict[str, Any]]] = {}
+        for row in rejected_claims:
+            if (row.get("attribution_status") == "AMBIGUOUS_ATTRIBUTION"
+                    and row.get("candidate_predicate") == "TASK_RESOLVED"
+                    and type(row.get("candidate_asserted_value")) is bool
+                    and isinstance(row.get("ambiguity_group_id"), str)):
+                ambiguity_groups.setdefault(row["ambiguity_group_id"], []).append(row)
+        clear_resolved_claims = {
+            claim["claim_id"]: claim["asserted_value"] for claim in statements
+            if claim["predicate"] == "TASK_RESOLVED" and not claim.get("superseded_by")
+        }
+        clear_noncomparable_active_claim = any(
+            claim["predicate"] != "TASK_RESOLVED" and not claim.get("superseded_by")
+            for claim in statements
+        )
+
+        def comparison_outcome(values: set[bool], observed: bool,
+                               noncomparable_active_claim: bool) -> str:
+            outcomes = {compare_boolean_values(value, observed)["verdict"] for value in values}
+            if noncomparable_active_claim or not outcomes:
+                outcomes.add("INSUFFICIENT_EVIDENCE")
+            if outcomes == {"SUPPORTED"}:
+                return "SUPPORTED"
+            if outcomes == {"CONTRADICTED"}:
+                return "CONTRADICTED"
+            return "INSUFFICIENT_EVIDENCE"
+
+        ambiguity_affects_comparison = False
+        if ambiguity_groups and len({obs["value"] for obs in evaluator}) == 1 and not errors:
+            observed_value = evaluator[0]["value"]
+            value_by_claim_id = dict(clear_resolved_claims)
+            for group_rows in ambiguity_groups.values():
+                for row in group_rows:
+                    if row.get("candidate_state") in {"ACTIVE_ASSERTION", "CORRECTION"}:
+                        value_by_claim_id[row["rejection_id"]] = row["candidate_asserted_value"]
+            all_supersession_targets = {
+                target for group_rows in ambiguity_groups.values() for row in group_rows
+                for target in row.get("supersedes_claim_ids", []) if isinstance(target, str)
+            }
+            initial_ids = set(clear_resolved_claims)
+            initial_tracked = frozenset(initial_ids & all_supersession_targets)
+            initial_values = frozenset(
+                value for claim_id, value in clear_resolved_claims.items()
+                if claim_id not in all_supersession_targets
+            )
+            possible_states: set[tuple[frozenset[str], frozenset[bool]]] = {
+                (initial_tracked, initial_values)
+            }
+            ordered_groups = sorted(ambiguity_groups.items(), key=lambda item: min(
+                (message_order(row.get("source_pointer"), row.get("match_span"))
+                 or (MAX_OBSERVATIONS, 0)) for row in item[1]))
+            scenario_limit_exceeded = False
+            for group_index, (_group_id, group_rows) in enumerate(ordered_groups):
+                targets_after = {
+                    target for _later_id, later_rows in ordered_groups[group_index + 1:]
+                    for row in later_rows for target in row.get("supersedes_claim_ids", [])
+                    if isinstance(target, str)
+                }
+                group_rows = sorted(group_rows, key=lambda row: (
+                    message_order(row.get("source_pointer"), row.get("match_span"))
+                    or (MAX_OBSERVATIONS, MAX_OBSERVATIONS),
+                    row["match_span"][0],
+                ))
+                next_states: set[tuple[frozenset[str], frozenset[bool]]] = set()
+                for active_ids, residual_values in possible_states:
+                    branches = [(set(active_ids), set(residual_values), False),
+                                (set(active_ids), set(residual_values), True)]
+                    for branch_ids, branch_values, include_local in branches:
+                        if include_local:
+                            for row in group_rows:
+                                state = row.get("candidate_state")
+                                if state not in {"ACTIVE_ASSERTION", "CORRECTION"}:
+                                    continue
+                                branch_ids.difference_update(row.get("supersedes_claim_ids", []))
+                                candidate_id = row.get("rejection_id")
+                                candidate_value = row.get("candidate_asserted_value")
+                                if not isinstance(candidate_id, str) or type(candidate_value) is not bool:
+                                    continue
+                                if candidate_id in all_supersession_targets:
+                                    branch_ids.add(candidate_id)
+                                else:
+                                    branch_values.add(candidate_value)
+                        values = set(branch_values)
+                        retained_ids = set(branch_ids) & targets_after
+                        values.update(value_by_claim_id[claim_id] for claim_id in branch_ids - retained_ids
+                                      if claim_id in value_by_claim_id)
+                        next_states.add((frozenset(retained_ids), frozenset(values)))
+                        if len(next_states) > MAX_ATTRIBUTION_SCENARIO_STATES:
+                            scenario_limit_exceeded = True
+                            break
+                    if scenario_limit_exceeded:
+                        break
+                if scenario_limit_exceeded:
+                    break
+                possible_states = next_states
+            if scenario_limit_exceeded:
+                errors.append("ATTRIBUTION_SCENARIO_LIMIT")
+            else:
+                possible_outcomes = {
+                    comparison_outcome(
+                        set(residual_values) | {value_by_claim_id[claim_id] for claim_id in active_ids
+                                                if claim_id in value_by_claim_id},
+                        observed_value, clear_noncomparable_active_claim)
+                    for active_ids, residual_values in possible_states
+                }
+                baseline_outcome = comparison_outcome(
+                    set(clear_resolved_claims.values()), observed_value,
+                    clear_noncomparable_active_claim)
+                ambiguity_affects_comparison = any(
+                    outcome != baseline_outcome for outcome in possible_outcomes)
+        if ambiguity_affects_comparison:
+            result["reason_codes"].append("ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON")
         if len({obs["value"] for obs in evaluator}) > 1:
             errors.append("EVALUATOR_RECORD_CONFLICT")
             for claim in statements:
@@ -2231,7 +2659,9 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         }
         if result["CLAIM_AGGREGATION"]["active_contradicted_claim_ids"]:
             result["reason_codes"].append("ACTIVE_CONTRADICTED_CLAIM_PRESENT")
-        if (verdicts and all(value == "SUPPORTED" for value in verdicts)
+        if ambiguity_affects_comparison:
+            computed_verdict = "INSUFFICIENT_EVIDENCE"
+        elif (verdicts and all(value == "SUPPORTED" for value in verdicts)
                 and not result["CLAIM_AGGREGATION"]["active_contradicted_claim_ids"]):
             computed_verdict = "SUPPORTED"
         elif verdicts and all(value == "CONTRADICTED" for value in verdicts):
