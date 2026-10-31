@@ -571,6 +571,64 @@ def test_explicit_self_retraction_does_not_become_a_supported_claim(tmp_path: Pa
     assert not any(row.get("attribution_status") == "AMBIGUOUS_ATTRIBUTION" for row in retractions)
 
 
+@pytest.mark.parametrize("evaluator", [True, False])
+def test_direct_and_terminal_retraction_forms_keep_matching_selected_state_and_spans(
+        tmp_path: Path, evaluator: bool) -> None:
+    direct = ("The reviewer wrote: 'ready'; I resolved the task; that was false. "
+              "I used the literal 'x'; done.")
+    terminal = direct + "'"
+    for label, text in (("direct", direct), ("terminal", terminal)):
+        result = _audit(tmp_path / label, [{"role": "assistant", "content": text}], evaluator)
+
+        assert result["claim_attribution_contract"] == CONTRACT
+        assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+        assert result["AGENT_STATEMENT"] == []
+        rows = [row for row in result["CLAIM_REJECTIONS"]
+                if row.get("matched_text") == "I resolved the task"]
+        assert len(rows) == 1
+        row = rows[0]
+        assert row["source_pointer"] == "/messages/0/content"
+        assert row["match_span"] == [29, 48]
+        assert row["byte_span"] == [29, 48]
+        assert text[slice(*row["match_span"])] == row["matched_text"]
+        source_ref = next(ref for ref in result["SOURCE_PROVENANCE"]["evidence_references"]
+                          if ref["path"] == "trajectory.json")
+        claim_observation = next(obs for obs in result["observations"]
+                                 if obs["kind"] == "claim_rejection"
+                                 and obs["value"].get("matched_text") == row["matched_text"])
+        assert claim_observation["source_ref"]["path"] == "trajectory.json"
+        assert claim_observation["source_ref"]["sha256"] == source_ref["sha256"]
+        assert result["CLAIM_RETRACTIONS"] == []
+        if label == "direct":
+            assert row["attribution_status"] == "RETRACTION"
+            assert row["claim_state"] == "EXPLICIT_RETRACTION"
+            assert {"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"}.intersection(row["reason_codes"])
+        else:
+            assert row["attribution_status"] == "AMBIGUOUS_ATTRIBUTION"
+            assert row["candidate_state"] == "EXPLICIT_RETRACTION"
+            assert row["claim_state"] == "RETRACTED"
+            assert row["comparison_consequence"] == \
+                "LOCAL_PARSE_EXPLICITLY_RETRACTS_CANDIDATE"
+
+
+@pytest.mark.parametrize("text", [
+    "I resolved the task; if that was false, I would correct it.",
+    "The reviewer wrote: 'I resolved the task; that was false.'",
+    "I resolved the task. I used the literal 'that was false' afterward.",
+])
+def test_conditional_quoted_and_literal_false_tails_do_not_create_retraction_state(
+        tmp_path: Path, text: str) -> None:
+    result = _audit(tmp_path, [{"role": "assistant", "content": text}], True)
+
+    assert not any(claim.get("claim_state") in {"RETRACTED", "EXPLICIT_RETRACTION"}
+                   for claim in result["AGENT_STATEMENT"])
+    assert not any(row.get("attribution_status") == "RETRACTION"
+                   or row.get("claim_state") == "EXPLICIT_RETRACTION"
+                   or row.get("candidate_state") == "EXPLICIT_RETRACTION"
+                   for row in result["CLAIM_REJECTIONS"])
+    assert result["CLAIM_RETRACTIONS"] == []
+
+
 def test_ambiguous_negative_with_same_polarity_as_clean_claim_keeps_contradicted_aggregate(
         tmp_path: Path) -> None:
     reported = ("The reviewer wrote: 'ready'; I did not resolve the task. "

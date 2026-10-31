@@ -1126,8 +1126,13 @@ def _conditional_scope_before(text: str, position: int, quote_spans: list[tuple[
 
 
 def _explicitly_retracted(text: str, match_end: int, predicate: str,
-                          claim_span: list[int] | None = None) -> bool:
+                          claim_span: list[int] | None = None, *,
+                          allow_bounded_false_tail: bool = False) -> bool:
     tail = text[match_end:]
+    if (allow_bounded_false_tail and re.match(
+            r"\s*;\s*(?:that|it)\s+(?:was|is)\s+(?:false|untrue)\b"
+            r"(?=\s*(?:[.!?;](?:\s|$)|$))", tail, re.I)):
+        return True
     if re.match(r"\s*[,;]?\s*(?:but\s+)?(?:that\s+)?(?:claim|statement)\s+"
                 r"(?:is|was)\s+(?:false|untrue)\b", tail, re.I):
         return True
@@ -1171,6 +1176,19 @@ def _explicitly_retracted(text: str, match_end: int, predicate: str,
     state_clause = scope["state_clause"]
     return bool(re.match(
         rf"\s*(?:it|that)\s+{state_clause}\b{_SCOPE_BOUNDARY}", body_clause, re.I))
+
+
+def _qualified_retraction_reasons(text: str, match_end: int, predicate: str,
+                                  claim_span: list[int],
+                                  clause_end: int, *,
+                                  allow_bounded_false_tail: bool = False) -> list[str]:
+    reasons: list[str] = []
+    if _RETRACTION.search(text[match_end:clause_end]):
+        reasons.append("RETRACTION_IN_CLAUSE")
+    if _explicitly_retracted(text, match_end, predicate, claim_span,
+                             allow_bounded_false_tail=allow_bounded_false_tail):
+        reasons.append("EXPLICIT_CORRECTION")
+    return reasons
 
 
 def _related_qualifier_after(text: str, match_end: int, clause_end: int, predicate: str,
@@ -1281,6 +1299,7 @@ def _time_scopes_compatible(earlier: dict[str, Any], later: dict[str, Any]) -> b
 
 def _claim_analysis(
     text: str, *, markdown_blankline_closes_quote: bool = False,
+    allow_bounded_false_tail: bool = False,
 ) -> tuple[list[tuple[str, bool, str, list[int]]], list[dict[str, Any]]]:
     if len(text.encode("utf-8")) > MAX_CLAIM_BYTES:
         raise AuditError("CLAIM_TEXT_TOO_LARGE", "assistant message exceeds claim parsing byte bound")
@@ -1353,10 +1372,10 @@ def _claim_analysis(
                 reasons.append("DENIED_CLAIM")
             if asserted and _NEGATION.search(clause_context):
                 reasons.append("NEGATED_ASSERTION")
-            if _RETRACTION.search(context_text[match.end():end]):
-                reasons.append("RETRACTION_IN_CLAUSE")
-            if _explicitly_retracted(context_text, match.end(), predicate, [match.start(), match.end()]):
-                reasons.append("EXPLICIT_CORRECTION")
+            reasons.extend(_qualified_retraction_reasons(
+                context_text, match.end(), predicate,
+                [match.start(), match.end()], end,
+                allow_bounded_false_tail=allow_bounded_false_tail))
             tail_to_sentence_end = text[match.end():sentence_end]
             tail_context = context_text[match.end():sentence_end]
             if re.match(r"\s*,?\s*(?:or\s+so\s+(?:the\s+)?(?:user|tool|log|agent)\s+"
@@ -1462,7 +1481,8 @@ def _apply_attribution_ambiguity_contract(
     local_quote_spans = [(a, b) for a, b, _open_char, _close_char in local_pairs]
     local_context_text = _mask_quoted_context(text, local_quote_spans)
     locally_accepted, locally_rejected = _claim_analysis(
-        local_context_text, markdown_blankline_closes_quote=True)
+        local_context_text, markdown_blankline_closes_quote=True,
+        allow_bounded_false_tail=True)
     local_acceptance = {(predicate, asserted, tuple(span))
                         for predicate, asserted, _matched, span in locally_accepted}
     local_rejection_reasons = {
@@ -1471,44 +1491,50 @@ def _apply_attribution_ambiguity_contract(
         if isinstance(row.get("match_span"), list)
     }
 
+    def direct_after_closed_quote(span: list[int], matched_text: str) -> bool:
+        completed = sorted(((a, b) for a, b, _o, _c in local_pairs if b <= span[0]),
+                           key=lambda pair: pair[1])
+        if not completed or not re.match(r"\s*I\b", matched_text, re.I):
+            return False
+        start, end = completed[-1]
+        prefix = text[end:span[0]]
+        quote_body = text[start + 1:end - 1].rstrip()
+        explicit_separator = bool(re.fullmatch(r"\s*[;.!?]\s*", prefix))
+        completed_sentence = (
+            bool(re.search(r"[.!?]['\"\u2019\u201d]?$", quote_body))
+            and bool(re.fullmatch(r"\s*", prefix)))
+        prefix_after_separator = ("" if explicit_separator else prefix)
+        return ((explicit_separator or completed_sentence)
+                and _eligible_assertion_prefix(prefix_after_separator))
+
     def local_candidate_state(predicate: str, asserted: bool, span: list[int]) -> str:
         match_end = span[1]
         key = (predicate, asserted, tuple(span))
         local_reasons = local_rejection_reasons.get(key, set())
-        direct_prefix_match = False
-        completed = sorted(((a, b) for a, b, _o, _c in local_pairs if b <= span[0]),
-                           key=lambda pair: pair[1])
-        if completed:
-            start, end = completed[-1]
-            prefix = text[end:span[0]]
-            quote_body = text[start + 1:end - 1].rstrip()
-            direct_prefix_match = (
-                (bool(re.fullmatch(r"\s*[;.!?]\s*", prefix))
-                 or (bool(re.search(r"[.!?]['\"\u2019\u201d]?$", quote_body))
-                     and bool(re.fullmatch(r"\s*", prefix))))
-                and _eligible_assertion_prefix(prefix)
-            )
+        direct_prefix_match = direct_after_closed_quote(span, text[span[0]:span[1]])
+        nonassertive_reasons = {
+            "HEDGED_CLAUSE", "CONDITIONAL_CLAUSE", "DENIED_CLAIM",
+            "INTERROGATIVE_CLAUSE", "MARKDOWN_CODE", "MARKDOWN_QUOTE", "QUOTED_CLAIM",
+            "NEGATED_ASSERTION",
+        }
+        if (local_reasons.intersection(nonassertive_reasons)
+                or ("REPORTED_CLAIM" in local_reasons and not direct_prefix_match)):
+            return "INELIGIBLE"
+        retraction_reasons = local_reasons.intersection(
+            {"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"})
+        if retraction_reasons:
+            return "EXPLICIT_RETRACTION" if direct_prefix_match else "INELIGIBLE"
         parser_eligible = key in local_acceptance or (
             key in local_rejection_reasons
             and local_reasons.issubset({"QUOTED_CLAIM", "REPORTED_CLAIM", "EMBEDDED_CLAIM_CONTEXT"})
             and direct_prefix_match
         )
         if not parser_eligible:
-            if local_reasons.intersection({"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"}):
-                return "EXPLICIT_RETRACTION"
             return "INELIGIBLE"
-        tail = local_context_text[match_end:]
-        sentence_terminator = re.search(r"[.!?](?=\s|$)", tail)
-        if sentence_terminator:
-            tail = tail[:sentence_terminator.end()]
-        retracted = _explicitly_retracted(local_context_text, match_end, predicate, span)
-        # Keep the established lexical retraction detector in play over the
-        # local-close view as well; the legacy outer-close mask can hide it.
-        retracted = retracted or bool(_RETRACTION.search(tail))
-        retracted = retracted or bool(re.search(
-            r"\b(?:that|it)\s+(?:was|is)\s+(?:false|untrue)\b",
-            tail, re.I))
-        if retracted:
+        local_clause_end = _claim_segment(local_context_text, span[0])[1]
+        if _qualified_retraction_reasons(
+                local_context_text, match_end, predicate, span, local_clause_end,
+                allow_bounded_false_tail=True):
             return "EXPLICIT_RETRACTION"
         if _has_explicit_correction(local_context_text, span):
             return "CORRECTION"
@@ -1574,21 +1600,7 @@ def _apply_attribution_ambiguity_contract(
             continue
         reasons = set(row.get("reason_codes", []))
         span_is_quoted = any(a <= span[0] and span[1] <= b for a, b, _o, _c in local_pairs)
-        completed_quote_precedes = sorted(
-            ((a, b) for a, b, _o, _c in local_pairs if b <= span[0]),
-            key=lambda pair: pair[1],
-        )
-        quote_start, quote_end = completed_quote_precedes[-1] if completed_quote_precedes else (0, 0)
-        direct_prefix = text[quote_end:span[0]] if completed_quote_precedes else ""
-        quote_body = text[quote_start + 1:quote_end - 1].rstrip() if completed_quote_precedes else ""
-        explicit_separator = bool(re.fullmatch(r"\s*[;.!?]\s*", direct_prefix))
-        quoted_sentence_end = bool(re.search(r"[.!?]['\"\u2019\u201d]?$", quote_body))
-        direct_after_quote = (
-            bool(completed_quote_precedes)
-            and (explicit_separator or (quoted_sentence_end and bool(re.fullmatch(r"\s*", direct_prefix))))
-            and _eligible_assertion_prefix(direct_prefix)
-            and bool(re.match(r"\s*I\b", row.get("matched_text", ""), re.I))
-        )
+        direct_after_quote = direct_after_closed_quote(span, row.get("matched_text", ""))
         promotable_reasons = {"QUOTED_CLAIM", "REPORTED_CLAIM", "EMBEDDED_CLAIM_CONTEXT"}
         if (isinstance(predicate, str) and type(asserted) is bool
                 and isinstance(span, list) and len(span) == 2
@@ -2084,7 +2096,8 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                     ref, run, iid, "claim_retraction", "EXPLICIT_RETRACTION_EVENT",
                     event, pointer, "SOURCE_DECLARED_ASSISTANT_ROLE_UNAUTHENTICATED"))
             accepted, rejected = _claim_analysis(
-                content, markdown_blankline_closes_quote=selected_attribution_contract)
+                content, markdown_blankline_closes_quote=selected_attribution_contract,
+                allow_bounded_false_tail=selected_attribution_contract)
             if selected_attribution_contract:
                 accepted, rejected = _apply_attribution_ambiguity_contract(
                     content, pointer, accepted, rejected, message.get("message_id"))
