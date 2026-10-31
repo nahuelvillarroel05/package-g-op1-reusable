@@ -182,6 +182,261 @@ def test_explicit_correction_supersedes_earlier_opposite_assertion(tmp_path: Pat
                    for row in result["CLAIM_REJECTIONS"])
 
 
+@pytest.mark.parametrize("evaluator", [True, False])
+def test_b05_standalone_same_source_retraction_links_and_deactivates_prior_claim(
+        tmp_path: Path, evaluator: bool) -> None:
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I resolved the task."},
+        {"role": "assistant", "content": "I retract my previous claim."},
+    ], evaluator)
+
+    assert len(result["AGENT_STATEMENT"]) == 1
+    prior = result["AGENT_STATEMENT"][0]
+    assert prior["asserted_value"] is True
+    assert prior["claim_state"] == "RETRACTED"
+    events = result["CLAIM_RETRACTIONS"]
+    assert len(events) == 1
+    event = events[0]
+    assert event["event_type"] == "STANDALONE_CLAIM_RETRACTION"
+    assert event["target_status"] == "LINKED"
+    assert event["target_claim_id"] == prior["claim_id"]
+    assert event["source_pointer"] == "/messages/1/content"
+    assert event["source_message_id"] == "UNKNOWN"
+    assert event["attribution_status"] == "SOURCE_DECLARED_UNVERIFIED"
+    assert event["speaker_identity_status"] == "UNKNOWN"
+    event_observation = next(row for row in result["observations"]
+                             if row["kind"] == "claim_retraction")
+    trajectory_ref = next(ref for ref in result["SOURCE_PROVENANCE"]["evidence_references"]
+                          if ref["path"] == "trajectory.json")
+    assert event_observation["value"] == event
+    assert event_observation["source_ref"]["path"] == "trajectory.json"
+    assert event_observation["source_ref"]["sha256"] == trajectory_ref["sha256"]
+    assert event["event_id"] in prior["retracted_by"]
+    assert event["target_source_ref"] == prior["source_ref"]
+    assert event["target_source_pointer"] == prior["source_pointer"]
+    assert event["target_match_span"] == prior["match_span"]
+    assert event["speaker_scope"] == "SAME_TRAJECTORY_DECLARED_ASSISTANT_ROLE"
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert "ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON" not in result["reason_codes"]
+
+
+@pytest.mark.parametrize("evaluator,expected", [(True, "SUPPORTED"), (False, "CONTRADICTED")])
+def test_b05_standalone_retraction_keeps_legacy_default_unchanged(
+        tmp_path: Path, evaluator: bool, expected: str) -> None:
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I resolved the task."},
+        {"role": "assistant", "content": "I retract my previous claim."},
+    ], evaluator, versioned=False)
+
+    assert "claim_attribution_contract" not in result
+    assert "CLAIM_RETRACTIONS" not in result
+    assert len(result["AGENT_STATEMENT"]) == 1
+    assert result["AGENT_STATEMENT"][0]["asserted_value"] is True
+    assert set(result["CLAIM_AGGREGATION"]) == {
+        "policy", "corrected_claim_ids", "active_contradicted_claim_ids",
+        "active_noncomparable_claim_ids", "retracted_candidate_count",
+    }
+    assert result["AUDIT_VERDICT"] == expected
+
+
+@pytest.mark.parametrize("evaluator", [True, False])
+def test_quoted_or_conditional_retraction_does_not_deactivate_prior_claim(
+        tmp_path: Path, evaluator: bool) -> None:
+    cases = [
+        "The reviewer wrote: 'I retract my previous claim.'",
+        "If I retract my previous claim, the task status would change.",
+    ]
+    for text in cases:
+        result = _audit(tmp_path / str(len(text)), [
+            {"role": "assistant", "content": "I resolved the task."},
+            {"role": "assistant", "content": text},
+        ], evaluator)
+
+        assert len(result["AGENT_STATEMENT"]) == 1
+        prior = result["AGENT_STATEMENT"][0]
+        expected_state = "ACTIVE" if evaluator else "ACTIVE_CONTRADICTED"
+        assert prior["claim_state"] == expected_state and "retracted_by" not in prior
+        assert result["CLAIM_RETRACTIONS"] == []
+        assert result["AUDIT_VERDICT"] == ("SUPPORTED" if evaluator else "CONTRADICTED")
+
+
+@pytest.mark.parametrize("evaluator", [True, False])
+def test_question_form_standalone_retraction_is_not_an_event(
+        tmp_path: Path, evaluator: bool) -> None:
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I resolved the task."},
+        {"role": "assistant", "content": "I retract my previous claim?"},
+    ], evaluator)
+
+    prior = result["AGENT_STATEMENT"][0]
+    assert prior["claim_state"] == ("ACTIVE" if evaluator else "ACTIVE_CONTRADICTED")
+    assert "retracted_by" not in prior
+    assert result["CLAIM_RETRACTIONS"] == []
+    assert result["AUDIT_VERDICT"] == ("SUPPORTED" if evaluator else "CONTRADICTED")
+
+
+def test_correction_then_standalone_retraction_targets_corrected_claim(tmp_path: Path) -> None:
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I did not resolve the task."},
+        {"role": "assistant", "content": "Correction: I resolved the task."},
+        {"role": "assistant", "content": "I retract my previous claim."},
+    ], True)
+
+    negative, positive = result["AGENT_STATEMENT"]
+    assert negative["claim_state"] == "CORRECTED"
+    assert positive["claim_state"] == "RETRACTED"
+    event = result["CLAIM_RETRACTIONS"][0]
+    assert event["target_claim_id"] == positive["claim_id"]
+    assert event["event_id"] in positive["retracted_by"]
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+
+
+@pytest.mark.parametrize("evaluator,expected", [(True, "CONTRADICTED"), (False, "SUPPORTED")])
+def test_standalone_retraction_then_correction_uses_event_time_active_claim(
+        tmp_path: Path, evaluator: bool, expected: str) -> None:
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I resolved the task."},
+        {"role": "assistant", "content": "I retract my previous claim."},
+        {"role": "assistant", "content": "Correction: I did not resolve the task."},
+    ], evaluator)
+
+    original, later_negative = result["AGENT_STATEMENT"]
+    event = result["CLAIM_RETRACTIONS"][0]
+    assert event["target_claim_id"] == original["claim_id"]
+    assert event["target_source_ref"] == original["source_ref"]
+    assert event["target_source_pointer"] == original["source_pointer"]
+    assert event["target_match_span"] == original["match_span"]
+    assert event["event_id"] in original["retracted_by"]
+    assert original["claim_state"] == "RETRACTED"
+    assert later_negative["asserted_value"] is False
+    assert later_negative["claim_state"] == (
+        "ACTIVE_CONTRADICTED" if evaluator else "ACTIVE")
+    assert result["AUDIT_VERDICT"] == expected
+
+
+@pytest.mark.parametrize("evaluator", [True, False])
+def test_retraction_target_ambiguity_preserves_source_bound_clear_and_candidate_alternatives(
+        tmp_path: Path, evaluator: bool) -> None:
+    ambiguous_text = "The reviewer wrote: 'ready'; I did not resolve the task. " \
+                     "I used the literal 'x'; done.'"
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I did not resolve the task."},
+        {"role": "assistant", "content": "I resolved the task."},
+        {"role": "assistant", "content": ambiguous_text},
+        {"role": "assistant", "content": "I retract my previous claim."},
+    ], evaluator)
+
+    clear_negative, clear_positive = result["AGENT_STATEMENT"]
+    assert clear_positive["asserted_value"] is True
+    assert clear_positive["claim_state"] == (
+        "ACTIVE" if evaluator else "ACTIVE_CONTRADICTED")
+    assert "retracted_by" not in clear_positive
+    event = result["CLAIM_RETRACTIONS"][0]
+    assert event["source_pointer"] == "/messages/3/content"
+    assert event["target_status"] == "AMBIGUOUS_TARGET"
+    assert event["target_claim_id"] is None
+    assert event["event_id"] in clear_positive["possible_retracted_by"]
+
+    candidate = next(row for row in result["CLAIM_REJECTIONS"]
+                     if row.get("attribution_status") == "AMBIGUOUS_ATTRIBUTION"
+                     and row.get("matched_text") == "I did not resolve the task")
+    assert candidate["source_pointer"] == "/messages/2/content"
+    assert candidate["candidate_predicate"] == "TASK_RESOLVED"
+    assert candidate["candidate_asserted_value"] is False
+    assert candidate["asserted_value"] is None
+    start, end = candidate["match_span"]
+    assert ambiguous_text[start:end] == candidate["matched_text"]
+    assert candidate["byte_span"] == [start, end]
+
+    alternatives = event["target_claim_alternatives"]
+    assert {row["target_kind"] for row in alternatives} == {
+        "CLEAR_CLAIM", "AMBIGUOUS_CLAIM"}
+    clear_alternative = next(row for row in alternatives if row["target_kind"] == "CLEAR_CLAIM")
+    candidate_alternative = next(row for row in alternatives
+                                 if row["target_kind"] == "AMBIGUOUS_CLAIM")
+    assert clear_alternative["claim_id"] == clear_positive["claim_id"]
+    assert clear_alternative["source_ref"] == clear_positive["source_ref"]
+    assert clear_alternative["source_pointer"] == clear_positive["source_pointer"]
+    assert clear_alternative["match_span"] == clear_positive["match_span"]
+    assert candidate_alternative["claim_id"] == candidate["rejection_id"]
+    assert candidate_alternative["ambiguity_group_id"] == candidate["ambiguity_group_id"]
+    assert candidate_alternative["source_ref"]["path"] == "trajectory.json"
+    assert candidate_alternative["source_pointer"] == candidate["source_pointer"]
+    assert candidate_alternative["match_span"] == candidate["match_span"]
+    assert clear_negative["asserted_value"] is False
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert "ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON" in result["reason_codes"]
+
+
+@pytest.mark.parametrize("evaluator,expected", [(True, "SUPPORTED"), (False, "CONTRADICTED")])
+def test_retraction_in_user_speaker_scope_cannot_withdraw_assistant_claim(
+        tmp_path: Path, evaluator: bool, expected: str) -> None:
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I resolved the task."},
+        {"role": "user", "content": "I retract my previous claim."},
+    ], evaluator)
+
+    expected_state = "ACTIVE" if evaluator else "ACTIVE_CONTRADICTED"
+    assert [claim["claim_state"] for claim in result["AGENT_STATEMENT"]] == [expected_state]
+    assert result["CLAIM_RETRACTIONS"] == []
+    assert result["AUDIT_VERDICT"] == expected
+
+
+@pytest.mark.parametrize("evaluator,expected", [(True, "SUPPORTED"), (False, "CONTRADICTED")])
+def test_retraction_in_another_source_cannot_withdraw_prior_source_claim(
+        tmp_path: Path, evaluator: bool, expected: str) -> None:
+    first = _put(tmp_path, "trajectory-a.json", {"instance_id": INSTANCE,
+        "messages": [{"role": "assistant", "content": "I resolved the task."}]},
+        "AGENT_TRAJECTORY", TRAJECTORY)
+    second = _put(tmp_path, "trajectory-b.json", {"instance_id": INSTANCE,
+        "messages": [{"role": "assistant", "content": "I retract my previous claim."}]},
+        "AGENT_TRAJECTORY", TRAJECTORY)
+    report = _put(tmp_path, "report.json", {INSTANCE: {"resolved": evaluator}},
+                  "EVALUATOR_REPORT", REPORT)
+    result = audit_evidence(tmp_path, {"run_id": RUN, "instance_id": INSTANCE,
+        "claim_attribution_contract": CONTRACT, "evidence": [first, second, report]})
+
+    expected_state = "ACTIVE" if evaluator else "ACTIVE_CONTRADICTED"
+    assert [claim["claim_state"] for claim in result["AGENT_STATEMENT"]] == [expected_state]
+    event = result["CLAIM_RETRACTIONS"][0]
+    assert event["target_status"] == "UNKNOWN_NO_PRIOR_COMPATIBLE_ACTIVE_CLAIM"
+    assert event["target_claim_id"] is None
+    assert not any(row.get("target_status") == "LINKED"
+                   for row in result["CLAIM_RETRACTIONS"])
+    assert result["AUDIT_VERDICT"] == expected
+
+
+@pytest.mark.parametrize("evaluator,expected", [(False, "SUPPORTED"), (True, "CONTRADICTED")])
+def test_b12_blank_line_closes_markdown_quote_and_preserves_own_negative(
+        tmp_path: Path, evaluator: bool, expected: str) -> None:
+    text = "> I resolved the task.\n\nI did not resolve the task."
+    result = _audit(tmp_path, [{"role": "assistant", "content": text}], evaluator)
+
+    assert len(result["AGENT_STATEMENT"]) == 1
+    claim = result["AGENT_STATEMENT"][0]
+    assert claim["asserted_value"] is False
+    assert claim["match_span"] == [24, 50]
+    assert claim["byte_span"] == [24, 50]
+    assert text[24:50] == "I did not resolve the task"
+    quoted = next(row for row in result["CLAIM_REJECTIONS"]
+                  if row.get("matched_text") == "I resolved the task")
+    assert quoted["attribution_status"] == "QUOTED"
+    assert "MARKDOWN_QUOTE" in quoted["reason_codes"]
+    assert result["AUDIT_VERDICT"] == expected
+
+
+def test_b13_unicode_prefix_remains_disclosed_scope_mismatch_with_correct_offsets(tmp_path: Path) -> None:
+    text = (chr(0x1f9ea) + " café e" + chr(0x301) + " — I did not resolve the task.")
+    result = _audit(tmp_path, [{"role": "assistant", "content": text}], True)
+
+    assert result["AGENT_STATEMENT"] == []
+    rejected = next(row for row in result["CLAIM_REJECTIONS"]
+                    if row.get("matched_text") == "I did not resolve the task")
+    assert "EMBEDDED_CLAIM_CONTEXT" in rejected["reason_codes"]
+    assert rejected["match_span"] == [12, 38]
+    assert rejected["byte_span"] == [19, 45]
+
+
 def test_explicit_self_retraction_does_not_become_a_supported_claim(tmp_path: Path) -> None:
     result = _audit(tmp_path, [{"role": "assistant", "content":
                                 "I resolved the task, but that claim was false."}], True)

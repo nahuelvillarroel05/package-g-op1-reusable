@@ -43,6 +43,22 @@ def _case(data_root: Path) -> tuple[dict[str, object], dict[str, bytes]]:
     return result, {"trajectory.json": trajectory_raw, "report.json": evaluator_raw}
 
 
+def _retraction_case(data_root: Path) -> tuple[dict[str, object], dict[str, bytes]]:
+    data_root.mkdir(parents=True, exist_ok=True)
+    trajectory, trajectory_raw = _put(data_root, "trajectory.json", {
+        "instance_id": INSTANCE,
+        "messages": [
+            {"role": "assistant", "content": "I resolved the task."},
+            {"role": "assistant", "content": "I retract my previous claim."},
+        ],
+    }, "AGENT_TRAJECTORY", "pgop1.swebench.trajectory.miniswe_json.v1")
+    evaluator, evaluator_raw = _put(data_root, "report.json", {INSTANCE: {"resolved": True}},
+        "EVALUATOR_REPORT", "pgop1.swebench.evaluator_report.resolved_map_json.v1")
+    result = audit_evidence(data_root, {"run_id": RUN, "instance_id": INSTANCE,
+        "claim_attribution_contract": CONTRACT, "evidence": [trajectory, evaluator]})
+    return result, {"trajectory.json": trajectory_raw, "report.json": evaluator_raw}
+
+
 def test_new_contract_survives_context_commit_and_fresh_process_recovery(tmp_path: Path) -> None:
     data_root = tmp_path / "data"
     context_root = tmp_path / "context"
@@ -120,6 +136,54 @@ def test_versioned_contract_recovery_rejects_identity_tampering(tmp_path: Path) 
 
     with pytest.raises(AuditError, match="(?i)receipt|identity|capsule|metadata"):
         recover_generalized_audit(context_root)
+
+
+def test_standalone_retraction_observation_recovers_from_committed_source_bytes(
+        tmp_path: Path) -> None:
+    data_root = tmp_path / "data"
+    context_root = tmp_path / "context"
+    audit, source_bytes = _retraction_case(data_root)
+    assert len(audit["CLAIM_RETRACTIONS"]) == 1
+    event = audit["CLAIM_RETRACTIONS"][0]
+    bound = bind_generalized_audit(audit, data_root, context_root)
+    assert bound["derivation"]["status"] == "DERIVATION_VERIFIED"
+    assert bound["context_engine"]["fresh_process_readback"]["status"] == "PASS"
+
+    for name in source_bytes:
+        (data_root / name).unlink()
+    recovery = recover_generalized_audit(context_root)
+    assert recovery["status"] == "PASS"
+    assert recovery["derivation"]["status"] == "DERIVATION_VERIFIED"
+    assert recovery["bridge_qualifiers"]["evaluator_authentication_status"] == "UNAUTHENTICATED"
+
+    repo_root = Path(__file__).resolve().parents[1]
+    child_code = (
+        "import hashlib,json,sys; from pathlib import Path; sys.path.insert(0,sys.argv[1]); "
+        "from runtime.candidate.context_engine import Engine; "
+        "from runtime.candidate.swebench_claim_audit.generalized_bridge import recover_generalized_audit; "
+        "root=Path(sys.argv[2]); recovery=recover_generalized_audit(root); engine=Engine(root); "
+        "receipt=json.loads((root/'generalized-bridge-receipt.json').read_bytes()); "
+        "capsule=json.loads(engine.read_source(receipt['capsule']['source_id'])); "
+        "rows=engine.query(task_id='INSTANCE:example__repo-1',kind='claim_retraction',limit=10); "
+        "sources=[{'path':r['path'],'bytes':len(engine.read_source(r['source_id'])),'sha256':"
+        "hashlib.sha256(engine.read_source(r['source_id'])).hexdigest()} for r in capsule['source_refs']]; "
+        "print(json.dumps({'recovery':recovery,'rows':rows,'sources':sources},sort_keys=True))"
+    )
+    child = subprocess.run([sys.executable, "-I", "-B", "-c", child_code,
+                            str(repo_root), str(context_root)],
+                           capture_output=True, text=True, timeout=45, check=False)
+    assert child.returncode == 0, child.stderr
+    fresh = json.loads(child.stdout)
+    assert fresh["recovery"]["status"] == "PASS"
+    assert fresh["recovery"]["derivation"]["status"] == "DERIVATION_VERIFIED"
+    assert len(fresh["rows"]) == 1
+    recovered_event = fresh["rows"][0]["value"]["value"]
+    assert {key: recovered_event[key] for key in event} == event
+    assert recovered_event["target_claim_id"] == event["target_claim_id"]
+    assert recovered_event["source_pointer"] == event["source_pointer"]
+    assert {row["path"]: (row["bytes"], row["sha256"]) for row in fresh["sources"]} == {
+        name: (len(raw), hashlib.sha256(raw).hexdigest()) for name, raw in source_bytes.items()
+    }
 
 
 def test_versioned_contract_source_commitment_mismatch_fails_before_context_creation(tmp_path: Path) -> None:
