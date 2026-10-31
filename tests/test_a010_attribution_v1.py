@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from runtime.candidate.swebench_claim_audit.generalized import audit_evidence
+from runtime.candidate.swebench_claim_audit.generalized import audit_evidence, audit_file
 
 CONTRACT = "pgop1.swebench.attribution-ambiguity.v1"
 RUN = "a010-contract-run"
@@ -101,6 +101,62 @@ def test_legacy_default_keeps_pre_contract_behavior_and_contract_is_explicit(tmp
     assert versioned["claim_attribution_contract"] == CONTRACT
     assert versioned["AGENT_STATEMENT"][0]["asserted_value"] is False
     assert versioned["AUDIT_VERDICT"] == "CONTRADICTED"
+
+
+@pytest.mark.parametrize("descriptor_selector,request_selector", [
+    (CONTRACT, None),
+    ("pgop1.swebench.attribution-ambiguity.v999", None),
+    (CONTRACT, CONTRACT),
+], ids=["known-descriptor-only", "unknown-descriptor-only", "matches-request"])
+def test_descriptor_selector_cannot_select_or_override_audit_contract(
+        tmp_path: Path, descriptor_selector: str, request_selector: str | None) -> None:
+    trajectory = _put(tmp_path, "trajectory.json", {"instance_id": INSTANCE,
+        "messages": [{"role": "assistant", "content": "I resolved the task."}]},
+        "AGENT_TRAJECTORY", TRAJECTORY)
+    trajectory["claim_attribution_contract"] = descriptor_selector
+    report = _put(tmp_path, "report.json", {INSTANCE: {"resolved": True}},
+                  "EVALUATOR_REPORT", REPORT)
+    request: dict[str, object] = {"run_id": RUN, "instance_id": INSTANCE,
+                                  "evidence": [trajectory, report]}
+    if request_selector is not None:
+        request["claim_attribution_contract"] = request_selector
+
+    result = audit_evidence(tmp_path, request)
+
+    assert result["AUDIT_VERDICT"] == "VERIFICATION_ERROR"
+    assert result["FINAL_ERROR_CODES"] == ["ATTRIBUTION_CONTRACT_PLACEMENT_INVALID"]
+    if request_selector is None:
+        assert "claim_attribution_contract" not in result
+        assert "CLAIM_RETRACTIONS" not in result
+    else:
+        assert result["claim_attribution_contract"] == CONTRACT
+
+
+@pytest.mark.parametrize("selector,expected_status,expected_stamp,expected_reason", [
+    (None, "SUPPORTED", None, []),
+    (CONTRACT, "SUPPORTED", CONTRACT, []),
+    ("pgop1.swebench.attribution-ambiguity.v999", "ERROR", None,
+     ["ATTRIBUTION_CONTRACT_UNSUPPORTED"]),
+])
+def test_public_audit_file_selector_and_contract_stamp_are_truthful(
+        tmp_path: Path, selector: str | None, expected_status: str,
+        expected_stamp: str | None, expected_reason: list[str]) -> None:
+    descriptor = _put(tmp_path, "trajectory.json", {"instance_id": INSTANCE,
+        "messages": [{"role": "assistant", "content": "I resolved the task."}]},
+        "AGENT_TRAJECTORY", TRAJECTORY)
+    descriptor["run_id"] = RUN
+    descriptor["instance_id"] = INSTANCE
+    if selector is not None:
+        descriptor["claim_attribution_contract"] = selector
+
+    result = audit_file(tmp_path, descriptor)
+
+    assert result["status"] == expected_status
+    assert result["reason_codes"] == expected_reason
+    if expected_stamp is None:
+        assert "claim_attribution_contract" not in result
+    else:
+        assert result["claim_attribution_contract"] == expected_stamp
 
 
 @pytest.mark.parametrize("text", [
@@ -366,6 +422,71 @@ def test_retraction_target_ambiguity_preserves_source_bound_clear_and_candidate_
     assert clear_negative["asserted_value"] is False
     assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
     assert "ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON" in result["reason_codes"]
+
+
+@pytest.mark.parametrize("evaluator,expected", [(False, "SUPPORTED"), (True, "CONTRADICTED")])
+def test_c05_final_direct_negative_is_decisive_after_ambiguity_and_retractions(
+        tmp_path: Path, evaluator: bool, expected: str) -> None:
+    ambiguous = ("The reviewer wrote: 'alpha'; I did not resolve the task. "
+                 "I used the literal 'zqxv'; done.'")
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I resolved the task."},
+        {"role": "assistant", "content": ambiguous},
+        {"role": "assistant", "content": "I retract my previous claim."},
+        {"role": "assistant", "content": "I retract my previous claim."},
+        {"role": "assistant", "content": "I did not resolve the task."},
+    ], evaluator)
+
+    assert result["AUDIT_VERDICT"] == expected
+    assert "ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON" not in result["reason_codes"]
+    ambiguity = next(row for row in result["CLAIM_REJECTIONS"]
+                     if row.get("attribution_status") == "AMBIGUOUS_ATTRIBUTION"
+                     and row.get("matched_text") == "I did not resolve the task")
+    assert ambiguity["candidate_asserted_value"] is False
+    assert ambiguity["source_pointer"] == "/messages/1/content"
+    assert ambiguous[ambiguity["match_span"][0]:ambiguity["match_span"][1]] == \
+        ambiguity["matched_text"]
+    assert len(result["CLAIM_RETRACTIONS"]) == 2
+    final = next(claim for claim in result["AGENT_STATEMENT"]
+                 if claim["source_pointer"] == "/messages/4/content")
+    assert final["predicate"] == "TASK_RESOLVED"
+    assert final["asserted_value"] is False
+    assert final["claim_state"] == ("ACTIVE" if not evaluator else "ACTIVE_CONTRADICTED")
+    active = [claim for claim in result["AGENT_STATEMENT"]
+              if claim["claim_state"] in {"ACTIVE", "ACTIVE_CONTRADICTED"}]
+    assert [claim["claim_id"] for claim in active] == [final["claim_id"]]
+
+
+@pytest.mark.parametrize("evaluator", [True, False])
+def test_noncomparable_claim_can_be_retracted_in_one_ambiguity_scenario(
+        tmp_path: Path, evaluator: bool) -> None:
+    ambiguous = "The reviewer wrote: 'ready'; I resolved the task. I used the literal 'x'; done.'"
+    result = _audit(tmp_path, [
+        {"role": "assistant", "content": "I completed the task."},
+        {"role": "assistant", "content": ambiguous},
+        {"role": "assistant", "content": "I retract my previous claim."},
+        {"role": "assistant", "content": "I resolved the task."},
+    ], evaluator)
+
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert "ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON" in result["reason_codes"]
+    completed = next(claim for claim in result["AGENT_STATEMENT"]
+                     if claim["predicate"] == "TASK_COMPLETED")
+    direct_positive = next(claim for claim in result["AGENT_STATEMENT"]
+                           if claim["source_pointer"] == "/messages/3/content")
+    assert completed["claim_state"] == "ACTIVE_NONCOMPARABLE"
+    assert direct_positive["predicate"] == "TASK_RESOLVED"
+    assert direct_positive["asserted_value"] is True
+    candidate = next(row for row in result["CLAIM_REJECTIONS"]
+                     if row.get("attribution_status") == "AMBIGUOUS_ATTRIBUTION"
+                     and row.get("matched_text") == "I resolved the task")
+    assert candidate["candidate_predicate"] == "TASK_RESOLVED"
+    assert candidate["candidate_asserted_value"] is True
+    event = result["CLAIM_RETRACTIONS"][0]
+    assert event["target_status"] == "AMBIGUOUS_TARGET"
+    assert event["target_claim_id"] is None
+    assert {row["target_kind"] for row in event["target_claim_alternatives"]} == {
+        "CLEAR_CLAIM", "AMBIGUOUS_CLAIM"}
 
 
 @pytest.mark.parametrize("evaluator,expected", [(True, "SUPPORTED"), (False, "CONTRADICTED")])

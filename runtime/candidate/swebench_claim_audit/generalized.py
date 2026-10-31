@@ -156,10 +156,17 @@ def _safe_path(root: Path, value: object) -> tuple[str, Path]:
     return value, resolved
 
 
-def _descriptor(value: object) -> dict[str, Any]:
+def _descriptor(value: object, *, allow_claim_attribution_contract: bool = False) -> dict[str, Any]:
     if not isinstance(value, dict) or any(k not in value for k in ("path", "sha256", "bytes", "role", "parser_id")):
         raise AuditError("DESCRIPTOR_INVALID", "descriptor needs path, sha256, bytes, role, and parser_id")
     item = dict(value)
+    if "claim_attribution_contract" in item:
+        if not allow_claim_attribution_contract:
+            raise AuditError("ATTRIBUTION_CONTRACT_PLACEMENT_INVALID",
+                             "claim_attribution_contract is request-level, not an evidence descriptor field")
+        if item["claim_attribution_contract"] != ATTRIBUTION_AMBIGUITY_CONTRACT:
+            raise AuditError("ATTRIBUTION_CONTRACT_UNSUPPORTED",
+                             "claim attribution contract is not registered")
     if not isinstance(item["role"], str) or not item["role"] or len(item["role"]) > 64:
         raise AuditError("DESCRIPTOR_INVALID", "role must be a bounded explicit string")
     if not isinstance(item["parser_id"], str) or not item["parser_id"] or len(item["parser_id"]) > 160:
@@ -2262,7 +2269,7 @@ def audit_file(data_root: str | os.PathLike[str], descriptor: dict[str, object])
         "observations": [],
     }
     try:
-        item = _descriptor(descriptor)
+        item = _descriptor(descriptor, allow_claim_attribution_contract=True)
         root = _root(data_root)
         raw, ref = _read(root, item)
         result["source_ref"] = ref
@@ -2281,6 +2288,8 @@ def audit_file(data_root: str | os.PathLike[str], descriptor: dict[str, object])
             raise AuditError("OBSERVATION_LIMIT", "source emitted too many observations")
         result.update({"status": "SUPPORTED", "run_id": run, "instance_id": target or "UNKNOWN",
                        "observations": observations})
+        if "claim_attribution_contract" in item:
+            result["claim_attribution_contract"] = item["claim_attribution_contract"]
         return result
     except AuditError as exc:
         unsupported_codes = {"UNSUPPORTED_FORMAT", "UNSUPPORTED_YAML_SHAPE", "UNSUPPORTED_PATCH_SHAPE",
@@ -2622,23 +2631,36 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         result["SOURCE_PROVENANCE"]["parser_ids"] = sorted({ref["parser_id"] for ref in refs.values()})
 
         verdicts: list[str] = []
+        scenario_consensus_outcome: str | None = None
+        inactive_in_all_scenarios: set[str] = set()
         ambiguity_groups: dict[str, list[dict[str, Any]]] = {}
+        ambiguous_retraction_target_ids = {
+            alternative.get("claim_id")
+            for event in retraction_events
+            if event.get("target_status") == "AMBIGUOUS_TARGET"
+            for alternative in event.get("target_claim_alternatives", [])
+            if (isinstance(alternative, dict)
+                and alternative.get("target_kind") == "AMBIGUOUS_CLAIM"
+                and isinstance(alternative.get("claim_id"), str))
+        }
         for row in rejected_claims:
             if (row.get("attribution_status") == "AMBIGUOUS_ATTRIBUTION"
-                    and row.get("candidate_predicate") == "TASK_RESOLVED"
-                    and type(row.get("candidate_asserted_value")) is bool
+                    and (row.get("candidate_predicate") == "TASK_RESOLVED"
+                         or row.get("rejection_id") in ambiguous_retraction_target_ids)
                     and isinstance(row.get("ambiguity_group_id"), str)):
                 ambiguity_groups.setdefault(row["ambiguity_group_id"], []).append(row)
-        clear_resolved_claims = {
-            claim["claim_id"]: claim["asserted_value"] for claim in statements
-            if (claim["predicate"] == "TASK_RESOLVED" and not claim.get("superseded_by")
-                and not claim.get("retracted_by"))
+        clear_active_claims = {
+            claim["claim_id"]: claim for claim in statements
+            if not claim.get("superseded_by") and not claim.get("retracted_by")
         }
-        clear_noncomparable_active_claim = any(
-            claim["predicate"] != "TASK_RESOLVED" and not claim.get("superseded_by")
-            and not claim.get("retracted_by")
-            for claim in statements
-        )
+        clear_resolved_claims = {
+            claim_id: claim["asserted_value"] for claim_id, claim in clear_active_claims.items()
+            if claim["predicate"] == "TASK_RESOLVED"
+        }
+        noncomparable_claim_ids = {
+            claim_id for claim_id, claim in clear_active_claims.items()
+            if claim["predicate"] != "TASK_RESOLVED"
+        }
 
         def comparison_outcome(values: set[bool], observed: bool,
                                noncomparable_active_claim: bool) -> str:
@@ -2657,8 +2679,15 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
             value_by_claim_id = dict(clear_resolved_claims)
             for group_rows in ambiguity_groups.values():
                 for row in group_rows:
-                    if row.get("candidate_state") in {"ACTIVE_ASSERTION", "CORRECTION"}:
-                        value_by_claim_id[row["rejection_id"]] = row["candidate_asserted_value"]
+                    candidate_id = row.get("rejection_id")
+                    candidate_predicate = row.get("candidate_predicate")
+                    if (row.get("candidate_state") in {"ACTIVE_ASSERTION", "CORRECTION"}
+                            and isinstance(candidate_id, str)
+                            and isinstance(candidate_predicate, str)):
+                        if candidate_predicate == "TASK_RESOLVED" and type(row.get("candidate_asserted_value")) is bool:
+                            value_by_claim_id[candidate_id] = row["candidate_asserted_value"]
+                        elif candidate_predicate != "TASK_RESOLVED":
+                            noncomparable_claim_ids.add(candidate_id)
             all_supersession_targets = {
                 target for group_rows in ambiguity_groups.values() for row in group_rows
                 for target in row.get("supersedes_claim_ids", []) if isinstance(target, str)
@@ -2670,15 +2699,13 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 for alternative in event.get("target_claim_alternatives", [])
                 if isinstance(alternative, dict) and isinstance(alternative.get("claim_id"), str)
             }
-            tracked_claim_ids = all_supersession_targets | retraction_target_ids
-            initial_ids = set(clear_resolved_claims)
-            initial_tracked = frozenset(initial_ids & tracked_claim_ids)
-            initial_values = frozenset(
-                value for claim_id, value in clear_resolved_claims.items()
-                if claim_id not in tracked_claim_ids
-            )
-            possible_states: set[tuple[frozenset[str], frozenset[bool]]] = {
-                (initial_tracked, initial_values)
+            clear_claim_ids = set(clear_active_claims)
+            tracked_claim_ids = all_supersession_targets | retraction_target_ids | clear_claim_ids
+            initial_ids = clear_claim_ids
+            initial_tracked = frozenset(initial_ids)
+            initial_values = frozenset()
+            possible_states: set[tuple[frozenset[str], frozenset[bool], bool]] = {
+                (initial_tracked, initial_values, False)
             }
             ordered_groups = sorted(ambiguity_groups.items(), key=lambda item: min(
                 (message_order(row.get("source_pointer"), row.get("match_span"))
@@ -2695,11 +2722,11 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                     or (MAX_OBSERVATIONS, MAX_OBSERVATIONS),
                     row["match_span"][0],
                 ))
-                next_states: set[tuple[frozenset[str], frozenset[bool]]] = set()
-                for active_ids, residual_values in possible_states:
-                    branches = [(set(active_ids), set(residual_values), False),
-                                (set(active_ids), set(residual_values), True)]
-                    for branch_ids, branch_values, include_local in branches:
+                next_states: set[tuple[frozenset[str], frozenset[bool], bool]] = set()
+                for active_ids, residual_values, residual_noncomparable in possible_states:
+                    branches = [(set(active_ids), set(residual_values), residual_noncomparable, False),
+                                (set(active_ids), set(residual_values), residual_noncomparable, True)]
+                    for branch_ids, branch_values, branch_noncomparable, include_local in branches:
                         if include_local:
                             for row in group_rows:
                                 state = row.get("candidate_state")
@@ -2708,17 +2735,25 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                                 branch_ids.difference_update(row.get("supersedes_claim_ids", []))
                                 candidate_id = row.get("rejection_id")
                                 candidate_value = row.get("candidate_asserted_value")
-                                if not isinstance(candidate_id, str) or type(candidate_value) is not bool:
+                                candidate_predicate = row.get("candidate_predicate")
+                                if not isinstance(candidate_id, str) or not isinstance(candidate_predicate, str):
                                     continue
                                 if candidate_id in tracked_claim_ids:
                                     branch_ids.add(candidate_id)
-                                else:
+                                elif candidate_predicate == "TASK_RESOLVED" and type(candidate_value) is bool:
                                     branch_values.add(candidate_value)
+                                elif candidate_predicate != "TASK_RESOLVED":
+                                    branch_noncomparable = True
                         values = set(branch_values)
-                        retained_ids = set(branch_ids) & (targets_after | retraction_target_ids)
-                        values.update(value_by_claim_id[claim_id] for claim_id in branch_ids - retained_ids
+                        retained_ids = set(branch_ids) & (
+                            targets_after | retraction_target_ids | clear_claim_ids)
+                        collapsed_ids = branch_ids - retained_ids
+                        values.update(value_by_claim_id[claim_id] for claim_id in collapsed_ids
                                       if claim_id in value_by_claim_id)
-                        next_states.add((frozenset(retained_ids), frozenset(values)))
+                        collapsed_noncomparable = branch_noncomparable or any(
+                            claim_id in noncomparable_claim_ids for claim_id in collapsed_ids)
+                        next_states.add((frozenset(retained_ids), frozenset(values),
+                                         collapsed_noncomparable))
                         if len(next_states) > MAX_ATTRIBUTION_SCENARIO_STATES:
                             scenario_limit_exceeded = True
                             break
@@ -2731,7 +2766,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 errors.append("ATTRIBUTION_SCENARIO_LIMIT")
             else:
                 possible_outcomes: set[str] = set()
-                for active_ids, residual_values in possible_states:
+                scenario_active_sets: list[set[str]] = []
+                for active_ids, residual_values, residual_noncomparable in possible_states:
                     scenario_active_ids = set(active_ids)
                     for event in sorted(retraction_events, key=lambda row: (
                             message_order(row.get("source_pointer"), row.get("match_span"))
@@ -2753,16 +2789,20 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                                           alternative_by_id[claim_id].get("match_span"))
                             or (-1, -1), claim_id))
                         scenario_active_ids.discard(target_id)
+                    scenario_active_sets.append(scenario_active_ids & clear_claim_ids)
                     scenario_values = set(residual_values) | {
                         value_by_claim_id[claim_id] for claim_id in scenario_active_ids
                         if claim_id in value_by_claim_id}
+                    scenario_noncomparable = residual_noncomparable or any(
+                        claim_id in noncomparable_claim_ids for claim_id in scenario_active_ids)
                     possible_outcomes.add(comparison_outcome(
-                        scenario_values, observed_value, clear_noncomparable_active_claim))
-                baseline_outcome = comparison_outcome(
-                    set(clear_resolved_claims.values()), observed_value,
-                    clear_noncomparable_active_claim)
-                ambiguity_affects_comparison = any(
-                    outcome != baseline_outcome for outcome in possible_outcomes)
+                        scenario_values, observed_value, scenario_noncomparable))
+                if scenario_active_sets:
+                    active_in_any_scenario = set().union(*scenario_active_sets)
+                    inactive_in_all_scenarios = clear_claim_ids - active_in_any_scenario
+                    scenario_consensus_outcome = (next(iter(possible_outcomes))
+                                                  if len(possible_outcomes) == 1 else None)
+                ambiguity_affects_comparison = len(possible_outcomes) > 1
         if ambiguity_affects_comparison:
             result["reason_codes"].append("ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON")
         if len({obs["value"] for obs in evaluator}) > 1:
@@ -2774,7 +2814,11 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         elif evaluator:
             observed = evaluator[0]["value"]
             for claim in statements:
-                if claim.get("retracted_by"):
+                if claim.get("claim_id") in inactive_in_all_scenarios:
+                    claim["inactive_in_all_attribution_scenarios"] = True
+                    claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
+                    claim["reason_codes"] = ["INACTIVE_IN_ALL_ATTRIBUTION_SCENARIOS"]
+                elif claim.get("retracted_by"):
                     claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
                     claim["reason_codes"] = ["EXPLICITLY_RETRACTED_BY_STANDALONE_EVENT"]
                 elif claim.get("superseded_by"):
@@ -2806,17 +2850,25 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                     verdicts.append("INSUFFICIENT_EVIDENCE")
         else:
             for claim in statements:
-                claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
-                claim["reason_codes"] = (
-                    ["EXPLICITLY_RETRACTED_BY_STANDALONE_EVENT"]
-                    if claim.get("retracted_by") else ["NO_MATCHING_EVALUATOR_PREDICATE"])
-                if not claim.get("retracted_by"):
+                if claim.get("claim_id") in inactive_in_all_scenarios:
+                    claim["inactive_in_all_attribution_scenarios"] = True
+                    claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
+                    claim["reason_codes"] = ["INACTIVE_IN_ALL_ATTRIBUTION_SCENARIOS"]
+                else:
+                    claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
+                    claim["reason_codes"] = (
+                        ["EXPLICITLY_RETRACTED_BY_STANDALONE_EVENT"]
+                        if claim.get("retracted_by") else ["NO_MATCHING_EVALUATOR_PREDICATE"])
+                if (not claim.get("retracted_by")
+                        and claim.get("claim_id") not in inactive_in_all_scenarios):
                     verdicts.append("INSUFFICIENT_EVIDENCE")
 
         for claim in statements:
             claim["COMPUTED_VERDICT"] = claim["AUDIT_VERDICT"]
             claim.setdefault("FINAL_ERROR", None)
             claim["claim_state"] = (
+                "INACTIVE_IN_ALL_ATTRIBUTION_SCENARIOS"
+                if claim.get("inactive_in_all_attribution_scenarios") else
                 "RETRACTED" if claim.get("retracted_by") else
                 "CORRECTED" if claim.get("superseded_by") else
                 "ACTIVE_CONTRADICTED" if claim["AUDIT_VERDICT"] == "CONTRADICTED" else
@@ -2839,7 +2891,9 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         result["CLAIM_AGGREGATION"] = claim_aggregation
         if result["CLAIM_AGGREGATION"]["active_contradicted_claim_ids"]:
             result["reason_codes"].append("ACTIVE_CONTRADICTED_CLAIM_PRESENT")
-        if ambiguity_affects_comparison:
+        if scenario_consensus_outcome is not None:
+            computed_verdict = scenario_consensus_outcome
+        elif ambiguity_affects_comparison:
             computed_verdict = "INSUFFICIENT_EVIDENCE"
         elif (verdicts and all(value == "SUPPORTED" for value in verdicts)
                 and not result["CLAIM_AGGREGATION"]["active_contradicted_claim_ids"]):

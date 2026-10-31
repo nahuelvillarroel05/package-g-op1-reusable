@@ -16,6 +16,13 @@ must retain and reapply the selector from committed bytes; no silent fallback
 to a different contract is valid. The identity must be checked for preexisting
 use before registration. Storage integrity and semantic validity remain separate.
 
+For the instance-level `audit_evidence` API the selector belongs only to the
+request, never to an evidence descriptor. A descriptor carrying that reserved
+selector must fail closed rather than create an unrecorded per-source contract.
+The file-level `audit_file` API may select the registered contract directly in
+its descriptor; its result must stamp that identity. Unknown selector values
+must not silently invoke legacy semantics in either API.
+
 ## Ownership and claim state
 
 Ownership describes the source's declared speaker, not an authenticated human
@@ -87,6 +94,17 @@ not definitively supersede a clear claim while its owner remains unresolved.
 The implementation bounds scenario propagation to 256 canonical active-claim
 states. Exceeding that bound must produce an explicit verification error with
 `ATTRIBUTION_SCENARIO_LIMIT`; it is not semantic evidence for UNKNOWN ownership.
+
+A standalone retraction is a source-bound event linked to the most recent
+eligible prior claim within its declared speaker/source scope. If the possible
+target depends on an unresolved quotation, retain those target alternatives
+and evaluate the retraction in the same correlated interpretations. Do not
+definitively mutate a clear target chosen by ignoring an intervening ambiguous
+candidate. Multiple retractions must preserve their order and can remove a
+claim in every interpretation even when the individual event targets differ.
+Compare actual scenario outcomes with each other, including noncomparable
+active predicates. An un-retracted extraction baseline is not an additional
+plausible interpretation. Unanimous decisive outcomes remain decisive.
 
 ## Integrity and bounded scope
 
