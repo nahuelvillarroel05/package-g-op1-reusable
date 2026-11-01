@@ -296,7 +296,8 @@ def _fresh_process_readback(context_root: Path, expected_manifest: dict[str, Any
                             capsule_source_id: str, capsule_sha256: str) -> dict[str, Any]:
     repo_root = Path(__file__).resolve().parents[3]
     code = (
-        "import json,sys; from pathlib import Path; sys.path.insert(0,sys.argv[1]); "
+        "import json,sys; sys.argv.extend(json.load(sys.stdin)); "
+        "from pathlib import Path; sys.path.insert(0,sys.argv[1]); "
         "from runtime.candidate.context_engine import Engine; "
         "from runtime.candidate.swebench_claim_audit.generalized_bridge import _derive_from_engine_sources; "
         "e=Engine(Path(sys.argv[2])); v=e.verify(); m=e.latest(); "
@@ -316,13 +317,16 @@ def _fresh_process_readback(context_root: Path, expected_manifest: dict[str, Any
         "'dispatch':'NOT_PERFORMED','redispatch':'NOT_PERFORMED',"
         "'index_reconstruction':'POSSIBLE'},sort_keys=True)); sys.exit(0 if ok else 3)"
     )
-    args = [sys.executable, "-I", "-B", "-c", code, str(repo_root), str(context_root),
-            json.dumps(expected_manifest, sort_keys=True, separators=(",", ":")),
+    # Large admitted graphs can exceed Windows CreateProcess's argv bound.
+    # Pipe the same expectation strings; all child verification stays unchanged.
+    args = [sys.executable, "-I", "-B", "-c", code, str(repo_root), str(context_root)]
+    expectations = [json.dumps(expected_manifest, sort_keys=True, separators=(",", ":")),
             json.dumps(expected_by_task, sort_keys=True, separators=(",", ":")),
             capsule_source_id, capsule_sha256,
             json.dumps(expected_derivation, sort_keys=True, separators=(",", ":"))]
     try:
-        result = subprocess.run(args, shell=False, capture_output=True, text=True, timeout=45)
+        result = subprocess.run(args, input=json.dumps(expectations), shell=False,
+                                capture_output=True, text=True, timeout=45)
     except (OSError, subprocess.TimeoutExpired):
         return {"status": "NOT_PROVEN", "reason_code": "FRESH_PROCESS_UNAVAILABLE",
                 "dispatch": "NOT_PERFORMED", "redispatch": "NOT_PERFORMED"}
