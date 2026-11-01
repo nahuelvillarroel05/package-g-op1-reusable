@@ -20,7 +20,8 @@ from .generalized import audit_evidence, audit_file
 
 SCHEMA = "pgop1.swebench.campaign-plan.v1"
 POST_SONNET_CAMPAIGN = "PGOP1_POST_SONNET_REMEDIATION_FULL_ENGINEERING_RUN_001"
-CAMPAIGN_IDS = {"PGOP1_RUN_001", POST_SONNET_CAMPAIGN}
+RUN002_ENGINEERING = "PGOP1_RUN_002_ENGINEERING_NONQUALIFYING"
+CAMPAIGN_IDS = {"PGOP1_RUN_001", POST_SONNET_CAMPAIGN, RUN002_ENGINEERING}
 MIN_FREE_BYTES = 70_000_000_000
 
 
@@ -199,6 +200,15 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
     requests = plan.get("requests")
     if not isinstance(sources, list) or not isinstance(requests, list):
         raise AuditError("CAMPAIGN_PLAN_INVALID", "sources and requests must be arrays")
+    if plan["campaign_id"] == RUN002_ENGINEERING:
+        if (plan.get("qualification_scope") != "ENGINEERING_NONQUALIFYING"
+                or plan.get("independent_semantic_qualification") != "NOT_ACHIEVED"
+                or plan.get("gate_11") != "BLOCKED"):
+            raise AuditError("CAMPAIGN_QUALIFICATION_SCOPE", "RUN-002 engineering cannot claim independent qualification")
+        contract = "pgop1.swebench.attribution-ambiguity.v1"
+        if (any(s.get("claim_attribution_contract") != contract for s in sources)
+                or any(r.get("claim_attribution_contract") != contract for r in requests)):
+            raise AuditError("CAMPAIGN_ATTRIBUTION_CONTRACT", "RUN-002 requires the explicit versioned attribution contract")
     if not development:
         import re
         code_pin = plan.get("code_commit", "")
@@ -335,6 +345,9 @@ def run_campaign(data_root, plan, output_root, *, resume=False, min_free_bytes=M
         result = {"schema": "pgop1.swebench.campaign-execution.v1", "campaign_id": plan["campaign_id"],
                   **pin, **counts, "status": "COMPLETED_PLAN_UNITS",
                   "dispatch": "NOT_PERFORMED", "independent_custody": "NOT_PROVEN"}
+        if plan["campaign_id"] == RUN002_ENGINEERING:
+            result.update(qualification_scope="ENGINEERING_NONQUALIFYING",
+                          independent_semantic_qualification="NOT_ACHIEVED", gate_11="BLOCKED")
         if plan["campaign_id"] == POST_SONNET_CAMPAIGN:
             result["review_invocation_assessment"] = "CALLER_SUPPLIED_METADATA_AUDIT_ONLY"
             result["review_identity_authentication"] = "NOT_CRYPTOGRAPHICALLY_AUTHENTICATED"

@@ -26,6 +26,41 @@ def fixture(tmp_path):
     return root, plan, tmp_path / "campaign"
 
 
+def test_run002_requires_nonqualifying_scope_and_explicit_contract(tmp_path):
+    root, plan, out = fixture(tmp_path)
+    plan["campaign_id"] = "PGOP1_RUN_002_ENGINEERING_NONQUALIFYING"
+    with pytest.raises(AuditError) as exc:
+        run_campaign(root, plan, out, min_free_bytes=0)
+    assert exc.value.code == "CAMPAIGN_QUALIFICATION_SCOPE"
+    plan.update(qualification_scope="ENGINEERING_NONQUALIFYING",
+                independent_semantic_qualification="NOT_ACHIEVED", gate_11="BLOCKED")
+    with pytest.raises(AuditError) as exc:
+        run_campaign(root, plan, out, min_free_bytes=0)
+    assert exc.value.code == "CAMPAIGN_ATTRIBUTION_CONTRACT"
+    plan["sources"][0]["claim_attribution_contract"] = "pgop1.swebench.attribution-ambiguity.v1"
+    first = run_campaign(root, plan, out, min_free_bytes=0)
+    second = run_campaign(root, plan, out, resume=True, min_free_bytes=0)
+    assert first["executed"] == 1 and second["recovered"] == 1
+    assert first["independent_semantic_qualification"] == "NOT_ACHIEVED"
+    assert first["gate_11"] == "BLOCKED"
+
+
+@pytest.mark.parametrize("field,value", [
+    ("qualification_scope", "INDEPENDENT"),
+    ("independent_semantic_qualification", "ACHIEVED"),
+    ("gate_11", "PASS"),
+])
+def test_run002_rejects_qualification_promotion(tmp_path, field, value):
+    root, plan, out = fixture(tmp_path)
+    plan.update(campaign_id="PGOP1_RUN_002_ENGINEERING_NONQUALIFYING",
+                qualification_scope="ENGINEERING_NONQUALIFYING",
+                independent_semantic_qualification="NOT_ACHIEVED", gate_11="BLOCKED")
+    plan[field] = value
+    with pytest.raises(AuditError) as exc:
+        run_campaign(root, plan, out, min_free_bytes=0)
+    assert exc.value.code == "CAMPAIGN_QUALIFICATION_SCOPE"
+
+
 def test_resume_keeps_completed_bytes_and_does_not_duplicate_units(tmp_path):
     root, plan, out = fixture(tmp_path)
     first = run_campaign(root, plan, out, min_free_bytes=0)
