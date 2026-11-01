@@ -1,0 +1,24 @@
+{
+  "schema": "pgop1.run002.individual-context-verification.v1",
+  "candidate_commit": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+  "completed_utc": "2026-11-01T00:38:41.285449+00:00",
+  "denominator": 266,
+  "status_counts": {
+    "PASS": 264,
+    "ERROR": 2
+  },
+  "derivation_counts": {
+    "DERIVATION_VERIFIED": 264,
+    "NOT_REACHED": 2
+  },
+  "authentication_counts": {
+    "UNAUTHENTICATED": 264,
+    "NOT_REACHED": 2
+  },
+  "recovery_counts": {
+    "PASS": 264,
+    "NOT_REACHED": 2
+  },
+  "semantic_truth": "NOT_PROVEN",
+  "independent_semantic_qualification": "NOT_ACHIEVED"
+}

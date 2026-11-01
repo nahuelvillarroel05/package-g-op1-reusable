@@ -1,0 +1,48 @@
+{
+  "schema": "pgop1.run002.regression-binding.v1",
+  "candidate_commit": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+  "candidate_tree": "79a2a0300c89a723e5ce43c23ace1902347784a1",
+  "all_frozen_source_sha256_match": true,
+  "historical_762": "SEPARATE_VERIFIED_RECEIPT_NOT_FRESH_TEST_COUNT",
+  "focused_75": "SEPARATE_FRESH_PRE_CAMPAIGN_A010_RUN",
+  "runs": [
+    {
+      "run_id": "PGOP1_RUN002_CAMPAIGN_GATE_001",
+      "invocation_head": "f0ae448d22e6be13731d14bf56c3eb0d7c697f3f",
+      "completed_utc": "2026-11-01T00:16:26.306858+00:00",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 16,
+      "xml": "campaign-gate-tests.xml",
+      "xml_sha256": "66ddd20723d8e8e25e39f4c3ddc35a3283f5451a7d95caa405d5820200aab75e"
+    },
+    {
+      "run_id": "PGOP1_RUN002_CAMPAIGN_RELATED_001",
+      "invocation_head": "f0ae448d22e6be13731d14bf56c3eb0d7c697f3f",
+      "completed_utc": "2026-11-01T00:17:53.390802+00:00",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19,
+      "xml": "campaign-related-tests.xml",
+      "xml_sha256": "6c88e3598fc8560fb586a8929a06d017a6611ee494f607ef36cd0f5912bbac9b"
+    },
+    {
+      "run_id": "PGOP1_RUN002_FROZEN_REGRESSION_001",
+      "invocation_head": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+      "completed_utc": "2026-11-01T00:24:10.911096+00:00",
+      "tests": 766,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 766,
+      "xml": "frozen-regression.xml",
+      "xml_sha256": "c43d5dfd52bd9eeeae6176031e0d365eab96e0b28946a9009a634768ce354cc0"
+    }
+  ],
+  "frozen_regression_passed": 766,
+  "semantic_qualification": "NOT_ACHIEVED"
+}

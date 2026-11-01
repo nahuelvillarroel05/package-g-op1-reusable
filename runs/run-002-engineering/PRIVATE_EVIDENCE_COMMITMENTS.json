@@ -1,0 +1,7 @@
+{
+  "freeze_sha256": "19b9ad019c46aa5e22aa8adf085ecaa49064e74f66a28abae392269c4d711dc2",
+  "manifest_sha256": "c1296a98e748a5349aa5c06cb87bad3a212f35c169b12b21e34b42d750f3f375",
+  "comparison_sha256": "6e89d3a0f88d60a1025b2500ff69d466eb4a12f011f76a6f1b3b053d9bc481f8",
+  "deterministic_replay_sha256": "7b360447b654c623ebeffcf471c8c05ab5aeafea3d01c33d6e0a56af8f0237ad",
+  "scope": "Hashes commit private artifacts; their bodies are not published"
+}

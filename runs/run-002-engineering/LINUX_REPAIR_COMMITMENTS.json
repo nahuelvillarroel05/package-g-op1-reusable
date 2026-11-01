@@ -1,0 +1,39 @@
+{
+  "candidate_commit": "22434026abb47fb8300ec13f3cea71592ff1944c",
+  "candidate_tree": "fec65ed54a71cba15c4eec58cf1ebf24ab3841c7",
+  "large_readback_passed": 1,
+  "path_checks_passed": 22,
+  "windows_only_skipped": 1,
+  "source_archive_sha256": "199005188644951d6d130bb7b9706db9feb0953e6081dfbab3feecfeab23a09e",
+  "receipt_commitments": [
+    {
+      "artifact": "LINUX_READBACK_REPORT.md",
+      "bytes": 3372,
+      "sha256": "fdad99dbef42f45334f7fcc9993fb95fed5104cda786f09f796d2936b852bcf6"
+    },
+    {
+      "artifact": "LINUX_READBACK_TEST_RECEIPT.txt",
+      "bytes": 98,
+      "sha256": "e852d9de08772e14a3d6eec3a7657224260aa01e16f594bb44c755114c3656fd"
+    },
+    {
+      "artifact": "LINUX_F16_TEST_RECEIPT.txt",
+      "bytes": 477,
+      "sha256": "5cff681c3ff6062b14bb5dac75a76edec6f51e04b082d81320a4c79d1e8b2cc4"
+    },
+    {
+      "artifact": "LINUX_ENVIRONMENT_RECEIPT.txt",
+      "bytes": 921,
+      "sha256": "e9ecc205522f55bc36009acf0c7135a31bbb4bb0db5be6c1c55985a13dc7c9d7"
+    },
+    {
+      "artifact": "LINUX_READBACK_SOURCE_SHA256SUMS.txt",
+      "bytes": 1829,
+      "sha256": "423e84b095603ab1080562ec8808521655fdf69b4b80579d4c58bd70909e0232"
+    }
+  ],
+  "results_freeze_sha256": "6aa6917571f03809dfc362b279e1548dd68d205a55a8d54737a7a7753d15ba65",
+  "receipt_bodies": "PRIVATE_ENVIRONMENT_PATHS_WITHHELD",
+  "F16": "DEFERRED_LINUX_VALIDATION_PENDING",
+  "linux_portability": "NOT_QUALIFIED"
+}

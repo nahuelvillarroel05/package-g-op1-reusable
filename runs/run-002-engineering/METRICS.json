@@ -1,0 +1,199 @@
+{
+  "schema": "pgop1.run002.metrics-reconciliation.v1",
+  "campaign": "PGOP1_RUN_002_ENGINEERING_NONQUALIFYING",
+  "qualification_scope": "ENGINEERING_NONQUALIFYING",
+  "independent_semantic_qualification": "NOT_ACHIEVED",
+  "gate_11": "BLOCKED",
+  "code_commit": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+  "campaign_plan_sha256": "becbc08cfa0649b76b684e4bea18bb352f3aef92d9367bbc0153a1e18e7fc3f0",
+  "reconciliation_status": "COMPLETE_ACCOUNTING",
+  "source_metrics": {
+    "SOURCE_FILES": 25580,
+    "eligible_source_files": 3802,
+    "PROCESSING_ATTEMPTS": 3802,
+    "completed_file_results": 3802,
+    "PARSED_FILES": 1744,
+    "UNSUPPORTED_FILES": 2045,
+    "ERRORS": 13,
+    "file_status_distribution": {
+      "ERROR": 13,
+      "SUPPORTED": 1744,
+      "UNSUPPORTED": 2045
+    }
+  },
+  "execution_audits": {
+    "EXECUTION_AUDITS": 266,
+    "completed_audits": 266,
+    "ABSTENTIONS": 264,
+    "audit_verdict_distribution": {
+      "INSUFFICIENT_EVIDENCE": 264,
+      "INTEGRITY_FAILURE": 2
+    }
+  },
+  "claim_metrics": {
+    "CLAIM_CANDIDATES": 106,
+    "unique_source_bound_candidates": 106,
+    "unbound_candidate_rows": 0,
+    "ATTRIBUTED_CLAIMS": 61,
+    "UNKNOWN_ATTRIBUTION": 45,
+    "AMBIGUOUS_ATTRIBUTION": 0,
+    "OTHER_ATTRIBUTION_STATUS": 0,
+    "attribution_class_distribution": {
+      "ATTRIBUTED": 61,
+      "UNKNOWN": 45
+    },
+    "raw_attribution_status_distribution": {
+      "DIRECT": 61,
+      "UNKNOWN": 45
+    },
+    "unique_source_bound_attribution_distribution": {
+      "ATTRIBUTED": 61,
+      "UNKNOWN": 45
+    },
+    "candidate_verdict_distribution": {
+      "INSUFFICIENT_EVIDENCE": 61,
+      "NOT_REPORTED": 45
+    }
+  },
+  "evaluator_authentication": {
+    "audit_qualifier_status_distribution": {
+      "NOT_APPLICABLE": 8,
+      "UNAUTHENTICATED": 258
+    },
+    "evaluator_identity_status_distribution": {
+      "UNKNOWN": 266
+    },
+    "authentication_status_field_distribution": {
+      "UNAUTHENTICATED": 266
+    },
+    "provenance_evaluator_authentication_distribution": {
+      "UNAUTHENTICATED": 266
+    },
+    "provenance_evaluator_identity_distribution": {
+      "UNKNOWN": 266
+    },
+    "evaluator_result_authentication_distribution": {
+      "UNAUTHENTICATED": 258
+    },
+    "denominators": {
+      "audit_qualifier": 266,
+      "authentication_status_field": 266,
+      "source_provenance_fields": 266,
+      "evaluator_result_authentication": 258
+    },
+    "identity_authentication_is_not_inferred": true
+  },
+  "historical_comparison": {
+    "matched_file_units": 3802,
+    "run001_file_units": 3802,
+    "run002_file_units": 3802,
+    "unmatched_run001_files": 0,
+    "unmatched_run002_files": 0,
+    "file_status_transitions": {
+      "ERROR->ERROR": 13,
+      "SUPPORTED->SUPPORTED": 1744,
+      "UNSUPPORTED->UNSUPPORTED": 2045
+    },
+    "matched_audit_units": 266,
+    "run001_audit_units": 266,
+    "run002_audit_units": 266,
+    "unmatched_run001_audits": 0,
+    "unmatched_run002_audits": 0,
+    "audit_verdict_transitions": {
+      "INSUFFICIENT_EVIDENCE->INSUFFICIENT_EVIDENCE": 264,
+      "INTEGRITY_FAILURE->INTEGRITY_FAILURE": 2
+    },
+    "claim_verdict_transitions": {
+      "INSUFFICIENT_EVIDENCE->INSUFFICIENT_EVIDENCE": 61,
+      "INSUFFICIENT_EVIDENCE->NOT_REPORTED": 43,
+      "INSUFFICIENT_EVIDENCE->NO_NEW_CLAIM": 247,
+      "NO_OLD_CLAIM->NOT_REPORTED": 2
+    },
+    "run001_claim_occurrences": 351
+  },
+  "context_engine": {
+    "status": "PASS",
+    "CONTEXT_ENGINE_UNITS": 4068,
+    "bound_units": 4068,
+    "recovered_units": 4068,
+    "batch_count": 167,
+    "batch_recovery_statuses": {
+      "PASS": 167
+    },
+    "batch_derivation_statuses": {
+      "DERIVATION_NOT_VERIFIED": 167
+    },
+    "batch_verification_statuses": {
+      "PASS": 167
+    },
+    "batch_starts": 167,
+    "batch_completions": 167,
+    "RECOVERY_VERIFICATIONS": 167,
+    "storage_derivation_not_verified": 167
+  },
+  "DERIVATION_VERIFICATION": {
+    "extraction_qualifier_distribution": {
+      "NOT_VERIFIED_AT_EXTRACTION": 266
+    },
+    "deterministic_replay_statuses": {
+      "MATCH": 266
+    },
+    "replay_is_not_independent_semantic_accuracy": true
+  },
+  "independent_reference_metrics": "NOT_COMPUTABLE_NO_QUALIFIED_LABELS",
+  "combined_processing_scope": {
+    "unique_source_universe": 3802,
+    "strict_profile_processing_attempts": 3802,
+    "current_parser_supplement_processing_attempts": 300,
+    "combined_processing_attempts": 4102,
+    "combined_attempts_expected_when_both_profiles_complete": 4102,
+    "strict_status_counts": {
+      "PARSED_FILES": 1744,
+      "UNSUPPORTED_FILES": 2045,
+      "ERRORS": 13
+    },
+    "current_parser_supplement_status_counts": {
+      "PARSED_FILES": 300,
+      "UNSUPPORTED_FILES": 0,
+      "ERRORS": 0
+    },
+    "derived_current_parser_coverage_counts": {
+      "PARSED_FILES": 2044,
+      "UNSUPPORTED_FILES": 1745,
+      "ERRORS": 13
+    },
+    "unique_sources_are_not_summed_across_profiles": true
+  },
+  "current_parser_aider_supplement": {
+    "status": "COMPLETE_ACCOUNTING",
+    "engineering_profile": "CURRENT_PARSER_AIDER_SUPPLEMENT_V1",
+    "expected_additional_sources": 300,
+    "processing_attempts": 300,
+    "completed_file_results": 300,
+    "file_status_distribution": {
+      "SUPPORTED": 300
+    },
+    "PARSED_FILES": 300,
+    "UNSUPPORTED_FILES": 0,
+    "ERRORS": 0,
+    "source_universe_overlap": 300,
+    "unique_source_universe": 3802,
+    "status_transitions_vs_strict_profile": {
+      "UNSUPPORTED->SUPPORTED": 300
+    },
+    "context": {
+      "status": "PASS",
+      "CONTEXT_ENGINE_UNITS": 300,
+      "bound_units": 300,
+      "recovered_units": 300,
+      "batch_count": 21,
+      "RECOVERY_VERIFICATIONS": 21,
+      "batch_recovery_statuses": {
+        "PASS": 21
+      },
+      "batch_derivation_statuses": {
+        "DERIVATION_NOT_VERIFIED": 21
+      }
+    }
+  }
+}

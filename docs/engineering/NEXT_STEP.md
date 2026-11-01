@@ -1,3 +1,21 @@
+# Next step after RUN-002 engineering
+
+Review the experimental [RUN-002 public handoff](../../runs/run-002-engineering/SONNET_PUBLIC_HANDOFF.md)
+against the exact execution and repair commits, the bounded [Astra audit](../../runs/run-002-engineering/ASTRA_PUBLIC_AUDIT.md),
+and the published code/tests. Sonnet public-only review remains PENDING. Preserve
+the historical 264 PASS / 2 ERROR readback record and the separate two-case
+prospective repair. Test the disclosed bounded assertion grammar, excluded nested
+content, attribution and abstentions without inferring semantic accuracy from
+the 351-to-106 occurrence transition. Public commitments do not provide the
+private source bytes or executable plan for self-contained replay.
+
+`GATE_11=BLOCKED`; independent semantic qualification NOT_ACHIEVED; F16 deferred
+pending the original exact Linux reproducer; I7 incomplete; Physical C2
+DEFERRED_NOT_WAIVED. Any further campaign, independent semantic qualification,
+main merge or src promotion requires its own authority and evidence.
+
+The prior next-step text below is retained historical continuity.
+
 # Next step: independent audit of parser1.11.0
 
 Read AGENTS.md, CURRENT_STATE.md and ../audits/SECOND_SONNET_CONTRACTS.md.

@@ -1,0 +1,97 @@
+{
+  "executed_campaign_code": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+  "repaired_code": "22434026abb47fb8300ec13f3cea71592ff1944c",
+  "repaired_tree": "fec65ed54a71cba15c4eec58cf1ebf24ab3841c7",
+  "historical_original_pass": 264,
+  "historical_original_errors": 2,
+  "root_cause": "WINDOWS_CREATEPROCESS_COMMAND_LINE_LENGTH",
+  "transport": "JSON_STDIN_SAME_VERIFICATION_CHECKS",
+  "prospective_verification": {
+    "denominator": 2,
+    "passed": 2,
+    "errors": 0,
+    "rows": [
+      {
+        "unit": "audit-104",
+        "original_result_sha256": "aa1b7e4b05ec89afd7df0810ecfaf693aab6db68b32f6696c495d0e47499cf02",
+        "canonical_replay_equal": true,
+        "candidate_commit": "22434026abb47fb8300ec13f3cea71592ff1944c",
+        "original_candidate": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+        "status": "PASS",
+        "fresh_process": "PASS",
+        "derivation": "DERIVATION_VERIFIED",
+        "recovery": "PASS",
+        "recovery_derivation": "DERIVATION_VERIFIED",
+        "evaluator_authentication": "UNAUTHENTICATED"
+      },
+      {
+        "unit": "audit-92",
+        "original_result_sha256": "5fb9211d938f44d8704ffe18c2b80993e6e35b4b3d4b443c7ccf4ba1b10dbd49",
+        "canonical_replay_equal": true,
+        "candidate_commit": "22434026abb47fb8300ec13f3cea71592ff1944c",
+        "original_candidate": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+        "status": "PASS",
+        "fresh_process": "PASS",
+        "derivation": "DERIVATION_VERIFIED",
+        "recovery": "PASS",
+        "recovery_derivation": "DERIVATION_VERIFIED",
+        "evaluator_authentication": "UNAUTHENTICATED"
+      }
+    ],
+    "original_summary": "UNCHANGED_264_PASS_2_ERROR",
+    "campaign_redispatch": "NOT_PERFORMED",
+    "source_unchanged": true,
+    "independent_semantic_qualification": "NOT_ACHIEVED"
+  },
+  "windows_regressions": [
+    {
+      "run_id": "PGOP1_RUN002_READBACK_RED_001",
+      "meaning": "BUG_REPRODUCED",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "xml_sha256": "897b54ccd02ea59915c0b415380e456a00e9c3374fcff8f813255182109f7b3c"
+    },
+    {
+      "run_id": "PGOP1_RUN002_READBACK_GREEN_001",
+      "meaning": "FOCUSED_PASS_BEFORE_BOUND_ASSERTION",
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml_sha256": "f8144a5893981900d6338315d67181735772f0d08067509617e68538ab720488"
+    },
+    {
+      "run_id": "PGOP1_RUN002_READBACK_BOUND_001",
+      "meaning": "TEST_DEVELOPMENT_KEYERROR_PRESERVED",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "xml_sha256": "c6c14c54a21bf98a4e7cdf3464ba85acf2926ccd1b889815edef07a5651b80f8"
+    },
+    {
+      "run_id": "PGOP1_RUN002_READBACK_BOUND_002",
+      "meaning": "STRENGTHENED_REGRESSION_PASS",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml_sha256": "ab43737aaab039be94a90966269038f470ddaad7a7c9def03f6d199e6b6270d7"
+    },
+    {
+      "run_id": "PGOP1_RUN002_REPAIR_FROZEN_REGRESSION_001",
+      "meaning": "FINAL_COMMITTED_REGRESSION",
+      "tests": 767,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml_sha256": "7ea7970c1315504e8bfc80ff6f3e423f63ec01d1e2e610292573406f575c96ad"
+    }
+  ],
+  "linux_large_readback_passed": 1,
+  "linux_path_checks_passed": 22,
+  "linux_windows_only_skipped": 1,
+  "historical_results_modified": false
+}

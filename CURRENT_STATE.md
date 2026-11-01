@@ -1,3 +1,25 @@
+# RUN-002 engineering release candidate (2026-10-31)
+
+RUN-002 nonqualifying campaign executed at `d589697b9b5e537a93e67480cb0c1f9970745d88`;
+prospective repair: `22434026abb47fb8300ec13f3cea71592ff1944c`.
+See [results](runs/run-002-engineering/README.md),
+[Astra audit](runs/run-002-engineering/ASTRA_PUBLIC_AUDIT.md) and
+[Sonnet handoff](runs/run-002-engineering/SONNET_PUBLIC_HANDOFF.md).
+
+3,802 unique sources had 4,102 file attempts; 266 audits are separate.
+Original readback remains 264 PASS / 2 ERROR; two later repair checks passed.
+The full campaign was not rerun. The 351-to-106 occurrence change is not
+accuracy evidence; 247 nested-content exclusions and bounded grammar limit
+recall. Private evidence is withheld. Sonnet review is PENDING.
+
+`GATE_11=BLOCKED`; independent semantic qualification `NOT_ACHIEVED`;
+`F16=DEFERRED_LINUX_VALIDATION_PENDING`; `I0-I6=FORMALLY_FROZEN`;
+`I7=INCOMPLETE`; `FORMAL_I7=NOT_COMPLETED`;
+`OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED`; `INDEPENDENT_CUSTODY=NOT_PROVEN`;
+`PHYSICAL_C2=DEFERRED_NOT_WAIVED`. No main merge or src promotion.
+
+Below is retained historical continuity, not current authority.
+
 # A-010 prospective contract candidate (2026-10-31)
 
 Owner-authorized explicit pgop1.swebench.attribution-ambiguity.v1 is implemented in the experimental adapter, preserving the legacy default. See [contract](docs/swebench-claim-audit/ATTRIBUTION_AMBIGUITY_V1.md). Current exact commit, fresh regression receipts and independent audit are maintained outside this checkout in Engineering/PGOP1_A010_ATTRIBUTION_CONVERGENCE_001. This is the freeze-time continuity snapshot: independent Astra acceptance is pending at freeze; the later commit-bound external audit decision supersedes this pending label. Historical negative outcomes below remain immutable evidence and do not describe the new contract.
