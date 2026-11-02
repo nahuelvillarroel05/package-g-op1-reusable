@@ -132,6 +132,37 @@ def test_legacy_lock_recovery_requires_proven_dead_owner(tmp_path: Path) -> None
     assert lock.read_bytes() == before
 
 
+@pytest.mark.skipif(os.name == "nt", reason="POSIX process lookup behavior")
+def test_legacy_lock_unknown_process_status_is_not_treated_as_dead(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    engine = Engine(tmp_path / "engine")
+    lock = engine.root / "writer.lock"
+    lock.write_text("2147483647", encoding="ascii")
+    before = lock.read_bytes()
+
+    def unknown_process_status(pid: int, signal: int) -> None:
+        raise OSError("process status unavailable")
+
+    monkeypatch.setattr(os, "kill", unknown_process_status)
+    with pytest.raises(EngineError, match="legacy writer lock owner is still alive"):
+        with engine._lock():
+            pytest.fail("unknown process status must not permit lock recovery")
+    assert lock.read_bytes() == before
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX process lookup behavior")
+@pytest.mark.parametrize("failure", [OverflowError, ValueError])
+def test_invalid_process_id_lookup_is_treated_as_dead(
+    monkeypatch: pytest.MonkeyPatch, failure: type[Exception]
+) -> None:
+    def invalid_process_id(pid: int, signal: int) -> None:
+        raise failure("invalid process identifier")
+
+    monkeypatch.setattr(os, "kill", invalid_process_id)
+    assert Engine._process_is_alive(2147483648) is False
+
+
 def test_os_lock_blocks_live_writer_and_recovers_after_process_interruption(tmp_path: Path) -> None:
     root = tmp_path / "shared-engine"
     engine = Engine(root)

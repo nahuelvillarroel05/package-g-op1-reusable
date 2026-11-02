@@ -1,0 +1,125 @@
+{
+  "schema": "pgop1.run003.experimental-publication-manifest.v1",
+  "candidate_kind": "ALLOWLISTED_FIRST_PARTY_CODE_TESTS_CONTRACTS_METHODOLOGY_AND_SANITIZED_AGGREGATES",
+  "base_public_commit": "15887cc4f660661a82beb5f5887a566421328c5d",
+  "historical_executed_candidate_commit": "8b2ccbe68bd5857ac2d3173923670f84eb445457",
+  "historical_executed_candidate_tree": "caa847289e63bad5b11bf80577c5fd4c3d579783",
+  "source_manifest_file_count": 563,
+  "source_manifest_full_match": true,
+  "included_members": [
+    {
+      "path": "docs/swebench-claim-audit/ATTRIBUTION_AMBIGUITY_V2.md",
+      "source_bytes": 8945,
+      "source_sha256": "298e7365aada3022280ce0d6077b9457268ab7b4791febb0ad4d942be9ff67c2",
+      "release_sha256": "298e7365aada3022280ce0d6077b9457268ab7b4791febb0ad4d942be9ff67c2"
+    },
+    {
+      "path": "docs/swebench-claim-audit/ATTRIBUTION_COMPATIBILITY_MATRIX_V2_PROPOSAL.md",
+      "source_bytes": 2408,
+      "source_sha256": "004bb1da46fbcae12361fc2460b39ca938cf1e9c32233b7074cf6a47da45c05c",
+      "release_sha256": "004bb1da46fbcae12361fc2460b39ca938cf1e9c32233b7074cf6a47da45c05c"
+    },
+    {
+      "path": "docs/swebench-claim-audit/ATTRIBUTION_V1_KNOWN_DEFECTS.md",
+      "source_bytes": 1284,
+      "source_sha256": "7c623ea59eb4088119b6bfec2b35bc5b6c563bf1131fe91f93d02ecef689f649",
+      "release_sha256": "7c623ea59eb4088119b6bfec2b35bc5b6c563bf1131fe91f93d02ecef689f649"
+    },
+    {
+      "path": "runtime/candidate/context_engine.py",
+      "source_bytes": 30959,
+      "source_sha256": "88e4c2ec06468c76e5d8fa249760edc03cf4a1fd561f337c903a64b0649a3800",
+      "release_sha256": "88e4c2ec06468c76e5d8fa249760edc03cf4a1fd561f337c903a64b0649a3800"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/generalized.py",
+      "source_bytes": 200681,
+      "source_sha256": "136d64e44a137b28e4aeef86fd900740d492d01880dcc5852fe6cf9efb4e8340",
+      "release_sha256": "136d64e44a137b28e4aeef86fd900740d492d01880dcc5852fe6cf9efb4e8340"
+    },
+    {
+      "path": "runtime/candidate/swebench_claim_audit/generalized_bridge.py",
+      "source_bytes": 57435,
+      "source_sha256": "90cfef22261fa4dff9ade446f83c0e66a3497f9f396f8b2fc67b0352a7e7ff8a",
+      "release_sha256": "90cfef22261fa4dff9ade446f83c0e66a3497f9f396f8b2fc67b0352a7e7ff8a"
+    },
+    {
+      "path": "tests/test_a010_attribution_v2.py",
+      "source_bytes": 13177,
+      "source_sha256": "398970f93e9520ca9b6f96e91702867a4954009927697d838157c7858da2f345",
+      "release_sha256": "398970f93e9520ca9b6f96e91702867a4954009927697d838157c7858da2f345"
+    },
+    {
+      "path": "tests/test_a010_attribution_v2_recovery.py",
+      "source_bytes": 3140,
+      "source_sha256": "24e9e09bdf7d07f9f231bc8035c2da41f69a2b18da8bfccc2d719ef5b1e3ec50",
+      "release_sha256": "24e9e09bdf7d07f9f231bc8035c2da41f69a2b18da8bfccc2d719ef5b1e3ec50"
+    },
+    {
+      "path": "tests/test_sonnet_batching.py",
+      "source_bytes": 7244,
+      "source_sha256": "02b144616c0c0e807c7a29dcb7cb411700f1e2c4b1c84d1e52d1c6895555d356",
+      "release_sha256": "02b144616c0c0e807c7a29dcb7cb411700f1e2c4b1c84d1e52d1c6895555d356"
+    },
+    {
+      "path": "tests/test_sonnet_v2_review_regressions.py",
+      "source_bytes": 11101,
+      "source_sha256": "3850bf57910a399ececcded3eb36ac103b81f94e467cee5e49ab76825e38640f",
+      "release_sha256": "3850bf57910a399ececcded3eb36ac103b81f94e467cee5e49ab76825e38640f"
+    },
+    {
+      "path": "tests/test_swebench_generalized.py",
+      "source_bytes": 36482,
+      "source_sha256": "94d25027d2f2d6b1dc6d15eb12f73cb674c8a87bf64b11635080df7899ba8d6b",
+      "release_sha256": "94d25027d2f2d6b1dc6d15eb12f73cb674c8a87bf64b11635080df7899ba8d6b"
+    },
+    {
+      "path": "runs/run-003-engineering-public/AGGREGATE_RESULTS.json",
+      "source_bytes": 1126,
+      "source_sha256": "cea3fdf993df5e1138c73b31abc6004b7b9856393b0394f563a9e94635c9d53d",
+      "release_sha256": "cea3fdf993df5e1138c73b31abc6004b7b9856393b0394f563a9e94635c9d53d"
+    },
+    {
+      "path": "runs/run-003-engineering-public/RUN003_ENGINEERING_SUMMARY.md",
+      "source_bytes": 1250,
+      "source_sha256": "ea57806223f67fb197b9abf99dd830052a8167c94433a3868e61445a1a95e4b5",
+      "release_sha256": "ea57806223f67fb197b9abf99dd830052a8167c94433a3868e61445a1a95e4b5"
+    }
+  ],
+  "excluded_source_roots": [
+    "runs/ (private/historical campaign payload)",
+    "manifests/ (historical provenance may bind private payload)",
+    "ornith/",
+    "pg_i7_mcp/",
+    "src/ (frozen core not required for this experimental patch)",
+    "examples/",
+    "mcp/",
+    "tools/",
+    "third_party/"
+  ],
+  "private_source_bodies_included": false,
+  "private_execution_evidence_included": false,
+  "third_party_source_included": false,
+  "publication_status": "LOCAL_REVIEW_CANDIDATE_NOT_PUBLISHED",
+  "source_code_reference_sha256": "ef0709c7069d93ec460d6b5cfbfb38353e915bf484adaee517ae30fd896aceaa",
+  "source_candidate_archive_sha256": "acacf909cb42b8302cbc2e85cd88c3348fb2762bc38ade9301dc20d9a516ad4f",
+  "source_candidate_changed_paths": [
+    "CURRENT_STATE.md",
+    "docs/engineering/NEXT_STEP.md",
+    "docs/swebench-claim-audit/ATTRIBUTION_AMBIGUITY_V2.md",
+    "docs/swebench-claim-audit/ATTRIBUTION_COMPATIBILITY_MATRIX_V2_PROPOSAL.md",
+    "docs/swebench-claim-audit/ATTRIBUTION_V1_KNOWN_DEFECTS.md",
+    "runtime/candidate/context_engine.py",
+    "runtime/candidate/swebench_claim_audit/generalized.py",
+    "runtime/candidate/swebench_claim_audit/generalized_bridge.py",
+    "tests/test_a010_attribution_v2.py",
+    "tests/test_a010_attribution_v2_recovery.py",
+    "tests/test_sonnet_batching.py",
+    "tests/test_sonnet_v2_review_regressions.py",
+    "tests/test_swebench_generalized.py"
+  ],
+  "excluded_changed_paths": [
+    "CURRENT_STATE.md",
+    "docs/engineering/NEXT_STEP.md"
+  ]
+}

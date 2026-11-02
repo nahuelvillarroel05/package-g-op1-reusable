@@ -38,6 +38,7 @@ MAX_NESTED_EXCLUSION_NODES = 20_000
 MAX_NESTED_EXCLUSION_DEPTH = 32
 MAX_NESTED_EXCLUSION_BYTES = 16 * 1024 * 1024
 ATTRIBUTION_AMBIGUITY_CONTRACT = "pgop1.swebench.attribution-ambiguity.v1"
+ATTRIBUTION_AMBIGUITY_V2_CONTRACT = "pgop1.swebench.attribution-ambiguity.v2"
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,159}$")
 RUN_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,255}$")
 SHA_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -164,7 +165,8 @@ def _descriptor(value: object, *, allow_claim_attribution_contract: bool = False
         if not allow_claim_attribution_contract:
             raise AuditError("ATTRIBUTION_CONTRACT_PLACEMENT_INVALID",
                              "claim_attribution_contract is request-level, not an evidence descriptor field")
-        if item["claim_attribution_contract"] != ATTRIBUTION_AMBIGUITY_CONTRACT:
+        if item["claim_attribution_contract"] not in (ATTRIBUTION_AMBIGUITY_CONTRACT,
+                                                       ATTRIBUTION_AMBIGUITY_V2_CONTRACT):
             raise AuditError("ATTRIBUTION_CONTRACT_UNSUPPORTED",
                              "claim attribution contract is not registered")
     if not isinstance(item["role"], str) or not item["role"] or len(item["role"]) > 64:
@@ -382,6 +384,16 @@ _DIRECT_ASSERTION_PREFIX = re.compile(
     r"actually|correction)\b\s*[,;:]?\s*)*\s*", re.I)
 _CORRECTION_MARKER = re.compile(r"\b(?:actually|correction|i\s+(?:am|was)\s+(?:wrong|mistaken))\b", re.I)
 _STANDALONE_RETRACTION = re.compile(r"\s*I retract my previous claim\s*[.!]?\s*", re.I)
+_V2_STANDALONE_RETRACTION = re.compile(
+    r"\s*(?:actually\s*[,;:]?\s*i\s+(?:didn't|did\s+not|haven't|have\s+not|"
+    r"couldn't|could\s+not)(?:\s+resolve\s+(?:it|that|the\s+task))?|"
+    r"wait\s*[,;:]?\s*i\s+(?:didn't|did\s+not)\s+(?:resolve\s+)?(?:it|that)|"
+    r"that\s+(?:is|was)\s+false|i\s+(?:was|am)\s+wrong|"
+    r"i\s+retract\s+(?:that|it|my\s+(?:previous\s+)?claim)|"
+    r"i\s+take\s+(?:that|it)\s+back|scratch\s+that)\s*[.!]?\s*", re.I)
+_V2_GENERIC_RETRACTION = re.compile(
+    r"\s*(?:i\s+(?:was|am)\s+wrong|i\s+was\s+mistaken|"
+    r"that\s+(?:is|was)\s+false)\s*[.!]?\s*", re.I)
 _PREDICATE_NEGATIVE = {
     "TASK_RESOLVED": _TASK_NEGATIVE,
     "TASK_COMPLETED": _TASK_COMPLETED_NEGATIVE,
@@ -1191,6 +1203,52 @@ def _qualified_retraction_reasons(text: str, match_end: int, predicate: str,
     return reasons
 
 
+_V2_EXPLICIT_RETRACTION_TAIL = re.compile(
+    r"^\s*(?:[.!?;]\s*)?(?:actually\s*[,;:]?\s*|wait\s*[,;:]?\s*)?"
+    r"(?:that\s+(?:is|was)\s+(?:false|untrue)|"
+    r"i\s+(?:retract\s+(?:that|it|my\s+(?:previous\s+)?claim)|"
+    r"take\s+(?:that|it)\s+back)|scratch\s+that|"
+    r"(?:i\s+)?(?:didn't|did\s+not|haven't|have\s+not|couldn't|could\s+not)\s+"
+    r"(?:resolve|fix|solve)\s+(?:it|that))\b", re.I)
+_V2_UNRESOLVED_RETRACTION_TAIL = re.compile(
+    r"^\s*(?:[.!?;]\s*)?(?:actually\s*[,;:]?\s*)?"
+    r"(?:i\s+(?:was|am)\s+wrong|i\s+was\s+mistaken|that\s+was\s+false)\b"
+    r"(?=\s*(?:[.!?;:,](?:\s|$)|$))", re.I)
+
+
+def _v2_standalone_retraction(content: str) -> tuple[list[int], str] | None:
+    if _V2_STANDALONE_RETRACTION.fullmatch(content):
+        if re.search(r"\b(?:resolve|fix|solve)\s+(?:it|that|the\s+task)\b", content, re.I):
+            # Predicate-bearing corrections use their resolved predicate and
+            # supersession link, not an unrelated nearest-claim withdrawal.
+            return None
+        return [0, len(content)], ("RETRACTION_UNRESOLVED"
+            if _V2_GENERIC_RETRACTION.fullmatch(content) else "EXPLICIT_RETRACTION")
+    for separator in re.finditer(r"[:,]", content):
+        cue = content[:separator.start()]
+        if _V2_STANDALONE_RETRACTION.fullmatch(cue):
+            if re.search(r"\b(?:resolve|fix|solve)\s+(?:it|that|the\s+task)\b", cue, re.I):
+                continue
+            return [0, len(cue)], ("RETRACTION_UNRESOLVED"
+                if separator.group() == "," or _V2_GENERIC_RETRACTION.fullmatch(cue)
+                else "EXPLICIT_RETRACTION")
+    return None
+
+
+def _v2_retraction_tail_status(text: str, match_end: int) -> str | None:
+    tail = _mask_quoted_context(text, _quoted_spans(text))[match_end:]
+    for pattern, status in ((_V2_EXPLICIT_RETRACTION_TAIL, "EXPLICIT_CORRECTION"),
+                            (_V2_UNRESOLVED_RETRACTION_TAIL, "RETRACTION_UNRESOLVED")):
+        match = pattern.match(tail)
+        if match:
+            # Only a complete declarative cue can withdraw the previous claim.
+            # A question, condition or other complement supplies no such act.
+            ending = re.match(r"\s*([.!?;:,]|$)", tail[match.end():])
+            if ending and ending.group(1) != "?":
+                return "RETRACTION_UNRESOLVED" if ending.group(1) == "," else status
+    return None
+
+
 def _related_qualifier_after(text: str, match_end: int, clause_end: int, predicate: str,
                              quote_spans: list[tuple[int, int]]) -> bool:
     sentence_end = _sentence_segment(text, match_end, quote_spans)[1]
@@ -1243,9 +1301,11 @@ def _related_qualifier_after(text: str, match_end: int, clause_end: int, predica
         body_clause, re.I,
     ))
 
-def _has_explicit_correction(text: str, span: list[int]) -> bool:
+def _has_explicit_correction(text: str, span: list[int], *, attribution_v2: bool = False) -> bool:
     clause_start, _ = _claim_segment(text, span[0])
-    return bool(_CORRECTION_MARKER.search(text[clause_start:span[0]]))
+    prefix = text[clause_start:span[0]]
+    return bool(_CORRECTION_MARKER.search(prefix) or
+                (attribution_v2 and re.fullmatch(r"\s*wait\s*[,;:]\s*", prefix, re.I)))
 
 
 _TIME_LABEL = r"(?:today|yesterday|tomorrow|now|currently|last\s+(?:week|month|year)|on\s+\d{4}-\d{2}-\d{2})"
@@ -1297,9 +1357,46 @@ def _time_scopes_compatible(earlier: dict[str, Any], later: dict[str, Any]) -> b
     return _temporal_labels_compatible(left, right)
 
 
+def _v2_nonassertive_context(text: str, span: list[int]) -> list[str]:
+    """Apply existing attribution guards to bounded forms lacking a safe parse."""
+    quotes = _quoted_spans(text)
+    start, end = _sentence_segment(text, span[0], quotes)
+    prefix = _assertion_prefix(text, start, span[0], quotes)
+    context = _mask_quoted_context(prefix, _quoted_spans(prefix))
+    reasons = []
+    if any(a <= span[0] and span[1] <= b for a, b in quotes):
+        reasons.append("QUOTED_CLAIM")
+    line_start = text.rfind("\n", 0, span[0]) + 1
+    line = text[line_start:span[0]]
+    if _fenced(text, span[0]) or line.startswith(("    ", "\t")):
+        reasons.append("MARKDOWN_CODE")
+    if re.match(r" {0,3}>", line):
+        reasons.append("MARKDOWN_QUOTE")
+    for previous_line in reversed(text[:line_start].splitlines()):
+        if not previous_line.strip():
+            break
+        if re.match(r" {0,3}>", previous_line):
+            reasons.append("MARKDOWN_QUOTE")
+            break
+    if any(text[offset] == "?" and not any(a <= offset < b for a, b in quotes)
+           for offset in range(start, min(end + 1, len(text)))):
+        reasons.append("INTERROGATIVE_CLAUSE")
+    if _REPORTED_PREFIX.search(context):
+        reasons.append("REPORTED_CLAIM")
+    if _DENIAL_PREFIX.search(context):
+        reasons.append("DENIED_CLAIM")
+    if _HEDGES.search(context) or _HEDGES.search(text[span[0]:span[1]]):
+        reasons.append("HEDGED_CLAUSE")
+    if _conditional_scope_before(text, span[0], quotes, span[1], end):
+        reasons.append("CONDITIONAL_CLAUSE")
+    if not _eligible_assertion_tail(text[span[1]:end], "TASK_RESOLVED"):
+        reasons.append("EMBEDDED_CLAIM_CONTEXT")
+    return sorted(set(reasons))
+
+
 def _claim_analysis(
     text: str, *, markdown_blankline_closes_quote: bool = False,
-    allow_bounded_false_tail: bool = False,
+    allow_bounded_false_tail: bool = False, attribution_v2: bool = False,
 ) -> tuple[list[tuple[str, bool, str, list[int]]], list[dict[str, Any]]]:
     if len(text.encode("utf-8")) > MAX_CLAIM_BYTES:
         raise AuditError("CLAIM_TEXT_TOO_LARGE", "assistant message exceeds claim parsing byte bound")
@@ -1315,8 +1412,58 @@ def _claim_analysis(
         ("TASK_RESOLVED", True, _TASK_RESOLVED),
         ("ISSUE_RESOLVED", True, _ISSUE_RESOLVED),
     )
+    if attribution_v2:
+        # Explicitly bounded grammar additions. Keep the registered v1 parser
+        # path byte-for-byte stable and preserve each match's original span.
+        patterns += (
+            ("TASK_RESOLVED", False, re.compile(
+                rf"\bI\s+(?:haven't|hasn't|hadn't|didn't|don't|doesn't|couldn't)\s+"
+                rf"(?:successfully\s+)?(?:resolve[ds]?|fix(?:ed)?|solv(?:e|ed))\s+{_TASK_OBJECT}", re.I)),
+            ("TASK_RESOLVED", False, re.compile(
+                rf"\bI\s+failed\s+to\s+(?:resolve|fix|solve)\s+{_TASK_OBJECT}", re.I)),
+            ("TASK_RESOLVED", False, re.compile(
+                r"\bI\s+(?:didn't|did\s+not|haven't|have\s+not|couldn't|could\s+not)\s+"
+                r"(?:resolve|fix|solve)\s+(?:it|that)\b", re.I)),
+            ("TASK_RESOLVED", True, re.compile(
+                rf"\bI\s+did\s+(?:successfully\s+)?(?:resolve|fix|solve)\s+{_TASK_OBJECT}", re.I)),
+            ("TASK_RESOLVED", True, re.compile(
+                r"\bI\s+(?:resolved|fixed|solved)\s+(?:the\s+)?(?:assigned\s+|original\s+|SWE-bench\s+)?task\s+successfully\b", re.I)),
+            ("TASK_RESOLVED", True, re.compile(
+                r"\bI\s+did\s+(?:resolve|fix|solve)\s+(?:it|that)\b", re.I)),
+            ("TASK_RESOLVED", True, re.compile(
+                r"\bI\s+(?:resolved|fixed|solved)\s+(?:the\s+)?(?:assigned\s+|original\s+|SWE-bench\s+)?"
+                r"task\s*,\s*(?:and\s+)?the\s+tests\s+pass(?:es|ed)?\b", re.I)),
+            ("TASK_RESOLVED", False, re.compile(
+                r"\b(?:the\s+)?(?:assigned\s+|original\s+|SWE-bench\s+)?task\s+"
+                r"(?:is|was|remains|continues\s+to\s+be)\s+(?:still\s+)?(?:unresolved|not\s+resolved)\b", re.I)),
+            ("TASK_RESOLVED", True, re.compile(
+                rf"\bFinal\s+outcome\s*:\s*(?:the\s+)?{_TASK_SUBJECT}\s+"
+                rf"{_STATE_LINK}resolved\b", re.I)),
+            ("TASK_RESOLVED", False, re.compile(
+                rf"\bFinal\s+outcome\s*:\s*(?:the\s+)?{_TASK_SUBJECT}\s+"
+                rf"{_STATE_LINK}(?:unresolved|not\s+resolved)\b", re.I)),
+            ("ISSUE_RESOLVED", True, re.compile(
+                rf"\bFinal\s+outcome\s*:\s*(?:the\s+)?{_ISSUE_SUBJECT}\s+"
+                rf"{_STATE_LINK}(?:fixed|resolved|solved)\b", re.I)),
+        )
     for predicate, asserted, pattern in patterns:
         for match in pattern.finditer(text):
+            if attribution_v2 and not asserted and predicate in {"TASK_RESOLVED", "ISSUE_RESOLVED"}:
+                state_form = re.match(
+                    r"(?:the\s+)?(?:assigned\s+|original\s+|SWE-bench\s+)?"
+                    r"(?:task|issue|problem|bug|failure|defect)\b",
+                    match.group(0), re.I)
+                line_prefix = text[max(0, text.rfind("\n", 0, match.start()) + 1):match.start()]
+                final_scope = bool(re.search(r"\bFinal\s+outcome\s*:\s*$", line_prefix, re.I))
+                if state_form and not final_scope:
+                    span = [match.start(), match.end()]
+                    rejected.append({"candidate_predicate": predicate, "asserted_value": False,
+                                     "matched_text": match.group(0), "match_span": span,
+                                     "byte_span": [len(text[:span[0]].encode("utf-8")),
+                                                   len(text[:span[1]].encode("utf-8"))],
+                                     "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                                     "reason_codes": ["TEMPORAL_SCOPE_UNKNOWN"]})
+                    continue
             start, end = _claim_segment(text, match.start())
             sentence_start, sentence_end = _sentence_segment(text, match.start(), quote_spans)
             clause = text[start:end]
@@ -1355,7 +1502,10 @@ def _claim_analysis(
             clause_context = context_text[start:end]
             clause_prefix_context = context_text[start:match.start()]
             assertion_context = _mask_quoted_context(assertion_prefix, _quoted_spans(assertion_prefix))
-            if (_HEDGES.search(clause_context) or _HEDGES.search(clause_prefix_context)
+            hedge_context = clause_context
+            if attribution_v2 and not asserted:
+                hedge_context = re.sub(r"\b(?:couldn't|could\s+not)\b", " ", hedge_context, flags=re.I)
+            if (_HEDGES.search(hedge_context) or _HEDGES.search(clause_prefix_context)
                     or _HEDGES.search(assertion_context)
                     or re.match(r"\s*(?:it|this)\s+is\s+(?:false|untrue)\s+that\b",
                                 assertion_prefix, re.I)
@@ -1376,6 +1526,10 @@ def _claim_analysis(
                 context_text, match.end(), predicate,
                 [match.start(), match.end()], end,
                 allow_bounded_false_tail=allow_bounded_false_tail))
+            if attribution_v2:
+                retraction_status = _v2_retraction_tail_status(text, match.end())
+                if retraction_status:
+                    reasons.append(retraction_status)
             tail_to_sentence_end = text[match.end():sentence_end]
             tail_context = context_text[match.end():sentence_end]
             if re.match(r"\s*,?\s*(?:or\s+so\s+(?:the\s+)?(?:user|tool|log|agent)\s+"
@@ -1385,7 +1539,10 @@ def _claim_analysis(
             if re.match(r"\s+(?:is|was)\s+(?:a\s+)?(?:lie|false|untrue|hypothetical|fiction)\b",
                         tail_context, re.I):
                 reasons.append("RETRACTION_IN_CLAUSE")
-            if ((not _eligible_assertion_prefix(assertion_prefix)
+            eligible_prefix = assertion_prefix
+            if attribution_v2:
+                eligible_prefix = re.sub(r"^\s*wait\s*[,;:]\s*", "", eligible_prefix, flags=re.I)
+            if ((not _eligible_assertion_prefix(eligible_prefix)
                  or not _eligible_assertion_tail(tail_to_sentence_end, predicate))
                     and not any(code in reasons for code in {
                         "HEDGED_CLAUSE", "CONDITIONAL_CLAUSE", "DENIED_CLAIM", "REPORTED_CLAIM",
@@ -1425,6 +1582,74 @@ def _claim_analysis(
                                            len(text[:span[1]].encode("utf-8"))],
                              "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
                              "reason_codes": ["NONCOMPARABLE_TASK_SCOPE"]})
+    if attribution_v2:
+        unsupported_forms = (
+            re.compile(rf"\bwe\s+(?:resolved|fixed|solved)\s+(?:the\s+)?{_TASK_SUBJECT}\b", re.I),
+            re.compile(rf"\b(?:the\s+)?{_TASK_SUBJECT}\s+has\s+been\s+(?:resolved|fixed|solved)\b", re.I),
+            re.compile(rf"\bI\s+\*\*(?:resolved|fixed|solved)\*\*\s+(?:the\s+)?{_TASK_SUBJECT}\b", re.I),
+            re.compile(rf"\bI\s+(?:can't|cannot|won't|will\s+not)\s+(?:resolve|fix|solve)\s+{_TASK_OBJECT}", re.I),
+        )
+        for form_index, pattern in enumerate(unsupported_forms):
+            for match in pattern.finditer(text):
+                span = [match.start(), match.end()]
+                if any(row.get("match_span") == span for row in rejected):
+                    continue
+                rejected.append({"candidate_predicate": "TASK_RESOLVED",
+                                 "matched_text": match.group(0), "match_span": span,
+                                 "byte_span": [len(text[:span[0]].encode("utf-8")),
+                                               len(text[:span[1]].encode("utf-8"))],
+                                 "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                                 "reason_codes": ["RECOGNIZED_BUT_UNSUPPORTED_FORM"],
+                                 **({"candidate_asserted_value": True}
+                                    if form_index < 3 else {})})
+        question = re.search(
+            r"\b(?:did|do|have|has|was|is|can|could|will)\s+i\s+"
+            r"(?:resolve|resolved|fix|fixed|solve|solved)\s+(?:the\s+)?task\b[^\n]*\?",
+            text, re.I)
+        if question:
+            span = [question.start(), question.end()]
+            rejected.append({"candidate_predicate": "TASK_RESOLVED",
+                             "matched_text": question.group(0), "match_span": span,
+                             "byte_span": [len(text[:span[0]].encode("utf-8")),
+                                           len(text[:span[1]].encode("utf-8"))],
+                             "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                             "reason_codes": ["INTERROGATIVE_CLAUSE"]})
+        state_patterns = (
+            ("TASK_RESOLVED", re.compile(
+                rf"\b(?:the\s+)?{_TASK_SUBJECT}\s+{_STATE_LINK}resolved\b", re.I)),
+            ("ISSUE_RESOLVED", re.compile(
+                rf"\b(?:the\s+)?{_ISSUE_SUBJECT}\s+{_STATE_LINK}(?:fixed|resolved|solved)\b", re.I)),
+        )
+        for predicate, pattern in state_patterns:
+            for match in pattern.finditer(text):
+                span = [match.start(), match.end()]
+                prefix = text[max(0, text.rfind("\n", 0, match.start()) + 1):match.start()]
+                if re.search(r"\bFinal\s+outcome\s*:\s*$", prefix, re.I):
+                    continue
+                if any(a <= match.start() < b for a, b in _quoted_spans(text)) or _fenced(text, match.start()):
+                    continue
+                rejected.append({"candidate_predicate": predicate, "asserted_value": True,
+                                 "matched_text": match.group(0), "match_span": span,
+                                 "byte_span": [len(text[:span[0]].encode("utf-8")),
+                                               len(text[:span[1]].encode("utf-8"))],
+                                 "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                                 "reason_codes": ["TEMPORAL_SCOPE_UNKNOWN"]})
+    if attribution_v2:
+        for row in rejected:
+            if set(row.get("reason_codes", [])).intersection({
+                    "TEMPORAL_SCOPE_UNKNOWN", "RECOGNIZED_BUT_UNSUPPORTED_FORM"}):
+                row["reason_codes"] = sorted(set(row["reason_codes"]) |
+                    set(_v2_nonassertive_context(text, row["match_span"])))
+        # Overlapping registered patterns may identify the same exact message
+        # span and interpretation. Emit that observation once; distinct spans,
+        # source identities and interpretations remain separate.
+        rejected = list({json.dumps(row, sort_keys=True, ensure_ascii=False): row
+                         for row in rejected}.values())
+        unique_found = {(predicate, value, matched, tuple(span))
+                        for predicate, value, matched, span in found}
+        found = [(predicate, value, matched, list(span))
+                 for predicate, value, matched, span in sorted(unique_found,
+                     key=lambda row: (row[3], row[0], row[1], row[2]))]
     rejected.sort(key=lambda item: item["match_span"][0] if item["match_span"] else -1)
     return sorted(found, key=lambda row: row[3][0]), rejected
 
@@ -1440,6 +1665,7 @@ def _apply_attribution_ambiguity_contract(
     accepted: list[tuple[str, bool, str, list[int]]],
     rejected: list[dict[str, Any]],
     source_message_id: object = None,
+    attribution_v2: bool = False,
 ) -> tuple[list[tuple[str, bool, str, list[int]]], list[dict[str, Any]]]:
     """Retain claims covered by competing local-close and outer-close parses.
 
@@ -1482,7 +1708,7 @@ def _apply_attribution_ambiguity_contract(
     local_context_text = _mask_quoted_context(text, local_quote_spans)
     locally_accepted, locally_rejected = _claim_analysis(
         local_context_text, markdown_blankline_closes_quote=True,
-        allow_bounded_false_tail=True)
+        allow_bounded_false_tail=True, attribution_v2=attribution_v2)
     local_acceptance = {(predicate, asserted, tuple(span))
                         for predicate, asserted, _matched, span in locally_accepted}
     local_rejection_reasons = {
@@ -1521,7 +1747,7 @@ def _apply_attribution_ambiguity_contract(
                 or ("REPORTED_CLAIM" in local_reasons and not direct_prefix_match)):
             return "INELIGIBLE"
         retraction_reasons = local_reasons.intersection(
-            {"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"})
+            {"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE", "RETRACTION_UNRESOLVED"})
         if retraction_reasons:
             return "EXPLICIT_RETRACTION" if direct_prefix_match else "INELIGIBLE"
         parser_eligible = key in local_acceptance or (
@@ -1536,7 +1762,9 @@ def _apply_attribution_ambiguity_contract(
                 local_context_text, match_end, predicate, span, local_clause_end,
                 allow_bounded_false_tail=True):
             return "EXPLICIT_RETRACTION"
-        if _has_explicit_correction(local_context_text, span):
+        if attribution_v2 and _v2_retraction_tail_status(local_context_text, match_end):
+            return "EXPLICIT_RETRACTION"
+        if _has_explicit_correction(local_context_text, span, attribution_v2=attribution_v2):
             return "CORRECTION"
         return "ACTIVE_ASSERTION"
     # Keep both the legacy parser's outer-closer interpretation and the
@@ -2015,7 +2243,13 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                 {"sha256": _sha(payload), "bytes": len(payload),
                  "content_type": "text" if isinstance(content_value, str) else type(content_value).__name__,
                  "attribution_status": "UNKNOWN", "exclusion_reason": reason,
-                 "stage_classification": stage}, pointer, "UNKNOWN"))
+                 "stage_classification": stage,
+                 **({"semantic_status": "UNATTRIBUTABLE_CONTENT"}
+                    if desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_V2_CONTRACT else {}),
+                 **({"content_span": [0, len(content_value)] if isinstance(content_value, str) else None,
+                     "byte_span": [0, len(payload)]}
+                    if desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_V2_CONTRACT else {})},
+                pointer, "UNKNOWN"))
 
         def scan_nested(value: Any, pointer: str, depth: int) -> None:
             nonlocal nested_visited
@@ -2061,18 +2295,23 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                                                 "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
                                                 "reason_codes": ["STRUCTURED_CONTENT_UNSUPPORTED"]})
                 continue
-            selected_attribution_contract = (
-                desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_CONTRACT)
+            selected_attribution_contract = desc.get("claim_attribution_contract") in (
+                ATTRIBUTION_AMBIGUITY_CONTRACT, ATTRIBUTION_AMBIGUITY_V2_CONTRACT)
+            selected_attribution_v2 = (
+                desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_V2_CONTRACT)
+            v2_retraction_cue = _v2_standalone_retraction(content) if selected_attribution_v2 else None
             if (selected_attribution_contract and not root_actor_unscoped
                     and not message_actor_unscoped
-                    and _STANDALONE_RETRACTION.fullmatch(content)):
-                span = [0, len(content)]
+                    and (_STANDALONE_RETRACTION.fullmatch(content)
+                         or v2_retraction_cue is not None)):
+                span = v2_retraction_cue[0] if v2_retraction_cue else [0, len(content)]
+                cue_text = content[span[0]:span[1]]
                 event_id = _stable("retraction-event", run, iid, ref["path"], ref["sha256"],
                                    pointer, str(span))
                 event = {
                     "event_id": event_id,
                     "event_type": "STANDALONE_CLAIM_RETRACTION",
-                    "matched_text": content,
+                    "matched_text": cue_text,
                     "text": content,
                     "source_pointer": pointer,
                     "source_message_id": message.get("message_id")
@@ -2082,9 +2321,9 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                         if isinstance(message.get("message_id"), str) and message.get("message_id")
                         else "UNKNOWN"),
                     "match_span": span,
-                    "byte_span": [0, len(content.encode("utf-8"))],
+                    "byte_span": [0, len(cue_text.encode("utf-8"))],
                     "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
-                    "content_sha256": _sha(content.encode("utf-8")),
+                    "content_sha256": _sha(cue_text.encode("utf-8")),
                     "attribution_status": "SOURCE_DECLARED_UNVERIFIED",
                     "speaker_scope": "SAME_TRAJECTORY_DECLARED_ASSISTANT_ROLE",
                     "speaker_identity_status": "UNKNOWN",
@@ -2092,15 +2331,84 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                     "target_claim_id": None,
                     "target_status": "UNKNOWN_NO_PRIOR_COMPATIBLE_ACTIVE_CLAIM",
                 }
+                if selected_attribution_v2:
+                    event["retraction_resolution_status"] = (
+                        v2_retraction_cue[1] if v2_retraction_cue else "EXPLICIT_RETRACTION")
+                    event["semantic_status"] = event["retraction_resolution_status"]
                 _append_observation(out, _obs(
                     ref, run, iid, "claim_retraction", "EXPLICIT_RETRACTION_EVENT",
                     event, pointer, "SOURCE_DECLARED_ASSISTANT_ROLE_UNAUTHENTICATED"))
             accepted, rejected = _claim_analysis(
                 content, markdown_blankline_closes_quote=selected_attribution_contract,
-                allow_bounded_false_tail=selected_attribution_contract)
+                allow_bounded_false_tail=selected_attribution_contract,
+                attribution_v2=selected_attribution_v2)
             if selected_attribution_contract:
                 accepted, rejected = _apply_attribution_ambiguity_contract(
-                    content, pointer, accepted, rejected, message.get("message_id"))
+                    content, pointer, accepted, rejected, message.get("message_id"),
+                    attribution_v2=selected_attribution_v2)
+            if selected_attribution_v2:
+                # A target-uncertain same-message cue does not erase its claim
+                # before the scenario engine can evaluate retained alternatives.
+                for row in rejected:
+                    if (set(row.get("reason_codes", [])) == {"RETRACTION_UNRESOLVED"}
+                            and isinstance(row.get("predicate"), str)
+                            and type(row.get("asserted_value")) is bool):
+                        span = row["match_span"]
+                        target_id = _stable("claim", run, iid, ref["path"], ref["sha256"], pointer,
+                                            row["predicate"], str(row["asserted_value"]), str(span))
+                        row["uncertainty_id"] = _stable("tail-retraction-uncertainty", target_id)
+                        row["target_claim_alternatives"] = [{"claim_id": target_id,
+                            "predicate": row["predicate"], "asserted_value": row["asserted_value"],
+                            "source_ref": _src(ref, pointer), "source_pointer": pointer,
+                            "match_span": copy.deepcopy(span)}]
+                        tail = _mask_quoted_context(content, _quoted_spans(content))[span[1]:]
+                        cue_match = (_V2_UNRESOLVED_RETRACTION_TAIL.match(tail)
+                                     or _V2_EXPLICIT_RETRACTION_TAIL.match(tail))
+                        if cue_match:
+                            cue_span = [span[1] + cue_match.start(), span[1] + cue_match.end()]
+                            cue_raw = content[cue_span[0]:cue_span[1]].encode("utf-8")
+                            row["retraction_cue"] = {"match_span": cue_span,
+                                "matched_text": content[cue_span[0]:cue_span[1]],
+                                "byte_span": [len(content[:cue_span[0]].encode("utf-8")),
+                                              len(content[:cue_span[1]].encode("utf-8"))],
+                                "content_sha256": _sha(cue_raw)}
+                        accepted.append((row["predicate"], row["asserted_value"], row["matched_text"], span))
+                accepted.sort(key=lambda row: row[3][0])
+                if not accepted and not rejected and content:
+                    rejected.append({"matched_text": content, "match_span": [0, len(content)],
+                        "byte_span": [0, len(content.encode("utf-8"))],
+                        "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                        "reason_codes": ["NO_CLAIM"], "semantic_status": "NO_CLAIM"})
+                for row in rejected:
+                    reasons = set(row.get("reason_codes", []))
+                    if reasons.intersection({"QUOTED_CLAIM", "MARKDOWN_QUOTE", "MARKDOWN_CODE",
+                                               "REPORTED_CLAIM", "INTERROGATIVE_CLAUSE", "DENIED_CLAIM"}):
+                        row["semantic_status"] = "UNATTRIBUTABLE_CONTENT"
+                        row["claim_form_status"] = "UNATTRIBUTABLE_CONTENT"
+                    elif "EXPLICIT_CORRECTION" in reasons or "RETRACTION_IN_CLAUSE" in reasons:
+                        row["retraction_status"] = "EXPLICIT_RETRACTION"
+                        row["semantic_status"] = "RECOGNIZED_BUT_UNSUPPORTED_FORM"
+                    elif "RETRACTION_UNRESOLVED" in reasons:
+                        row["retraction_status"] = "RETRACTION_UNRESOLVED"
+                        row["semantic_status"] = "RECOGNIZED_BUT_UNSUPPORTED_FORM"
+                    elif "TEMPORAL_SCOPE_UNKNOWN" in reasons:
+                        clause_start, clause_end = _claim_segment(content, row["match_span"][0])
+                        own_context = _mask_quoted_context(content, _quoted_spans(content))[clause_start:clause_end]
+                        continuation = content[clause_end:]
+                        intermediate = bool(re.search(
+                            r"\b(?:still|let\s+me\s+(?:investigate|check|continue)|investigating|ongoing)\b",
+                            own_context, re.I) or re.match(
+                                r"\s*;\s*let\s+me\s+(?:investigate|check|continue)\b", continuation, re.I))
+                        row["state_status"] = (
+                            "INTERMEDIATE_STATE_ASSERTION" if intermediate
+                            else "TEMPORAL_SCOPE_UNKNOWN")
+                        row["semantic_status"] = "RECOGNIZED_BUT_UNSUPPORTED_FORM"
+                    elif "NO_CLAIM" in reasons:
+                        row["semantic_status"] = "NO_CLAIM"
+                    else:
+                        row["semantic_status"] = "RECOGNIZED_BUT_UNSUPPORTED_FORM"
+                    if row.get("semantic_status") != "UNATTRIBUTABLE_CONTENT":
+                        row.setdefault("claim_form_status", row["semantic_status"])
             if root_actor_unscoped or message_actor_unscoped:
                 attribution_code = ("ROOT_ACTOR_SCOPE_UNVERIFIED" if root_actor_unscoped
                                     else "MESSAGE_ACTOR_SCOPE_UNVERIFIED")
@@ -2110,11 +2418,85 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                                      "byte_span": [len(content[:span[0]].encode("utf-8")),
                                                    len(content[:span[1]].encode("utf-8"))],
                                      "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
-                                     "reason_codes": [attribution_code]})
+                                     "reason_codes": [attribution_code],
+                                     **({"semantic_status": "UNATTRIBUTABLE_CONTENT",
+                                         "claim_form_status": "UNATTRIBUTABLE_CONTENT"}
+                                        if selected_attribution_v2 else {})})
                 accepted = []
             for rejected_claim in rejected:
                 rejected_claims.append({**rejected_claim, "source_pointer": pointer, "text": content})
             for predicate, asserted, matched, span in accepted:
+                anaphora_target: dict[str, Any] | None = None
+                if selected_attribution_v2 and re.search(r"\b(?:it|that)\s*$", matched, re.I):
+                    # Predicate selection cannot decide the antecedent. Inspect
+                    # other resolution subjects before filtering to TASK_RESOLVED.
+                    mention_candidates = [claim for _seq, claim in candidate_claims
+                        if claim["predicate"] in {"TASK_RESOLVED", "ISSUE_RESOLVED"}
+                        and not claim.get("superseded_by")
+                        and _time_scopes_compatible(claim, {"text": content, "match_span": span})]
+                    mention_retractions = [row for row in rejected
+                        if row.get("predicate") in {"TASK_RESOLVED", "ISSUE_RESOLVED"}
+                        and set(row.get("reason_codes", [])).issubset({"EXPLICIT_CORRECTION"})
+                        and isinstance(row.get("match_span"), list)
+                        and row["match_span"][1] <= span[0]]
+                    mentioned_predicates = {row["predicate"] for row in [*mention_candidates, *mention_retractions]}
+                    if len(mentioned_predicates) > 1:
+                        uncertainty_id = _stable("anaphora-uncertainty", run, iid, ref["path"],
+                                                 ref["sha256"], pointer, str(span))
+                        alternatives = []
+                        for prior in mention_candidates:
+                            prior.setdefault("possible_retracted_by", []).append(uncertainty_id)
+                            alternatives.append({"claim_id": prior["claim_id"],
+                                "predicate": prior["predicate"], "asserted_value": prior["asserted_value"],
+                                "source_ref": copy.deepcopy(prior["source_ref"]),
+                                "source_pointer": prior["source_pointer"],
+                                "match_span": copy.deepcopy(prior["match_span"])})
+                        for prior in mention_retractions:
+                            alternatives.append({"claim_id": None, "predicate": prior["predicate"],
+                                "asserted_value": prior["asserted_value"], "source_ref": _src(ref, pointer),
+                                "source_pointer": pointer, "match_span": copy.deepcopy(prior["match_span"])})
+                        rejected_claims.append({"candidate_predicate": predicate,
+                            "candidate_asserted_value": asserted, "matched_text": matched,
+                            "match_span": span, "source_pointer": pointer, "text": content,
+                            "byte_span": [len(content[:span[0]].encode("utf-8")),
+                                          len(content[:span[1]].encode("utf-8"))],
+                            "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                            "reason_codes": ["UNRESOLVED_ANAPHORA_TARGET"],
+                            "retraction_status": "RETRACTION_UNRESOLVED",
+                            "semantic_status": "RECOGNIZED_BUT_UNSUPPORTED_FORM",
+                            "claim_form_status": "RECOGNIZED_BUT_UNSUPPORTED_FORM",
+                            "uncertainty_id": uncertainty_id, "target_claim_alternatives": alternatives})
+                        continue
+                    prior_candidates = [claim for _seq, claim in candidate_claims
+                        if claim["predicate"] == predicate
+                        and _time_scopes_compatible(claim, {"text": content, "match_span": span})]
+                    prior_retractions = [row for row in rejected
+                        if row.get("predicate") == predicate
+                        and row.get("asserted_value") is not asserted
+                        and "EXPLICIT_CORRECTION" in row.get("reason_codes", [])
+                        and isinstance(row.get("match_span"), list)
+                        and row["match_span"][1] <= span[0]]
+                    if not prior_candidates and not prior_retractions:
+                        rejected_claims.append({"candidate_predicate": predicate,
+                            "asserted_value": asserted, "matched_text": matched,
+                            "match_span": span, "source_pointer": pointer, "text": content,
+                            "byte_span": [len(content[:span[0]].encode("utf-8")),
+                                          len(content[:span[1]].encode("utf-8"))],
+                            "span_unit": "MESSAGE_RELATIVE_UTF8_BYTES",
+                            "reason_codes": ["UNRESOLVED_ANAPHORA"],
+                            "semantic_status": "RECOGNIZED_BUT_UNSUPPORTED_FORM",
+                            "claim_form_status": "RECOGNIZED_BUT_UNSUPPORTED_FORM"})
+                        continue
+                    if prior_candidates:
+                        prior = prior_candidates[-1]
+                        anaphora_target = {"target_claim_id": prior["claim_id"],
+                            "target_source_pointer": prior["source_pointer"],
+                            "target_match_span": copy.deepcopy(prior["match_span"]),
+                            "resolution_status": "SOURCE_BOUND_PRIOR_CLAIM"}
+                    else:
+                        anaphora_target = {"target_source_pointer": pointer,
+                            "target_match_span": copy.deepcopy(prior_retractions[-1]["match_span"]),
+                            "resolution_status": "SOURCE_BOUND_RETRACTED_PRIOR_CLAIM"}
                 byte_span = [len(content[:span[0]].encode("utf-8")),
                              len(content[:span[1]].encode("utf-8"))]
                 claim = {
@@ -2129,9 +2511,30 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                     "authentication_status": "UNAUTHENTICATED",
                     "source_ref": _src(ref, pointer),
                 }
-                if desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_CONTRACT:
+                if selected_attribution_contract:
                     claim["attribution_status"] = "DIRECT"
                     claim["claim_classification"] = "DIRECT"
+                if anaphora_target is not None:
+                    claim["anaphora_target"] = anaphora_target
+                if selected_attribution_v2:
+                    claim["claim_form_status"] = "SUPPORTED_CLAIM_FORM"
+                    claim["retraction_status"] = (
+                        "RESOLVED_CORRECTION" if anaphora_target is not None
+                        and (anaphora_target.get("resolution_status") == "SOURCE_BOUND_RETRACTED_PRIOR_CLAIM"
+                             or bool(_CORRECTION_MARKER.search(content[max(0, content.rfind("\n", 0, span[0]) + 1):span[0]]))
+                             or bool(re.fullmatch(r"\s*wait\s*[,;:]\s*", content[max(0, content.rfind("\n", 0, span[0]) + 1):span[0]], re.I)))
+                        else "NO_RETRACTION")
+                    prefix = content[max(0, content.rfind("\n", 0, span[0]) + 1):span[0]]
+                    if (re.search(r"\bFinal\s+outcome\s*:\s*$", prefix, re.I)
+                            or re.match(r"Final\s+outcome\s*:", matched, re.I)):
+                        claim["state_status"] = "FINAL_OUTCOME_ASSERTION"
+                        if predicate != "TASK_RESOLVED":
+                            claim["comparison_status"] = "NONCOMPARABLE_STATE"
+                    tail_uncertainties = [row for row in rejected
+                        if row.get("uncertainty_id") and row.get("match_span") == span]
+                    if tail_uncertainties:
+                        claim["possible_retracted_by"] = [row["uncertainty_id"] for row in tail_uncertainties]
+                        claim["retraction_status"] = "RETRACTION_UNRESOLVED"
                 if len(candidate_claims) >= MAX_OBSERVATIONS:
                     raise AuditError("OBSERVATION_LIMIT", "trajectory emitted too many candidate claims")
                 sequence = message_order * 65_536 + span[0]
@@ -2144,10 +2547,13 @@ def _parse(raw: bytes, ref: dict[str, Any], desc: dict[str, Any], run: str,
                            and later["predicate"] == claim["predicate"]
                            and later["asserted_value"] != claim["asserted_value"]
                            and _time_scopes_compatible(claim, later)
-                           and _has_explicit_correction(later["text"], later["match_span"])]
+                           and _has_explicit_correction(later["text"], later["match_span"],
+                                                        attribution_v2=selected_attribution_v2)]
             if superseding:
                 claim["superseded_by"] = superseding[-1]["claim_id"]
-                if desc.get("claim_attribution_contract") == ATTRIBUTION_AMBIGUITY_CONTRACT:
+                if selected_attribution_v2:
+                    claim["retraction_status"] = "RESOLVED_CORRECTION"
+                if selected_attribution_contract:
                     claim["attribution_status"] = "SUPERSEDED"
                     claim["claim_classification"] = "SUPERSEDED"
         for rejected_claim in rejected_claims:
@@ -2379,7 +2785,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         if not isinstance(request, dict) or not _valid_run(run_id) or not _valid_id(instance_id):
             raise AuditError("REQUEST_SCOPE_INVALID", "request needs valid run_id and instance_id")
         attribution_contract = request.get("claim_attribution_contract")
-        if attribution_contract not in (None, ATTRIBUTION_AMBIGUITY_CONTRACT):
+        if attribution_contract not in (None, ATTRIBUTION_AMBIGUITY_CONTRACT,
+                                        ATTRIBUTION_AMBIGUITY_V2_CONTRACT):
             raise AuditError("ATTRIBUTION_CONTRACT_UNSUPPORTED", "claim attribution contract is not registered")
         if attribution_contract is not None:
             result["claim_attribution_contract"] = attribution_contract
@@ -2557,6 +2964,34 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 event_context = {**event, "predicate": candidate.get("candidate_predicate")}
                 if _time_scopes_compatible(candidate, event_context):
                     possible_ambiguous_targets.append(candidate)
+            if event.get("retraction_resolution_status") == "RETRACTION_UNRESOLVED":
+                alternatives: list[dict[str, Any]] = []
+                if target is not None:
+                    target["possible_retracted_by"] = sorted(set(
+                        target.get("possible_retracted_by", []) + [event["event_id"]]))
+                    alternatives.append({
+                        "claim_id": target["claim_id"], "target_kind": "CLEAR_CLAIM",
+                        "predicate": target["predicate"], "asserted_value": target["asserted_value"],
+                        "source_ref": copy.deepcopy(target["source_ref"]),
+                        "source_pointer": target["source_pointer"],
+                        "match_span": copy.deepcopy(target["match_span"]),
+                    })
+                for candidate in possible_ambiguous_targets:
+                    candidate["possible_retracted_by"] = sorted(set(
+                        candidate.get("possible_retracted_by", []) + [event["event_id"]]))
+                    alternatives.append({
+                        "claim_id": candidate["rejection_id"], "target_kind": "AMBIGUOUS_CLAIM",
+                        "predicate": candidate["candidate_predicate"],
+                        "asserted_value": candidate["candidate_asserted_value"],
+                        "ambiguity_group_id": candidate["ambiguity_group_id"],
+                        "source_ref": copy.deepcopy(rejection_sources.get(candidate.get("rejection_id"))),
+                        "source_pointer": candidate["source_pointer"],
+                        "match_span": copy.deepcopy(candidate["match_span"]),
+                    })
+                event["target_status"] = "RETRACTION_UNRESOLVED"
+                event["target_claim_id"] = None
+                event["target_claim_alternatives"] = alternatives
+                continue
             if possible_ambiguous_targets:
                 alternatives: list[dict[str, Any]] = []
                 if target is not None:
@@ -2605,13 +3040,19 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         } for ref in refs.values())
         result["AGENT_STATEMENT"] = statements
         result["CLAIM_REJECTIONS"] = rejected_claims
-        if attribution_contract == ATTRIBUTION_AMBIGUITY_CONTRACT:
+        if attribution_contract in (ATTRIBUTION_AMBIGUITY_CONTRACT,
+                                    ATTRIBUTION_AMBIGUITY_V2_CONTRACT):
             result["CLAIM_RETRACTIONS"] = retraction_events
         result["EXCLUDED_CONTENT"] = [
             {"source_ref": copy.deepcopy(obs["source_ref"]), "sha256": obs["value"]["sha256"],
              "bytes": obs["value"]["bytes"], "content_type": obs["value"]["content_type"],
              "attribution_status": "UNKNOWN", "exclusion_reason": obs["value"]["exclusion_reason"],
-             "stage_classification": obs["value"].get("stage_classification", "UNKNOWN")}
+             "stage_classification": obs["value"].get("stage_classification", "UNKNOWN"),
+             **({"semantic_status": obs["value"]["semantic_status"]}
+                if isinstance(obs["value"].get("semantic_status"), str) else {}),
+             **({"content_span": copy.deepcopy(obs["value"].get("content_span")),
+                 "byte_span": copy.deepcopy(obs["value"].get("byte_span"))}
+                if isinstance(obs["value"].get("semantic_status"), str) else {})}
             for obs in excluded_content]
         result["EXCLUDED_CONTENT_SUMMARY"] = {
             "record_count": len(excluded_content),
@@ -2650,7 +3091,7 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
         ambiguous_retraction_target_ids = {
             alternative.get("claim_id")
             for event in retraction_events
-            if event.get("target_status") == "AMBIGUOUS_TARGET"
+            if event.get("target_status") in {"AMBIGUOUS_TARGET", "RETRACTION_UNRESOLVED"}
             for alternative in event.get("target_claim_alternatives", [])
             if (isinstance(alternative, dict)
                 and alternative.get("target_kind") == "AMBIGUOUS_CLAIM"
@@ -2687,7 +3128,27 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
             return "INSUFFICIENT_EVIDENCE"
 
         ambiguity_affects_comparison = False
-        if ambiguity_groups and len({obs["value"] for obs in evaluator}) == 1 and not errors:
+        unresolved_retractions = ([event for event in retraction_events
+            if event.get("target_status") == "RETRACTION_UNRESOLVED"]
+            if attribution_contract == ATTRIBUTION_AMBIGUITY_V2_CONTRACT else [])
+        unresolved_anaphora = ([row for row in rejected_claims
+            if row.get("retraction_status") == "RETRACTION_UNRESOLVED"
+            and row.get("target_claim_alternatives")]
+            if attribution_contract == ATTRIBUTION_AMBIGUITY_V2_CONTRACT else [])
+        unresolved_effects = sorted([*unresolved_retractions, *unresolved_anaphora], key=lambda row:
+            message_order(row.get("source_pointer"), row.get("match_span"))
+            or (MAX_OBSERVATIONS, MAX_OBSERVATIONS))
+        possible_forms = ([row for row in rejected_claims
+            if row.get("candidate_predicate") == "TASK_RESOLVED"
+            and (type(row.get("candidate_asserted_value")) is bool
+                 or type(row.get("asserted_value")) is bool)
+            and row.get("attribution_status") not in {"QUOTED", "AMBIGUOUS_ATTRIBUTION"}
+            and row.get("state_status") != "INTERMEDIATE_STATE_ASSERTION"
+            and set(row.get("reason_codes", [])).issubset({
+                "RECOGNIZED_BUT_UNSUPPORTED_FORM", "TEMPORAL_SCOPE_UNKNOWN"})]
+            if attribution_contract == ATTRIBUTION_AMBIGUITY_V2_CONTRACT else [])
+        if ((ambiguity_groups or unresolved_effects or possible_forms)
+                and len({obs["value"] for obs in evaluator}) == 1 and not errors):
             observed_value = evaluator[0]["value"]
             value_by_claim_id = dict(clear_resolved_claims)
             for group_rows in ambiguity_groups.values():
@@ -2708,7 +3169,7 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
             retraction_target_ids = {
                 alternative.get("claim_id")
                 for event in retraction_events
-                if event.get("target_status") == "AMBIGUOUS_TARGET"
+                if event.get("target_status") in {"AMBIGUOUS_TARGET", "RETRACTION_UNRESOLVED"}
                 for alternative in event.get("target_claim_alternatives", [])
                 if isinstance(alternative, dict) and isinstance(alternative.get("claim_id"), str)
             }
@@ -2802,22 +3263,76 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                                           alternative_by_id[claim_id].get("match_span"))
                             or (-1, -1), claim_id))
                         scenario_active_ids.discard(target_id)
-                    scenario_active_sets.append(scenario_active_ids & clear_claim_ids)
-                    scenario_values = set(residual_values) | {
-                        value_by_claim_id[claim_id] for claim_id in scenario_active_ids
-                        if claim_id in value_by_claim_id}
-                    scenario_noncomparable = residual_noncomparable or any(
-                        claim_id in noncomparable_claim_ids for claim_id in scenario_active_ids)
-                    possible_outcomes.add(comparison_outcome(
-                        scenario_values, observed_value, scenario_noncomparable))
+                    # Unresolved cues preserve both no eligible withdrawal and
+                    # each source-bound target interpretation. Never remove a
+                    # possibly withdrawn assertion from every interpretation.
+                    effect_states = {(frozenset(scenario_active_ids), residual_values,
+                                      residual_noncomparable)}
+                    for effect_index, effect in enumerate([*unresolved_effects, *possible_forms]):
+                        next_effect_states = set(effect_states)
+                        for effect_ids, effect_values, effect_noncomparable in effect_states:
+                            if effect_index >= len(unresolved_effects):
+                                candidate_value = effect.get("candidate_asserted_value", effect.get("asserted_value"))
+                                next_effect_states.add((effect_ids,
+                                    frozenset(set(effect_values) | {candidate_value}), effect_noncomparable))
+                                continue
+                            for alternative in effect.get("target_claim_alternatives", []):
+                                changed_ids = set(effect_ids)
+                                changed_ids.discard(alternative.get("claim_id"))
+                                changed_values = set(effect_values)
+                                changed_noncomparable = effect_noncomparable
+                                # A pronominal correction may assert the new
+                                # value only under the corresponding referent.
+                                if type(effect.get("candidate_asserted_value")) is bool:
+                                    if alternative.get("predicate") == "TASK_RESOLVED":
+                                        changed_values.add(effect["candidate_asserted_value"])
+                                    else:
+                                        changed_noncomparable = True
+                                next_effect_states.add((frozenset(changed_ids),
+                                    frozenset(changed_values), changed_noncomparable))
+                                if len(next_effect_states) > MAX_ATTRIBUTION_SCENARIO_STATES:
+                                    break
+                            if len(next_effect_states) > MAX_ATTRIBUTION_SCENARIO_STATES:
+                                break
+                        if len(next_effect_states) > MAX_ATTRIBUTION_SCENARIO_STATES:
+                            errors.append("ATTRIBUTION_SCENARIO_LIMIT")
+                            break
+                        effect_states = next_effect_states
+                    for effect_ids, effect_values, effect_noncomparable in effect_states:
+                        scenario_active_sets.append(set(effect_ids) & clear_claim_ids)
+                        scenario_values = set(effect_values) | {
+                            value_by_claim_id[claim_id] for claim_id in effect_ids
+                            if claim_id in value_by_claim_id}
+                        scenario_noncomparable = effect_noncomparable or any(
+                            claim_id in noncomparable_claim_ids for claim_id in effect_ids)
+                        possible_outcomes.add(comparison_outcome(
+                            scenario_values, observed_value, scenario_noncomparable))
                 if scenario_active_sets:
                     active_in_any_scenario = set().union(*scenario_active_sets)
                     inactive_in_all_scenarios = clear_claim_ids - active_in_any_scenario
                     scenario_consensus_outcome = (next(iter(possible_outcomes))
                                                   if len(possible_outcomes) == 1 else None)
                 ambiguity_affects_comparison = len(possible_outcomes) > 1
+                if unresolved_effects:
+                    result["RETRACTION_SCENARIO_COMPARISON"] = {
+                        "possible_outcomes": sorted(possible_outcomes),
+                        "consensus": scenario_consensus_outcome,
+                        "uncertainty_count": len(unresolved_effects),
+                        "policy": "RETAINED_AND_SOURCE_BOUND_TARGET_ALTERNATIVES",
+                    }
+                if possible_forms:
+                    result["UNSUPPORTED_FORM_SCENARIO_COMPARISON"] = {
+                        "possible_outcomes": sorted(possible_outcomes),
+                        "consensus": scenario_consensus_outcome,
+                        "candidate_rejection_ids": [row["rejection_id"] for row in possible_forms],
+                        "policy": "ELIGIBLE_AND_EXCLUDED_INTERPRETATIONS_NO_ASSERTED_UNKNOWN_VALUE",
+                    }
         if ambiguity_affects_comparison:
             result["reason_codes"].append("ATTRIBUTION_AMBIGUITY_AFFECTS_COMPARISON")
+            if unresolved_effects:
+                result["reason_codes"].append("RETRACTION_UNCERTAINTY_AFFECTS_COMPARISON")
+            if possible_forms:
+                result["reason_codes"].append("UNSUPPORTED_FORM_AFFECTS_COMPARISON")
         if len({obs["value"] for obs in evaluator}) > 1:
             errors.append("EVALUATOR_RECORD_CONFLICT")
             for claim in statements:
@@ -2831,9 +3346,12 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                     claim["inactive_in_all_attribution_scenarios"] = True
                     claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
                     claim["reason_codes"] = ["INACTIVE_IN_ALL_ATTRIBUTION_SCENARIOS"]
-                elif claim.get("retracted_by"):
+                elif (claim.get("retracted_by") or
+                      (attribution_contract == ATTRIBUTION_AMBIGUITY_V2_CONTRACT
+                       and claim.get("possible_retracted_by"))):
                     claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
-                    claim["reason_codes"] = ["EXPLICITLY_RETRACTED_BY_STANDALONE_EVENT"]
+                    claim["reason_codes"] = (["EXPLICITLY_RETRACTED_BY_STANDALONE_EVENT"]
+                        if claim.get("retracted_by") else ["RETRACTION_UNRESOLVED"])
                 elif claim.get("superseded_by"):
                     claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
                     claim["reason_codes"] = ["SUPERSEDED_BY_LATER_OPPOSITE_ASSERTION"]
@@ -2870,9 +3388,14 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 else:
                     claim["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
                     claim["reason_codes"] = (
-                        ["EXPLICITLY_RETRACTED_BY_STANDALONE_EVENT"]
-                        if claim.get("retracted_by") else ["NO_MATCHING_EVALUATOR_PREDICATE"])
+                        ["EXPLICITLY_RETRACTED_BY_STANDALONE_EVENT"] if claim.get("retracted_by") else
+                        ["RETRACTION_UNRESOLVED"]
+                        if (attribution_contract == ATTRIBUTION_AMBIGUITY_V2_CONTRACT
+                            and claim.get("possible_retracted_by")) else
+                        ["NO_MATCHING_EVALUATOR_PREDICATE"])
                 if (not claim.get("retracted_by")
+                        and not (attribution_contract == ATTRIBUTION_AMBIGUITY_V2_CONTRACT
+                                 and claim.get("possible_retracted_by"))
                         and claim.get("claim_id") not in inactive_in_all_scenarios):
                     verdicts.append("INSUFFICIENT_EVIDENCE")
 
@@ -2883,6 +3406,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
                 "INACTIVE_IN_ALL_ATTRIBUTION_SCENARIOS"
                 if claim.get("inactive_in_all_attribution_scenarios") else
                 "RETRACTED" if claim.get("retracted_by") else
+                "RETRACTION_UNRESOLVED" if (attribution_contract == ATTRIBUTION_AMBIGUITY_V2_CONTRACT
+                                              and claim.get("possible_retracted_by")) else
                 "CORRECTED" if claim.get("superseded_by") else
                 "ACTIVE_CONTRADICTED" if claim["AUDIT_VERDICT"] == "CONTRADICTED" else
                 "ACTIVE_NONCOMPARABLE" if claim["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE" else "ACTIVE")
@@ -2896,7 +3421,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
             "retracted_candidate_count": sum(any(code in {"EXPLICIT_CORRECTION", "RETRACTION_IN_CLAUSE"}
                 for code in row.get("reason_codes", [])) for row in rejected_claims),
         }
-        if attribution_contract == ATTRIBUTION_AMBIGUITY_CONTRACT:
+        if attribution_contract in (ATTRIBUTION_AMBIGUITY_CONTRACT,
+                                    ATTRIBUTION_AMBIGUITY_V2_CONTRACT):
             claim_aggregation["retracted_claim_ids"] = [
                 claim["claim_id"] for claim in statements if claim.get("retracted_by")]
             claim_aggregation["standalone_retraction_event_ids"] = [
@@ -2935,7 +3461,8 @@ def audit_evidence(data_root: str | os.PathLike[str], request: dict[str, object]
             result["AUDIT_VERDICT"] = computed_verdict
             if not statements:
                 result["reason_codes"].append("NO_ATTRIBUTABLE_CLAIM")
-            elif (attribution_contract == ATTRIBUTION_AMBIGUITY_CONTRACT
+            elif (attribution_contract in (ATTRIBUTION_AMBIGUITY_CONTRACT,
+                                           ATTRIBUTION_AMBIGUITY_V2_CONTRACT)
                   and not verdicts
                   and result["CLAIM_AGGREGATION"].get("retracted_claim_ids")):
                 result["reason_codes"].append("NO_ACTIVE_CLAIM_AFTER_RETRACTION")

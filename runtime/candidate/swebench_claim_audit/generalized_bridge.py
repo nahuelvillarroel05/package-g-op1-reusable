@@ -31,6 +31,7 @@ RECEIPT_SCHEMA_V1 = "pgop1.swebench.generalized-bridge-receipt.v1"
 RECEIPT_SCHEMA_V2 = "pgop1.swebench.generalized-bridge-receipt.v2"
 DERIVATION_SCHEMA = "pgop1.swebench.audit-derivation.v1"
 ATTRIBUTION_AMBIGUITY_CONTRACT = "pgop1.swebench.attribution-ambiguity.v1"
+ATTRIBUTION_AMBIGUITY_V2_CONTRACT = "pgop1.swebench.attribution-ambiguity.v2"
 DERIVATION_MARKER = "semantic_derivation_schema"
 AUDIT_CONTRACT_VERSION = "pgop1.swebench.audit-contract.v2"
 NORMALIZATION_SCHEMA_V2 = "pgop1.swebench.source-bound-normalization.v2"
@@ -182,7 +183,8 @@ def _validate_audit(audit_result: dict[str, Any]) -> tuple[str, str, str]:
             }):
         raise AuditError("BRIDGE_AUDIT_RESULT_INVALID", "bridge requires a versioned generalized audit result")
     attribution_contract = audit_result.get("claim_attribution_contract")
-    if attribution_contract not in (None, ATTRIBUTION_AMBIGUITY_CONTRACT):
+    if attribution_contract not in (None, ATTRIBUTION_AMBIGUITY_CONTRACT,
+                                    ATTRIBUTION_AMBIGUITY_V2_CONTRACT):
         raise AuditError("BRIDGE_ATTRIBUTION_CONTRACT_INVALID", "audit result declares an unsupported claim attribution contract")
     identity = _identity(audit_result)
     contract = audit_result.get("audit_contract_version")

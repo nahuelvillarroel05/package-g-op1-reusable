@@ -198,7 +198,10 @@ class Engine:
             kernel32.WaitForSingleObject.argtypes = (wintypes.HANDLE, wintypes.DWORD)
             kernel32.WaitForSingleObject.restype = wintypes.DWORD
             kernel32.CloseHandle.argtypes = (wintypes.HANDLE,)
-            handle = kernel32.OpenProcess(0x00100000, False, pid)  # SYNCHRONIZE
+            try:
+                handle = kernel32.OpenProcess(0x00100000, False, pid)  # SYNCHRONIZE
+            except (OverflowError, ValueError):
+                return False
             if not handle:
                 error = ctypes.get_last_error()
                 if error == 87:  # ERROR_INVALID_PARAMETER means no such process.
@@ -217,6 +220,8 @@ class Engine:
         try:
             os.kill(pid, 0)
         except ProcessLookupError:
+            return False
+        except (OverflowError, ValueError):
             return False
         except PermissionError:
             return True

@@ -1,0 +1,23 @@
+{
+  "status": "PGOP1_RUN003_ENGINEERING_COMPLETE_GATE11_BLOCKED",
+  "candidate_commit": "8b2ccbe68bd5857ac2d3173923670f84eb445457",
+  "candidate_tree": "caa847289e63bad5b11bf80577c5fd4c3d579783",
+  "source_files": 3802,
+  "unique_content_hashes": 3723,
+  "processing_attempts": 4102,
+  "parsed": 2044,
+  "unsupported": 1745,
+  "errors": 13,
+  "execution_audits": 266,
+  "supported": 0,
+  "contradicted": 0,
+  "insufficient_evidence": 264,
+  "integrity_failure": 2,
+  "context_engine_units": 4368,
+  "independent_semantic_qualification": "NOT_ACHIEVED",
+  "GATE_11": "BLOCKED",
+  "independent_accuracy": "NOT_COMPUTABLE",
+  "publication": "PREPARED_NOT_PUBLISHED",
+  "scope": "Aggregate engineering measures only; no private source bodies, trajectories, claim spans, source paths, private execution evidence, reserved labels, or GOLD included. Parsed counts use one current-parser outcome per distinct source; attempts include reprocessing.",
+  "publication_note": "Owner authorized preparation of this experimental publication candidate; review gates remain pending and no remote write has occurred."
+}

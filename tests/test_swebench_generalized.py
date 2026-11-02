@@ -4,6 +4,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -610,6 +611,7 @@ def test_duplicate_source_descriptor_is_rejected_without_duplicate_claim_ids(tmp
     assert result["reason_codes"] == ["DUPLICATE_SOURCE_DESCRIPTOR"]
 
 
+@pytest.mark.skipif(os.name != "nt", reason="case-fold collision rule is specific to Windows path identity")
 def test_windows_case_alias_duplicate_is_rejected(tmp_path: Path) -> None:
     descriptor = _trajectory(tmp_path)
     alias = {**descriptor, "path": descriptor["path"].upper()}
