@@ -222,8 +222,8 @@
       "ID": "PILOT-001",
       "record_kind": "HISTORICAL_RECONSTRUCTION",
       "directory": "pilots/pilot-001",
-      "execution_code_commit": "f424c86fc73b077606f5ca7a092f9f29c42485ee",
-      "execution_code_tree": "a83c4b7a3da3849d8328a6916d1cf8135f469267",
+      "execution_code_commit": "NOT_SINGLE_GIT_EXECUTION_IDENTITY",
+      "execution_code_tree": "NOT_SINGLE_GIT_EXECUTION_IDENTITY",
       "result_or_release_commit": "NOT_PUBLISHED",
       "public_evidence_path": "NONE",
       "private_evidence_commitments": [
@@ -253,7 +253,11 @@
       "status": "HISTORICAL_WITH_EXACT_LIMITATIONS",
       "original_identity": "PGOP1_MULTIBENCHMARK_INDEPENDENT_PILOT_001",
       "relationship": "SEPARATE_FROM_RUN004; development, not independent semantic qualification",
-      "central_integration": "REFERENCE_ONLY; pilot code not merged into central base"
+      "central_integration": "REFERENCE_ONLY; pilot code not merged into central base",
+      "validated_candidate_commit": "f424c86fc73b077606f5ca7a092f9f29c42485ee",
+      "validated_candidate_tree": "a83c4b7a3da3849d8328a6916d1cf8135f469267",
+      "execution_context": "SWE adapter ran while checkout HEAD a4181bb941914f6784d5f2e06a4c9bc1cfc54917. BFCL isolated module was executed before later byte-identical import into validated candidate. No claim that the full f424c86 checkout executed.",
+      "execution_identity_evidence": "PILOT-001-001 private CODE_REFERENCE commitment; supporting driver hashes remain separately bound"
     }
   ],
   "identifier_policy": "RUN IDs unique across revisions. PILOT-001 is a new locator alias for its original identity, not a new execution. No historical attempt IDs minted."
