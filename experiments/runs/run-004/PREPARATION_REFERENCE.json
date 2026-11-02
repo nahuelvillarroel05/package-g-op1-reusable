@@ -1,0 +1,42 @@
+{
+  "ID": "RUN-004",
+  "record_kind": "PROSPECTIVE_PREPARATION_NOT_FROZEN",
+  "directory": "runs/run-004",
+  "execution_code_commit": "NOT_SELECTED",
+  "execution_code_tree": "NOT_SELECTED",
+  "result_or_release_commit": "NOT_PUBLISHED",
+  "public_evidence_path": "NONE",
+  "private_evidence_commitments": [
+    {
+      "artifact_id": "RUN-004-001",
+      "sha256": "9a4a6ae064d3f4d2b9b5906ee4f90c1ba463103ac8e2b8308d07ba9b8b0d2eb6",
+      "bytes": 3056
+    },
+    {
+      "artifact_id": "RUN-004-002",
+      "sha256": "c6ef9875fc6e27810b3784805aa02e6b61b2bf5781987b927d88b20f35444d6e",
+      "bytes": 6157
+    },
+    {
+      "artifact_id": "RUN-004-003",
+      "sha256": "ca5d4b7035cbfffb0c4004f7888c992844539063415d68e501ed2e8236f54a06",
+      "bytes": 230573
+    },
+    {
+      "artifact_id": "RUN-004-004",
+      "sha256": "df92cd6e5f076f4665961f729c6d937badee21d28413cc1be449dd144c8d4f2d",
+      "bytes": 7400
+    },
+    {
+      "artifact_id": "RUN-004-005",
+      "sha256": "f296b6bc74ce5e93ef50a15be731cb7a54595dc8972ad814ee2f4b0bb0509312",
+      "bytes": 3055
+    }
+  ],
+  "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+  "formal_qualification": "NOT_ACHIEVED",
+  "status": "RESERVED_PREPARATION_BLOCKED_NOT_EXECUTED",
+  "campaign_execution": "NOT_EXECUTED",
+  "contract_status": "DRAFT_NOT_APPROVED",
+  "population_quota": null
+}

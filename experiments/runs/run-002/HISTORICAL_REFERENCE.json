@@ -1,0 +1,49 @@
+{
+  "ID": "RUN-002",
+  "record_kind": "HISTORICAL_RECONSTRUCTION",
+  "directory": "runs/run-002",
+  "execution_code_commit": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+  "execution_code_tree": "79a2a0300c89a723e5ce43c23ace1902347784a1",
+  "result_or_release_commit": "15887cc4f660661a82beb5f5887a566421328c5d",
+  "public_evidence_path": "runs/run-002-engineering",
+  "private_evidence_commitments": [
+    {
+      "artifact_id": "RUN-002-001",
+      "sha256": "c738b79bb9f9910ecd803a8d6a21a39931c8b5acdc55262959cdf38c291956d0",
+      "bytes": 69696
+    },
+    {
+      "artifact_id": "RUN-002-002",
+      "sha256": "a32210669ce29222b10700f6175f43df627def1b67cc78bfc3f94d1f19682135",
+      "bytes": 9622
+    },
+    {
+      "artifact_id": "RUN-002-003",
+      "sha256": "19b9ad019c46aa5e22aa8adf085ecaa49064e74f66a28abae392269c4d711dc2",
+      "bytes": 2045
+    },
+    {
+      "artifact_id": "RUN-002-004",
+      "sha256": "6aa6917571f03809dfc362b279e1548dd68d205a55a8d54737a7a7753d15ba65",
+      "bytes": 7474958
+    },
+    {
+      "artifact_id": "RUN-002-005",
+      "sha256": "413d379de2db56e603e9d0f9f8c9ff4fb0eb5bc3049614966623339bd2da201a",
+      "bytes": 1800
+    },
+    {
+      "artifact_id": "RUN-002-006",
+      "sha256": "cdd42b8b927a89e9690d7f5ec0ac61fc04b29f10d19ac16aa3671bfce00cdd9e",
+      "bytes": 3265
+    },
+    {
+      "artifact_id": "RUN-002-007",
+      "sha256": "e629b2c4e2a5139202705ffd24c5df19c87782fd501ca74e8a1b84e28f577e59",
+      "bytes": 1048
+    }
+  ],
+  "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+  "formal_qualification": "NOT_ACHIEVED",
+  "status": "HISTORICAL_WITH_EXACT_LIMITATIONS"
+}

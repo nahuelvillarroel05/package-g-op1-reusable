@@ -1,0 +1,59 @@
+{
+  "ID": "RUN-001",
+  "record_kind": "HISTORICAL_RECONSTRUCTION",
+  "directory": "runs/run-001",
+  "execution_code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+  "execution_code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+  "result_or_release_commit": "af95c484813c8e6180f72be8c86896f5aab23305",
+  "public_evidence_path": "runs/run-001",
+  "private_evidence_commitments": [
+    {
+      "artifact_id": "RUN-001-001",
+      "sha256": "7233ff5a51c3f5f036ccc7c63c114696060dab66ae5241bd505a785123e51229",
+      "bytes": 7748
+    },
+    {
+      "artifact_id": "RUN-001-002",
+      "sha256": "301910f07375dba60cc818853c16c5a046d11b296023ec47c767b7e506f056df",
+      "bytes": 7785
+    },
+    {
+      "artifact_id": "RUN-001-003",
+      "sha256": "87e618cd31a2b0034926f23ed13b0c5c0bae761bb76050607ecfa06a5ecfeabf",
+      "bytes": 8624
+    },
+    {
+      "artifact_id": "RUN-001-004",
+      "sha256": "ed6cece6433414f8ad6bde16490643062f0d10428d1fba3a1bcfbc5ee9441127",
+      "bytes": 2091
+    },
+    {
+      "artifact_id": "RUN-001-005",
+      "sha256": "a9b5345eef8c1cf7e71664e7db8fca3255c74c44b88eb886c69c05d8bda63efd",
+      "bytes": 3999
+    },
+    {
+      "artifact_id": "RUN-001-006",
+      "sha256": "384420118dd13ec527194b01b7ce9f223a62921b843ccbd4b9df178ad7170267",
+      "bytes": 18391389
+    },
+    {
+      "artifact_id": "RUN-001-007",
+      "sha256": "44a04582adc9d358946dc7d18c56b8b043f1709ab73f3ed7afb7383e3002655e",
+      "bytes": 6571
+    },
+    {
+      "artifact_id": "RUN-001-008",
+      "sha256": "79f658b95822e447cef7e6d42445f272a1209c1ea47466f9eae6ffceb5a0c593",
+      "bytes": 7765
+    },
+    {
+      "artifact_id": "RUN-001-009",
+      "sha256": "8f579dddb4c3f02a0609f2bff697dd51fbed7611abd46aad5d4dcbcebd960d22",
+      "bytes": 1038
+    }
+  ],
+  "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+  "formal_qualification": "NOT_ACHIEVED",
+  "status": "HISTORICAL_WITH_EXACT_LIMITATIONS"
+}

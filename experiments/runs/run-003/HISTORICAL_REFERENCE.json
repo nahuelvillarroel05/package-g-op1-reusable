@@ -1,0 +1,61 @@
+{
+  "ID": "RUN-003",
+  "record_kind": "HISTORICAL_RECONSTRUCTION",
+  "directory": "runs/run-003",
+  "execution_code_commit": "8b2ccbe68bd5857ac2d3173923670f84eb445457",
+  "execution_code_tree": "caa847289e63bad5b11bf80577c5fd4c3d579783",
+  "result_or_release_commit": "5d692882bdd625ca57d82f77d62b1ea830fe9c15",
+  "public_evidence_path": "runs/run-003-engineering-public",
+  "private_evidence_commitments": [
+    {
+      "artifact_id": "RUN-003-001",
+      "sha256": "ed81d068fde20de77f926425fc3d9c27eb28d40b7f429c68feb69d851c071aa4",
+      "bytes": 72833
+    },
+    {
+      "artifact_id": "RUN-003-002",
+      "sha256": "21d03e4c8d6465eb7908a8d51d71ba4f6163ed42eb60e81378d0d2703ba47b8c",
+      "bytes": 7794
+    },
+    {
+      "artifact_id": "RUN-003-003",
+      "sha256": "eb957d3268798ac5a9a581a0cc3b51d143a183261d35366c2d97e3ae8587c949",
+      "bytes": 5980
+    },
+    {
+      "artifact_id": "RUN-003-004",
+      "sha256": "695575710ab59ba905fe0cf654c901282658884a13a6025ebb6998a3d974e916",
+      "bytes": 5389
+    },
+    {
+      "artifact_id": "RUN-003-005",
+      "sha256": "dd9606b38fffd2e745d3e3d41a87511921a5dff708d7bfa65903c02f8f12967e",
+      "bytes": 7891
+    },
+    {
+      "artifact_id": "RUN-003-006",
+      "sha256": "7ed80c84d818de38b114e3d11fc21a9b89ef0ccae94ac5b1f4b42e05add58248",
+      "bytes": 7556656
+    },
+    {
+      "artifact_id": "RUN-003-007",
+      "sha256": "2194860cb12c4ced99db27d3b7fa3c3c3bf864c22465683ceb1bc18e01ad0a7d",
+      "bytes": 11153
+    },
+    {
+      "artifact_id": "RUN-003-008",
+      "sha256": "52833e848ece75b0f130fa396f81e51dd1db022725897ee9a2b554a045cb18b1",
+      "bytes": 6934
+    },
+    {
+      "artifact_id": "RUN-003-009",
+      "sha256": "1a1f03c0252e9624d003308c3cc6f7ebfe7b3d85c4feb1ccffb864b7ae3c0964",
+      "bytes": 1090
+    }
+  ],
+  "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+  "formal_qualification": "NOT_ACHIEVED",
+  "status": "HISTORICAL_WITH_EXACT_LIMITATIONS",
+  "publication_status": "BLOCKED_AUTHENTICATION_HISTORICAL_RECEIPT_NOT_RETRIED",
+  "execution_external_drivers": "SEPARATE_HASH_BOUND_WORKSPACE_ARTIFACTS; release tree is not full executed environment"
+}

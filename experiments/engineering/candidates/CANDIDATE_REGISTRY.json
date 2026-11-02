@@ -1,0 +1,18 @@
+{
+  "schema": "pgop1.experimental.candidates.v1",
+  "candidates": [
+    {
+      "commit": "5d692882bdd625ca57d82f77d62b1ea830fe9c15",
+      "tree": "959c40ca08ac875cdca7a2ae27567ed649efd8a5",
+      "role": "CENTRAL_BRANCH_BASE; reviewed RUN003 publication candidate, not fresh execution",
+      "integration": "BASE_SELECTED_EXPLICITLY"
+    },
+    {
+      "commit": "f424c86fc73b077606f5ca7a092f9f29c42485ee",
+      "tree": "a83c4b7a3da3849d8328a6916d1cf8135f469267",
+      "branch": "feat/pgop1-independent-pilot-001",
+      "role": "PRESERVED_PILOT_CANDIDATE",
+      "integration": "REFERENCE_ONLY_NOT_MERGED"
+    }
+  ]
+}

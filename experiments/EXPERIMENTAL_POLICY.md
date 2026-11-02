@@ -1,0 +1,33 @@
+# Política experimental PGOP1 — versión 1
+
+Autoridad: instrucción del Owner PGOP1_EXPERIMENTAL_RUN_ARCHITECTURE_001. Esta política organiza ingeniería prospectiva; no autoriza ejecutar campañas. Rama central permanente: `experimental/pgop1-runs`. No crear una rama remota por RUN. Ramas locales temporales se permiten para aislar trabajo concurrente.
+
+`experiments/` contiene contratos, registros y referencias. `experiments/runs/run-NNN/attempts/ATTEMPT_ID/` contiene cada intento futuro; `experiments/pilots/` conserva pilotos con identidad distinta. `experiments/engineering/fixes/` y `candidates/` vinculan defectos y commits. El código experimental sigue en `runtime/candidate/`; `src/package_g/` no se promueve por esta política. Los originales en `runs/` permanecen inmutables. No duplicar corpus, stores ni grandes archivos: referenciar commits, rutas y SHA-256. Los registros son índices derivados; contratos aprobados, originales y decisiones del Owner prevalecen.
+
+## Identidad y congelación
+
+Reservar RUN_ID globalmente en RUN_REGISTRY.json antes de preparar un RUN. Comprobar todas las secciones, alias históricos y publicaciones para detectar colisiones. El piloto no consume ni representa RUN-004. Reservar ATTEMPT_ID globalmente único (RUN_ID + UTC + sufijo aleatorio); nunca reutilizarlo, incluso si no empezó. Las revisiones llevan ID y SHA-256 nuevos y enlazan la revisión anterior. El índice actual puede actualizarse; los contratos aprobados, freezes, intentos, decisiones y recibos anteriores nunca se reemplazan. Registrar cambios del índice mediante commits normales y conservar preimágenes locales.
+
+Estados: RESERVED -> DRAFT -> APPROVED_FROZEN -> AUTHORIZED_TO_EXECUTE -> RUNNING -> TERMINAL -> AUDITED. DRAFT/BLOCKED no habilitan ejecución. APPROVED_FROZEN requiere contrato completo, revisión firmemente identificada y decisión explícita del Owner que vincule revisión/SHA-256; AUTHORIZED_TO_EXECUTE requiere autorización de esa campaña. Ningún placeholder, test o nombre de carpeta concede aprobación. Una modificación de población, código, configuración, predicados o criterios requiere revisión prospectiva y nueva aprobación antes del siguiente intento; no altera el contrato original ni el significado de resultados anteriores. TERMINAL incluye SUCCESS_WITH_SCOPE, FAILED, STOPPED y BLOCKED; conservar todos.
+
+## Intentos y recuperación
+
+Antes de iniciar, guardar ATTEMPT_CONTRACT.json con commit/tree limpios, manifiesto y hash de inputs, contrato congelado y hash, configuración exacta/hash, autorización, namespaces, límites y estado inicial. Registrar inicio, resultados/errores, timestamps reales, estado terminal, auditoría e integridad mediante recibos nuevos con hashes y enlace al recibo anterior. El contrato inicial es inmutable; RESULTS/ERRORS iniciales PENDING se resuelven mediante recibos terminales, no sobrescritura. Un error previo a inicio se registra START_STATUS=NOT_STARTED, nunca ejecución inferida.
+
+Recovery debe revalidar código, contrato, configuración, hashes de entrada y ownership del namespace. Si hay ambigüedad, corrupción o identidad distinta: BLOCK, preservar bytes y abrir intento nuevo. Recuperación de lectura no redispatcha productores. Reanudar sólo en checkpoint seguro, con política previamente congelada y recibo de autorización aplicable; no continuar intentos consumidos/terminales ni repetir trabajo silenciosamente. Los fallos siguen contando en denominadores; no seleccionar retrospectivamente sólo éxitos.
+
+## Defectos, correcciones y comparación
+
+Registrar DEFECT_ID, RUN/ATTEMPT original, reproducer congelado/hash, causa y componente. UNKNOWN se conserva hasta demostrarlo. Ciclo: DISCOVERED -> REPRODUCED -> ROOT_CAUSE_ESTABLISHED -> FIX_CANDIDATE -> REGRESSION_VERIFIED -> AUDITED. FIX_COMMIT es una identidad nueva. Probar el reproducer original en el código afectado y en el corregido y las regresiones pertinentes, sin alterar entradas/expectativas para fabricar PASS; usar copias/namespaces nuevos bajo autorización. Un intento posterior exitoso por sí solo no cierra el defecto. Registrar fallos y ausencia de reproducción; no elevar NOT_RUN a PASS.
+
+Comparar sólo poblaciones compatibles: mismo revisionado y selección, exclusiones, unidades, predicados, configuración y métodos, o declarar por separado las diferencias. Separar tareas inventariadas, casos con resultados auténticos, casos elegibles, casos evaluados e intentos. No combinar desarrollos, piloto y holdout como independencia; no calcular precisión/recall sin denominadores y referencias calificadas. Métricas estructurales, integridad, autenticidad y semántica son ejes separados.
+
+## Integración, publicación y promoción
+
+Para integrar a la rama central: identificar commits/diff exactos y base, revisar derechos, privacidad, dependencias, contratos, reproducibilidad, regresiones y auditorías Sol XHigh/Astra; resolver hallazgos materiales; registrar decisión y commits de integración. Seleccionar cambios explícitos; no fusionar todas las ramas históricas por fecha ni reescribir commits existentes. No force push, rebase de historia publicada ni cambio a main. Conservar origen y fallos. Un merge normal o un cherry-pick revisado a la rama central requiere alcance autorizado y nueva identidad, nunca equivalencia automática con un árbol ejecutado.
+
+Publicar sólo código propio/autorizado, contratos y agregados revisados, índices y compromisos criptográficos. No publicar credenciales, rutas personales, fuentes privadas, trazas originales ni datasets/datos con derechos UNKNOWN. Registrar evidencia de licencia/derecho por artefacto y revisión de toda la historia alcanzable, además del diff. UNKNOWN bloquea la publicación del material afectado. Los manifiestos privados permanecen locales; el índice público sólo expone compromisos y localizadores públicos. Una referencia a commit local no afirma que exista remotamente.
+
+Esta intervención NO realiza push ni prueba credenciales. La publicación previa de RUN-003 permanece BLOCKED por autenticación según recibo histórico, no reprobada aquí. No modificar autenticación. Un push futuro requiere autorización aplicable, preestado remoto fresco y verificación posterior de commit/tree/bytes. Destino central `experimental/pgop1-runs`; preservar la propuesta histórica de publicación sin ejecutarla automáticamente ni sustituir su identidad.
+
+Integración experimental, publicación, calificación formal y promoción a main son decisiones distintas. Publicar o pasar una regresión NO autoriza promoción. Calificación formal exige procedimientos/autoridad propios, resolución de sus gates y aprobación explícita del Owner. Esta política no cierra GATE_11, OD03, Source025 u OD05 ni levanta I0-I7 o Physical C2.

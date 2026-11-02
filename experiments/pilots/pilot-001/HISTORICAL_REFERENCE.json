@@ -1,0 +1,37 @@
+{
+  "ID": "PILOT-001",
+  "record_kind": "HISTORICAL_RECONSTRUCTION",
+  "directory": "pilots/pilot-001",
+  "execution_code_commit": "f424c86fc73b077606f5ca7a092f9f29c42485ee",
+  "execution_code_tree": "a83c4b7a3da3849d8328a6916d1cf8135f469267",
+  "result_or_release_commit": "NOT_PUBLISHED",
+  "public_evidence_path": "NONE",
+  "private_evidence_commitments": [
+    {
+      "artifact_id": "PILOT-001-001",
+      "sha256": "c03f88307c436a11460466d1924860b62cb4c98ac3c4d0b63ac41bf1c7968d3c",
+      "bytes": 7751
+    },
+    {
+      "artifact_id": "PILOT-001-002",
+      "sha256": "bd8dd62220a23d4bd9fc2433c99754956ba050d41760c5e2846e52fca622ce27",
+      "bytes": 4412
+    },
+    {
+      "artifact_id": "PILOT-001-003",
+      "sha256": "d45815641ed5f76731d080bedf8b954d43de2f9e3b624398c8c78e5aded9bd7c",
+      "bytes": 1708
+    },
+    {
+      "artifact_id": "PILOT-001-004",
+      "sha256": "5b5ab6982f0139c687ea5eb399c48a9c95cda4e2abc74781843a7bd7f8fa5c70",
+      "bytes": 1739
+    }
+  ],
+  "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+  "formal_qualification": "NOT_ACHIEVED",
+  "status": "HISTORICAL_WITH_EXACT_LIMITATIONS",
+  "original_identity": "PGOP1_MULTIBENCHMARK_INDEPENDENT_PILOT_001",
+  "relationship": "SEPARATE_FROM_RUN004; development, not independent semantic qualification",
+  "central_integration": "REFERENCE_ONLY; pilot code not merged into central base"
+}

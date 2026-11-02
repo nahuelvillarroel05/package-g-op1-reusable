@@ -1,0 +1,38 @@
+{
+  "schema": "pgop1.defect-and-fix-registry.v1",
+  "records": [],
+  "required_fields": [
+    "DEFECT_ID",
+    "DISCOVERED_IN_RUN",
+    "DISCOVERED_IN_ATTEMPT",
+    "REPRODUCER",
+    "ROOT_CAUSE",
+    "AFFECTED_COMPONENT",
+    "FIX_COMMIT",
+    "REGRESSION_RESULTS",
+    "AUDIT_STATUS",
+    "PROMOTION_STATUS"
+  ],
+  "new_record_template": {
+    "DEFECT_ID": "UNKNOWN",
+    "DISCOVERED_IN_RUN": "UNKNOWN",
+    "DISCOVERED_IN_ATTEMPT": "UNKNOWN",
+    "REPRODUCER": "UNKNOWN",
+    "ROOT_CAUSE": "UNKNOWN",
+    "AFFECTED_COMPONENT": "UNKNOWN",
+    "FIX_COMMIT": "UNKNOWN",
+    "REGRESSION_RESULTS": "UNKNOWN",
+    "AUDIT_STATUS": "UNKNOWN",
+    "PROMOTION_STATUS": "UNKNOWN"
+  },
+  "policy": "Historical issues are referenced in original reports, not retroactively declared fixed here. No technical defect adjudication in this documentation intervention. New defect records are append-only by revision; registry updates preserve prior commits. Successful later attempt alone never closes a defect.",
+  "workflow": [
+    "DISCOVERED",
+    "REPRODUCED",
+    "ROOT_CAUSE_ESTABLISHED",
+    "FIX_CANDIDATE",
+    "REGRESSION_VERIFIED",
+    "AUDITED"
+  ],
+  "promotion_policy": "SEPARATE_OWNER_DECISION_REQUIRED; experimental audit is not main promotion"
+}

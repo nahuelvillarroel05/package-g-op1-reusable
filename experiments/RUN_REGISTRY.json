@@ -1,0 +1,258 @@
+{
+  "schema": "pgop1.experimental.run-registry.v1",
+  "central_branch": "experimental/pgop1-runs",
+  "authority": "Owner request PGOP1_EXPERIMENTAL_RUN_ARCHITECTURE_001; index is not execution approval",
+  "runs": [
+    {
+      "ID": "RUN-001",
+      "record_kind": "HISTORICAL_RECONSTRUCTION",
+      "directory": "runs/run-001",
+      "execution_code_commit": "0305a35d43661729f4a6061262cd452d62090a98",
+      "execution_code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
+      "result_or_release_commit": "af95c484813c8e6180f72be8c86896f5aab23305",
+      "public_evidence_path": "runs/run-001",
+      "private_evidence_commitments": [
+        {
+          "artifact_id": "RUN-001-001",
+          "sha256": "7233ff5a51c3f5f036ccc7c63c114696060dab66ae5241bd505a785123e51229",
+          "bytes": 7748
+        },
+        {
+          "artifact_id": "RUN-001-002",
+          "sha256": "301910f07375dba60cc818853c16c5a046d11b296023ec47c767b7e506f056df",
+          "bytes": 7785
+        },
+        {
+          "artifact_id": "RUN-001-003",
+          "sha256": "87e618cd31a2b0034926f23ed13b0c5c0bae761bb76050607ecfa06a5ecfeabf",
+          "bytes": 8624
+        },
+        {
+          "artifact_id": "RUN-001-004",
+          "sha256": "ed6cece6433414f8ad6bde16490643062f0d10428d1fba3a1bcfbc5ee9441127",
+          "bytes": 2091
+        },
+        {
+          "artifact_id": "RUN-001-005",
+          "sha256": "a9b5345eef8c1cf7e71664e7db8fca3255c74c44b88eb886c69c05d8bda63efd",
+          "bytes": 3999
+        },
+        {
+          "artifact_id": "RUN-001-006",
+          "sha256": "384420118dd13ec527194b01b7ce9f223a62921b843ccbd4b9df178ad7170267",
+          "bytes": 18391389
+        },
+        {
+          "artifact_id": "RUN-001-007",
+          "sha256": "44a04582adc9d358946dc7d18c56b8b043f1709ab73f3ed7afb7383e3002655e",
+          "bytes": 6571
+        },
+        {
+          "artifact_id": "RUN-001-008",
+          "sha256": "79f658b95822e447cef7e6d42445f272a1209c1ea47466f9eae6ffceb5a0c593",
+          "bytes": 7765
+        },
+        {
+          "artifact_id": "RUN-001-009",
+          "sha256": "8f579dddb4c3f02a0609f2bff697dd51fbed7611abd46aad5d4dcbcebd960d22",
+          "bytes": 1038
+        }
+      ],
+      "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+      "formal_qualification": "NOT_ACHIEVED",
+      "status": "HISTORICAL_WITH_EXACT_LIMITATIONS"
+    },
+    {
+      "ID": "RUN-002",
+      "record_kind": "HISTORICAL_RECONSTRUCTION",
+      "directory": "runs/run-002",
+      "execution_code_commit": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+      "execution_code_tree": "79a2a0300c89a723e5ce43c23ace1902347784a1",
+      "result_or_release_commit": "15887cc4f660661a82beb5f5887a566421328c5d",
+      "public_evidence_path": "runs/run-002-engineering",
+      "private_evidence_commitments": [
+        {
+          "artifact_id": "RUN-002-001",
+          "sha256": "c738b79bb9f9910ecd803a8d6a21a39931c8b5acdc55262959cdf38c291956d0",
+          "bytes": 69696
+        },
+        {
+          "artifact_id": "RUN-002-002",
+          "sha256": "a32210669ce29222b10700f6175f43df627def1b67cc78bfc3f94d1f19682135",
+          "bytes": 9622
+        },
+        {
+          "artifact_id": "RUN-002-003",
+          "sha256": "19b9ad019c46aa5e22aa8adf085ecaa49064e74f66a28abae392269c4d711dc2",
+          "bytes": 2045
+        },
+        {
+          "artifact_id": "RUN-002-004",
+          "sha256": "6aa6917571f03809dfc362b279e1548dd68d205a55a8d54737a7a7753d15ba65",
+          "bytes": 7474958
+        },
+        {
+          "artifact_id": "RUN-002-005",
+          "sha256": "413d379de2db56e603e9d0f9f8c9ff4fb0eb5bc3049614966623339bd2da201a",
+          "bytes": 1800
+        },
+        {
+          "artifact_id": "RUN-002-006",
+          "sha256": "cdd42b8b927a89e9690d7f5ec0ac61fc04b29f10d19ac16aa3671bfce00cdd9e",
+          "bytes": 3265
+        },
+        {
+          "artifact_id": "RUN-002-007",
+          "sha256": "e629b2c4e2a5139202705ffd24c5df19c87782fd501ca74e8a1b84e28f577e59",
+          "bytes": 1048
+        }
+      ],
+      "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+      "formal_qualification": "NOT_ACHIEVED",
+      "status": "HISTORICAL_WITH_EXACT_LIMITATIONS"
+    },
+    {
+      "ID": "RUN-003",
+      "record_kind": "HISTORICAL_RECONSTRUCTION",
+      "directory": "runs/run-003",
+      "execution_code_commit": "8b2ccbe68bd5857ac2d3173923670f84eb445457",
+      "execution_code_tree": "caa847289e63bad5b11bf80577c5fd4c3d579783",
+      "result_or_release_commit": "5d692882bdd625ca57d82f77d62b1ea830fe9c15",
+      "public_evidence_path": "runs/run-003-engineering-public",
+      "private_evidence_commitments": [
+        {
+          "artifact_id": "RUN-003-001",
+          "sha256": "ed81d068fde20de77f926425fc3d9c27eb28d40b7f429c68feb69d851c071aa4",
+          "bytes": 72833
+        },
+        {
+          "artifact_id": "RUN-003-002",
+          "sha256": "21d03e4c8d6465eb7908a8d51d71ba4f6163ed42eb60e81378d0d2703ba47b8c",
+          "bytes": 7794
+        },
+        {
+          "artifact_id": "RUN-003-003",
+          "sha256": "eb957d3268798ac5a9a581a0cc3b51d143a183261d35366c2d97e3ae8587c949",
+          "bytes": 5980
+        },
+        {
+          "artifact_id": "RUN-003-004",
+          "sha256": "695575710ab59ba905fe0cf654c901282658884a13a6025ebb6998a3d974e916",
+          "bytes": 5389
+        },
+        {
+          "artifact_id": "RUN-003-005",
+          "sha256": "dd9606b38fffd2e745d3e3d41a87511921a5dff708d7bfa65903c02f8f12967e",
+          "bytes": 7891
+        },
+        {
+          "artifact_id": "RUN-003-006",
+          "sha256": "7ed80c84d818de38b114e3d11fc21a9b89ef0ccae94ac5b1f4b42e05add58248",
+          "bytes": 7556656
+        },
+        {
+          "artifact_id": "RUN-003-007",
+          "sha256": "2194860cb12c4ced99db27d3b7fa3c3c3bf864c22465683ceb1bc18e01ad0a7d",
+          "bytes": 11153
+        },
+        {
+          "artifact_id": "RUN-003-008",
+          "sha256": "52833e848ece75b0f130fa396f81e51dd1db022725897ee9a2b554a045cb18b1",
+          "bytes": 6934
+        },
+        {
+          "artifact_id": "RUN-003-009",
+          "sha256": "1a1f03c0252e9624d003308c3cc6f7ebfe7b3d85c4feb1ccffb864b7ae3c0964",
+          "bytes": 1090
+        }
+      ],
+      "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+      "formal_qualification": "NOT_ACHIEVED",
+      "status": "HISTORICAL_WITH_EXACT_LIMITATIONS",
+      "publication_status": "BLOCKED_AUTHENTICATION_HISTORICAL_RECEIPT_NOT_RETRIED",
+      "execution_external_drivers": "SEPARATE_HASH_BOUND_WORKSPACE_ARTIFACTS; release tree is not full executed environment"
+    },
+    {
+      "ID": "RUN-004",
+      "record_kind": "PROSPECTIVE_PREPARATION_NOT_FROZEN",
+      "directory": "runs/run-004",
+      "execution_code_commit": "NOT_SELECTED",
+      "execution_code_tree": "NOT_SELECTED",
+      "result_or_release_commit": "NOT_PUBLISHED",
+      "public_evidence_path": "NONE",
+      "private_evidence_commitments": [
+        {
+          "artifact_id": "RUN-004-001",
+          "sha256": "9a4a6ae064d3f4d2b9b5906ee4f90c1ba463103ac8e2b8308d07ba9b8b0d2eb6",
+          "bytes": 3056
+        },
+        {
+          "artifact_id": "RUN-004-002",
+          "sha256": "c6ef9875fc6e27810b3784805aa02e6b61b2bf5781987b927d88b20f35444d6e",
+          "bytes": 6157
+        },
+        {
+          "artifact_id": "RUN-004-003",
+          "sha256": "ca5d4b7035cbfffb0c4004f7888c992844539063415d68e501ed2e8236f54a06",
+          "bytes": 230573
+        },
+        {
+          "artifact_id": "RUN-004-004",
+          "sha256": "df92cd6e5f076f4665961f729c6d937badee21d28413cc1be449dd144c8d4f2d",
+          "bytes": 7400
+        },
+        {
+          "artifact_id": "RUN-004-005",
+          "sha256": "f296b6bc74ce5e93ef50a15be731cb7a54595dc8972ad814ee2f4b0bb0509312",
+          "bytes": 3055
+        }
+      ],
+      "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+      "formal_qualification": "NOT_ACHIEVED",
+      "status": "RESERVED_PREPARATION_BLOCKED_NOT_EXECUTED",
+      "campaign_execution": "NOT_EXECUTED",
+      "contract_status": "DRAFT_NOT_APPROVED",
+      "population_quota": null
+    }
+  ],
+  "pilots": [
+    {
+      "ID": "PILOT-001",
+      "record_kind": "HISTORICAL_RECONSTRUCTION",
+      "directory": "pilots/pilot-001",
+      "execution_code_commit": "f424c86fc73b077606f5ca7a092f9f29c42485ee",
+      "execution_code_tree": "a83c4b7a3da3849d8328a6916d1cf8135f469267",
+      "result_or_release_commit": "NOT_PUBLISHED",
+      "public_evidence_path": "NONE",
+      "private_evidence_commitments": [
+        {
+          "artifact_id": "PILOT-001-001",
+          "sha256": "c03f88307c436a11460466d1924860b62cb4c98ac3c4d0b63ac41bf1c7968d3c",
+          "bytes": 7751
+        },
+        {
+          "artifact_id": "PILOT-001-002",
+          "sha256": "bd8dd62220a23d4bd9fc2433c99754956ba050d41760c5e2846e52fca622ce27",
+          "bytes": 4412
+        },
+        {
+          "artifact_id": "PILOT-001-003",
+          "sha256": "d45815641ed5f76731d080bedf8b954d43de2f9e3b624398c8c78e5aded9bd7c",
+          "bytes": 1708
+        },
+        {
+          "artifact_id": "PILOT-001-004",
+          "sha256": "5b5ab6982f0139c687ea5eb399c48a9c95cda4e2abc74781843a7bd7f8fa5c70",
+          "bytes": 1739
+        }
+      ],
+      "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
+      "formal_qualification": "NOT_ACHIEVED",
+      "status": "HISTORICAL_WITH_EXACT_LIMITATIONS",
+      "original_identity": "PGOP1_MULTIBENCHMARK_INDEPENDENT_PILOT_001",
+      "relationship": "SEPARATE_FROM_RUN004; development, not independent semantic qualification",
+      "central_integration": "REFERENCE_ONLY; pilot code not merged into central base"
+    }
+  ],
+  "identifier_policy": "RUN IDs unique across revisions. PILOT-001 is a new locator alias for its original identity, not a new execution. No historical attempt IDs minted."
+}

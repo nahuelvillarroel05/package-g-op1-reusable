@@ -1,38 +1,7 @@
-# Next step after RUN-002 engineering
+# Siguiente paso
 
-Review the experimental [RUN-002 public handoff](../../runs/run-002-engineering/SONNET_PUBLIC_HANDOFF.md)
-against the exact execution and repair commits, the bounded [Astra audit](../../runs/run-002-engineering/ASTRA_PUBLIC_AUDIT.md),
-and the published code/tests. Sonnet public-only review remains PENDING. Preserve
-the historical 264 PASS / 2 ERROR readback record and the separate two-case
-prospective repair. Test the disclosed bounded assertion grammar, excluded nested
-content, attribution and abstentions without inferring semantic accuracy from
-the 351-to-106 occurrence transition. Public commitments do not provide the
-private source bytes or executable plan for self-contained replay.
+Revisar el handoff y las auditorías de PGOP1_EXPERIMENTAL_RUN_ARCHITECTURE_001. Mantener experimental/pgop1-runs como centro de registros; candidato f424c86 permanece separado, no integrado. La publicación remota sigue pendiente: no hacer push ni modificar autenticación en esta intervención. No repetir credenciales inválidas.
 
-`GATE_11=BLOCKED`; independent semantic qualification NOT_ACHIEVED; F16 deferred
-pending the original exact Linux reproducer; I7 incomplete; Physical C2
-DEFERRED_NOT_WAIVED. Any further campaign, independent semantic qualification,
-main merge or src promotion requires its own authority and evidence.
+Para RUN-004, resolver los blockers de cada una de las seis familias, verificar población pública exhaustiva seleccionada sin cuota de 155, derechos, autenticidad, compatibilidad, exclusiones, comparabilidad, predicados, recuperación y auditorías. Completar el contrato DRAFT, crear aprobación/freeze por SHA-256 y obtener autorización de ejecución explícita antes de cualquier campaña. No declarar preparación completa con familias incompletas. No reutilizar piloto como RUN ni holdout independiente.
 
-The prior next-step text below is retained historical continuity.
-
-# Next step: independent audit of parser1.11.0
-
-Read AGENTS.md, CURRENT_STATE.md and ../audits/SECOND_SONNET_CONTRACTS.md.
-Preserve the original negative Astra round-007 report and exact prior commit.
-Re-audit all N-01..N-10, every material A-XXX and internal material S-003 on the new frozen candidate, using
-independent original hypotheses in addition to retests. Internal Sol checks and
-engineering tests do not substitute Astra. Do not edit a frozen candidate.
-Any material new defect requires prospective repair/tests/commit/re-audit.
-
-After actual independent acceptance prepare public third-Sonnet handoff, review
-all new commits for publicability, obtain exact documentation-delta acknowledgement,
-then normal-push only feat/pgop1-second-sonnet-remediation-001 and verify remote
-commit/tree/full blob map. No force-push, main, src or operational promotion.
-SONNET_THIRD_EXTERNAL_AUDIT=PENDING; F16=DEFERRED_LINUX_VALIDATION_PENDING;
-GATE_11=BLOCKED; RUN_002=NOT_READY; INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE.
-No RUN-002, mass campaign, private GOLD/holdout or models/training. CI NOT_RUN.
-Bounded English/Windows, unauthenticated source roles, no general precision/recall;
-deep coordination may fail closed with explicit processing/final verification error.
-Retain331-core evidence by exact unchanged-byte proof separately from fresh adapter
-tests. Reuse the integrity-verified usage collector without changing its cache.
+La integración prospectiva de código piloto requiere diff/commits seleccionados, validación y revisión propios. Ningún PASS documental cierra GATE_11/OD03/Source025/OD05 o autoriza promoción a main. I0-I6 congelados, I7 incompleto, Formal I7 no completado y Physical C2 DEFERRED_NOT_WAIVED.

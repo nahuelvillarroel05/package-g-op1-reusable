@@ -1,0 +1,157 @@
+{
+  "schema": "pgop1.run004.architecture-readiness.v1",
+  "status": "PREPARATION_INCOMPLETE",
+  "execution": "NOT_EXECUTED",
+  "scope": "Six existing family metadata records inspected, no source outputs opened, no acquisition or scoring. Prior source_available fields have differing scope and must not be summed.",
+  "families": [
+    {
+      "family": "SWE-bench",
+      "historical_family_key": "swebench",
+      "checks": {
+        "DATA_AVAILABLE": "PASS",
+        "AUTHENTIC_OUTPUTS_AVAILABLE": "PARTIAL",
+        "OFFICIAL_EVIDENCE_AVAILABLE": "UNKNOWN",
+        "ADAPTER_VALIDATED": "UNKNOWN",
+        "PILOT_VALIDATED": "PARTIAL",
+        "PREDICATES_DEFINED": "PASS",
+        "SELECTION_FROZEN": "BLOCKED",
+        "OVERLAP_RESOLVED": "BLOCKED",
+        "EXECUTION_METHOD_READY": "BLOCKED",
+        "RECOVERY_TESTED": "PARTIAL",
+        "AUDIT_APPROVED": "BLOCKED"
+      },
+      "readiness": "BLOCKED",
+      "inventoried_tasks_reported_in_prior_source": 264,
+      "authentic_output_case_count": "UNKNOWN_FULL_POPULATION; prior acquisition counts are bounded metadata, not complete verified eligibility",
+      "run004_cases_effectively_evaluated": 0,
+      "dataset_revision_reported": "UNKNOWN",
+      "limitations": "Known prior overlaps and unresolved RUN001/002/003 associations; no fresh selected binding."
+    },
+    {
+      "family": "SWE-bench Pro V2",
+      "historical_family_key": "swebench_pro_v2",
+      "checks": {
+        "DATA_AVAILABLE": "PASS",
+        "AUTHENTIC_OUTPUTS_AVAILABLE": "BLOCKED",
+        "OFFICIAL_EVIDENCE_AVAILABLE": "PARTIAL",
+        "ADAPTER_VALIDATED": "UNKNOWN",
+        "PILOT_VALIDATED": "BLOCKED",
+        "PREDICATES_DEFINED": "PASS",
+        "SELECTION_FROZEN": "BLOCKED",
+        "OVERLAP_RESOLVED": "UNKNOWN",
+        "EXECUTION_METHOD_READY": "BLOCKED",
+        "RECOVERY_TESTED": "PARTIAL",
+        "AUDIT_APPROVED": "BLOCKED"
+      },
+      "readiness": "BLOCKED",
+      "inventoried_tasks_reported_in_prior_source": 642,
+      "authentic_output_case_count": "UNKNOWN_FULL_POPULATION; prior acquisition counts are bounded metadata, not complete verified eligibility",
+      "run004_cases_effectively_evaluated": 0,
+      "dataset_revision_reported": "repo 66f92766bba642462d4bbe5479e83f91f9211862; dataset 2d52cb3df914a3fcf80c7f66738b3a88ae37fc50",
+      "limitations": "Only task/verifier assets locally; output and per-task evaluator evidence not acquired or bound."
+    },
+    {
+      "family": "Terminal-Bench 2.0",
+      "historical_family_key": "terminal_bench_2",
+      "checks": {
+        "DATA_AVAILABLE": "PASS",
+        "AUTHENTIC_OUTPUTS_AVAILABLE": "PARTIAL",
+        "OFFICIAL_EVIDENCE_AVAILABLE": "PARTIAL",
+        "ADAPTER_VALIDATED": "PARTIAL",
+        "PILOT_VALIDATED": "BLOCKED",
+        "PREDICATES_DEFINED": "PASS",
+        "SELECTION_FROZEN": "BLOCKED",
+        "OVERLAP_RESOLVED": "UNKNOWN",
+        "EXECUTION_METHOD_READY": "BLOCKED",
+        "RECOVERY_TESTED": "PARTIAL",
+        "AUDIT_APPROVED": "BLOCKED"
+      },
+      "readiness": "BLOCKED",
+      "inventoried_tasks_reported_in_prior_source": 89,
+      "authentic_output_case_count": "UNKNOWN_FULL_POPULATION; prior acquisition counts are bounded metadata, not complete verified eligibility",
+      "run004_cases_effectively_evaluated": 0,
+      "dataset_revision_reported": "572b2614be2c0cb2527e14f5b1e4026f1072e6c1; last_modified=2026-05-15T21:18:55Z",
+      "limitations": "10 target result/trajectory pairs are acquired at the pinned 2.0 revision. A previously assigned pilot case circuit-fibsqrt overlapped the target candidate list; that assignment is retained but superseded. A distinct next lexical task, cobol-modernization, now has a pilot-only result/trajectory/config bundle. Local task revision equivalence, evaluator/run provenance, rights, recovery and audit remain unresolved; no pilot ran."
+    },
+    {
+      "family": "MCPMark Verified",
+      "historical_family_key": "mcpmark_verified",
+      "checks": {
+        "DATA_AVAILABLE": "PASS",
+        "AUTHENTIC_OUTPUTS_AVAILABLE": "PARTIAL",
+        "OFFICIAL_EVIDENCE_AVAILABLE": "PARTIAL",
+        "ADAPTER_VALIDATED": "PARTIAL",
+        "PILOT_VALIDATED": "BLOCKED",
+        "PREDICATES_DEFINED": "PASS",
+        "SELECTION_FROZEN": "BLOCKED",
+        "OVERLAP_RESOLVED": "UNKNOWN",
+        "EXECUTION_METHOD_READY": "BLOCKED",
+        "RECOVERY_TESTED": "PARTIAL",
+        "AUDIT_APPROVED": "BLOCKED"
+      },
+      "readiness": "BLOCKED",
+      "inventoried_tasks_reported_in_prior_source": 127,
+      "authentic_output_case_count": "UNKNOWN_FULL_POPULATION; prior acquisition counts are bounded metadata, not complete verified eligibility",
+      "run004_cases_effectively_evaluated": 0,
+      "dataset_revision_reported": "task source cd45b7f57923b9b3985467f5139927575f83141c; result repository commit b8a62a98cc3b596c9d2e8a7879478df37a582c46",
+      "limitations": "Attempt 001 extracted bytes were newline-transformed: 32/32 files failed Git blob object SHA-1 checks. The original files and receipt are retained. Attempt 002 re-extracted raw Git objects into a fresh namespace; 32/32 output files and exact task_meta blob now match pinned object IDs. Run identity/config and generation attestation are not independently established; task/evaluator compatibility, rights, recovery, audit pending."
+    },
+    {
+      "family": "BFCL V4",
+      "historical_family_key": "bfcl_v4",
+      "checks": {
+        "DATA_AVAILABLE": "PASS",
+        "AUTHENTIC_OUTPUTS_AVAILABLE": "PARTIAL",
+        "OFFICIAL_EVIDENCE_AVAILABLE": "UNKNOWN",
+        "ADAPTER_VALIDATED": "UNKNOWN",
+        "PILOT_VALIDATED": "PARTIAL",
+        "PREDICATES_DEFINED": "PASS",
+        "SELECTION_FROZEN": "PARTIAL",
+        "OVERLAP_RESOLVED": "PARTIAL",
+        "EXECUTION_METHOD_READY": "BLOCKED",
+        "RECOVERY_TESTED": "PARTIAL",
+        "AUDIT_APPROVED": "BLOCKED"
+      },
+      "readiness": "BLOCKED",
+      "inventoried_tasks_reported_in_prior_source": 20,
+      "authentic_output_case_count": "UNKNOWN_FULL_POPULATION; prior acquisition counts are bounded metadata, not complete verified eligibility",
+      "run004_cases_effectively_evaluated": 0,
+      "dataset_revision_reported": "official source revision UNKNOWN; local original hashes in RUN004 selection and source manifest",
+      "limitations": "Only existing 20-case development selection preserved; generation revision/custody UNKNOWN; no added 30-case acquisition; official CLI regrade blocked."
+    },
+    {
+      "family": "τ²-bench 2.0",
+      "historical_family_key": "tau2_2_text_v1",
+      "checks": {
+        "DATA_AVAILABLE": "PASS",
+        "AUTHENTIC_OUTPUTS_AVAILABLE": "BLOCKED",
+        "OFFICIAL_EVIDENCE_AVAILABLE": "PARTIAL",
+        "ADAPTER_VALIDATED": "UNKNOWN",
+        "PILOT_VALIDATED": "BLOCKED",
+        "PREDICATES_DEFINED": "PASS",
+        "SELECTION_FROZEN": "BLOCKED",
+        "OVERLAP_RESOLVED": "UNKNOWN",
+        "EXECUTION_METHOD_READY": "BLOCKED",
+        "RECOVERY_TESTED": "PARTIAL",
+        "AUDIT_APPROVED": "BLOCKED"
+      },
+      "readiness": "BLOCKED",
+      "inventoried_tasks_reported_in_prior_source": 55,
+      "authentic_output_case_count": "UNKNOWN_FULL_POPULATION; prior acquisition counts are bounded metadata, not complete verified eligibility",
+      "run004_cases_effectively_evaluated": 0,
+      "dataset_revision_reported": "local source commit/hash available in DOWNLOAD_MANIFEST",
+      "limitations": "Only task/reference source; observed public results are v1.0.1, not 2.0; no exact 2.0 trajectory artifact acquired."
+    }
+  ],
+  "source_commitments": [
+    {
+      "sha256": "c6ef9875fc6e27810b3784805aa02e6b61b2bf5781987b927d88b20f35444d6e",
+      "artifact": "RUN004_FULL_READINESS_MATRIX.json"
+    },
+    {
+      "sha256": "df92cd6e5f076f4665961f729c6d937badee21d28413cc1be449dd144c8d4f2d",
+      "artifact": "SOURCES_AND_COUNTS.json"
+    }
+  ],
+  "corpus_policy": "Exhaustive integration of selected public corpus subject to verified rights, compatibility and explicit exclusions. Historical 155 slots are not a cap. UNKNOWN full-population counts remain UNKNOWN."
+}
