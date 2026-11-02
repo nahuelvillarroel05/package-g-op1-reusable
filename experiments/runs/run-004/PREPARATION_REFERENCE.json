@@ -38,5 +38,7 @@
   "status": "RESERVED_PREPARATION_BLOCKED_NOT_EXECUTED",
   "campaign_execution": "NOT_EXECUTED",
   "contract_status": "DRAFT_NOT_APPROVED",
-  "population_quota": null
+  "population_quota": null,
+  "identity_role": "RESERVED_SERIES_AND_PREPARATION_LOCATOR_NOT_PHYSICAL_EXECUTION",
+  "execution_campaign_id": "NOT_ASSIGNED_REQUIRES_FRESH_ID_AT_AUTHORIZATION"
 }
