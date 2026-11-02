@@ -93,10 +93,10 @@
     },
     {
       "path": "runs/run-003-engineering-public/RUN003_ENGINEERING_SUMMARY.md",
-      "source_bytes": 1514,
-      "source_sha256": "00435907f4fb9818e0b46d36b62c210b4698951dbe7d8343cae0bd05fde94876",
-      "release_sha256": "00435907f4fb9818e0b46d36b62c210b4698951dbe7d8343cae0bd05fde94876",
-      "release_bytes": 1514
+      "source_bytes": 1525,
+      "source_sha256": "1a59755c07af2ba65c8a015475f3482f92b18c4520cc86af07a392347e2d23aa",
+      "release_sha256": "1a59755c07af2ba65c8a015475f3482f92b18c4520cc86af07a392347e2d23aa",
+      "release_bytes": 1525
     }
   ],
   "excluded_source_roots": [
