@@ -1,6 +1,23 @@
 {
   "schema": "pgop1.defect-and-fix-registry.v1",
-  "records": [],
+  "records": [
+    {
+      "DEFECT_ID": "ARCH-DEFECT-001",
+      "DISCOVERED_IN_RUN": "NOT_IN_BENCHMARK_RUN; governance architecture review",
+      "DISCOVERED_IN_ATTEMPT": "Review of d1a78257bf7b8900b88fd12a7ba8c46f43be4e6d",
+      "REPRODUCER": "At d1a7825, PILOT-001 execution_code_commit==f424c86; original CODE_REFERENCE disclaims full checkout execution and gives separate SWE/BFCL contexts",
+      "ROOT_CAUSE": "Generic historical index generator mapped validated pilot candidate to execution identity fields",
+      "AFFECTED_COMPONENT": "experiments/RUN_REGISTRY.json; pilot HISTORICAL_REFERENCE.json and README.md",
+      "FIX_COMMIT": "f356c4a1ef777feeef3e2d45bc024279c8e38c51",
+      "REGRESSION_RESULTS": {
+        "old_mislabel_reproduced_by_git_blob": true,
+        "corrected_candidate_and_execution_fields_separated": true,
+        "historical_CODE_REFERENCE_preserved": true
+      },
+      "AUDIT_STATUS": "PENDING_EXACT_COMMIT_REVIEW; final local addenda bind actual outcome",
+      "PROMOTION_STATUS": "NOT_PROPOSED"
+    }
+  ],
   "required_fields": [
     "DEFECT_ID",
     "DISCOVERED_IN_RUN",
@@ -25,7 +42,7 @@
     "AUDIT_STATUS": "UNKNOWN",
     "PROMOTION_STATUS": "UNKNOWN"
   },
-  "policy": "Historical issues are referenced in original reports, not retroactively declared fixed here. No technical defect adjudication in this documentation intervention. New defect records are append-only by revision; registry updates preserve prior commits. Successful later attempt alone never closes a defect.",
+  "policy": "Prospective documentation defect ARCH-DEFECT-001 recorded with original reproducer and fix identity. No historical campaign defect is reclassified. Each record is a cutoff snapshot; exact final technical review resides in its immutable local audit addenda; no promotion authority.",
   "workflow": [
     "DISCOVERED",
     "REPRODUCED",
