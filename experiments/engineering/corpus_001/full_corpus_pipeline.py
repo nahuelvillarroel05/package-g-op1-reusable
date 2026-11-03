@@ -120,9 +120,14 @@ def recover_attempt(out):
     assert result['record_count']>0 and result['shards'],'nonempty completed population required'
     assert sum(s['record_count'] for s in result['shards'])==result['record_count'],'truncated shard population'
     assert len({s['store'] for s in result['shards']})==len(result['shards']),'duplicate shards'
-    allowed={}
+    allowed={};expected_tasks={}
     if start['PLAN_TYPE']=='TASK_DEFINITIONS':
         for group in plan['groups']:
+            assert len(group['task_ids'])==group['expected_task_count'],'planned IDs/count differ'
+            for tid in group['task_ids']:
+                key=':'.join((group['benchmark_id'],group['version'],group.get('split',''),tid))
+                assert key not in expected_tasks,'duplicate planned task identity'
+                expected_tasks[key]=(group['input_path'],group['source_commitments'][group['input_path']],group['revision'])
             for path,digest in group['source_commitments'].items():
                 if path in allowed:assert allowed[path]==digest,'conflicting planned source'
                 allowed[path]=digest
@@ -131,7 +136,7 @@ def recover_attempt(out):
         if result['status']=='PASS':assert result['record_count']==expected,'population differs from plan'
     else:
         allowed={s['path']:s['sha256'] for s in plan['sources']}
-    all_observations=set();recovered_sources=set()
+    all_observations=set();recovered_sources=set();recovered_tasks=set()
     for shard in result['shards']:
         engine=Engine(shard['store']);verification=engine.verify()
         assert engine._manifest==shard['manifest'],'recorded Engine head differs'
@@ -143,11 +148,22 @@ def recover_attempt(out):
             assert sha(engine.read_source(source['source_id']))==source['sha256']
             recovered_sources.add(source['path'])
         receipts=shard['records'];assert len(index['records'])==len(receipts)
+        if start['PLAN_TYPE']=='ARCHIVED_FILES':
+            from archive_catalog import iter_rows
+            for source in shard['source_objects']:
+                original=iter_rows(engine.read_source(source['source_id']))
+                expected_rows=[(pos,sha(canonical_json(value))) for pos,value in original]
+                actual_rows=[(row['source_row_index'],row['row_canonical_sha256']) for row in index['records'] if row['source_path']==source['path']]
+                assert actual_rows==expected_rows,'archive row population/content differs from original source'
         for row,receipt in zip(index['records'],receipts):
             assert row['source_path'] in {s['path'] for s in shard['source_objects']},'unadmitted row source'
             assert allowed[row['source_path']]==row['source_sha256'],'row source hash differs from plan'
             assert receipt['observation_id'] not in all_observations,'duplicate observation receipt'
             all_observations.add(receipt['observation_id'])
+            if start['PLAN_TYPE']=='TASK_DEFINITIONS':
+                assert row['task_key'] not in recovered_tasks,'duplicate recovered task'
+                recovered_tasks.add(row['task_key'])
+                assert expected_tasks.get(row['task_key'])==(row['source_path'],row['source_sha256'],row['source_revision']),'task identity differs from plan'
             assert sha(canonical_json(row))==receipt['row_sha256']
             nodes=engine.query(identifier=receipt['observation_id'])
             nodes=[n for n in nodes if n['id']==receipt['observation_id']]
@@ -158,9 +174,15 @@ def recover_attempt(out):
         assert len(engine.query(limit=2*len(receipts)+1))==2*len(receipts)
         checked.append({'store':shard['store'],'records':len(receipts),'source_objects':len(shard['source_objects']),'verification':verification,'index_rebuild':'PASS','associations':'PASS'})
     if start['PLAN_TYPE']=='ARCHIVED_FILES' and result['status']=='PASS':assert recovered_sources==set(allowed),'truncated archived source population'
+    if start['PLAN_TYPE']=='TASK_DEFINITIONS':
+        ledger=[strict_json_loads(line) for line in (out/'TASK_RESULTS.jsonl').read_bytes().splitlines() if line]
+        assert len(ledger)==result['record_count'] and {r['task_key'] for r in ledger}==recovered_tasks,'task ledger population differs'
+        if result['status']=='PASS':assert recovered_tasks==set(expected_tasks),'planned task population missing'
     report={'status':'PASS','record_count':sum(r['records'] for r in checked),'shards':checked,'process_id':os.getpid(),
         'producer_process_id':result['attempt']['process_id'],'different_process':os.getpid()!=result['attempt']['process_id'],
         'redispatches':0,'sources_reacquired':0,'integrity':'PASS','recovery':'PASS'}
+    report['original_processing_status']=result['status']
+    report['recovery_scope']='COMPLETE_PLANNED_POPULATION' if result['status']=='PASS' else 'VALID_RECORDS_ONLY_ORIGINAL_PROCESSING_PARTIAL'
     write(out/'FRESH_PROCESS_RECOVERY.json',report);print(json.dumps({'status':report['status'],'recovered':report['record_count']}));return report
 
 def main():
