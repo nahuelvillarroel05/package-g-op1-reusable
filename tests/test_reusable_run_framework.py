@@ -197,5 +197,3 @@ def test_strict_config_duplicate_keys_rejected(tmp_path):
     path.write_bytes(b'{"schema":"x","schema":"y"}')
     with pytest.raises(FrameworkError):
         load_config(path, [tmp_path], tmp_path / "out", [tmp_path], [tmp_path])
-
-
