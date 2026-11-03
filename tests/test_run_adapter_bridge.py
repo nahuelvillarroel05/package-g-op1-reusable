@@ -204,3 +204,6 @@ def test_six_authored_family_fixtures_parse_and_persist_without_evaluation(tmp_p
         assert result["processing_status"] == "SOURCE_BOUND_TASK_DEFINITION_STORED_AND_READ_BACK"
         assert result["evaluator_status"] == "NOT_RUN"
         assert result["semantic_status"] == "UNKNOWN"
+        if family in {"swebench", "swebench_pro_v2"}:
+            assert result["task_capabilities"] == "UNKNOWN"
+            assert result["task_capabilities_status"] == "UNKNOWN"

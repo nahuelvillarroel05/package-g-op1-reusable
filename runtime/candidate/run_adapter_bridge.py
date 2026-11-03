@@ -106,12 +106,15 @@ def process_authored_unit(
     recovered = recover(engine, receipt)
     if recovered != envelope:
         raise EvidenceError("Context Engine same-process readback differs")
+    capabilities = task.get("capabilities", UNKNOWN)
+    declared_capabilities = isinstance(capabilities, list)
     return {
         "family": family,
         "task_id": task_id,
         "source_sha256": source_sha256,
         "capability_ids": list(FAMILY_ADAPTERS[family].capability_ids),
-        "task_capabilities": list(task.get("capabilities", [])),
+        "task_capabilities": list(capabilities) if declared_capabilities else UNKNOWN,
+        "task_capabilities_status": "DECLARED_METADATA" if declared_capabilities else UNKNOWN,
         "operation_capabilities": dict(CAPABILITY_OPERATIONS),
         "receipt": receipt,
         "processing_status": "SOURCE_BOUND_TASK_DEFINITION_STORED_AND_READ_BACK",
