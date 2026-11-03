@@ -3,16 +3,16 @@ import argparse,collections,datetime,hashlib,json,os
 from pathlib import Path
 import sys
 import full_corpus_pipeline
-from full_corpus_pipeline import admit_batch,canonical_json,git,load,sha,write
+from full_corpus_pipeline import admit_batch,canonical_json,git,load,sha,write,strict_json_loads,checked_source
 
 def iter_rows(raw):
     try:
-        value=json.loads(raw)
+        value=strict_json_loads(raw)
         if isinstance(value,list):return list(enumerate(value))
         if isinstance(value,dict):return [(None,value)]
         raise ValueError('unsupported JSON root')
     except json.JSONDecodeError:
-        return [(i,json.loads(line)) for i,line in enumerate(raw.splitlines()) if line.strip()]
+        return [(i,strict_json_loads(line)) for i,line in enumerate(raw.splitlines()) if line.strip()]
 
 def calling(manifest,inventory):
     taskmap={x['TASK_ID']:x for x in load(inventory)}
@@ -27,9 +27,11 @@ def run_calling(manifest,inventory,out,roots):
     out=Path(out);out.mkdir(parents=True,exist_ok=False)
     if git('status','--porcelain'):raise ValueError('clean committed execution code required')
     planned=list(calling(manifest,inventory))
+    task_sources={r['SOURCE_PATH']:r['SOURCE_SHA256'] for r in load(inventory)}
+    auxiliary=[{'path':p,'sha256':d,'role':'AUDIT_TASK_DEFINITION'} for p,d in task_sources.items()]
     configuration={'source_files_per_shard':20,'auditor':'RESTRICTED_V1_SIMPLE_PYTHON_EXPLICIT_ENVELOPE_ONLY','reserved_bfcl':'NO_SCORING'}
     plan={'schema':'pgop1.archived-files-plan.v1','configuration':configuration,'sources':[{k:s[k] for k in ['path','sha256','role','family','version','revision','model_id','category']} for s in planned],
-          'source_manifest_sha256':sha(Path(manifest).read_bytes()),'task_inventory_sha256':sha(Path(inventory).read_bytes())}
+          'source_manifest_sha256':sha(Path(manifest).read_bytes()),'task_inventory_sha256':sha(Path(inventory).read_bytes()),'auxiliary_sources':auxiliary}
     write(out/'PLAN.json',plan)
     start={'ATTEMPT_ID':out.name,'CODE_COMMIT':git('rev-parse','HEAD'),'CODE_TREE':git('rev-parse','HEAD^{tree}'),
         'INPUT_MANIFEST_SHA256':sha((out/'PLAN.json').read_bytes()),'CONFIGURATION_SHA256':sha(canonical_json(configuration)),
@@ -39,20 +41,20 @@ def run_calling(manifest,inventory,out,roots):
     counts=collections.Counter();audits=collections.Counter();errors=[];shards=[];batch=[];sources=[];source_count=0
     from runtime.candidate.bfcl_structured_audit import audit
     taskrows={}
-    for s in set(x['SOURCE_PATH'] for x in load(inventory)):
-        raw=Path(s).read_bytes()
+    for s,digest in task_sources.items():
+        _,raw=checked_source(s,roots,digest)
         for _,r in iter_rows(raw):taskrows[r['id']]=r
     def flush():
         nonlocal batch,sources
         if not batch:return
-        receipt=admit_batch(out/'context'/f'shard-{len(shards):06d}',batch,sources,roots);shards.append(receipt)
+        receipt=admit_batch(out/'context'/f'shard-{len(shards):06d}',batch,sources+auxiliary,roots);shards.append(receipt)
         batch=[];sources=[]
         print(json.dumps({'source_files':source_count,'records':sum(counts.values()),'shards':len(shards),'errors':len(errors)}),flush=True)
     with (out/'ARTIFACT_CATALOG.jsonl').open('x',encoding='utf-8') as log,(out/'STRUCTURAL_AUDIT_RESULTS.jsonl').open('x',encoding='utf-8') as auditlog:
         for s in planned:
             try:
                 raw=Path(s['path']).read_bytes();assert sha(raw)==s['sha256'],'source hash mismatch'
-                original_rows=iter_rows(raw);seen=set();file_records=[]
+                original_rows=iter_rows(raw);seen=set();file_records=[];file_audits=[];file_audit_counts=collections.Counter()
                 for pos,row in original_rows:
                     if not isinstance(row,dict):raise ValueError('non-object archive row')
                     tid=row.get('id');identity=tid if isinstance(tid,str) else 'UNKNOWN'
@@ -77,12 +79,16 @@ def run_calling(manifest,inventory,out,roots):
                         elif not isinstance(result,str) or '<tool_call>' not in result:status='ABSTAIN_UNSUPPORTED_RESPONSE_REPRESENTATION'
                         else:
                             decision=audit(taskrows[identity],row);status=decision['status']
-                            auditlog.write(json.dumps({'response_id':rid,'task_id':identity,'model_id':s['model_id'],'source_sha256':s['sha256'],
-                                'status':status,'predicates':decision['predicates'],'contract':decision['contract'],'semantic_verdict':'NOT_COMPARABLE'})+'\n')
-                        audits[status]+=1
+                        record['structural_status']=status
+                        file_audits.append({'response_id':rid,'task_id':identity,'model_id':s['model_id'],'source_sha256':s['sha256'],
+                                'status':status,'predicates':decision['predicates'] if status in ['STRUCTURAL_REJECT','STRUCTURAL_PASS','ABSTAIN_UNSUPPORTED_SCHEMA','ABSTAIN_INVALID_TASK'] else None,
+                                'contract':'pgop1.bfcl.structured-tool-call-audit.v1','semantic_verdict':'NOT_COMPARABLE'})
+                        file_audit_counts[status]+=1
                 for record in file_records:
                     batch.append(record);log.write(json.dumps(record)+'\n');counts[record['role']]+=1
-                sources.append({'path':s['path'],'sha256':s['sha256']});source_count+=1
+                for record in file_audits:auditlog.write(json.dumps(record)+'\n')
+                audits.update(file_audit_counts)
+                sources.append({'path':s['path'],'sha256':s['sha256'],'role':'ARCHIVE'});source_count+=1
                 if len(sources)>=20:flush();log.flush();auditlog.flush()
             except Exception as exc:
                 error={'source_path':s['path'],'source_sha256':s['sha256'],'error_type':type(exc).__name__,'error':str(exc),'status':'PROCESSING_FAILURE'}

@@ -33,7 +33,7 @@ def admit_batch(store,records,sources,roots):
         checked_source(source['path'],roots,source['sha256'])
         sid='corpus-source:'+source['sha256']
         admitted=engine.admit_source(source['path'],source['sha256'],'AUTHORIZED_METADATA',source_id=sid)
-        source_rows.append({'source_id':sid,'path':source['path'],'sha256':source['sha256'],'bytes':admitted['byte_length']})
+        source_rows.append({'source_id':sid,'path':source['path'],'sha256':source['sha256'],'bytes':admitted['byte_length'],'role':source.get('role','PRIMARY')})
     document={'schema':'pgop1.full-corpus-derived-index.v1','records':records,'sources':source_rows,
               'boundary':'ENGINEERING_METADATA_AND_SOURCE_BYTES; NOT_EXECUTION_ATTESTATION'}
     path=store/'engineering-inputs/index.json';write(path,document)
@@ -60,6 +60,8 @@ def admit_batch(store,records,sources,roots):
 def run_tasks(plan_path,out):
     plan=load(plan_path);out=Path(out);out.mkdir(exist_ok=False,parents=True)
     if git('status','--porcelain'):raise ValueError('clean committed execution code required')
+    for group in plan['groups']:
+        if len(group['task_ids'])!=group['expected_task_count'] or len(set(group['task_ids']))!=len(group['task_ids']):raise ValueError('explicit unique planned IDs required')
     with (out/'PLAN.json').open('xb') as f:f.write(Path(plan_path).read_bytes())
     start={'ATTEMPT_ID':out.name,'CODE_COMMIT':git('rev-parse','HEAD'),'CODE_TREE':git('rev-parse','HEAD^{tree}'),
            'INPUT_MANIFEST_SHA256':sha(Path(plan_path).read_bytes()),'CONFIGURATION_SHA256':sha(canonical_json(plan['configuration'])),
@@ -136,6 +138,7 @@ def recover_attempt(out):
         if result['status']=='PASS':assert result['record_count']==expected,'population differs from plan'
     else:
         allowed={s['path']:s['sha256'] for s in plan['sources']}
+        allowed.update({s['path']:s['sha256'] for s in plan.get('auxiliary_sources',[])})
     all_observations=set();recovered_sources=set();recovered_tasks=set()
     for shard in result['shards']:
         engine=Engine(shard['store']);verification=engine.verify()
@@ -151,6 +154,7 @@ def recover_attempt(out):
         if start['PLAN_TYPE']=='ARCHIVED_FILES':
             from archive_catalog import iter_rows
             for source in shard['source_objects']:
+                if source.get('role')=='AUDIT_TASK_DEFINITION':continue
                 original=iter_rows(engine.read_source(source['source_id']))
                 expected_rows=[(pos,sha(canonical_json(value))) for pos,value in original]
                 actual_rows=[(row['source_row_index'],row['row_canonical_sha256']) for row in index['records'] if row['source_path']==source['path']]
