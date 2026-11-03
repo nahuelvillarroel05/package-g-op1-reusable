@@ -1,0 +1,23 @@
+{
+  "snapshots": [
+    {
+      "original": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\bfcl\\attempt-002\\bfcl_full_scale_used.py",
+      "snapshot": "execution_sources/bfcl_attempt002.py",
+      "sha256": "8f7a9d2a0396f7e4e418d9d32b9b1e3660b524256df9efa1328f4f2d178fb6cb",
+      "identity_role": "ARCHIVED_AUTHORED_EXECUTION_SOURCE; earlier run retains original baseline/driver identity, never retroactively attributed to this commit"
+    },
+    {
+      "original": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\terminal_bench\\attempts\\TERMINAL-STATIC-20261103-002\\DRIVER_SNAPSHOT.py",
+      "snapshot": "execution_sources/terminal_attempt002.py",
+      "sha256": "e793f35abdf72cfc64c8fa0f67cdc3a97feafcc11bd3f51aa4fbd573bdc76af8",
+      "identity_role": "ARCHIVED_AUTHORED_EXECUTION_SOURCE; earlier run retains original baseline/driver identity, never retroactively attributed to this commit"
+    },
+    {
+      "original": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\mcpmark\\attempts\\MCP-STRUCT-20261103-003\\DRIVER_SNAPSHOT.py",
+      "snapshot": "execution_sources/mcp_attempt003.py",
+      "sha256": "1ddad9399bb86198640dbac0de8d15742993de11d6a4144ea06ca6a0d9589a7a",
+      "identity_role": "ARCHIVED_AUTHORED_EXECUTION_SOURCE; earlier run retains original baseline/driver identity, never retroactively attributed to this commit"
+    }
+  ],
+  "execution_warning": "Fixed terminal attempt paths; do not run snapshots in place or reuse attempt IDs. Source snapshots are retained for review/reproduction under a new separately frozen attempt."
+}
