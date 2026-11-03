@@ -222,7 +222,13 @@
       "final_freeze": "NOT_ISSUED",
       "evidence_qualification_status": "RUN004_FULL_PREPARATION_BLOCKED_WITH_EXACT_LIMITATIONS",
       "qualification_candidate_commit": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
-      "qualification_readiness_sha256": "d21ad25b81064e03843ddcb0f2916828501b55f38be76b574ca097cd502e83db"
+      "qualification_readiness_sha256": "d21ad25b81064e03843ddcb0f2916828501b55f38be76b574ca097cd502e83db",
+      "evidence_closure_readiness": {
+        "path": "Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/RUN004_EXECUTION_READINESS_BY_FAMILY.json",
+        "sha256": "bb4a2e96ed05907467dcd9a34920d26f6ac85e460ec025c553b9af8f4bb98dac",
+        "status": "SIX_FAMILY_PARTIAL_CAMPAIGN_BLOCKED",
+        "offline_and_full_official_separate": true
+      }
     }
   ],
   "pilots": [
@@ -294,6 +300,15 @@
       "run004_execution": "NOT_EXECUTED",
       "coverage_sha256": "aec183f1df2b457b4adf989619f94b138110207ed91a814a2d15a73be8a1c638",
       "readiness_sha256": "3ab0ff3a262225c7a1493b5ea57d61778d5b67a5c1303d5d1d84e6bc943d4c7a"
+    },
+    {
+      "ID": "PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001",
+      "candidate_commit": "7c0fe613892d1d27ed79ac77314b6a237afb3a76",
+      "candidate_tree": "312c2f0b0e591134fe709cd02d60544ae5483b5a",
+      "status": "PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "run004_execution": "NOT_EXECUTED",
+      "readiness_sha256": "bb4a2e96ed05907467dcd9a34920d26f6ac85e460ec025c553b9af8f4bb98dac",
+      "readiness_path": "Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/RUN004_EXECUTION_READINESS_BY_FAMILY.json"
     }
   ]
 }
