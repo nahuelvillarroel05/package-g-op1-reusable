@@ -1,0 +1,26 @@
+# pgop1.bfcl.structured-tool-call-audit.v2
+
+Prospective development-only contract. V1 is unchanged. This contract does not establish independent semantic truth, producer authentication, model attribution or source revision compatibility. Inert task definitions and the original response object are its only inputs. It never consumes a publisher score, a ground-truth answer, an oracle patch or reserved cases. Driver provenance must establish source/model/row hashes separately. Exact task ID equality is required; no aliases, suffix stripping or fuzzy matching.
+
+Categories: exact ASCII numeric IDs in `simple_python`, `live_simple`, `multiple`, `live_multiple`. These single-call categories require exactly one emitted call. Parallel/multi-turn/agentic, foreign-language type systems and format-sensitivity IDs remain unsupported; function count is not inferred from available function definitions for those categories. Simple categories require one function definition. Multiple categories may expose several candidate definitions; this contract checks membership, not whether the correct function was selected for the user request.
+
+Representations: one original `<tool_call>` envelope containing a JSON call object/list with exactly `name` and `arguments`; or native list of one-key function mappings whose values are argument objects or strict JSON strings. Empty native list is a syntactically valid list with invalid single-call count. Duplicate keys in envelope JSON or argument JSON are rejected, as are nonfinite numbers, unknown call-shape fields and non-object arguments. Python-call strings and other layouts abstain: no evaluation, AST conversion, coercion, truncation, prose extraction or silent repair. Duplicate keys lost before this dict-based API are not recoverable; acquisition must use a duplicate-rejecting JSON parser.
+
+Supported schema types are exact `integer`, `float`/`number`, `string`, `boolean`, `array` with a supported `items` schema, and `dict`/`object` with declared properties. Required keys must be unique declared property names. Objects are closed: unknown argument keys reject. Nested required/property rules and enums are checked recursively. Boolean never satisfies numeric types or enum equality to numbers, including nested values. Integer/float enum equality follows numeric equality. `description` and `default` are annotations only; no default is inserted. Every function schema, including optional fields and unchosen functions, must be supported before arguments may PASS. Unknown restrictions (`pattern`, bounds, unions, optional dialect flags, etc.), unknown types and malformed schemas abstain. A nesting budget of 32 applies. No locale-specific conversion or Java/JavaScript type aliases are assumed.
+
+Predicates and decisions:
+
+| Predicate | Acceptance | Rejection | Abstention / limit |
+|---|---|---|---|
+| FUNCTION_CALL_FORMAT_VALID | Strict original representation parses | Recognized representation malformed, duplicate JSON, nonfinite/non-JSON values | Unrecognized representation or category |
+| FUNCTION_NAME_VALID | Every emitted name is exactly a defined function | Any emitted name absent | No parsed calls / invalid task |
+| FUNCTION_ARGUMENTS_VALID | All declared schemas supported; all calls satisfy names, types, required fields, closed keys and enums | Supported-schema arguments violate any rule | Any unsupported schema anywhere; no parsed calls |
+| FUNCTION_COUNT_VALID | Exactly one parsed call in the four supported categories | Zero or more than one call | Other categories / no parsed calls |
+| CATEGORY_COMPATIBILITY | Exact supported numeric task category | Category outside scope (not a model failure) | Invalid task identity |
+| FUNCTION_SELECTION_MATCHES_REFERENCE | Not evaluated | Not evaluated | Always null: no answer reference input |
+| MULTI_TURN_CONSISTENCY | Not evaluated | Not evaluated | Always null: multi-turn outside scope |
+| OFFICIAL_EVALUATOR_ACCEPTANCE | Not evaluated | Not evaluated | Always null: official evaluator not executed |
+
+All four core predicates true => `STRUCTURAL_PASS`; any false => `STRUCTURAL_REJECT`; remaining unknown => `ABSTAIN_UNSUPPORTED_SCHEMA`. Earlier category/representation/identity/task failures retain their specific status. A structural PASS is never semantic SUPPORTED. An independently decisive structural violation can reject despite an unknown other predicate; no unsupported schema can become an implied PASS.
+
+Tests: `tests/test_bfcl_structured_audit_v2.py` covers native and JSON-string arguments, nested objects/arrays/enums, duplicate keys, nonfinite values, boolean/integer distinction, absent optional restrictions, unchosen unsupported schemas, function count/name, incompatible IDs/categories, official-score invariance and inert Python text. V1 adversarial tests remain in force. Authentic pilot outcomes are separate frozen receipts tied to exact task and response source hashes; no official acceptance or independent precision/recall is claimed.
