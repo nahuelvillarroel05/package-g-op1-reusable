@@ -306,6 +306,139 @@
       "FORMAL_QUALIFICATION": "NOT_ACHIEVED",
       "FIX_KIND": "CURRENT_REPORT_CORRECTION_NOT_RUNTIME_CODE",
       "METADATA_RELEASE_REFERENCE": "GIT_VERIFICATION.json"
+    },
+    {
+      "DEFECT_ID": "BFCL-DRIVER-DENOMINATOR-001",
+      "FAMILY": "bfcl",
+      "SOURCE_ID": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\bfcl\\BFCL_DEFECT_AND_FIX_REPORT.json",
+      "SOURCE_SHA256": "1aa92e63fafd123bc9a94daa685fa62159be03ebb98c42a0fce97bdce9796168",
+      "REPRODUCER": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\bfcl\\BFCL_DEFECT_AND_FIX_REPORT.json",
+        "sha256": "1aa92e63fafd123bc9a94daa685fa62159be03ebb98c42a0fce97bdce9796168",
+        "bytes": 3813
+      },
+      "ROOT_CAUSE": "Join branch discarded nonreserve response rows without an exact pinned task definition",
+      "AFFECTED_COMPONENT": "archived experimental processing driver",
+      "BEFORE_RESULT": "186381unbound rows omitted in stopped partial attempt001",
+      "FIX_COMMIT": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "AFTER_RESULT": "All774473nonreserve rows retained,379784explicit unbound abstentions",
+      "REGRESSION_STATUS": "Full denominator/source/row-identity validation PASS",
+      "AUDIT_STATUS": "Scoped Sol/Astra final reviews in root audit reports",
+      "LIMITATION": "Attempt001 executed driver bytes unavailable; old code reexecution NOT_POSSIBLE, preserved output/checkpoint evidence only"
+    },
+    {
+      "DEFECT_ID": "LOCAL-TERMINAL-DRIVER-001",
+      "FAMILY": "terminal_bench",
+      "SOURCE_ID": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\terminal_bench\\defects\\TERMINAL_DRIVER_DEFECT_REGISTER.json",
+      "SOURCE_SHA256": "32356a82c563532ffac7025229e56b307cbcfd8094dc9a502129990d2ab22f17",
+      "REPRODUCER": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\terminal_bench\\defects\\TERMINAL_DRIVER_DEFECT_REGISTER.json",
+        "sha256": "32356a82c563532ffac7025229e56b307cbcfd8094dc9a502129990d2ab22f17",
+        "bytes": 1082
+      },
+      "ROOT_CAUSE": "The initial trial grouper read uppercase TRIAL_ID while the pinned output catalog uses lowercase trial_id.",
+      "AFFECTED_COMPONENT": "external experimental source processor",
+      "BEFORE_RESULT": "attempt 001 emitted 0 trial identity rows from 445 complete published trials; artifact rows and hashes were retained.",
+      "FIX_COMMIT": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "AFTER_RESULT": "Corrected fresh attempt passed exact population and identity checks",
+      "REGRESSION_STATUS": "PASS; fixed source snapshot retained in candidate",
+      "AUDIT_STATUS": "Scoped Sol/Astra final reviews in root audit reports",
+      "LIMITATION": null
+    },
+    {
+      "DEFECT_ID": "LOCAL-MCP-DRIVER-001",
+      "FAMILY": "mcpmark",
+      "SOURCE_ID": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\mcpmark\\defects\\MCP_DRIVER_DEFECT_REGISTER.json",
+      "SOURCE_SHA256": "9241ff2aa070e140386b24f12b8b37681ae19e8ab79692102adb056e288910c9",
+      "REPRODUCER": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\mcpmark\\defects\\MCP_DRIVER_DEFECT_REGISTER.json",
+        "sha256": "9241ff2aa070e140386b24f12b8b37681ae19e8ab79692102adb056e288910c9",
+        "bytes": 1895
+      },
+      "ROOT_CAUSE": "Initial comparison used the full catalog task_id or task_leaf_id alone, while result JSON carries the exact category_id + '__' + task_leaf_id source-path label.",
+      "AFFECTED_COMPONENT": "external experimental source processor",
+      "BEFORE_RESULT": "attempts 001 and 002 classified result identities as mismatches; corrected exact composition matched all 762 results and all 127 result containers in attempt 003.",
+      "FIX_COMMIT": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "AFTER_RESULT": "Corrected fresh attempt passed exact population and identity checks",
+      "REGRESSION_STATUS": "PASS; fixed source snapshot retained in candidate",
+      "AUDIT_STATUS": "Scoped Sol/Astra final reviews in root audit reports",
+      "LIMITATION": null
+    },
+    {
+      "DEFECT_ID": "NIGHTLY-CONTEXT-OPTIMIZED-001",
+      "FAMILY": "cross_family",
+      "SOURCE_ID": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\fixes\\recovery-reproducer-0144e365\\FIX_REPRODUCTION_RESULTS.json",
+      "SOURCE_SHA256": "44c0d99b6ddb5a9725e0bfce5ad6ea272ad9f712d30f69fbe8f5956e6e0a69b3",
+      "REPRODUCER": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\fixes\\recovery-reproducer-0144e365\\FIX_REPRODUCTION_RESULTS.json",
+        "sha256": "44c0d99b6ddb5a9725e0bfce5ad6ea272ad9f712d30f69fbe8f5956e6e0a69b3",
+        "bytes": 3668
+      },
+      "ROOT_CAUSE": "Python optimization removed assert-based population/invariant checks",
+      "AFFECTED_COMPONENT": "new Context composition driver",
+      "BEFORE_RESULT": "Olddriver -O accepted1synthetic row against2expected",
+      "FIX_COMMIT": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "AFTER_RESULT": "Newdriver explicitly rejects optimized Python before work",
+      "REGRESSION_STATUS": "Before/after safe synthetic reproducer PASS",
+      "AUDIT_STATUS": "Scoped Sol/Astra final reviews in root audit reports",
+      "LIMITATION": null
+    },
+    {
+      "DEFECT_ID": "NIGHTLY-CONTEXT-CODE-IDENTITY-001",
+      "FAMILY": "cross_family",
+      "SOURCE_ID": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\fixes\\recovery-reproducer-0144e365\\FIX_REPRODUCTION_RESULTS.json",
+      "SOURCE_SHA256": "44c0d99b6ddb5a9725e0bfce5ad6ea272ad9f712d30f69fbe8f5956e6e0a69b3",
+      "REPRODUCER": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\fixes\\recovery-reproducer-0144e365\\FIX_REPRODUCTION_RESULTS.json",
+        "sha256": "44c0d99b6ddb5a9725e0bfce5ad6ea272ad9f712d30f69fbe8f5956e6e0a69b3",
+        "bytes": 3668
+      },
+      "ROOT_CAUSE": "Read-only recovery did not verify Engine and original ingestion driver commitments",
+      "AFFECTED_COMPONENT": "new Context composition driver",
+      "BEFORE_RESULT": "Olddriver accepted forgedSTART codehashes",
+      "FIX_COMMIT": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "AFTER_RESULT": "Newdriver rejects mismatch and binds distinct ingestion/recovery snapshot hashes",
+      "REGRESSION_STATUS": "Before/after safe synthetic reproducer PASS",
+      "AUDIT_STATUS": "Scoped Sol/Astra final reviews in root audit reports",
+      "LIMITATION": null
+    },
+    {
+      "DEFECT_ID": "NIGHTLY-CONTEXT-EXTERNAL-ANCHOR-001",
+      "FAMILY": "cross_family",
+      "SOURCE_ID": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\context_engine\\CONTEXT-20261103T044334Z-3371ea15\\ADVERSARIAL_CONTROLS.json",
+      "SOURCE_SHA256": "9b5c69f3327f0e76eb648282d0fd149eb95669e2abb3ffa90d79f87c74c79e41",
+      "REPRODUCER": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\context_engine\\CONTEXT-20261103T044334Z-3371ea15\\ADVERSARIAL_CONTROLS.json",
+        "sha256": "9b5c69f3327f0e76eb648282d0fd149eb95669e2abb3ffa90d79f87c74c79e41",
+        "bytes": 1214
+      },
+      "ROOT_CAUSE": "Original recovery control only tested missing internal receipts and did not verify the external frozen plan",
+      "AFFECTED_COMPONENT": "new Context composition driver",
+      "BEFORE_RESULT": "Missing independent plan comparison and expected_total check",
+      "FIX_COMMIT": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "AFTER_RESULT": "Externalplan SHA/bytes and count arithmetic checked; selfconsistent alteredplan rejected",
+      "REGRESSION_STATUS": "9controlsPASS, external source plans independently reviewed",
+      "AUDIT_STATUS": "Scoped Sol/Astra final reviews in root audit reports",
+      "LIMITATION": null
+    },
+    {
+      "DEFECT_ID": "NIGHTLY-CONTEXT-RECEIPT-IDENTITY-RACE-001",
+      "FAMILY": "cross_family",
+      "SOURCE_ID": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\fixes\\RECOVERY_IDENTITY_RACE_DISPOSITION.json",
+      "SOURCE_SHA256": "2731a67b424b4824034141bf07aa36e730c32854a8a3adb6e352987aa7d4a1ca",
+      "REPRODUCER": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001\\fixes\\RECOVERY_IDENTITY_RACE_DISPOSITION.json",
+        "sha256": "2731a67b424b4824034141bf07aa36e730c32854a8a3adb6e352987aa7d4a1ca",
+        "bytes": 1558
+      },
+      "ROOT_CAUSE": "Long-running recovery hashed mutable source-file bytes only at receipt emission",
+      "AFFECTED_COMPONENT": "new Context composition driver",
+      "BEFORE_RESULT": "Earlierreceipt claims laterdriver hash but has earlier schema; exact execution source was not captured",
+      "FIX_COMMIT": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "AFTER_RESULT": "Candidate captures loaded source/hash before work and preserves snapshot; full774473row finalrebuild snapshot/identity verified",
+      "REGRESSION_STATUS": "Final806shard recovery snapshot hashes verified",
+      "AUDIT_STATUS": "Scoped Sol/Astra final reviews in root audit reports",
+      "LIMITATION": "Oldreceipt preserved as identity-unqualified, never final qualification"
     }
   ],
   "required_fields": [

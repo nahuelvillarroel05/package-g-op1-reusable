@@ -1,0 +1,18 @@
+{
+  "target": "PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001",
+  "status": "PGOP1_SIX_FAMILY_FULL_SCALE_PARTIAL_WITH_EXACT_LIMITATIONS",
+  "code_commit": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+  "code_tree": "ee1be2b51111de17065303d97714f94c15cfc1ac",
+  "regressions_passed": 1087,
+  "preexisting_skips": 3,
+  "bfcl_nonreserve_rows": 774473,
+  "context_descriptor_observations": 796805,
+  "context_shards": 806,
+  "new_semantic_verdicts": 0,
+  "new_official_evaluator_executions": 0,
+  "experimental_driver_defects_or_gaps_fixed": 7,
+  "historical_reproduction_limits": "Root DEFECT_REGISTER and audit reports; not all olddriver bytes captured",
+  "RUN004_CONTRACT": "NOT_APPROVED",
+  "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+  "RUN004_EXECUTION": "NOT_EXECUTED"
+}

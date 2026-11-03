@@ -44,6 +44,22 @@
         "SOL_XHIGH_AUDIT.md": "bcdbed1afb93694b9423e026316bc1f45ce971f0ae82a3b940ab168457c2b639",
         "ASTRA_INDEPENDENT_AUDIT.md": "5b7ecd1eb150af71487cf47cec255cf3ac734ae6e55864215958bc60a8e318b1"
       }
+    },
+    {
+      "commit": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "tree": "ee1be2b51111de17065303d97714f94c15cfc1ac",
+      "branch": "experimental/pgop1-runs",
+      "role": "SIX_FAMILY_NIGHTLY_EXPERIMENTAL_COMPOSITION",
+      "engineering_validation": "1087PASS_3PREEXISTING_SKIPS;796805descriptors806shards;all6available-scopepopulations",
+      "runtime_auditor_behavior": "UNCHANGED",
+      "formal_qualification": "NOT_ACHIEVED",
+      "run004_execution": "NOT_EXECUTED",
+      "run004_contract": "NOT_APPROVED",
+      "run004_final_freeze": "NOT_ISSUED",
+      "technical_audit_commitments": {
+        "SOL_XHIGH_AUDIT.md": "760d65669ff1f95e4c239aabef5b8b3134e4dd68cc93226ff2c9e9f441f9a96a",
+        "ASTRA_INDEPENDENT_AUDIT.md": "d21ac3e05c37d14929c8d5e48af1fd59b025814b43fc1df56b379868c602c574"
+      }
     }
   ]
 }

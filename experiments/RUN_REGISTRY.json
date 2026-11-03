@@ -284,6 +284,16 @@
       "status": "PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_PARTIAL_WITH_EXACT_LIMITATIONS",
       "run004_execution": "NOT_EXECUTED",
       "coverage_sha256": "7c2492d1ddf3be4b4baee72128397798cd13f018dbb03db367db0352d8eb750a"
+    },
+    {
+      "ID": "PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001",
+      "target": "PGOP1_SIX_FAMILY_FULL_SCALE_NIGHTLY_CONVERGENCE_001",
+      "candidate_commit": "571663485cddf1eeecfe8f40c0f42d39af8f4bd7",
+      "candidate_tree": "ee1be2b51111de17065303d97714f94c15cfc1ac",
+      "status": "PGOP1_SIX_FAMILY_FULL_SCALE_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "run004_execution": "NOT_EXECUTED",
+      "coverage_sha256": "aec183f1df2b457b4adf989619f94b138110207ed91a814a2d15a73be8a1c638",
+      "readiness_sha256": "3ab0ff3a262225c7a1493b5ea57d61778d5b67a5c1303d5d1d84e6bc943d4c7a"
     }
   ]
 }
