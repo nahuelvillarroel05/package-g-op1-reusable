@@ -12,6 +12,7 @@ import stat
 
 UNKNOWN = "UNKNOWN"
 _TAU_DOMAINS = {"airline", "retail", "telecom"}
+_TAU_TEXT_LANGUAGES = {"en", "es", "hi", "ko", "pt", "zh"}
 
 
 class CallingFormatError(ValueError):
@@ -92,10 +93,12 @@ def _revision_for(path: Path, family: str) -> str:
     return UNKNOWN
 
 
-def _question_shape(question):
+def _question_shape(question, *, empty_turns=()):
     if not isinstance(question, list) or not question:
         raise CallingFormatError("question must contain at least one text turn")
     for turn_index, turn in enumerate(question):
+        if isinstance(turn, list) and not turn and turn_index in empty_turns and turn_index > 0:
+            continue
         if not isinstance(turn, list) or not turn:
             raise CallingFormatError(f"question turn {turn_index} must contain messages")
         for message_index, message in enumerate(turn):
@@ -108,6 +111,23 @@ def _question_shape(question):
             if not isinstance(content, str) or not content.strip():
                 raise CallingFormatError(f"question message {turn_index}/{message_index} has invalid text content")
     return len(question), True
+
+
+def _bfcl_missing_turns(row, category):
+    """Only the declared missing-function schema can explain empty later turns."""
+    question = row.get('question')
+    if category != 'multi_turn_miss_func' or not isinstance(question, list):
+        return []
+    empty = [index for index, turn in enumerate(question) if isinstance(turn, list) and not turn]
+    if not empty:
+        return []
+    missing = row.get('missed_function')
+    if (0 in empty or not isinstance(missing, dict) or set(missing) != {str(i) for i in empty}
+            or any(not isinstance(names, list) or not names
+                   or any(not isinstance(name, str) or not name.strip() for name in names)
+                   for names in missing.values())):
+        raise CallingFormatError('empty BFCL turns require exact nonempty missed_function declarations')
+    return empty
 
 
 def _bfcl_functions(value, task_id):
@@ -193,7 +213,8 @@ def parse_bfcl(path) -> list[dict]:
         seen.add(task_id)
         if "question" not in row:
             raise CallingFormatError(f"BFCL task lacks question: {task_id}")
-        turns, nested = _question_shape(row["question"])
+        missing_turns = _bfcl_missing_turns(row, category)
+        turns, nested = _question_shape(row["question"], empty_turns=missing_turns)
         function_schemas = _bfcl_functions(row.get("function"), task_id)
         capabilities = ["function_calling"]
         if turns > 1 or category.startswith("multi_turn"):
@@ -212,6 +233,8 @@ def parse_bfcl(path) -> list[dict]:
             "function_schema_count": len(function_schemas),
             "initial_state_present": "initial_config" in row,
         }
+        if missing_turns:
+            metadata['missing_function_turn_indices'] = missing_turns
         output.append({
             "task_id": task_id,
             "source_family_id": family,
@@ -228,12 +251,31 @@ def parse_bfcl(path) -> list[dict]:
 
 
 def parse_tau(path) -> list[dict]:
-    """Parse tau-bench 2.0 English task definitions for the three text domains."""
+    """Parse canonical tasks or strict text-v1 multilingual source layouts.
+
+    Localized IDs are language-qualified; source task IDs remain exact and no
+    guessed canonical alias is derived from their spelling. Bundled databases,
+    policies and reference actions remain inert source evidence.
+    """
     source = _safe_source(path)
-    if source.name != "tasks.json" or source.parent.name not in _TAU_DOMAINS:
-        raise CallingFormatError("tau source must be a supported domain tasks.json")
-    domain = source.parent.name
+    language = None
+    bundle = False
+    if source.name == "tasks.json" and source.parent.name in _TAU_DOMAINS:
+        domain = source.parent.name
+    else:
+        bundle = source.parent.name == "regional"
+        language_dir = source.parent.parent if bundle else source.parent
+        language = language_dir.name
+        domain = source.stem if bundle else source.name.removesuffix(f"_tasks_{language}.json")
+        if (language_dir.parent.name != 'multilingual' or language not in _TAU_TEXT_LANGUAGES
+                or domain not in _TAU_DOMAINS
+                or source.name != (domain + '.json' if bundle else f'{domain}_tasks_{language}.json')):
+            raise CallingFormatError("tau source must be a supported domain tasks.json or multilingual text-v1 source")
     data, source_format = _decode_json(source)
+    if bundle:
+        if not isinstance(data, dict) or data.get('domain') != domain:
+            raise CallingFormatError('tau regional bundle domain differs from source layout')
+        data = data.get('tasks')
     if source_format != "json" or not isinstance(data, list) or not data:
         raise CallingFormatError("tau domain tasks must be a non-empty JSON array")
 
@@ -250,7 +292,7 @@ def parse_tau(path) -> list[dict]:
         raw_id = str(raw_id)
         if not raw_id.strip():
             raise CallingFormatError(f"empty tau task id at index {index}")
-        task_id = f"tau2:{domain}:{raw_id}"
+        task_id = f"tau2:{domain}:{raw_id}" if language is None else f"tau2:{language}:{domain}:{raw_id}"
         if task_id in seen:
             raise CallingFormatError(f"duplicate tau task id: {task_id}")
         seen.add(task_id)
@@ -277,7 +319,7 @@ def parse_tau(path) -> list[dict]:
             capabilities.append("natural_language_assertions")
         metadata = {
             "source_format": source_format,
-            "source_pointer": f"/{index}",
+            "source_pointer": f"/tasks/{index}" if bundle else f"/{index}",
             "source_line_number": UNKNOWN,
             "domain": domain,
             "reference_action_count": len(actions),
@@ -285,6 +327,10 @@ def parse_tau(path) -> list[dict]:
             "nl_assertion_count": len(assertions),
             "initial_state_present": row.get("initial_state") is not None,
         }
+        if language is not None:
+            metadata.update({'language': language, 'source_task_id': raw_id,
+                             'source_layout': 'regional_bundle' if bundle else 'localized_task_array',
+                             'canonical_task_alias': UNKNOWN})
         output.append({
             "task_id": task_id,
             "source_family_id": family,
@@ -295,6 +341,6 @@ def parse_tau(path) -> list[dict]:
             "evaluator_type": "tau2_declared_reward_basis_not_executed",
             "source_path": str(source),
             "source_revision": revision,
-            "source_pointer": f"/{index}",
+            "source_pointer": f"/tasks/{index}" if bundle else f"/{index}",
         })
     return output

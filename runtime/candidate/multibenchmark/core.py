@@ -92,7 +92,89 @@ def parser_for(benchmark_id):
     return getattr(import_module('.' + module, __package__), function)
 
 
-def normalize(task, *, benchmark_id, version, revision, source_sha256, allowed_roots, source_commitments=None):
+class VerifiedSourceSession:
+    """One hash-bound parse snapshot for a bounded admission batch.
+
+    Both entry and successful exit recheck every committed source byte. Tasks
+    admitted within the context derive from the immutable entry snapshot, even
+    if mutable source files subsequently change. A failed exit preserves any
+    already-written Engine evidence and must not be reported as a valid batch.
+    No session may be reopened or used after exit.
+    """
+
+    def __init__(self, source_path, *, benchmark_id, version, revision,
+                 source_sha256, allowed_roots, source_commitments):
+        self._source_path = str(Path(source_path).absolute())
+        self._binding = (benchmark_id, version, revision, source_sha256,
+                         tuple(str(Path(root).absolute()) for root in allowed_roots))
+        self._roots = tuple(allowed_roots)
+        self._commitments = deepcopy(source_commitments)
+        self._snapshots = {}
+        self._tasks = {}
+        self._entered = False
+        self._active = False
+        self.verified_on_exit = False
+
+    def __enter__(self):
+        if self._entered:
+            raise EvidenceError('source session cannot be reopened')
+        self._entered = True
+        if self._commitments.get(self._source_path) != self._binding[3]:
+            raise EvidenceError('session primary source not committed')
+        for path, digest in self._commitments.items():
+            resolved, raw = checked_source(path, self._roots, digest)
+            if str(resolved) != path:
+                raise EvidenceError('session commitments require absolute canonical paths')
+            self._snapshots[path] = (resolved, raw)
+        parsed = parser_for(self._binding[0])(self._source_path)
+        for task in parsed:
+            key = task['task_id']
+            if key in self._tasks:
+                raise EvidenceError('duplicate parser identity')
+            self._tasks[key] = canonical_json(task)
+        self.verify()
+        self._active = True
+        return self
+
+    @property
+    def tasks(self):
+        if not self._active:
+            raise EvidenceError('source session is not active')
+        return [strict_json_loads(raw) for raw in self._tasks.values()]
+
+    def verify(self):
+        for path, (resolved, raw) in self._snapshots.items():
+            current_path, current = checked_source(path, self._roots, self._commitments[path])
+            if current_path != resolved or current != raw:
+                raise EvidenceError('source session changed')
+
+    def __exit__(self, exc_type, exc, traceback):
+        try:
+            if exc_type is None:
+                self.verify()
+                self.verified_on_exit = True
+        finally:
+            self._active = False
+            self._snapshots.clear()
+            self._tasks.clear()
+        return False
+
+    def _bind(self, benchmark_id, version, revision, source_sha256, allowed_roots, source_commitments):
+        actual = (benchmark_id, version, revision, source_sha256,
+                  tuple(str(Path(root).absolute()) for root in allowed_roots))
+        if (not self._active or actual != self._binding
+                or source_commitments != self._commitments):
+            raise EvidenceError('source session admission binding differs')
+
+    def _source(self, path, digest):
+        key = str(Path(path).absolute())
+        if not self._active or self._commitments.get(key) != digest or key not in self._snapshots:
+            raise EvidenceError('source not bound to active session')
+        return self._snapshots[key]
+
+
+def normalize(task, *, benchmark_id, version, revision, source_sha256, allowed_roots,
+              source_commitments=None, source_session=None):
     if benchmark_id not in FAMILIES:
         raise EvidenceError('unsupported benchmark family')
     if not isinstance(version, str) or not version or not isinstance(revision, str) or not revision:
@@ -110,11 +192,21 @@ def normalize(task, *, benchmark_id, version, revision, source_sha256, allowed_r
         raise EvidenceError('mixed benchmark')
     if task.get('source_revision', revision) not in {revision, UNKNOWN}:
         raise EvidenceError('incompatible revision')
-    path, raw = checked_source(task['source_path'], allowed_roots, source_sha256)
-    matches = [item for item in parser_for(benchmark_id)(path) if item.get('task_id') == task_id]
+    if source_session is None:
+        path, raw = checked_source(task['source_path'], allowed_roots, source_sha256)
+        matches = [item for item in parser_for(benchmark_id)(path) if item.get('task_id') == task_id]
+    else:
+        if type(source_session) is not VerifiedSourceSession:
+            raise EvidenceError('unsupported source session')
+        source_session._bind(benchmark_id, version, revision, source_sha256, allowed_roots, source_commitments)
+        path, raw = source_session._source(task['source_path'], source_sha256)
+        if str(path) != source_session._source_path:
+            raise EvidenceError('session primary source differs')
+        entry = source_session._tasks.get(task_id)
+        matches = [] if entry is None else [strict_json_loads(entry)]
     if len(matches) != 1 or matches[0] != task:
         raise EvidenceError('task differs from parsed source')
-    if path.read_bytes() != raw:
+    if source_session is None and path.read_bytes() != raw:
         raise EvidenceError('source changed while parsing')
     if benchmark_id == 'mcpmark_verified' and (task.get('metadata', {}).get('task_suite') != 'standard' or revision == UNKNOWN):
         raise EvidenceError('Verified requires a pinned standard-suite task')
@@ -123,7 +215,8 @@ def normalize(task, *, benchmark_id, version, revision, source_sha256, allowed_r
         artifact_path = str(Path(artifact['path']).absolute())
         if source_commitments is not None and source_commitments.get(artifact_path) != artifact['sha256']:
             raise EvidenceError('ancillary artifact not committed by selection')
-        resolved, artifact_bytes = checked_source(artifact_path, allowed_roots, artifact['sha256'])
+        resolved, artifact_bytes = (checked_source(artifact_path, allowed_roots, artifact['sha256'])
+                                    if source_session is None else source_session._source(artifact_path, artifact['sha256']))
         artifacts.append({'path': str(resolved), 'role': artifact['role'], 'sha256': artifact['sha256'],
                           'size_bytes': len(artifact_bytes), 'bytes_base64': base64.b64encode(artifact_bytes).decode('ascii')})
     return {
@@ -185,7 +278,8 @@ def validate(envelope):
     return raw
 
 
-def ingest(engine: Engine, envelope, *, allowed_roots=None, source_commitments=None, expected_identity=None):
+def ingest(engine: Engine, envelope, *, allowed_roots=None, source_commitments=None,
+           expected_identity=None, source_session=None):
     original_bytes = validate(envelope)
     if not allowed_roots or not isinstance(source_commitments, dict) or not isinstance(expected_identity, dict):
         raise EvidenceError('explicit admission roots, commitments and identity required')
@@ -197,7 +291,7 @@ def ingest(engine: Engine, envelope, *, allowed_roots=None, source_commitments=N
     rebound = normalize(envelope['task_definition'], benchmark_id=identity['benchmark_id'],
                         version=identity['benchmark_version'], revision=identity['source_revision'],
                         source_sha256=identity['source_sha256'], allowed_roots=allowed_roots,
-                        source_commitments=source_commitments)
+                        source_commitments=source_commitments, source_session=source_session)
     if canonical_json(rebound) != canonical_json(envelope):
         raise EvidenceError('envelope differs from source-derived normalization')
     raw = canonical_json(envelope)
