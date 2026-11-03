@@ -83,7 +83,9 @@ def _string_list(value: Any, field: str, *, allow_empty: bool = True) -> list[st
     return list(value)
 
 
-def _artifact(path: Path, role: str) -> dict[str, Any]:
+def _artifact(path: Path, role: str, source_guard=None) -> dict[str, Any]:
+    if source_guard is not None:
+        source_guard(path)
     _reject_reparse_ancestors(path)
     resolved = path.resolve(strict=True)
     if not resolved.is_file():
@@ -110,7 +112,7 @@ def _reject_json_constant(value: str) -> None:
     raise ValueError(f"invalid JSON numeric constant: {value}")
 
 
-def _source_revision(path: Path, repo: str, marker: str) -> str:
+def _source_revision(path: Path, repo: str, marker: str, source_guard=None) -> str:
     """Return a revision only when a pinned manifest SHA-256 matches these bytes."""
     _reject_reparse_ancestors(path)
     indexes = [i for i, component in enumerate(path.parts) if component == marker]
@@ -122,6 +124,8 @@ def _source_revision(path: Path, repo: str, marker: str) -> str:
     workspace_root = Path(__file__).resolve().parents[6]
     manifest_path = workspace_root / "Engineering" / "PGOP1_MULTIBENCHMARK_001" / "operations" / "acquisition_004" / "manifest.json"
     try:
+        if source_guard is not None:
+            source_guard(manifest_path)
         _reject_reparse_ancestors(manifest_path)
         data = json.loads(manifest_path.read_text(encoding="utf-8"), object_pairs_hook=_strict_json_object, parse_constant=_reject_json_constant)
     except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
@@ -147,7 +151,7 @@ def _single(record: dict[str, Any]) -> list[dict[str, Any]]:
     return [record]
 
 
-def parse_terminal_bench(path: str | Path) -> list[dict[str, Any]]:
+def parse_terminal_bench(path: str | Path, *, source_guard=None) -> list[dict[str, Any]]:
     """Parse one Harbor-format Terminal-Bench task directory or task file.
 
     `path` may be a task directory, `task.toml`, `instruction.md`, or a file in
@@ -160,6 +164,8 @@ def parse_terminal_bench(path: str | Path) -> list[dict[str, Any]]:
     if not _plain_file_exists(task_file_candidate):
         raise ValueError(f"missing Terminal-Bench task.toml: {task_file_candidate}")
     task_file = task_file_candidate.resolve(strict=True)
+    if source_guard is not None:
+        source_guard(task_file_candidate)
     try:
         document = tomllib.loads(task_file.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, tomllib.TOMLDecodeError) as exc:
@@ -182,14 +188,14 @@ def parse_terminal_bench(path: str | Path) -> list[dict[str, Any]]:
     if not _plain_file_exists(shell_test) or not python_tests:
         raise ValueError("Terminal-Bench task must have tests/test.sh and at least one tests/*.py evaluator")
     artifacts = [
-        _artifact(task_file, "task_config"),
-        _artifact(task_dir / "instruction.md", "task_instruction"),
-        _artifact(shell_test, "verifier_entrypoint"),
+        _artifact(task_file, "task_config", source_guard),
+        _artifact(task_dir / "instruction.md", "task_instruction", source_guard),
+        _artifact(shell_test, "verifier_entrypoint", source_guard),
     ]
-    artifacts.extend(_artifact(p, "verifier_source") for p in python_tests)
+    artifacts.extend(_artifact(p, "verifier_source", source_guard) for p in python_tests)
     dockerfile = task_dir / "environment" / "Dockerfile"
     if _plain_file_exists(dockerfile):
-        artifacts.append(_artifact(dockerfile, "environment_build_config"))
+        artifacts.append(_artifact(dockerfile, "environment_build_config", source_guard))
     explicit = {
         "schema_version": document.get("schema_version"),
         "task_name": task["name"],
@@ -209,13 +215,13 @@ def parse_terminal_bench(path: str | Path) -> list[dict[str, Any]]:
         "reference_type": "public_task_verifier",
         "evaluator_type": "shell_entrypoint_with_python_tests",
         "source_path": str(task_file),
-        "source_revision": _source_revision(task_file, "harbor-framework/terminal-bench-2", "terminal-bench-2"),
+        "source_revision": _source_revision(task_file, "harbor-framework/terminal-bench-2", "terminal-bench-2", source_guard),
         "source_pointer": UNKNOWN,
     }
     return _single(record)
 
 
-def parse_mcpmark(path: str | Path) -> list[dict[str, Any]]:
+def parse_mcpmark(path: str | Path, *, source_guard=None) -> list[dict[str, Any]]:
     """Parse one MCPMark task directory or one of its task files."""
     source = _resolved(path)
     task_dir = source if source.is_dir() else source.parent
@@ -225,6 +231,8 @@ def parse_mcpmark(path: str | Path) -> list[dict[str, Any]]:
     if not _plain_file_exists(meta_candidate):
         raise ValueError(f"missing MCPMark meta.json: {meta_candidate}")
     meta_file = meta_candidate.resolve(strict=True)
+    if source_guard is not None:
+        source_guard(meta_candidate)
     try:
         metadata = json.loads(meta_file.read_text(encoding="utf-8"), object_pairs_hook=_strict_json_object, parse_constant=_reject_json_constant)
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
@@ -254,9 +262,9 @@ def parse_mcpmark(path: str | Path) -> list[dict[str, Any]]:
     if not _plain_file_exists(description) or not _plain_file_exists(verifier):
         raise ValueError("MCPMark task must have description.md and verify.py")
     artifacts = [
-        _artifact(meta_file, "task_metadata"),
-        _artifact(description, "task_description"),
-        _artifact(verifier, "verifier_source"),
+        _artifact(meta_file, "task_metadata", source_guard),
+        _artifact(description, "task_description", source_guard),
+        _artifact(verifier, "verifier_source", source_guard),
     ]
     explicit = {
         "declared_task_id": task_id,
@@ -279,7 +287,7 @@ def parse_mcpmark(path: str | Path) -> list[dict[str, Any]]:
         "reference_type": "public_task_verifier",
         "evaluator_type": "python_verify_script",
         "source_path": str(meta_file),
-        "source_revision": _source_revision(meta_file, "eval-sys/mcpmark", "mcpmark"),
+        "source_revision": _source_revision(meta_file, "eval-sys/mcpmark", "mcpmark", source_guard),
         "source_pointer": "/task_id",
     }
     return _single(record)

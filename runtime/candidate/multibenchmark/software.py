@@ -21,7 +21,7 @@ MAX_SOURCE_FILES = 20_000
 TASK_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,255}$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 SUPPORTED_PRO_VARIANTS = {"v2"}
-_SOURCE_MANIFEST_CACHE: dict[str, dict[str, Any] | None] = {}
+_SOURCE_MANIFEST_CACHE: dict[tuple[str, str], dict[str, Any] | None] = {}
 
 
 class SoftwareSourceError(ValueError):
@@ -193,7 +193,7 @@ def _capabilities(record: dict[str, Any]) -> Any:
     return _first_present(record, "capabilities", "skills", "tags")
 
 
-def _source_revision_for(path: Path) -> str:
+def _source_revision_for(path: Path, source_guard=None) -> str:
     """Return a revision only when a neighboring manifest commits exact bytes."""
     try:
         resolved = path.resolve(strict=True)
@@ -203,14 +203,24 @@ def _source_revision_for(path: Path) -> str:
         return UNKNOWN
     for directory in resolved.parents:
         manifest_path = directory / "SOURCE_MANIFEST.json"
+        if source_guard is not None:
+            try:
+                source_guard(manifest_path)
+            except (OSError, ValueError):
+                continue
         if not manifest_path.is_file():
             continue
-        cache_key = str(manifest_path.absolute())
+        try:
+            manifest_bytes = _regular_file(manifest_path).read_bytes()
+        except (OSError, SoftwareSourceError):
+            return UNKNOWN
+        cache_key = (str(manifest_path.absolute()), hashlib.sha256(manifest_bytes).hexdigest())
         if cache_key not in _SOURCE_MANIFEST_CACHE:
             try:
-                value = _json_bytes(manifest_path)
+                value = json.loads(manifest_bytes.decode('utf-8'), object_pairs_hook=_strict_object,
+                                   parse_constant=_reject_constant)
                 _SOURCE_MANIFEST_CACHE[cache_key] = value if isinstance(value, dict) else None
-            except SoftwareSourceError:
+            except (SoftwareSourceError, UnicodeError, json.JSONDecodeError):
                 _SOURCE_MANIFEST_CACHE[cache_key] = None
         manifest = _SOURCE_MANIFEST_CACHE[cache_key]
         if not isinstance(manifest, dict) or manifest.get("schema") != "pgop1.multibenchmark.software-acquisition.v1":
@@ -321,7 +331,9 @@ def _toml_task_id(config: dict[str, Any]) -> str:
     return candidate
 
 
-def _parse_harbor_task(config_path: Path, expected_variant: str | None) -> dict[str, Any]:
+def _parse_harbor_task(config_path: Path, expected_variant: str | None, source_guard=None) -> dict[str, Any]:
+    if source_guard is not None:
+        source_guard(config_path)
     config_path = _regular_file(config_path)
     try:
         config = tomllib.loads(config_path.read_text(encoding="utf-8", errors="strict"))
@@ -342,6 +354,8 @@ def _parse_harbor_task(config_path: Path, expected_variant: str | None) -> dict[
         raise SoftwareSourceError("TASK_ID_PATH_MISMATCH", "Harbor task identifier differs from its directory identity")
     instruction_path = task_dir / "instruction.md"
     if instruction_path.exists():
+        if source_guard is not None:
+            source_guard(instruction_path)
         source_path = _regular_file(instruction_path)
     else:
         source_path = config_path
@@ -355,6 +369,8 @@ def _parse_harbor_task(config_path: Path, expected_variant: str | None) -> dict[
     if len(artifact_paths) > MAX_SOURCE_FILES:
         raise SoftwareSourceError("SOURCE_FILE_COUNT_LIMIT", "Harbor task exceeds the related-artifact limit")
     for artifact in artifact_paths:
+        if source_guard is not None:
+            source_guard(artifact)
         artifact_file = _regular_file(artifact)
         artifact_bytes = artifact_file.read_bytes()
         relative_parts = artifact.relative_to(task_dir).parts
@@ -402,7 +418,7 @@ def _parse_harbor_task(config_path: Path, expected_variant: str | None) -> dict[
         "reference_type": "gold_patch.diff" if solution_patch.is_file() else UNKNOWN,
         "evaluator_type": "Harbor tests/test.sh" if verifier_test.is_file() else UNKNOWN,
         "source_path": str(source_path.absolute()),
-        "source_revision": _source_revision_for(source_path),
+        "source_revision": _source_revision_for(source_path, source_guard),
         "source_pointer": UNKNOWN,
     }
 
@@ -411,6 +427,7 @@ def parse_swebench_pro(
     path: str | os.PathLike[str],
     *,
     expected_variant: str | None = None,
+    source_guard=None,
 ) -> list[dict[str, Any]]:
     """Parse SWE-bench Pro JSON/JSONL/parquet or Harbor V2 task sources.
 
@@ -428,12 +445,12 @@ def parse_swebench_pro(
             raise SoftwareSourceError('UNSAFE_SOURCE_PATH', 'source path contains a link or reparse point')
     if source.is_file():
         if source.suffix.lower() == ".toml" and source.name == "task.toml":
-            return [_parse_harbor_task(source, expected_variant)]
+            return [_parse_harbor_task(source, expected_variant, source_guard)]
         if source.name == "instruction.md":
             task_config = source.parent / "task.toml"
             if not task_config.is_file():
                 raise SoftwareSourceError("MISSING_TASK_CONFIG", "Harbor instruction has no sibling task.toml")
-            return [_parse_harbor_task(task_config, expected_variant)]
+            return [_parse_harbor_task(task_config, expected_variant, source_guard)]
         raise SoftwareSourceError("UNSUPPORTED_SOURCE_FORMAT", "SWE-bench Pro parser accepts acquired Harbor V2 task.toml or instruction.md sources only")
     try:
         root = source.resolve(strict=True)
@@ -459,7 +476,7 @@ def parse_swebench_pro(
     output = []
     seen: set[str] = set()
     for config_path in configs:
-        task = _parse_harbor_task(config_path, expected_variant)
+        task = _parse_harbor_task(config_path, expected_variant, source_guard)
         if task["task_id"] in seen:
             raise SoftwareSourceError("DUPLICATE_TASK_ID", f"duplicate task identifier: {task['task_id']}")
         seen.add(task["task_id"])

@@ -92,6 +92,28 @@ def parser_for(benchmark_id):
     return getattr(import_module('.' + module, __package__), function)
 
 
+def parse_committed(benchmark_id, path, allowed_roots, source_commitments):
+    """Constrain primary/ancillary parser reads to caller-bound sources.
+
+    Optional revision-discovery manifests outside these grants stay UNKNOWN.
+    They never acquire authority merely by being located above a task.
+    """
+    def guard(candidate):
+        lexical = Path(candidate).absolute()
+        if not any(lexical.is_relative_to(Path(root).absolute()) for root in allowed_roots):
+            raise EvidenceError('parser source outside explicit roots')
+        resolved = checked_path(candidate, allowed_roots)
+        if source_commitments is None:
+            return resolved
+        commitment = source_commitments.get(str(resolved))
+        if commitment is None:
+            raise EvidenceError('ancillary source commitment missing')
+        return checked_source(candidate, allowed_roots, commitment)[0]
+    guard(path)
+    options = {'source_guard':guard} if benchmark_id in {'swebench_pro_v2','terminal_bench_2','mcpmark_verified'} else {}
+    return parser_for(benchmark_id)(path, **options)
+
+
 class VerifiedSourceSession:
     """One hash-bound parse snapshot for a bounded admission batch.
 
@@ -126,7 +148,7 @@ class VerifiedSourceSession:
             if str(resolved) != path:
                 raise EvidenceError('session commitments require absolute canonical paths')
             self._snapshots[path] = (resolved, raw)
-        parsed = parser_for(self._binding[0])(self._source_path)
+        parsed = parse_committed(self._binding[0],self._source_path,self._roots,self._commitments)
         for task in parsed:
             key = task['task_id']
             if key in self._tasks:
@@ -194,7 +216,10 @@ def normalize(task, *, benchmark_id, version, revision, source_sha256, allowed_r
         raise EvidenceError('incompatible revision')
     if source_session is None:
         path, raw = checked_source(task['source_path'], allowed_roots, source_sha256)
-        matches = [item for item in parser_for(benchmark_id)(path) if item.get('task_id') == task_id]
+        # The primary commitment is an explicit independent normalize argument;
+        # source_commitments historically binds ancillary files separately.
+        parser_commitments = None if source_commitments is None else {**source_commitments, str(path):source_sha256}
+        matches = [item for item in parse_committed(benchmark_id,path,allowed_roots,parser_commitments) if item.get('task_id') == task_id]
     else:
         if type(source_session) is not VerifiedSourceSession:
             raise EvidenceError('unsupported source session')
