@@ -275,12 +275,20 @@ class ResourceGuard:
                    "EXTERNAL_INTERRUPTION", "RESOURCE_LIMIT"}
         if reason not in allowed:
             raise ValueError("unsupported stop reason")
-        payload = {"schema": "pgop1.campaign-stop.v2", "reason": reason,
+        stop_status = ("STOP_REQUESTED" if reason=="EXPLICIT_REQUEST" else
+                       "STOP_INTEGRITY_FAILURE" if reason=="INTEGRITY_FAILURE" else
+                       "STOP_EXTERNAL_INTERRUPTION" if reason=="EXTERNAL_INTERRUPTION" else "STOP_LIMIT_REACHED")
+        payload = {"schema": "pgop1.campaign-stop.v2", "reason": reason, "status": stop_status,
                    "details": details if isinstance(details, (dict, list, str, int, bool)) or details is None
                    else str(details)}
         raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
         if len(raw) > self.stop_reserve_bytes:
-            payload["details"] = "details omitted: stop record reserve"
+            # Small explicitly configured reserves retain the detailed reason;
+            # its STOP_* category is deterministically derived from that reason.
+            payload.pop("status", None)
+            raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+        if len(raw) > self.stop_reserve_bytes:
+            payload.pop("details", None)
             raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
         self._stopped = True
         self._stopped_reason = reason
@@ -302,6 +310,7 @@ class ResourceGuard:
     def snapshot(self) -> dict:
         """Return an advisory resource snapshot; no process-level claims."""
         return {"schema": "pgop1.resource-guard-snapshot.v2", "actual_bytes": self._actual_bytes,
+                "mode": "RECOVERY_READ_ONLY" if self.read_only else "WRITER",
                 "reserved_bytes": self._reservations, "max_bytes": self.max_bytes,
                 "remaining_bytes": self.remaining_bytes,
                 "elapsed_milliseconds": max(0, int((self._clock() - self._started) * 1000)),

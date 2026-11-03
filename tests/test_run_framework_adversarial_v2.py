@@ -2,6 +2,7 @@
 import json
 import subprocess
 import sys
+import os
 from pathlib import Path
 
 import pytest
@@ -95,3 +96,74 @@ def test_in_memory_configuration_cannot_enlarge_budget_or_selection(tmp_path):
     c=_campaign(tmp_path)
     with pytest.raises((FrameworkError,TypeError,ValueError)): c.config['resource_budget']['max_bytes']=2**63
     with pytest.raises((FrameworkError,TypeError,ValueError)): c.config['expected_units'].append('foreign-unit')
+
+
+def test_v2_shard_plan_uses_existing_planner_with_detached_mutable_policies(tmp_path):
+    c=_campaign(tmp_path); plan=c.shard_plan()
+    assert plan['EXPECTED_UNITS']==2 and len(plan['shards'])==1
+    plan['RESOURCE_LIMITS']['max_units_per_shard']=900
+    assert c.config['resource_budget']['max_units_per_shard']==2
+
+
+def test_result_identity_cannot_be_admitted_twice_across_units(tmp_path):
+    c=_campaign(tmp_path); c.begin_unit('u1',{}); first=_envelope(c,'u1')
+    c.complete_unit('u1','DONE',first); c.begin_unit('u2',{})
+    second=_envelope(c,'u2'); second['result_id']=first['result_id']
+    with pytest.raises(FrameworkError,match='RESULT_ID_ALREADY_ADMITTED'): c.complete_unit('u2','DONE',second)
+    s=reload_campaign(c).recover(); assert s['completed']=={'u1'} and s['inflight']=={'u2'}
+
+
+def test_dict_union_cannot_bypass_frozen_policy(tmp_path):
+    c=_campaign(tmp_path); policy=c.config['checkpoint_policy']
+    with pytest.raises(FrameworkError): policy |= {'interval':1}
+    assert c.config['checkpoint_policy']['interval']==2
+
+
+def test_reader_stop_request_and_resource_report_do_not_write(tmp_path):
+    c=_campaign(tmp_path); c.begin_unit('u1',{}); before=bytes_under(c.output)
+    reader=reload_campaign(c)
+    with pytest.raises(FrameworkError,match='read-only'): reader.request_stop()
+    reader.resources_report()
+    assert bytes_under(c.output)==before
+
+
+def test_missing_tail_receipt_yields_readonly_verified_checkpoint_prefix(tmp_path):
+    c=_campaign(tmp_path); c.begin_unit('u1',{}); c.complete_unit('u1','DONE',_envelope(c,'u1')); c.begin_unit('u2',{})
+    sorted((c.output/'receipts').glob('*.json'))[-1].unlink(); before=bytes_under(c.output)
+    prefix=reload_campaign(c).recover_valid_prefix()
+    assert prefix['verified_prefix_sequence']==2 and prefix['completed']=={'u1'} and not prefix['complete']
+    assert bytes_under(c.output)==before
+
+
+@pytest.mark.parametrize('disposition',['',None,7])
+def test_coherent_rehash_cannot_admit_invalid_terminal_disposition(tmp_path,disposition):
+    c=_campaign(tmp_path); c.begin_unit('u1',{}); c.complete_unit('u1','DONE',_envelope(c,'u1'))
+    rp=sorted((c.output/'receipts').glob('*.json'))[-1]; r=json.loads(rp.read_bytes()); r['disposition']=disposition; rr=canonical(r); rh=digest(rr)
+    newrp=rp.parent/f'00000002-{rh}.json'; newrp.write_bytes(rr); rp.unlink()
+    dp=sorted((c.output/'deltas').glob('*.json'))[-1]; d=json.loads(dp.read_bytes()); d.update(disposition=disposition,receipt_sha256=rh,receipt_path='receipts/'+newrp.name); dr=canonical(d); dh=digest(dr)
+    (dp.parent/f'00000002-{dh}.json').write_bytes(dr); dp.unlink()
+    cp=next((c.output/'checkpoints').glob('*.json')); obj=json.loads(cp.read_bytes()); obj['head_delta_sha256']=dh; cr=canonical(obj)
+    (cp.parent/f'00000002-{digest(cr)}.json').write_bytes(cr); cp.unlink()
+    with pytest.raises(FrameworkError,match='terminal disposition'): reload_campaign(c).recover()
+
+
+def test_checkpoint_interruption_preserves_prefix_and_records_stop(tmp_path,monkeypatch):
+    from runtime.candidate.run_framework import incremental
+    c=_campaign(tmp_path); c.begin_unit('u1',{}); c.complete_unit('u1','DONE',_envelope(c,'u1')); c.begin_unit('u2',{})
+    original=incremental._write_immutable
+    def interrupted(path,raw):
+        if path.parent.name=='checkpoints': raise KeyboardInterrupt('synthetic interruption during checkpoint')
+        return original(path,raw)
+    monkeypatch.setattr(incremental,'_write_immutable',interrupted)
+    with pytest.raises(KeyboardInterrupt): c.complete_unit('u2','DONE',_envelope(c,'u2'))
+    stop=json.loads((c.output/'.resource-stop.json').read_bytes()); assert stop['reason']=='EXTERNAL_INTERRUPTION'
+    prefix=reload_campaign(c).recover_valid_prefix()
+    assert prefix['verified_prefix_sequence']==2 and prefix['completed']=={'u1'} and prefix['pending']=={'u2'} and not prefix['complete']
+
+
+def test_same_stat_metadata_replacement_rejected_before_publication(tmp_path):
+    c=_campaign(tmp_path); c.begin_unit('u1',{}); path=Path(c.config['contract_path']); before=path.stat()
+    path.write_bytes(path.read_bytes().replace(b'DECLARED',b'DISABLED')); os.utime(path,ns=(before.st_atime_ns,before.st_mtime_ns))
+    count=len(list((c.output/'receipts').glob('*.json')))
+    with pytest.raises(FrameworkError,match='bytes changed'): c.complete_unit('u1','DONE',_envelope(c,'u1'))
+    assert len(list((c.output/'receipts').glob('*.json')))==count

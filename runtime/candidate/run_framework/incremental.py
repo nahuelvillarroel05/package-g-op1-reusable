@@ -8,6 +8,7 @@ from __future__ import annotations
 import os
 from pathlib import Path, PurePosixPath
 import stat
+from copy import deepcopy
 
 from . import core
 from .core import Campaign as _Campaign, FrameworkError, canonical, digest, _loads, _write_immutable, _path
@@ -22,12 +23,16 @@ HEX = core.HEX
 
 
 class _FrozenDict(dict):
+    def __deepcopy__(self, memo):
+        return {key: deepcopy(value, memo) for key, value in self.items()}
     def _deny(self, *args, **kwargs):
         raise FrameworkError("in-memory v2 campaign configuration is immutable")
-    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = _deny
+    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = __ior__ = _deny
 
 
 class _FrozenList(list):
+    def __deepcopy__(self, memo):
+        return [deepcopy(value, memo) for value in self]
     def _deny(self, *args, **kwargs):
         raise FrameworkError("in-memory v2 campaign configuration is immutable")
     __setitem__ = __delitem__ = append = clear = extend = insert = pop = remove = reverse = sort = _deny
@@ -69,6 +74,7 @@ class CampaignV2(_Campaign):
         self._v2_manifest_verified = False
         self._v2_error_count = 0
         self._critical_stats = {}
+        self._critical_hashes = {}
 
     def preflight(self):
         result = super().preflight()
@@ -80,6 +86,7 @@ class CampaignV2(_Campaign):
                     Path(self.config["exclusion_ledger"]["path"]),
                     *(Path(item["path"]) for item in self.config["code_files"])]
         self._critical_stats = {path: self._stat_key(path) for path in critical}
+        self._critical_hashes = {path: digest(path.read_bytes()) for path in critical}
         self._config_stat = self._critical_stats[self.config_path]
         return result
 
@@ -120,22 +127,23 @@ class CampaignV2(_Campaign):
                 self.output,
                 max_bytes=budget.get("max_bytes"), max_seconds=budget.get("max_seconds"),
                 max_units=budget.get("max_units", budget.get("max_total_units")),
-                max_errors=budget.get("max_errors", self.config["stop_criteria"].get("max_errors")),
+                max_errors=budget.get("max_errors", self.config["stop_criteria"].get("max_errors", 1 if self.config["stop_criteria"].get("on_error")=="stop" else None)),
                 accounted_paths=(run_marker, attempt_marker),
-                read_only=read_only,
+                read_only=read_only or not self._can_write,
             )
         return self._v2_guard
 
     def _initial_state(self):
         units = set(self.config["expected_units"])
         return {"receipts": [], "checkpoints": [], "completed": set(),
-                "pending": units, "inflight": set(), "open_attempts": {},
+                "pending": units, "inflight": set(), "open_attempts": {}, "result_ids": set(),
                 "complete": False, "head": None, "sequence": 0}
 
     def _manifest_path(self, sha):
         return self.output / "manifest" / (sha + ".json")
 
     def _ensure_manifest(self, manifest, sha, raw, *, create=False, reserved=False):
+        _path(self._manifest_path(sha), False)
         path = _safe_artifact(self.output, f"manifest/{sha}.json", "manifest") if self._manifest_path(sha).exists() else self._manifest_path(sha)
         relative = path.relative_to(self.output).as_posix()
         if not path.exists():
@@ -157,6 +165,14 @@ class CampaignV2(_Campaign):
         self._v2_manifest_raw = raw
 
     def recover(self, *, _prefix_max_sequence=None):
+        try:
+            return self._recover_impl(_prefix_max_sequence=_prefix_max_sequence)
+        except FrameworkError:
+            raise
+        except (OSError, TypeError, KeyError, AttributeError) as exc:
+            raise FrameworkError("invalid or unavailable v2 recovery artifact: " + str(exc)) from exc
+
+    def _recover_impl(self, *, _prefix_max_sequence=None):
         if self._preflight is None:
             raise FrameworkError("preflight required")
         self.__dict__.pop("_v2_provenance_index", None)
@@ -172,6 +188,8 @@ class CampaignV2(_Campaign):
         manifest_dir = self.output / "manifest"
         receipt_dir = self.output / "receipts"
         checkpoint_dir = self.output / "checkpoints"
+        for directory in (journal, manifest_dir, receipt_dir, checkpoint_dir, self.output / "rejected"):
+            _path(directory, False)
         if not journal.exists():
             if any(p.exists() for p in (manifest_dir, receipt_dir, checkpoint_dir, self.output / "writer.owner")):
                 raise FrameworkError("orphan/interrupted v2 publication without journal")
@@ -184,6 +202,8 @@ class CampaignV2(_Campaign):
         if journal.is_symlink() or not journal.is_dir():
             raise FrameworkError("v2 delta journal type/reparse rejected")
         entries = list(journal.iterdir())
+        for path in entries:
+            _path(path, True)
         if any(p.is_symlink() or not p.is_file() for p in entries):
             raise FrameworkError("unsafe v2 delta journal entry")
         entries.sort(key=lambda p: p.name)
@@ -198,6 +218,7 @@ class CampaignV2(_Campaign):
         actual_checkpoints = set()
         if checkpoint_dir.exists():
             for p in checkpoint_dir.iterdir():
+                _path(p, True)
                 if p.is_symlink() or not p.is_file():
                     raise FrameworkError("checkpoint directory contains unsafe entry")
                 actual_checkpoints.add(p.name)
@@ -236,7 +257,9 @@ class CampaignV2(_Campaign):
             if digest(receipt_raw) != delta["receipt_sha256"]:
                 raise FrameworkError("v2 receipt digest mismatch")
             receipt = _loads(receipt_raw)
-            if canonical(receipt) != receipt_raw or receipt.get("schema") != RECEIPT_SCHEMA:
+            receipt_fields={"schema","run_id","campaign_id","attempt_id","unit_id","phase","disposition","sequence","manifest_sha256","admission","payload"}
+            if (not isinstance(receipt, dict) or set(receipt)!=receipt_fields
+                    or canonical(receipt) != receipt_raw or receipt.get("schema") != RECEIPT_SCHEMA):
                 raise FrameworkError("v2 receipt is noncanonical or unsupported")
             if (receipt.get("sequence") != seq or receipt.get("manifest_sha256") != manifest_sha
                     or receipt.get("unit_id") != delta["unit_id"] or receipt.get("phase") != delta["phase"]
@@ -256,7 +279,12 @@ class CampaignV2(_Campaign):
                 state["pending"].remove(unit); state["inflight"].add(unit)
                 state["open_attempts"][unit] = delta["attempt_id"]
             else:
+                if not isinstance(delta["disposition"], str) or not delta["disposition"]:
+                    raise FrameworkError("invalid v2 terminal disposition")
                 admitted = validate_result(self, unit, receipt.get("payload"))
+                if admitted["result_id"] in state["result_ids"]:
+                    raise FrameworkError("RESULT_ID_ALREADY_ADMITTED")
+                state["result_ids"].add(admitted["result_id"])
                 if receipt.get("admission") != admitted:
                     raise FrameworkError("v2 terminal admission metadata mismatch")
                 if unit not in state["inflight"] or state["open_attempts"].get(unit) != delta["attempt_id"]:
@@ -315,8 +343,9 @@ class CampaignV2(_Campaign):
         """
         try:
             return self.recover()
-        except FrameworkError as original:
+        except (FrameworkError, OSError) as original:
             directory = self.output / "checkpoints"
+            _path(directory, False)
             candidates = []
             if directory.is_dir() and not directory.is_symlink():
                 for path in directory.iterdir():
@@ -327,7 +356,7 @@ class CampaignV2(_Campaign):
                     state = self.recover(_prefix_max_sequence=sequence)
                     state["corruption_after_prefix"] = str(original)
                     return state
-                except FrameworkError:
+                except (FrameworkError, OSError):
                     continue
             return {**self._initial_state(), "recovery_status": "INCOMPLETE_READ_ONLY",
                     "verified_prefix_sequence": 0, "corruption_after_prefix": str(original)}
@@ -335,10 +364,12 @@ class CampaignV2(_Campaign):
     def _read_checkpoint(self, seq, head, parent_cp, state, manifest_sha):
         # Names are content addressed; find exactly one checkpoint for this seq.
         directory = self.output / "checkpoints"
+        _path(directory, False)
         matches = list(directory.glob(f"{seq:08d}-*.json")) if directory.exists() else []
         if len(matches) != 1:
             raise FrameworkError("required periodic checkpoint missing or ambiguous")
         path = matches[0]
+        _path(path, True)
         raw = path.read_bytes(); value = _loads(raw); sha = digest(raw)
         if path.name != f"{seq:08d}-{sha}.json" or canonical(value) != raw:
             raise FrameworkError("checkpoint content address/canonical form mismatch")
@@ -365,9 +396,11 @@ class CampaignV2(_Campaign):
                                 "campaign_attempt_id": self.config["campaign_attempt_id"],
                                 "config_sha256": self.config_sha256}
             for path, expected in ((run_marker, expected_run), (attempt_marker, expected_attempt)):
+                _path(path, True)
                 if path.is_symlink() or not path.is_file() or _loads(path.read_bytes()) != expected:
                     raise FrameworkError("global run/attempt reservation missing or changed")
             owner_path = self.output / "writer.owner"
+            _path(owner_path, True)
             owner = _loads(owner_path.read_bytes()) if owner_path.is_file() and not owner_path.is_symlink() else None
             if (not isinstance(owner, dict) or set(owner) != {"schema", "run_id", "campaign_id", "campaign_attempt_id", "token"}
                     or owner.get("schema") != "pgop1.reusable-run-writer-owner.v1"
@@ -381,9 +414,10 @@ class CampaignV2(_Campaign):
     def _ensure_live(self):
         if self._preflight is None:
             raise FrameworkError("preflight required")
-        # Keep hot-path work O(1): the canonical config bytes and selected set
-        # were frozen at load/preflight, while file identity/size/mtime are
-        # checked for every event. Full byte and binding hashes run at recovery.
+        # Rehash critical metadata/code bytes before publication. Stat equality
+        # alone cannot detect same-size replacements with restored timestamps.
+        # This reads pinned bytes; it never serializes selected populations or
+        # repeats the source-file inventory in a durable event.
         if self.config is not self._frozen_config:
             self._write_blocked = True
             raise FrameworkError("in-memory external configuration changed after load")
@@ -391,6 +425,9 @@ class CampaignV2(_Campaign):
             if any(self._stat_key(path) != expected for path, expected in self._critical_stats.items()):
                 self._write_blocked = True
                 raise FrameworkError("critical bound file identity changed; run quarantined")
+            if any(digest(path.read_bytes()) != expected for path, expected in self._critical_hashes.items()):
+                self._write_blocked = True
+                raise FrameworkError("critical bound file bytes changed; run quarantined")
         except OSError as exc:
             self._write_blocked = True
             raise FrameworkError("critical bound file became unavailable; run quarantined") from exc
@@ -454,10 +491,16 @@ class CampaignV2(_Campaign):
                 if phase == "terminal":
                     try:
                         admission = validate_result(self, unit, payload)
-                    except FrameworkError:
+                        if admission["result_id"] in state["result_ids"]:
+                            raise FrameworkError("RESULT_ID_ALREADY_ADMITTED")
+                    except FrameworkError as rejected:
                         self._store_rejected(payload_raw)
                         self._v2_error_count += 1
-                        guard.check_limits(error_count=self._v2_error_count)
+                        try:
+                            guard.check_limits(error_count=self._v2_error_count)
+                        except ResourceLimitStop as stop:
+                            self._write_blocked = True
+                            raise FrameworkError(str(rejected) + "; " + str(stop)) from rejected
                         raise
                 self._publish_v2(state, unit, kind, phase, payload, admission)
             except ResourceLimitStop as exc:
@@ -483,6 +526,9 @@ class CampaignV2(_Campaign):
 
     def request_stop(self, reason="EXPLICIT_REQUEST", details=None):
         """Request a durable stop; stopped campaigns remain read-only recoverable."""
+        self._ensure_live()
+        if not self._can_write or self._write_blocked:
+            raise FrameworkError("existing or interrupted run is read-only; stop publication forbidden")
         return self._guard().request_stop(reason, details)
 
     def resources_report(self):
@@ -549,9 +595,14 @@ class CampaignV2(_Campaign):
                 _write_immutable(self.output / cp_path, cp_raw)
                 guard.account_write(cp_path, len(cp_raw))
             guard.finish_publication()
-        except BaseException:
+        except BaseException as interrupted:
             self._write_blocked = True
             self._v2_state = None
+            try:
+                guard.request_stop("EXTERNAL_INTERRUPTION" if isinstance(interrupted, KeyboardInterrupt) else "INTEGRITY_FAILURE",
+                                   {"sequence": seq, "issue": type(interrupted).__name__})
+            except ResourceLimitStop:
+                pass
             raise
         head = delta_sha
         if phase == "start":
@@ -560,6 +611,7 @@ class CampaignV2(_Campaign):
         else:
             state["inflight"].remove(unit); state["completed"].add(unit)
             state["open_attempts"].pop(unit, None)
+            state["result_ids"].add(admission["result_id"])
         state.update({"sequence": seq, "head": head,
                       "complete": not state["pending"] and not state["inflight"]})
         state["receipts"].append({"sequence": seq, "path": receipt_path,
