@@ -1,107 +1,221 @@
 {
-  "schema": "pgop1.run004.full-corpus-readiness.v1",
-  "status": "NOT_READY_WITH_EXACT_LIMITATIONS",
-  "task_population": {
-    "private_manifest_sha256": "217ea0e6dddb8fce056c3db758c3f5c193758e1e055fb3db49177dfabfc83a65"
-  },
+  "schema": "pgop1.run004.readiness.v3",
+  "status": "BLOCKED_FOR_FULL_CAMPAIGN",
+  "RUN004_CONTRACT": "NOT_APPROVED",
+  "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+  "RUN004_EXECUTION": "NOT_EXECUTED",
+  "contract_revision": "pgop1.run004.multibenchmark.contract.rev003",
   "families": [
     {
-      "BENCHMARK_ID": "swebench",
-      "OFFICIAL_TASK_POPULATION": 2819,
-      "UNIT": "DISTINCT_SELECTED_TASK",
-      "task_inventory_ingestion_recovery": "PASS",
-      "authentic_output_comparability": "NOT_COMPLETE",
-      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
-      "producer_authentication": "NOT_ESTABLISHED",
-      "official_regrade_ready": false,
-      "semantic_reference_qualification": "NOT_ACHIEVED",
-      "final_campaign_freeze": "NOT_ISSUED"
+      "BENCHMARK": "BFCL",
+      "POPULATION": {
+        "tasks": 4696
+      },
+      "CORPUS_READY": "PASS",
+      "AUTHENTIC_OUTPUT_READY": "PARTIAL",
+      "SOURCE_BINDING_READY": "PARTIAL",
+      "PGOP1_OFFLINE_AUDIT_READY": "PARTIAL",
+      "OFFICIAL_EVALUATOR_READY": "BLOCKED",
+      "OFFICIAL_RUNTIME_READY": "BLOCKED",
+      "RECOVERY_READY": "PARTIAL",
+      "CONTAMINATION_REVIEWED": "PARTIAL",
+      "FULL_CAMPAIGN_READY": "BLOCKED",
+      "CURRENT_REPORT": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\bfcl\\BFCL_EVALUATOR_DEPENDENCY_REPORT.md",
+        "sha256": "40eed607ba53f5162e42f21b3990f79ac234139f2e81cb4c6106822625c0c3fc",
+        "bytes": 7824
+      },
+      "PREVIOUS_EVIDENCE": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001\\BFCL_BINDING_RESULTS.json",
+        "sha256": "84452c843cc3650d2b169fca0c3118474941e99bdf6e38716ac9a8e74579424d",
+        "bytes": 617671
+      },
+      "BASELINE_BLOCKERS": [
+        "Complete pinned official helper/config/dependency closure",
+        "Exact producer revision and category-specific evaluator/reference compatibility",
+        "Qualified isolated source execution path; no official evaluator invoked"
+      ],
+      "OFFLINE_SCOPE": "Development only; no compatible full semantic coverage inferred",
+      "RECOVERY_SCOPE": "Two existing shards/1127 descriptors freshly sampled; complete per-family source-body recovery not repeated",
+      "READINESS_SCOPE": "Full selected-version family, not successful bounded component scoring"
     },
     {
-      "BENCHMARK_ID": "swebench_pro_v2",
-      "OFFICIAL_TASK_POPULATION": 642,
-      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
-      "task_inventory_ingestion_recovery": "PASS",
-      "authentic_output_comparability": "NOT_COMPLETE",
-      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
-      "producer_authentication": "NOT_ESTABLISHED",
-      "official_regrade_ready": false,
-      "semantic_reference_qualification": "NOT_ACHIEVED",
-      "final_campaign_freeze": "NOT_ISSUED"
+      "BENCHMARK": "SWE-bench",
+      "POPULATION": {
+        "memberships": 3642,
+        "distinct_tasks": 2819
+      },
+      "CORPUS_READY": "PASS",
+      "AUTHENTIC_OUTPUT_READY": "PARTIAL",
+      "SOURCE_BINDING_READY": "PARTIAL",
+      "PGOP1_OFFLINE_AUDIT_READY": "PARTIAL",
+      "OFFICIAL_EVALUATOR_READY": "BLOCKED",
+      "OFFICIAL_RUNTIME_READY": "BLOCKED",
+      "RECOVERY_READY": "PARTIAL",
+      "CONTAMINATION_REVIEWED": "PARTIAL",
+      "FULL_CAMPAIGN_READY": "BLOCKED",
+      "CURRENT_REPORT": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\swebench\\SWE_OFFICIAL_EVALUATION_READINESS.md",
+        "sha256": "b266ec6e1fc9c0fdc8ae8df2b53f94af11a7c7fd4059c16e803bf04f5c7e6d55",
+        "bytes": 5926
+      },
+      "PREVIOUS_EVIDENCE": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001\\SWE_EVIDENCE_ANALYSIS.json",
+        "sha256": "9bc172d8600b42fcc71bc6a41cbd590d73bfab42608cded3ea06d63da5f931d2",
+        "bytes": 3076
+      },
+      "BASELINE_BLOCKERS": [
+        "Original raw evidence absent for bounded sampled historical audit cases",
+        "Attributable comparable claim and bound evaluator predicates",
+        "Compatible Docker runtime for original tests"
+      ],
+      "OFFLINE_SCOPE": "Development only; no compatible full semantic coverage inferred",
+      "RECOVERY_SCOPE": "Two existing shards/1127 descriptors freshly sampled; complete per-family source-body recovery not repeated",
+      "READINESS_SCOPE": "Full selected-version family, not successful bounded component scoring"
     },
     {
-      "BENCHMARK_ID": "terminal_bench_2",
-      "OFFICIAL_TASK_POPULATION": 89,
-      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
-      "task_inventory_ingestion_recovery": "PASS",
-      "authentic_output_comparability": "NOT_COMPLETE",
-      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
-      "producer_authentication": "NOT_ESTABLISHED",
-      "official_regrade_ready": false,
-      "semantic_reference_qualification": "NOT_ACHIEVED",
-      "final_campaign_freeze": "NOT_ISSUED"
+      "BENCHMARK": "MCPMark",
+      "POPULATION": {
+        "tasks": 127,
+        "logical_results": 762,
+        "trajectory_files": 759
+      },
+      "CORPUS_READY": "PASS",
+      "AUTHENTIC_OUTPUT_READY": "PARTIAL",
+      "SOURCE_BINDING_READY": "PARTIAL",
+      "PGOP1_OFFLINE_AUDIT_READY": "PARTIAL",
+      "OFFICIAL_EVALUATOR_READY": "BLOCKED",
+      "OFFICIAL_RUNTIME_READY": "BLOCKED",
+      "RECOVERY_READY": "PARTIAL",
+      "CONTAMINATION_REVIEWED": "PARTIAL",
+      "FULL_CAMPAIGN_READY": "BLOCKED",
+      "CURRENT_REPORT": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\MCPMARK_VERIFIER_READINESS.md",
+        "sha256": "4b7abc03ca308c75df53599ef220284965a11b7785c2e9f896fc525fc66968dd",
+        "bytes": 4913
+      },
+      "PREVIOUS_EVIDENCE": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001\\MCPMARK_BINDING_RESULTS.json",
+        "sha256": "815a3db1d63acf58fe18afb9ec8ecfecf2d696964dfd83c86984027ef41bde56",
+        "bytes": 3962
+      },
+      "BASELINE_BLOCKERS": [
+        "Three missing trajectories and thirty run-identity limitations",
+        "Authenticated task/run/evaluator binding and immutable service final state",
+        "Service-specific controlled runtime and dependencies"
+      ],
+      "OFFLINE_SCOPE": "Development only; no compatible full semantic coverage inferred",
+      "RECOVERY_SCOPE": "Two existing shards/1127 descriptors freshly sampled; complete per-family source-body recovery not repeated",
+      "READINESS_SCOPE": "Full selected-version family, not successful bounded component scoring"
     },
     {
-      "BENCHMARK_ID": "mcpmark_verified",
-      "OFFICIAL_TASK_POPULATION": 127,
-      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
-      "task_inventory_ingestion_recovery": "PASS",
-      "authentic_output_comparability": "NOT_COMPLETE",
-      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
-      "producer_authentication": "NOT_ESTABLISHED",
-      "official_regrade_ready": false,
-      "semantic_reference_qualification": "NOT_ACHIEVED",
-      "final_campaign_freeze": "NOT_ISSUED"
+      "BENCHMARK": "Terminal-Bench",
+      "POPULATION": {
+        "tasks": 89,
+        "published_trials": 445
+      },
+      "CORPUS_READY": "PASS",
+      "AUTHENTIC_OUTPUT_READY": "PARTIAL",
+      "SOURCE_BINDING_READY": "PARTIAL",
+      "PGOP1_OFFLINE_AUDIT_READY": "PARTIAL",
+      "OFFICIAL_EVALUATOR_READY": "BLOCKED",
+      "OFFICIAL_RUNTIME_READY": "BLOCKED",
+      "RECOVERY_READY": "PARTIAL",
+      "CONTAMINATION_REVIEWED": "PARTIAL",
+      "FULL_CAMPAIGN_READY": "BLOCKED",
+      "CURRENT_REPORT": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\TERMINAL_HARBOR_READINESS.md",
+        "sha256": "f044bf2be77b1b30c045055737aafa3b0e48126d402c16518126c8db491eddb4",
+        "bytes": 6748
+      },
+      "PREVIOUS_EVIDENCE": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001\\TERMINAL_VERSION_ANALYSIS.json",
+        "sha256": "9c7aca769d556332921a2470b7876f163b476102a769ada2e81c5af484a36d6e",
+        "bytes": 2215
+      },
+      "BASELINE_BLOCKERS": [
+        "Four materially changed contracts and85unknown cross-revision equivalences",
+        "Producer runtime/schema defaults and dependency/image qualification",
+        "Compatible Harbor isolated runtime"
+      ],
+      "OFFLINE_SCOPE": "Development only; no compatible full semantic coverage inferred",
+      "RECOVERY_SCOPE": "Two existing shards/1127 descriptors freshly sampled; complete per-family source-body recovery not repeated",
+      "READINESS_SCOPE": "Full selected-version family, not successful bounded component scoring"
     },
     {
-      "BENCHMARK_ID": "bfcl_v4",
-      "OFFICIAL_TASK_POPULATION": 4696,
-      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
-      "task_inventory_ingestion_recovery": "PASS",
-      "authentic_output_comparability": "NOT_COMPLETE",
-      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
-      "producer_authentication": "NOT_ESTABLISHED",
-      "official_regrade_ready": false,
-      "semantic_reference_qualification": "NOT_ACHIEVED",
-      "final_campaign_freeze": "NOT_ISSUED"
+      "BENCHMARK": "SWE-bench Pro",
+      "POPULATION": {
+        "tasks": 642
+      },
+      "CORPUS_READY": "PASS",
+      "AUTHENTIC_OUTPUT_READY": "BLOCKED",
+      "SOURCE_BINDING_READY": "PARTIAL",
+      "PGOP1_OFFLINE_AUDIT_READY": "BLOCKED",
+      "OFFICIAL_EVALUATOR_READY": "BLOCKED",
+      "OFFICIAL_RUNTIME_READY": "BLOCKED",
+      "RECOVERY_READY": "PARTIAL",
+      "CONTAMINATION_REVIEWED": "PARTIAL",
+      "FULL_CAMPAIGN_READY": "BLOCKED",
+      "CURRENT_REPORT": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\swebench_pro\\SWEBENCH_PRO_V2_SOURCE_STATUS.json",
+        "sha256": "3c5e6d8392a573eddddd57597764098d6fb21e05b54117df54d959cc4938d04f",
+        "bytes": 5165
+      },
+      "PREVIOUS_EVIDENCE": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001\\SWEBENCH_PRO_V2_SOURCE_RESEARCH.json",
+        "sha256": "a6c6d021d2be0a50e76e6db8135a3b9c52e7b275664a07de77131370963735e1",
+        "bytes": 6872
+      },
+      "BASELINE_BLOCKERS": [
+        "Exact V2 authentic agent outputs and run membership manifest not verified",
+        "Per-task compatible evaluation logs/results",
+        "Compatible isolated official runtime"
+      ],
+      "OFFLINE_SCOPE": "Development only; no compatible full semantic coverage inferred",
+      "RECOVERY_SCOPE": "Two existing shards/1127 descriptors freshly sampled; complete per-family source-body recovery not repeated",
+      "READINESS_SCOPE": "Full selected-version family, not successful bounded component scoring"
     },
     {
-      "BENCHMARK_ID": "tau_bench",
-      "OFFICIAL_TASK_POPULATION": 900,
-      "UNIT": "LOCALIZED_VARIANT",
-      "task_inventory_ingestion_recovery": "PASS",
-      "authentic_output_comparability": "NOT_COMPLETE",
-      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
-      "producer_authentication": "NOT_ESTABLISHED",
-      "official_regrade_ready": false,
-      "semantic_reference_qualification": "NOT_ACHIEVED",
-      "final_campaign_freeze": "NOT_ISSUED"
+      "BENCHMARK": "tau2-bench",
+      "POPULATION": {
+        "base_tasks": 150,
+        "localized_variants": 900
+      },
+      "CORPUS_READY": "PASS",
+      "AUTHENTIC_OUTPUT_READY": "BLOCKED",
+      "SOURCE_BINDING_READY": "PARTIAL",
+      "PGOP1_OFFLINE_AUDIT_READY": "BLOCKED",
+      "OFFICIAL_EVALUATOR_READY": "BLOCKED",
+      "OFFICIAL_RUNTIME_READY": "BLOCKED",
+      "RECOVERY_READY": "PARTIAL",
+      "CONTAMINATION_REVIEWED": "PARTIAL",
+      "FULL_CAMPAIGN_READY": "BLOCKED",
+      "CURRENT_REPORT": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\TAU2_EVALUATOR_READINESS.md",
+        "sha256": "bb1fa1ece311e2fba5455f2cae57369dfeab2d974e6fe5034c3b7756ad777963",
+        "bytes": 5617
+      },
+      "PREVIOUS_EVIDENCE": {
+        "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001\\TAU2_TRAJECTORY_RESEARCH.json",
+        "sha256": "fc0524c8c287acd3f106505fbf46666910fa1d1d73e804002fa63a70a8884594",
+        "bytes": 9458
+      },
+      "BASELINE_BLOCKERS": [
+        "Authentic2.0.0:text-v1 trajectories with required initial/final state and version/run fields",
+        "Pinned state/action/communication/NL-assertion dependencies",
+        "Required judge services for applicable channels; no silent substitute"
+      ],
+      "OFFLINE_SCOPE": "Development only; no compatible full semantic coverage inferred",
+      "RECOVERY_SCOPE": "Two existing shards/1127 descriptors freshly sampled; complete per-family source-body recovery not repeated",
+      "READINESS_SCOPE": "Full selected-version family, not successful bounded component scoring"
     }
   ],
-  "engineering_ingestion_is_execution": false,
-  "bfcl_structural_scope_is_semantic_qualification": false,
-  "boundaries": {
-    "I0-I6": "FORMALLY_FROZEN",
-    "I7": "INCOMPLETE",
-    "FORMAL_I7": "NOT_COMPLETED",
-    "OP1_OPERATIONAL_QUALIFICATION": "NOT_ACHIEVED",
-    "GATE_11": "BLOCKED",
-    "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
-    "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
-    "INDEPENDENT_CUSTODY": "NOT_PROVEN",
-    "PHYSICAL_C2": "DEFERRED_NOT_WAIVED",
-    "OD03": "PENDING",
-    "Source025": "PENDING",
-    "OD05": "PENDING",
-    "RUN004_CONTRACT": "NOT_APPROVED",
-    "RUN004_FINAL_FREEZE": "NOT_ISSUED",
-    "RUN004_EXECUTION": "NOT_EXECUTED",
-    "PRIVATE_GOLD_ACCESS": "NOT_PERFORMED",
-    "MODEL_RUNS": 0,
-    "PAID_API_CALLS": 0,
-    "BENCHMARK_TASK_EXECUTIONS": 0,
-    "OFFICIAL_EVALUATOR_EXECUTIONS": 0,
-    "PUSH": "NOT_PERFORMED",
-    "MAIN_CHANGE": "NOT_PERFORMED"
-  }
+  "ready_families": 0,
+  "no_quota_cap": true,
+  "completion_requires_modalities": [
+    "OFFLINE_EVIDENCE_AUDIT",
+    "OFFICIAL_EVALUATOR_EXECUTION"
+  ],
+  "owner_approval": "NOT_ISSUED",
+  "limitations": "Inherited corpus readiness is not a fresh corpus reprocess. Consult current report for bounded evaluator progress; full readiness remains blocked."
 }

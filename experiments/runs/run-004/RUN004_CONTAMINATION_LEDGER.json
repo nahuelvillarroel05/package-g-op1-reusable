@@ -1,0 +1,16 @@
+{
+  "schema": "pgop1.run004.contamination.v3",
+  "status": "REVIEWED_DEVELOPMENT_NOT_HOLDOUT",
+  "all_inspected_material": "DEVELOPMENT",
+  "pilot_exclusions": 55,
+  "original_reserved_bfcl_responses": 2180,
+  "derived_reserved_references": 1040,
+  "reserve_eligibility": "UNKNOWN_PENDING_ACCESS_REVIEW",
+  "private_gold_access": "NOT_PERFORMED",
+  "previous_reference_exposure": "Historical evidence and official outcomes have been inspected; not blind independent validation.",
+  "current_sources": "Per-family source/check receipts; official reference dependencies retained per result",
+  "independent_precision": "NOT_COMPUTABLE",
+  "independent_recall": "NOT_COMPUTABLE",
+  "future_requirement": "Exact per-output exposure/event ledger and rights review before approval; no reserve eligibility inferred",
+  "retain_negative_results": true
+}

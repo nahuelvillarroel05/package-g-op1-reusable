@@ -1,11 +1,70 @@
 {
-  "schema": "pgop1.run004.predicate-plan.v2",
-  "status": "DRAFT",
-  "semantic_reference_qualification": "NOT_ACHIEVED",
-  "implemented_axis": "SOURCE_BYTES_FORMAT_ID_ASSOCIATION_RECOVERY; restrictedBFCLschema; archivedSWEcontract unchanged",
-  "unsupported_or_missing_evidence": "ABSTAIN_OR_NOT_COMPARABLE; never change predicates to forceSUPPORTED",
-  "official_boolean_substitutes_for_semantic_audit": false,
-  "task_definitions_imply_agent_statements": false,
-  "independent_precision": "NOT_COMPUTABLE",
-  "independent_recall": "NOT_COMPUTABLE"
+  "schema": "pgop1.run004.predicates.v3",
+  "status": "DRAFT_NOT_APPROVED",
+  "predicates": [
+    {
+      "id": "SOURCE_INTEGRITY",
+      "inputs": "source bytes + expected digest",
+      "scope": "byte match",
+      "reference_dependency": "no semantic reference",
+      "abstain_or_block": "missing bytes/digest"
+    },
+    {
+      "id": "TASK_BINDING",
+      "inputs": "task/output/version/run IDs + original manifest",
+      "scope": "exact qualified identity",
+      "reference_dependency": "official task IDs allowed; dependency declared",
+      "abstain_or_block": "ambiguous run or revision"
+    },
+    {
+      "id": "OUTPUT_PROVENANCE",
+      "inputs": "source receipt/output hash/producer attribution",
+      "scope": "bound source attribution only",
+      "reference_dependency": "publisher source, not authenticated execution",
+      "abstain_or_block": "no authenticated producer chain"
+    },
+    {
+      "id": "FUNCTION_CALL_STRUCTURE",
+      "inputs": "inert parsed output + schema",
+      "scope": "parse/shape",
+      "reference_dependency": "official schema may be input",
+      "abstain_or_block": "missing schema or unsupported syntax"
+    },
+    {
+      "id": "FUNCTION_ARGUMENT_VALIDITY",
+      "inputs": "arguments + exact signature/type constraints",
+      "scope": "declared argument constraints",
+      "reference_dependency": "official signature is reference-dependent",
+      "abstain_or_block": "missing function schema"
+    },
+    {
+      "id": "PREDICATE_COMPARABILITY",
+      "inputs": "versions + predicate + required evidence",
+      "scope": "compatibility",
+      "reference_dependency": "requires exact predicate contract",
+      "abstain_or_block": "incompatible or unknown version"
+    },
+    {
+      "id": "CLAIM_EVIDENCE_SUPPORT",
+      "inputs": "attributable claim + complete bound evidence",
+      "scope": "specific claim only",
+      "reference_dependency": "official result not independent truth; declare dependency",
+      "abstain_or_block": "insufficient evidence or attribution"
+    },
+    {
+      "id": "RECOVERY_INTEGRITY",
+      "inputs": "immutable manifests + retrieved bytes/descriptors",
+      "scope": "exact recovery",
+      "reference_dependency": "no semantic truth",
+      "abstain_or_block": "hash/count/ownership mismatch"
+    }
+  ],
+  "result_axes": [
+    "SUPPORTED",
+    "CONTRADICTED",
+    "ABSTAIN",
+    "VERIFICATION_ERROR"
+  ],
+  "official_outcomes_are_separate": true,
+  "precommit_pgop1_before_comparison": true
 }

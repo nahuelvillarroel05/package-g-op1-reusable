@@ -1,0 +1,21 @@
+{
+  "schema": "pgop1.run004.metric-spec.v1",
+  "status": "DRAFT_NOT_APPROVED",
+  "required_fields": ["metric_id", "axis", "numerator", "denominator", "unit", "version", "method", "code", "evidence", "limitations", "status"],
+  "rules": [
+    "UNKNOWN denominator yields UNKNOWN rate; zero denominator yields NOT_COMPUTABLE",
+    "Numerator and denominator must share unit, version, eligibility and method",
+    "Never combine membership, task, response, trajectory, property, claim, invocation or descriptor units",
+    "Retain missing, error, abstention, negative and excluded counts by reason",
+    "Report official results separately for every submode and component",
+    "Historical observed counts do not become fresh execution counts"
+  ],
+  "metrics": [
+    {"metric_id":"CORPUS_TASK_COVERAGE","axis":"CORPUS","numerator":"selected task memberships processed","denominator":"all selected version/split memberships","unit":"TASK_MEMBERSHIP","version":"RUN004_SOURCE_MANIFEST revision bindings","method":"exact inventory reconciliation","code":"future approved execution commit","evidence":"future input and terminal shard receipts","limitations":"source processing does not audit a claim or execute a task","status":"PLANNED_NOT_EXECUTED"},
+    {"metric_id":"AUTHENTIC_OUTPUT_COVERAGE","axis":"CORPUS","numerator":"selected tasks with at least one compatible authentic output","denominator":"all selected logical task variants","unit":"LOGICAL_TASK_VARIANT","version":"exact source/output revisions","method":"qualified task/output membership join","code":"future approved binding code","evidence":"per-task binding ledger","limitations":"count one task once here; output occurrences reported separately","status":"BLOCKED_OUTPUT_POPULATION_UNRESOLVED"},
+    {"metric_id":"PGOP1_PROPERTY_COVERAGE","axis":"PGOP1_AUDIT","numerator":"actually decided eligible properties","denominator":"all required property instances under approved matrix","unit":"PROPERTY_INSTANCE","version":"predicate contract revision","method":"decision ledger count by predicate and verdict","code":"approved auditor commit/config","evidence":"precommitted PGOP1 decision ledger","limitations":"does not infer semantic truth from source integrity","status":"BLOCKED_REQUIRED_INSTANCE_POPULATION_NOT_FROZEN"},
+    {"metric_id":"PGOP1_CLAIM_COVERAGE","axis":"PGOP1_AUDIT","numerator":"claims actually audited","denominator":"all attributable claims required by approved scope","unit":"CLAIM_INSTANCE","version":"claim extraction and predicate revisions","method":"attributable claims linked to sufficient evidence","code":"approved auditor commit/config","evidence":"claim and decision ledgers","limitations":"abstentions and unattributable observations separately reported","status":"BLOCKED_CLAIM_POPULATION_NOT_FROZEN"},
+    {"metric_id":"OFFICIAL_RESULT_COVERAGE","axis":"OFFICIAL_EVALUATION","numerator":"task/output pairs with actual official results","denominator":"all required eligible task/output pairs in the approved submode","unit":"TASK_OUTPUT_PAIR","version":"benchmark/evaluator/reference/config revisions","method":"terminal receipts partitioned by submode/category/component","code":"official evaluator commit plus executed driver hash","evidence":"input commitments, command, streams, exit and official result","limitations":"partial function scoring is not full CLI, fresh tests or leaderboard score","status":"BLOCKED_FULL_REQUIRED_POPULATION_NOT_FROZEN"},
+    {"metric_id":"RECOVERY_COVERAGE","axis":"PGOP1_AUDIT","numerator":"checkpoint descriptors revalidated in fresh process","denominator":"descriptors in approved recovery population","unit":"DESCRIPTOR","version":"Engine and frozen store manifest","method":"byte/count/membership verification without producer redispatch","code":"Engine commit and recovery driver hash","evidence":"fresh-process recovery receipts","limitations":"descriptor recovery does not authenticate producer or reconstruct missing source bodies","status":"PLANNED_CAMPAIGN_NOT_EXECUTED"}
+  ]
+}

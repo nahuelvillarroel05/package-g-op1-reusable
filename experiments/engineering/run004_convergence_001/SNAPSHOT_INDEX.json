@@ -1,0 +1,98 @@
+{
+  "status": "OWNED_SOURCE_SNAPSHOTS_NOT_EXECUTION_ENTRYPOINTS",
+  "sources": [
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\package_continuity.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/package_continuity.py",
+      "sha256": "70c388f99111a788bc070e89829fc58eb5595f1c8b952ebfea8a205691bfadc7",
+      "bytes": 6447
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\build_readiness.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/build_readiness.py",
+      "sha256": "480ec1343adc9e6e147d7723449096428549db4959987c60a89efdc45114c0ff",
+      "bytes": 5939
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\assemble_results.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/assemble_results.py",
+      "sha256": "3ac9e84b06a91efc29e690ec1d1ed2fde2a9e921f39975731d3f6ef33f153bbd",
+      "bytes": 6274
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\verify_documentation_final.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/verify_documentation_final.py",
+      "sha256": "de80e57ded9e2aa82defa763c63db3fdaa667c76cbbd3c27ead4520c4d33866f",
+      "bytes": 1503
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\verify_final_delivery.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/verify_final_delivery.py",
+      "sha256": "fa867a0b5d7a60bfcfb7308fcb69bf8b315503fc4a30c9ec59026900486ffeee",
+      "bytes": 4285
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\integration\\verify_recovery.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/integration/verify_recovery.py",
+      "sha256": "f8ff7c65a01cb6c2dc1c7810187908af19039b591f1f7f37e8468fe95e02b194",
+      "bytes": 2256
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\fixes\\verify_zip_selection.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/fixes/verify_zip_selection.py",
+      "sha256": "e0ce121fa32515b2d3456942c1c6040e7aef48055934f7d0d2e095fb3eb38790",
+      "bytes": 1959
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\bfcl\\acquire_pinned_sources.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/bfcl/acquire_pinned_sources.py",
+      "sha256": "6c58d60b2cc1bc4479cab8a5cc0631c284894422b9cd0ea44c1c2c9f51d83502",
+      "bytes": 4435
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\bfcl\\run_bfcl_official_ast_regrade.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/bfcl/run_bfcl_official_ast_regrade.py",
+      "sha256": "121c56b31acb21a89fbf9b3a51faabdf0de6676404cfc8f69739ed346d781986",
+      "bytes": 21475
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\bfcl\\freeze_pgop1_prior_decisions.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/bfcl/freeze_pgop1_prior_decisions.py",
+      "sha256": "7de83f4af0a89159370daca9ac71da261fe3ddab5a5c7022369f6ee8501b2731",
+      "bytes": 2874
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\bfcl\\scan_bfcl_historical_inputs.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/bfcl/scan_bfcl_historical_inputs.py",
+      "sha256": "8bed913d8bccf5ed9f4b97564f8481a6d35703b94a641f1b5c64f062bdabca92",
+      "bytes": 7173
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\swebench\\run_swe_official_regrade.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/swebench/run_swe_official_regrade.py",
+      "sha256": "9d07b3163a1e3af691aa2c2b74be659f3a8b4a24c8dee5b6c450a79288de2964",
+      "bytes": 7982
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\swebench\\prepare_swe_official_selection.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/swebench/prepare_swe_official_selection.py",
+      "sha256": "15b0dd48546af70113cfafc10834e6ce88b859bf34f542fba25a87b1e2c7e374",
+      "bytes": 4998
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\swebench\\capture_swe_official_regrade.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/swebench/capture_swe_official_regrade.py",
+      "sha256": "e6b17a96c342390a77acdca7cc3eadbc7d419dbdef638100594682e95f5bbb26",
+      "bytes": 1561
+    },
+    {
+      "original_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\swebench\\verify_swe_readiness_consistency.py",
+      "snapshot_path": "experiments/engineering/run004_convergence_001/source_snapshots/swebench/verify_swe_readiness_consistency.py",
+      "sha256": "9c462639ca40574e4eb1d44bf59ec0ed67c829f3a216e90cc5fc9f2cbe107598",
+      "bytes": 4433
+    }
+  ],
+  "execution": "Use original workspace paths and immutable per-attempt drivers in receipts; copied scripts derive roots from location and must not be invoked in this snapshot directory.",
+  "external_official_source_bodies": "NOT_INCLUDED",
+  "historical_attempt_drivers": "006/007 bound separately;001-005 preimages unavailable"
+}

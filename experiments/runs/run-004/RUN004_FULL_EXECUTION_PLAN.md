@@ -1,0 +1,16 @@
+# RUN-004 full execution plan — DRAFT rev003
+
+NOT_APPROVED / NOT_ISSUED / NOT_EXECUTED. The contract rev003 governs. This plan dispatches nothing.
+
+1. Reconcile every selected task membership against the exact source manifest and immutable inventory. Preserve six families and all unavailable-output rows; do not substitute positive-only or easy subsets. Selected populations: SWE 3642 memberships/2819 tasks; ProV2 642; Terminal 89; MCPMark 127; BFCL 4696; tau2 150 base/900 variants.
+2. Before approval enumerate per-task authentic outputs, source rights/privacy, producer revision, run binding, contamination/exclusions, predicate/reference contract and mandatory official submode. Missing inputs stay in the denominator. Current gaps prevent approval; output count UNKNOWN must not be invented from task counts.
+3. Qualify exact evaluator commits, minimum dependency locks, input formats, commands, resolved environment/image digests, isolation, resources and runtime receipts by family/submode. A planned command is not an execution receipt. Keep blocked entries visible.
+4. Freeze clean baseline/candidate commits and external driver hashes; reserve fresh campaign/attempt identity and namespace only after explicit Owner authorization. Bind approval and contract hash, exact config and all input commitments. No reuse of engineering/pilot IDs.
+5. Execute modality A in immutable shards: integrity/binding first, then eligible property/claim audits. Commit PGOP1 decisions before official outcomes are exposed. Hash decision ledgers and preserve exclusions/errors/abstentions. Do not execute code embedded in data.
+6. Execute authorized modality B as separate child attempts per family/category/submode. Original-effect claims require original compatible verifier/tests. Oracle and fresh agent experiments require separate authorization and do not replace authentic-output evaluation. This intervention performs neither.
+7. Stress authorized disposable copies at predetermined shard boundaries: interrupted receipt, missing object, wrong revision, duplicate identity, truncated payload, tampered hash, corrupt index and count mismatch. Preserve rejection evidence. Verify read-only recovery in fresh process and no producer redispatch. Exact campaign budgets/checkpoints remain to be selected before approval.
+8. Compare candidates on identical frozen eligible input hashes, predicates/configurations and references. Preserve negative outcomes; register defect/reproducer/cause before prospective fixes. No src/package_g changes.
+9. Reconcile coverage independently: corpus, PGOP1 properties/claims, and official results by submode. Do not sum units or use replay as fresh tests. Both modalities and all mandatory families must meet the approved coverage; material gaps yield PARTIAL/BLOCKED.
+10. Complete technical/adversarial audits, fix material findings, verify documentation and indexed ZIP with fresh extraction/rehash. Owner acceptance remains separate from technical checks and cannot waive frozen criteria retrospectively.
+
+See RUN004_OFFLINE_AUDIT_PLAN.md, RUN004_OFFICIAL_EVALUATION_PLAN.md, RUN004_RECOVERY_PLAN.md and RUN004_READINESS_MATRIX.json. Sources remain external; do not redispatch missing producers. No RUN004 execution is authorized here.
