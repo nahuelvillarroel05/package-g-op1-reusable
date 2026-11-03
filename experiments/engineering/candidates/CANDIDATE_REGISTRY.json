@@ -81,6 +81,17 @@
         "ASTRA_CORE": "1f4a922a1cd2d864b3e36950b4aea06143c43f588fb699cd2efd0cba0631b1cb",
         "ASTRA_BRIDGE": "7c59add58f069923e6a0895e3090ea8e723ede346d89ac532f75e8dc11cf132d"
       }
+    },
+    {
+      "commit": "b5777a319581c84adcb8bd99570b7c9730bdfcfd",
+      "tree": "fddf1ed8ef8177cbd4de9a516de1ba349966f49f",
+      "branch": "experimental/pgop1-runs",
+      "role": "REUSABLE_FRAMEWORK_V2_REMEDIATED_ENGINEERING_CANDIDATE",
+      "engineering_validation": "10096 inert units/202 shards,137 independent units;311 historical +62 new tests; source/audit/measurement receipts in local handoff",
+      "formal_qualification": "NOT_ACHIEVED",
+      "run004_execution": "NOT_EXECUTED",
+      "run004_contract": "NOT_APPROVED",
+      "run004_final_freeze": "NOT_ISSUED"
     }
   ]
 }

@@ -1,3 +1,3 @@
-# Next: qualify producer and execution bindings
+# Next: qualify real producers and final campaign bindings
 
-Read [new RUN procedure](../../experiments/PREPARE_NEW_RUN.md) and [handoff](../../../../PGOP1_REUSABLE_RUN_FRAMEWORK_001/FINAL_HANDOFF.md). No RUN004 execution, final freeze or approval. Qualify the pending technical gates before a separate Owner decision.
+[Remediation handoff](../../../../PGOP1_REUSABLE_RUN_FRAMEWORK_REMEDIATION_001/FINAL_HANDOFF.md). Use the same reusable framework with new authorized configurations. Synthetic evidence does not authenticate producers or approve RUN004. No automatic resume, execution, push or promotion.

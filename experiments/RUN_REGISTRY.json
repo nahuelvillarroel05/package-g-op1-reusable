@@ -366,24 +366,43 @@
       "run004_execution": "NOT_EXECUTED",
       "development_configurations": "A6units/B3units; not registered campaigns",
       "readiness": "PARTIAL_WITH_EXACT_LIMITATIONS"
+    },
+    {
+      "ID": "PGOP1_REUSABLE_RUN_FRAMEWORK_REMEDIATION_001",
+      "status": "PGOP1_REUSABLE_RUN_FRAMEWORK_REMEDIATION_VALIDATED",
+      "candidate_commit": "b5777a319581c84adcb8bd99570b7c9730bdfcfd",
+      "candidate_tree": "fddf1ed8ef8177cbd4de9a516de1ba349966f49f",
+      "RUN004_CONTRACT": "NOT_APPROVED",
+      "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+      "RUN004_EXECUTION": "NOT_EXECUTED",
+      "synthetic_scale": "10096units/202shards/20192events",
+      "regressions": "311 historical +62 new; separate denominators"
     }
   ],
   "synthetic_development_validations": [
     {
       "ID": "FRAMEWORK_SCALE_VALIDATION_001",
-      "status": "RESERVED_SYNTHETIC_DEVELOPMENT",
+      "status": "TERMINAL_SYNTHETIC_DEVELOPMENT_VALIDATED",
       "execution_type": "SYNTHETIC_DEVELOPMENT",
       "authority": "Explicit Owner remediation request; inert authored synthetic inputs only",
       "real_campaign": false,
-      "RUN004_EXECUTION": "NOT_EXECUTED"
+      "RUN004_EXECUTION": "NOT_EXECUTED",
+      "candidate_commit": "b5777a319581c84adcb8bd99570b7c9730bdfcfd",
+      "candidate_tree": "fddf1ed8ef8177cbd4de9a516de1ba349966f49f",
+      "completed_units": 10096,
+      "shards": 202
     },
     {
       "ID": "FRAMEWORK_REUSE_VALIDATION_001",
-      "status": "RESERVED_SYNTHETIC_DEVELOPMENT",
+      "status": "TERMINAL_SYNTHETIC_DEVELOPMENT_VALIDATED",
       "execution_type": "SYNTHETIC_DEVELOPMENT",
       "authority": "Explicit Owner remediation request; inert authored synthetic inputs only",
       "real_campaign": false,
-      "RUN004_EXECUTION": "NOT_EXECUTED"
+      "RUN004_EXECUTION": "NOT_EXECUTED",
+      "candidate_commit": "b5777a319581c84adcb8bd99570b7c9730bdfcfd",
+      "candidate_tree": "fddf1ed8ef8177cbd4de9a516de1ba349966f49f",
+      "completed_units": 137,
+      "shards": 7
     }
   ]
 }
