@@ -124,7 +124,14 @@ def _calls(raw):
             if not isinstance(entry, dict) or len(entry) != 1:
                 raise ValueError('native call requires exactly one function key')
             name, args = next(iter(entry.items()))
-            calls.append({'name': name, 'arguments': _json(args) if isinstance(args, str) else args})
+            if isinstance(args, str):
+                try:
+                    args = _json(args)
+                except json.JSONDecodeError:
+                    # Source-native argument strings have no proven JSON-only
+                    # dialect contract. Unknown text cannot prove model error.
+                    return None
+            calls.append({'name': name, 'arguments': args})
     else:
         return None
     if any(type(c['name']) is not str or type(c['arguments']) is not dict
@@ -143,7 +150,8 @@ def audit(task, response):
         out['status'] = 'ABSTAIN_INVALID_TASK'; return out
     if response.get('id') != task['id']:
         out['status'] = 'INCOMPATIBLE_ID'; return out
-    category = next((c for c in CATEGORIES if re.fullmatch(re.escape(c)+r'_[0-9]+', task['id'])), None)
+    category = next((c for c in CATEGORIES if re.fullmatch(
+        re.escape(c)+(r'_[0-9]+-[0-9]+-[0-9]+' if c.startswith('live_') else r'_[0-9]+'), task['id'])), None)
     predicates['CATEGORY_COMPATIBILITY'] = category is not None
     if category is None:
         out['status'] = 'ABSTAIN_UNSUPPORTED_CATEGORY'; return out

@@ -48,6 +48,17 @@ def test_unsupported_categories_no_alias(changed_id):
     assert audit(changed, {**response({'x': [1]}), 'id': changed_id})['status'] == 'ABSTAIN_UNSUPPORTED_CATEGORY'
 
 
+@pytest.mark.parametrize('category', ['live_simple', 'live_multiple'])
+def test_authentic_live_id_grammar_keeps_exact_identity(category):
+    changed = {**TASK, 'id': category+'_999999-2-3'}
+    raw = {**response({'x': [1]}), 'id': changed['id']}
+    assert audit(changed, raw)['status'] == 'STRUCTURAL_PASS'
+    assert audit(changed, {**raw, 'id': category+'_999999-2-4'})['status'] == 'INCOMPATIBLE_ID'
+    for suffix in ('999999', '999999-2', '999999-2-3-4', '999999-2-\u0663'):
+        bad={**changed, 'id': category+'_'+suffix}
+        assert audit(bad, {**raw, 'id': bad['id']})['status'] == 'ABSTAIN_UNSUPPORTED_CATEGORY'
+
+
 def test_empty_extra_and_unknown_calls_reject():
     for raw in ([], [{'f': {'x': [1]}}, {'f': {'x': [2]}}], [{'g': {'x': [1]}}]):
         assert audit(TASK, {**response({}), 'result': raw})['status'] == 'STRUCTURAL_REJECT'
@@ -61,6 +72,17 @@ def test_duplicate_outer_keys_reject_and_python_text_is_inert():
     raw = '<tool_call>{"name":"f","name":"g","arguments":{"x":[1]}}</tool_call>'
     assert audit(TASK, {**response({}), 'result': raw})['status'] == 'STRUCTURAL_REJECT'
     assert audit(TASK, {**response({}), 'result': '[f(x=[1])]'})['status'] == 'ABSTAIN_UNSUPPORTED_REPRESENTATION'
+    assert audit(TASK, response("{'x':[1]}"))['status'] == 'ABSTAIN_UNSUPPORTED_REPRESENTATION'
+    assert audit(TASK, {**response({}), 'result': '<tool_call>{bad json}</tool_call>'})['status'] == 'STRUCTURAL_REJECT'
+
+
+def test_mixed_native_unsupported_dialect_keeps_parser_prerequisite():
+    raw = {**response({}), 'result': [{'f': {'x': [1]}}, {'f': "{'x':[2]}"}]}
+    result = audit(TASK, raw)
+    assert result['status'] == 'ABSTAIN_UNSUPPORTED_REPRESENTATION'
+    assert result['calls'] is None
+    for key in ('FUNCTION_CALL_FORMAT_VALID', 'FUNCTION_NAME_VALID', 'FUNCTION_ARGUMENTS_VALID', 'FUNCTION_COUNT_VALID'):
+        assert result['predicates'][key] is None
 
 
 def test_identity_and_official_score_cannot_supply_decision():

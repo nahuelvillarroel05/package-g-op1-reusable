@@ -7,6 +7,7 @@ import collections
 import datetime
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -39,6 +40,48 @@ def git(*args):
     return subprocess.check_output(['git', '-c', 'safe.directory='+REPO.as_posix(), '-C', str(REPO), *args], text=True).strip()
 
 
+def source_key(path):
+    return os.path.normcase(os.path.normpath(str(path)))
+
+
+def source_maps(plan):
+    """Frozen PLAN is authoritative for source attribution, not derived metadata."""
+    responses={}; tasks={}
+    for entries, target in ((plan['sources'],responses),(plan['auxiliary_sources'],tasks)):
+        for entry in entries:
+            key=source_key(entry['path'])
+            if key in target or key in responses and target is tasks:
+                raise ValueError('duplicate/conflicting PLAN source path')
+            target[key]=entry
+    if any(s.get('role')!='AUDIT_TASK_DEFINITION' for s in tasks.values()):
+        raise ValueError('invalid PLAN task source role')
+    return responses,tasks
+
+
+def check_sample(sample, response_sources):
+    if sample['task_id'] in {f'simple_python_{i}' for i in range(20,40)}:
+        raise ValueError('reserve pointer rejected before source read')
+    source=response_sources.get(source_key(sample['source_path']))
+    if source is None or source['role']!='MODEL_RESPONSE' or sample.get('role')!='MODEL_RESPONSE':
+        raise ValueError('sample is not a PLAN model response')
+    if any(sample[field]!=source[declared] for field,declared in (
+            ('source_sha256','sha256'),('model_id','model_id'),('category','category'),('source_revision','revision'))):
+        raise ValueError('sample attribution differs from frozen PLAN')
+
+
+def check_task_sources(actual, declared):
+    seen=set()
+    for entry in actual:
+        key=source_key(entry['path'])
+        if key in seen:raise ValueError('duplicate baseline task source')
+        seen.add(key)
+        source=declared.get(key)
+        if source is None or set(source)!=set(entry) or any(
+                entry[k]!=source[k] for k in source if k!='path'):
+            raise ValueError('baseline task source differs from frozen PLAN')
+    if seen!=declared.keys():raise ValueError('baseline task source set differs from frozen PLAN')
+
+
 def row_at(path, pos):
     # Sources are original JSONL, not reparsed model text. Never load reserve labels.
     with path.open(encoding='utf-8') as f:
@@ -62,6 +105,8 @@ def main():
     planpath=OLD/'attempts/attempt-0004/PLAN.json'
     assert digest(planpath)==baseline['plan_sha256']
     oldplan=json.loads(planpath.read_text())
+    response_sources,task_sources=source_maps(oldplan)
+    check_task_sources(baseline['task_sources'],task_sources)
     gateway=REPO/'experiments/engineering/corpus_001/archive_catalog.py'
     baseline_gateway=subprocess.check_output(['git','-c','safe.directory='+REPO.as_posix(),'-C',str(REPO),
         'show',baseline['baseline_code_commit']+':experiments/engineering/corpus_001/archive_catalog.py'])
@@ -71,8 +116,11 @@ def main():
     assert hashlib.sha256(baseline_v1).hexdigest()==digest(REPO/'runtime/candidate/bfcl_structured_audit.py')
     samples={(r['source_path'], r['source_row_index']):r for r in baseline['sample_pointers']
              if r['structural_status']!='NOT_COMPARABLE_UNRESOLVED_TASK_ID'}
+    if len(samples)!=sum(r['structural_status']!='NOT_COMPARABLE_UNRESOLVED_TASK_ID' for r in baseline['sample_pointers']):
+        raise ValueError('duplicate baseline sample identity')
+    for sample in samples.values():check_sample(sample,response_sources)
     # Explicit representation strata in the four newly supported categories;
-    # one first development task per category/model source, not tuned for PASS.
+    # one first development task per category/representation stratum, not tuned for PASS.
     seen=set()
     for s in oldplan['sources']:
         if s['role']!='MODEL_RESPONSE' or s['category'] not in ('simple_python','live_simple','multiple','live_multiple'):
@@ -89,6 +137,7 @@ def main():
         tid=row.get('id')
         if tid in {f'simple_python_{i}' for i in range(20,40)}:raise ValueError('reserve selected')
         samples.setdefault((s['path'],0),{'source_path':s['path'],'source_sha256':s['sha256'],
+            'role':'MODEL_RESPONSE',
             'source_row_index':0,'task_id':tid,'model_id':s['model_id'],'category':s['category'],
             'source_revision':s['revision'],'row_canonical_sha256':hashlib.sha256(canonical(row)).hexdigest(),
             'selection_basis':'first task in category/representation stratum; no score selection'})
@@ -98,9 +147,11 @@ def main():
         for line in p.open(encoding='utf-8'):
             row=_json(line)
             if row['id'] in {f'simple_python_{i}' for i in range(20,40)}:continue
+            if row['id'] in tasks:raise ValueError('duplicate/conflicting task identity')
             tasks[row['id']]=row;taskbindings[row['id']]=source
     inputs=[]
     for s in samples.values():
+        check_sample(s,response_sources)
         p=Path(s['source_path'])
         if str(p) not in verified:
             assert digest(p)==s['source_sha256'];verified[str(p)]=s['source_sha256']
