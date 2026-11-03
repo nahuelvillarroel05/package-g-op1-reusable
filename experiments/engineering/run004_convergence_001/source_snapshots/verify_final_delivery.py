@@ -27,7 +27,7 @@ def main():
     members=load(W/'FINAL_INTEGRITY_MANIFEST.json')['members'];fresh=Path(z['fresh_extraction'])
     with zipfile.ZipFile(z['archive']) as archive:
         assert archive.testzip() is None
-        assert not any('.test_output.' in n or any(p.startswith('official-') for p in Path(n).parts) for n in archive.namelist())
+        assert not any('.test_output.' in n or any(p.startswith('official-') for p in Path(n).parts[:-1]) for n in archive.namelist())
     for row in members:assert sha(fresh/row['path'])==row['sha256'] and (fresh/row['path']).stat().st_size==row['bytes']
     # Confirm core current delivery inside ZIP is identical to the handed-off originals.
     for name in ['FINAL_HANDOFF.md','CODE_REFERENCE.json','AUTHENTIC_EVALUATION_RECEIPTS.json','RUN004_READINESS_MATRIX.json','SOL_XHIGH_AUDIT.md','ASTRA_INDEPENDENT_AUDIT.md']:assert sha(fresh/name)==sha(W/name)

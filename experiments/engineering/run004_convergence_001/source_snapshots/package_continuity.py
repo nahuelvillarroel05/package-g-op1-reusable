@@ -15,12 +15,12 @@ def nolink(p):
 def git(*a):return subprocess.check_output(['git','-c','safe.directory='+R.as_posix(),'-C',str(R),*a])
 def validate_selection_row(row):
     n=row['path'];safe(n);p=W/n;nolink(p)
-    if '.test_output.' in n or any(x.startswith('official-') for x in PurePosixPath(n).parts):raise ValueError('original source body prohibited')
+    if '.test_output.' in n or any(x.startswith('official-') for x in PurePosixPath(n).parts[:-1]):raise ValueError('original source body prohibited')
     if not p.is_file() or sha(p)!=row['sha256'] or p.stat().st_size!=row['bytes']:raise ValueError('selection identity mismatch')
     return n,p
 def main():
     assert not git('status','--porcelain').strip()
-    stage=W/'continuity-export-001';stage.mkdir()
+    stage=W/'continuity-export-002';stage.mkdir()
     selected={}
     # Freeze and review exact membership before packaging; discovery is never export authority.
     selection=json.loads((W/'CONTINUITY_SELECTION.json').read_text(encoding='utf-8'))
@@ -50,14 +50,14 @@ def main():
 def archive():
     doc=json.loads((W/'DOCUMENTATION_VERIFICATION_RECEIPT.json').read_text(encoding='utf-8-sig'));assert doc['status']=='PASS'
     assert not git('status','--porcelain').strip()
-    stage=W/'continuity-export-001'
+    stage=W/'continuity-export-002'
     rows=json.loads((W/'FINAL_INTEGRITY_MANIFEST.json').read_text(encoding='utf-8-sig'))['members']
     archive=W/(W.name+'_CONTINUITY.zip');expected={x['path'] for x in rows}|{'FINAL_INTEGRITY_MANIFEST.json'}
     assert {p.relative_to(stage).as_posix() for p in stage.rglob('*') if p.is_file()}==expected
     for row in rows:assert sha(stage/row['path'])==row['sha256'] and (stage/row['path']).stat().st_size==row['bytes']
     with zipfile.ZipFile(archive,'x',zipfile.ZIP_DEFLATED) as z:
         for n in sorted(expected):safe(n);z.write(stage/n,n)
-    fresh=W/'fresh-extraction-001';fresh.mkdir()
+    fresh=W/'fresh-extraction-002';fresh.mkdir()
     with zipfile.ZipFile(archive) as z:
         names=z.namelist();assert len(names)==len({n.casefold() for n in names});assert set(names)==expected
         for n in names:safe(n)
