@@ -447,4 +447,10 @@ def load_config(path, allowed_config_roots, output, trusted_path_roots, trusted_
     for k in ("contract_path","dataset_manifest_path"):
         if not isinstance(c[k],str): raise FrameworkError(k+" required")
     if not isinstance(c["code_root"],str): raise FrameworkError("code_root required")
+    checkpoint_schema=c["checkpoint_policy"].get("schema",CHECKPOINT_SCHEMA)
+    if checkpoint_schema=="pgop1.reusable-run-checkpoint.v2":
+        from .incremental import CampaignV2
+        return CampaignV2(c,digest(raw),p,roots,output,output_roots)
+    if checkpoint_schema!=CHECKPOINT_SCHEMA:
+        raise FrameworkError("unsupported checkpoint schema")
     return Campaign(c,digest(raw),p,roots,output,output_roots)

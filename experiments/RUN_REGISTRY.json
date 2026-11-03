@@ -367,5 +367,23 @@
       "development_configurations": "A6units/B3units; not registered campaigns",
       "readiness": "PARTIAL_WITH_EXACT_LIMITATIONS"
     }
+  ],
+  "synthetic_development_validations": [
+    {
+      "ID": "FRAMEWORK_SCALE_VALIDATION_001",
+      "status": "RESERVED_SYNTHETIC_DEVELOPMENT",
+      "execution_type": "SYNTHETIC_DEVELOPMENT",
+      "authority": "Explicit Owner remediation request; inert authored synthetic inputs only",
+      "real_campaign": false,
+      "RUN004_EXECUTION": "NOT_EXECUTED"
+    },
+    {
+      "ID": "FRAMEWORK_REUSE_VALIDATION_001",
+      "status": "RESERVED_SYNTHETIC_DEVELOPMENT",
+      "execution_type": "SYNTHETIC_DEVELOPMENT",
+      "authority": "Explicit Owner remediation request; inert authored synthetic inputs only",
+      "real_campaign": false,
+      "RUN004_EXECUTION": "NOT_EXECUTED"
+    }
   ]
 }
