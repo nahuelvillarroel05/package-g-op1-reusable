@@ -2,7 +2,7 @@
 
 Result: PGOP1_RUN004_EXPERIMENTAL_CONTRACT_REV004_PREPARED. Documentary engineering only; Owner approved the campaign approach, not this contract, its final freeze or execution.
 
-[Contract](RUN004_CONTRACT_REV004.md), [prospective changes](REV003_REV004_CHANGELOG.md), [execution plan](RUN004_EXPERIMENTAL_EXECUTION_PLAN.md), [scope](RUN004_SIX_FAMILY_SCOPE.json), [completeness](RUN004_COMPLETENESS_CRITERIA.json), [metrics](RUN004_METRIC_CONTRACT.json), [readiness](RUN004_READINESS_MATRIX.json). Exact source hashes and unchanged selection are bound in [SOURCE_BINDINGS](SOURCE_BINDINGS.json).
+[Contract](RUN_CONTRACT.md), [prospective changes](REV003_REV004_CHANGELOG.md), [execution plan](RUN004_EXPERIMENTAL_EXECUTION_PLAN.md), [scope](RUN004_SIX_FAMILY_SCOPE.json), [completeness](RUN004_COMPLETENESS_CRITERIA.json), [metrics](RUN004_METRIC_CONTRACT.json), [readiness](RUN004_READINESS_MATRIX.json). Exact source hashes and unchanged selection are bound in [SOURCE_BINDINGS](SOURCE_BINDINGS.json).
 
 Mandatory A evaluates PGOP1 across all six full selected populations: SWE3,642 memberships/2,819 distinct tasks; ProV2 642; Terminal89; MCPMark127; BFCL4,696 definitions; tau2 150base/900localized variants. Totals10,096 memberships/variants and9,273 logical variants retain their distinct units. No scope reduction. Complementary B reports actual archived reevaluations, official regrades, patch checks, structural checks, fresh verifiers and full agents separately; its infrastructure is not a universal A gate.
 
