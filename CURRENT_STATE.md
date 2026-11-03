@@ -1,19 +1,19 @@
-# PGOP1: six-family evidence closure
+# PGOP1: RUN004 contract and evaluator convergence
 
-Result: `PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_PARTIAL_WITH_EXACT_LIMITATIONS`.
-[Handoff](../../PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/FINAL_HANDOFF.md), [next](docs/engineering/NEXT_STEP.md).
+Result: `PGOP1_RUN004_CONTRACT_AND_EVALUATOR_PARTIAL_WITH_EXACT_LIMITATIONS`.
+[Handoff](../../PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001/FINAL_HANDOFF.md), [next](docs/engineering/NEXT_STEP.md).
 
-Experimental candidate `7c0fe613892d1d27ed79ac77314b6a237afb3a76`, tree `312c2f0b0e591134fe709cd02d60544ae5483b5a`; documentary delivery is separately recorded in docs/WORKSPACE_STATE.json. Six families investigated with bounded original-source checks. Source integrity, structural validity, archived official results, fresh official reevaluation, PGOP1 audits and independent semantic truth remain separate.
+RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. Prospective contract pgop1.run004.multibenchmark.contract.rev003, preceding revisions preserved. Two modalities and five official submodes keep metrics/units/receipts separate. Full selected populations retained (10096 memberships/variants, 9273 logical variants); no155casecap. All six FULL_CAMPAIGN_READY=BLOCKED. Per-task authentic-output populations and material runtime/reference/right/contamination dependencies still prevent approval.
 
-BFCL prospective identity correction and exact denominators are in BFCL_BINDING_RESULTS.json; original responses and historical verdicts unchanged. SWE classifications retain 264 insufficient/2 integrity failures and distinguish 203 patch-shape rows, 61 statement events/43 rows and 41 mixed/noncomparable rows. MCP inspected 58 relevant trajectory files/1113 structural tool pairs: 3 missing trajectories and 30 run-identity limitations remain. Terminal has 4 materially changed contracts, 85 unknown equivalences, zero cross-revision contracts qualified equivalent; all445trials retained at producer revision. ProV2 and tau2 output research remains bounded and explicitly versioned; no universal absence claim.
+Actual new engineering results are bound in AUTHENTIC_EVALUATION_RECEIPTS.json; partial function/log regrades never imply fresh original tasks, full CLI parity, leaderboard score or independent semantic truth. Original negative results and failed attempts preserved. No runtime candidate change:7c0fe613892d1d27ed79ac77314b6a237afb3a76 tree312c2f0b0e591134fe709cd02d60544ae5483b5a. Documentary release identity in docs/WORKSPACE_STATE.json.
 
-Existing Context Engine: all806receipt memberships checked, 6fresh-process shard samples/3008descriptors recovered; full796805recovery not repeated. Focused existing regression183PASS; new resolver controls separately bound. No corpus stores, new ingestion or redispatch. Independent reviews and exact limits are in the handoff.
+183 existing focused regressions PASS. Fresh-process read recovery:2 existing shards/1127 authored descriptors; no full796805rerun/new stores/ingestion/redispatch. Source-free ZIP selection defect found by review, corrected prospectively and regression controlled; original logs/evaluator bodies/datasets remain external. Final documentation/ZIP gates require actual detached receipts, not this index.
 
-RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. All six CAMPAIGN_READY=BLOCKED; OFFLINE_READY and FULL_OFFICIAL_EXECUTION_READY are separate. No155casecap. All inspected material is development evidence;2180reserves excluded and eligibility UNKNOWN_PENDING_ACCESS_REVIEW.
+MCPMark3missing/30ambiguous remain; Terminal445trials stay producer revision,4changed/85unknown contracts, no equivalence inferred. ProV2 and tau2 compatible output bundles still unverified in bounded source research. BFCL dependency/source progress and exact callable limitations recorded in its report. All consulted evidence is development;2180original reserved responses and1040derived reserve references excluded; reserve eligibilityUNKNOWN_PENDING_ACCESS_REVIEW.
 
 I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED; OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED; GATE_11=BLOCKED; INDEPENDENT_PRECISION=NOT_COMPUTABLE; INDEPENDENT_RECALL=NOT_COMPUTABLE; INDEPENDENT_CUSTODY=NOT_PROVEN; PHYSICAL_C2=DEFERRED_NOT_WAIVED. OD03,Source025,OD05 pending.
 
-No workstation/model/training/privateGOLD/paidAPI/infrastructure, Windows permissions, Docker/WSL repair, external task execution, production signing, push, merge, main/src/formal promotion or RUN004 execution.
+No model/training/privateGOLD/paidAPI/workstation/infrastructure, Windows permissions, Docker/WSL/CodexSandboxOnline repair, main/src promotion, production signing, push, merge or RUN004 execution.
 
 Historical statuses retained (not new executions):
 

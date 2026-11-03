@@ -211,11 +211,11 @@
       "formal_qualification": "NOT_ACHIEVED",
       "status": "RESERVED_FULL_CORPUS_PREPARATION_NOT_READY_NOT_EXECUTED",
       "campaign_execution": "NOT_EXECUTED",
-      "contract_status": "DRAFT_REVISION_002_NOT_APPROVED",
+      "contract_status": "DRAFT_REVISION_003_NOT_APPROVED",
       "population_quota": null,
       "identity_role": "RESERVED_SERIES_AND_PREPARATION_LOCATOR_NOT_PHYSICAL_EXECUTION",
       "execution_campaign_id": "NOT_ASSIGNED_REQUIRES_FRESH_ID_AT_AUTHORIZATION",
-      "contract_revision": "contracts/revision-002/RUN_CONTRACT.md",
+      "contract_revision": "contracts/revision-003/RUN_CONTRACT.md",
       "full_corpus_task_memberships": 10096,
       "full_corpus_logical_task_variants": 9273,
       "engineering_coverage_commitment": "2ff9bcde25ddf4e144fe56c78763e72b6820bab9df18a90c403dd3df9a35f451",
@@ -228,6 +228,14 @@
         "sha256": "bb4a2e96ed05907467dcd9a34920d26f6ac85e460ec025c553b9af8f4bb98dac",
         "status": "SIX_FAMILY_PARTIAL_CAMPAIGN_BLOCKED",
         "offline_and_full_official_separate": true
+      },
+      "contract_identity": "pgop1.run004.multibenchmark.contract.rev003",
+      "contract_sha256": "dea6f86b07e71635fdc76be605aa42a35e3b0eb5f3b0928317d77f5b52e24cce",
+      "preparation_status": "PGOP1_RUN004_CONTRACT_AND_EVALUATOR_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "convergence_readiness": {
+        "path": "Engineering/PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001/RUN004_READINESS_MATRIX.json",
+        "sha256": "e9b81980bd1812fbdfbe0b98ed1824f278522f00c60137a9d3d516a41301dddb",
+        "full_ready_families": 0
       }
     }
   ],
@@ -309,6 +317,16 @@
       "run004_execution": "NOT_EXECUTED",
       "readiness_sha256": "bb4a2e96ed05907467dcd9a34920d26f6ac85e460ec025c553b9af8f4bb98dac",
       "readiness_path": "Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/RUN004_EXECUTION_READINESS_BY_FAMILY.json"
+    },
+    {
+      "ID": "PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001",
+      "status": "PGOP1_RUN004_CONTRACT_AND_EVALUATOR_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "baseline_commit": "9a798fee36b15d04e989d5ca2b3a938cab1e27a3",
+      "runtime_candidate_commit": "7c0fe613892d1d27ed79ac77314b6a237afb3a76",
+      "run004_execution": "NOT_EXECUTED",
+      "contract_revision": "pgop1.run004.multibenchmark.contract.rev003",
+      "results_sha256": "c8f0ad65c48165014835f21a80f976c1b5829e055a0bc371c33c4bef182ac000",
+      "readiness_sha256": "e9b81980bd1812fbdfbe0b98ed1824f278522f00c60137a9d3d516a41301dddb"
     }
   ]
 }
