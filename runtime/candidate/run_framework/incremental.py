@@ -586,4 +586,3 @@ class CampaignV2(_Campaign):
                 "inflight_units": sorted(state["inflight"]), "status": "COMPLETE_WITH_DISPOSITIONS" if state["complete"] else "PARTIAL",
                 "execution_completeness": "NOT_CERTIFIED", "receipt_count": len(state["receipts"]),
                 "checkpoint_count": len(state["checkpoints"])}
-

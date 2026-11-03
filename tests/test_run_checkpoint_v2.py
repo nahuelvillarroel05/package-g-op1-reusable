@@ -148,4 +148,3 @@ def test_v2_manifest_and_selection_are_bound_to_frozen_config(tmp_path):
     config_path.write_bytes(canonical(cfg))
     with pytest.raises(FrameworkError):
         _campaign(tmp_path).recover()
-
