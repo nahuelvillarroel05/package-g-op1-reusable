@@ -62,10 +62,12 @@ def run_calling(manifest,inventory,out,roots):
                     is_summary=tid is None
                     role='AGGREGATE_SCORE_ONLY' if is_summary else s['role']
                     duplicate=identity in seen and identity!='UNKNOWN';seen.add(identity)
-                    rid=sha((s['sha256']+':'+str(pos)).encode())
+                    rid=sha(canonical_json({'source_path':s['path'],'source_sha256':s['sha256'],'row_index':pos,
+                        'source_revision':s['revision'],'model_id':s['model_id'],'role':role}))
                     record={'kind':'BENCHMARK_ARCHIVED_ARTIFACT','task_key':s['family']+':V4:'+identity,
                         'benchmark_id':s['family'],'version':'V4','task_id':identity,'category':s['category'],'model_id':s['model_id'],
-                        'response_id':rid,'reference_id':identity if matched else 'UNKNOWN','source_revision':s['revision'],'source_path':s['path'],
+                        'response_id':rid,'response_id_kind':'SOURCE_INSTANCE_ROW_ID_NOT_PRODUCER_REQUEST_ID','reference_id':'UNKNOWN',
+                        'task_schema_reference_id':identity if matched else 'UNKNOWN','source_revision':s['revision'],'source_path':s['path'],
                         'source_sha256':s['sha256'],'source_row_index':pos,'row_canonical_sha256':sha(canonical_json(row)),
                         'role':role,'task_binding':'EXACT_TASK_ID_ONLY_PRODUCER_TASK_REVISION_UNKNOWN' if matched else 'UNRESOLVED_TASK_ID_OR_AGGREGATE',
                         'duplicate_id_in_source':duplicate,'producer_identity':'PRODUCER_DECLARED_NOT_AUTHENTICATED','audit_verdict':'NOT_COMPARABLE',
