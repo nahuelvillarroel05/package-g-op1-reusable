@@ -536,14 +536,49 @@ class Engine:
     def _ensure_index(self):
         if self._index_stat is not None and self._index_stat == self._index_signature():
             return
+
+        def read_error_kind(exc):
+            code = getattr(exc, 'sqlite_errorcode', None)
+            if code is not None and (code & 0xff) in (sqlite3.SQLITE_CORRUPT, sqlite3.SQLITE_NOTADB):
+                return 'corrupt'
+            if isinstance(exc, sqlite3.OperationalError) and str(exc).lower() == 'no such table: observations':
+                return 'missing_table'
+            return 'operational'
+
+        def rebuild_or_quarantine(exc):
+            kind = read_error_kind(exc)
+            if kind == 'operational':
+                raise exc
+            path = self.root / 'index.sqlite'
+            if kind == 'corrupt' and path.exists():
+                quarantine = self.root / f'index.sqlite.corrupt-{uuid.uuid4().hex}'
+                path.rename(quarantine)
+            self.metrics['RECONSTRUCTION_REQUIRED'] = True
+            self.rebuild_index()
+
         try:
             with closing(sqlite3.connect(self.root / 'index.sqlite')) as db:
                 actual = db.execute('SELECT * FROM observations ORDER BY id').fetchall()
+        except sqlite3.Error as exc:
+            # Serialize recovery with writers, and preserve only a confirmed
+            # corrupt/not-a-database index. Other operational failures fail closed.
+            if read_error_kind(exc) == 'operational':
+                raise
+            with self._lock():
+                try:
+                    with closing(sqlite3.connect(self.root / 'index.sqlite')) as db:
+                        actual = db.execute('SELECT * FROM observations ORDER BY id').fetchall()
+                except sqlite3.Error as retry_exc:
+                    rebuild_or_quarantine(retry_exc)
+                else:
+                    if actual != sorted(self._index_rows()):
+                        self.metrics['RECONSTRUCTION_REQUIRED'] = True
+                        self.rebuild_index()
+        else:
             if actual != sorted(self._index_rows()):
-                raise EngineError('index differs')
-        except (sqlite3.Error, EngineError):
-            self.metrics['RECONSTRUCTION_REQUIRED'] = True
-            self.rebuild_index()
+                with self._lock():
+                    self.metrics['RECONSTRUCTION_REQUIRED'] = True
+                    self.rebuild_index()
         self._index_stat = self._index_signature()
 
     def _index_signature(self):
