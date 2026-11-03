@@ -1,0 +1,163 @@
+{
+  "schema": "pgop1.run004.metric-contract.v4",
+  "contract": "pgop1.run004.multibenchmark.contract.rev004",
+  "required_fields": [
+    "numerator",
+    "denominator",
+    "unit",
+    "benchmark",
+    "version",
+    "contract",
+    "contract_sha256",
+    "evidence",
+    "limitations",
+    "method",
+    "state"
+  ],
+  "metric_definitions": [
+    {
+      "name": "CAMPAIGN_EXECUTION_COMPLETENESS",
+      "numerator_definition": "Unique selected memberships with actual attempt and verifiable terminal disposition",
+      "denominator_definition": "All selected memberships in each family/version/split/locale",
+      "unit": "SELECTED_MEMBERSHIP",
+      "rule": "Exact ID set equality; attempts>0 for every member; no inflight/ambiguous receipts; all six families",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "PGOP1_AUDIT_COVERAGE",
+      "numerator_definition": "Unique unit-predicate pairs with performed audit and evidence-backed decision, stratified structural/provenance/semantic",
+      "denominator_definition": "All semantically applicable selected unit-predicate pairs from the complete eight-predicate candidate universe, including unavailable evidence and UNKNOWN_APPLICABILITY; planned allocation cannot prune this denominator",
+      "unit": "UNIT_PREDICATE_PAIR",
+      "rule": "Abstentions/errors do not count as completed evidence-backed semantic verdicts; report audit attempts separately",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "EVIDENCE_SUFFICIENCY",
+      "numerator_definition": "Unit-predicate pairs meeting frozen evidence prerequisites",
+      "denominator_definition": "All semantically applicable selected unit-predicate pairs from the complete eight-predicate candidate universe, including unavailable evidence and UNKNOWN_APPLICABILITY; planned allocation cannot prune this denominator",
+      "unit": "UNIT_PREDICATE_PAIR",
+      "rule": "Authentic output necessary for agent semantic predicates, not sufficient; report missing/ambiguous inputs",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "OFFICIAL_EVALUATOR_COVERAGE",
+      "numerator_definition": "Units with actual valid official evaluator result in named submode",
+      "denominator_definition": "Both full selected population mapping and frozen planned/eligible submode population, reported separately",
+      "unit": "SUBMODE_SPECIFIC_UNIT",
+      "rule": "B complementary; never mix calls/trajectories/tasks or static inspection/fresh execution",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "ENGINEERING_QUALITY",
+      "numerator_definition": "Validated requirements or reproduced defects fixed with matched regression evidence, separately",
+      "denominator_definition": "Frozen technical requirement set or reproduced defect set, respectively",
+      "unit": "REQUIREMENT_OR_DEFECT_SEPARATE",
+      "rule": "Do not invent zero defects; open/nonreproduced/unknown defects visible; no model-performance proxy",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "INDEPENDENT_SEMANTIC_QUALIFICATION",
+      "numerator_definition": "Qualified independent true positives etc. only under separate procedure",
+      "denominator_definition": "Qualified unseen reference denominators only",
+      "unit": "QUALIFIED_CLAIM_OR_CASE",
+      "rule": "NOT_ACHIEVED; precision/recall NOT_COMPUTABLE; no qualified denominator here",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    }
+  ],
+  "partition_keys": [
+    "benchmark",
+    "version",
+    "revision",
+    "split",
+    "locale",
+    "predicate",
+    "audit_type",
+    "official_submode",
+    "evidence_origin",
+    "unit"
+  ],
+  "metric_record_template": {
+    "numerator": null,
+    "denominator": null,
+    "unit": null,
+    "benchmark": null,
+    "version": null,
+    "contract": null,
+    "contract_sha256": null,
+    "evidence": null,
+    "limitations": null,
+    "method": null,
+    "state": null
+  },
+  "additional_required_observations": [
+    "processing_success",
+    "processing_error",
+    "blocked",
+    "not_evaluable_current_evidence",
+    "abstention_reason",
+    "abstention_justified",
+    "abstention_unjustified",
+    "abstention_unknown_unreviewable",
+    "semantic_supported",
+    "semantic_contradicted",
+    "recovery_state",
+    "unattempted",
+    "evidence_excluded_or_reserved"
+  ],
+  "abstention_review": "Exactly JUSTIFIED / UNJUSTIFIED / UNKNOWN_UNREVIEWABLE; sum equals actual abstentions in identical unit/predicate partition. JUSTIFIED needs evidenced prerequisite failure; UNJUSTIFIED needs evidence all prerequisites satisfied plus violated mandatory decision rule; insufficient review or unsupported assertions => UNKNOWN_UNREVIEWABLE.",
+  "official_record_fields": [
+    "archived_producer_time",
+    "present_evaluation_time",
+    "input_hash",
+    "evaluator_revision",
+    "config_hash",
+    "environment",
+    "command",
+    "exit_code",
+    "receipt_hash",
+    "valid_result",
+    "submode",
+    "planned_population",
+    "eligible_population",
+    "selected_population_gap"
+  ],
+  "prohibited_aggregation": [
+    "tasks+responses",
+    "trajectories+audits",
+    "retry attempts as unique members",
+    "SWE overlap as new logical tasks",
+    "structural decisions as semantic verdicts"
+  ],
+  "comparison": "Matched input hashes, units, predicates and compatible revisions/config/reference; noncomparable pairs explicit",
+  "no_measurements_in_preparation": true,
+  "applicability_policy": {
+    "universe": "All selected unit memberships × eight predicate families from the execution plan; retained exact pair ledger",
+    "classification": [
+      "APPLICABLE",
+      "NOT_APPLICABLE",
+      "UNKNOWN_APPLICABILITY"
+    ],
+    "unknown_policy": "Included conservatively in applicable denominator; separately disclosed",
+    "not_applicable_requires": "Versioned semantic domain exclusion, evidence and rationale; never evidence/runtime/output/reference/reserve unavailability",
+    "reconciliation": "Universe = applicable including unknown + genuine not_applicable; exact sets/counts; all applicable pairs remain in audit denominator",
+    "reporting": "Separate structural/provenance/semantic coverage and per-predicate NA/missing/unknown counts"
+  },
+  "abstention_partition": [
+    "JUSTIFIED",
+    "UNJUSTIFIED",
+    "UNKNOWN_UNREVIEWABLE"
+  ],
+  "abstention_evidence_requirements": "Normative Audit correction 001 in contract; unknown is neither justified nor unjustified by default"
+}

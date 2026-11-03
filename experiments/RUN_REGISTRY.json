@@ -209,13 +209,13 @@
       ],
       "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
       "formal_qualification": "NOT_ACHIEVED",
-      "status": "RESERVED_FULL_CORPUS_PREPARATION_NOT_READY_NOT_EXECUTED",
+      "status": "RESERVED_EXPERIMENTAL_CONTRACT_REV004_NOT_APPROVED_NOT_EXECUTED",
       "campaign_execution": "NOT_EXECUTED",
-      "contract_status": "DRAFT_REVISION_003_NOT_APPROVED",
+      "contract_status": "DRAFT_REVISION_004_NOT_APPROVED",
       "population_quota": null,
       "identity_role": "RESERVED_SERIES_AND_PREPARATION_LOCATOR_NOT_PHYSICAL_EXECUTION",
       "execution_campaign_id": "NOT_ASSIGNED_REQUIRES_FRESH_ID_AT_AUTHORIZATION",
-      "contract_revision": "contracts/revision-003/RUN_CONTRACT.md",
+      "contract_revision": "contracts/revision-004/RUN_CONTRACT.md",
       "full_corpus_task_memberships": 10096,
       "full_corpus_logical_task_variants": 9273,
       "engineering_coverage_commitment": "2ff9bcde25ddf4e144fe56c78763e72b6820bab9df18a90c403dd3df9a35f451",
@@ -229,13 +229,28 @@
         "status": "SIX_FAMILY_PARTIAL_CAMPAIGN_BLOCKED",
         "offline_and_full_official_separate": true
       },
-      "contract_identity": "pgop1.run004.multibenchmark.contract.rev003",
-      "contract_sha256": "dea6f86b07e71635fdc76be605aa42a35e3b0eb5f3b0928317d77f5b52e24cce",
-      "preparation_status": "PGOP1_RUN004_CONTRACT_AND_EVALUATOR_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "contract_identity": "pgop1.run004.multibenchmark.contract.rev004",
+      "contract_sha256": "a1db91f6a6905c5c94abbf0e67dca4a411be5ca7ef1a548e0fec1adac4f8d212",
+      "preparation_status": "PGOP1_RUN004_EXPERIMENTAL_CONTRACT_REV004_PREPARED",
       "convergence_readiness": {
         "path": "Engineering/PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001/RUN004_READINESS_MATRIX.json",
         "sha256": "e9b81980bd1812fbdfbe0b98ed1824f278522f00c60137a9d3d516a41301dddb",
         "full_ready_families": 0
+      },
+      "previous_contract_revisions": [
+        {
+          "identity": "pgop1.run004.multibenchmark.contract.rev003",
+          "path": "contracts/revision-003/RUN_CONTRACT.md",
+          "sha256": "dea6f86b07e71635fdc76be605aa42a35e3b0eb5f3b0928317d77f5b52e24cce"
+        }
+      ],
+      "approach_approval": "OWNER_APPROVED_CONCEPT_ONLY",
+      "modality_A": "PRIMARY_MANDATORY_FULL_SELECTED_POPULATIONS",
+      "modality_B": "COMPLEMENTARY_NOT_UNIVERSAL_A_START_OR_COMPLETENESS_GATE",
+      "rev004_readiness": {
+        "path": "Engineering/PGOP1_RUN004_CONTRACT_REV004_001/RUN004_READINESS_MATRIX.json",
+        "sha256": "ac36dddf2f1b00a076795d62ef2ffa34f6db3c2a49158b0530e6499c524ff15d",
+        "A_start": "NOT_AUTHORIZED_PENDING_EXECUTION_GATES"
       }
     }
   ],
@@ -327,6 +342,14 @@
       "contract_revision": "pgop1.run004.multibenchmark.contract.rev003",
       "results_sha256": "c8f0ad65c48165014835f21a80f976c1b5829e055a0bc371c33c4bef182ac000",
       "readiness_sha256": "e9b81980bd1812fbdfbe0b98ed1824f278522f00c60137a9d3d516a41301dddb"
+    },
+    {
+      "ID": "PGOP1_RUN004_CONTRACT_REV004_001",
+      "baseline_commit": "c1ec85e337f93952c7aa82ce4adaaef1e739e7d3",
+      "contract_identity": "pgop1.run004.multibenchmark.contract.rev004",
+      "contract_sha256": "a1db91f6a6905c5c94abbf0e67dca4a411be5ca7ef1a548e0fec1adac4f8d212",
+      "run004_execution": "NOT_EXECUTED",
+      "scope": "CONTRACT_ENGINEERING_ONLY"
     }
   ]
 }

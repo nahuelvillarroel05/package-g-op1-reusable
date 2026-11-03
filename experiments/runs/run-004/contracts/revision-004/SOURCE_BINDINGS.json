@@ -1,0 +1,42 @@
+{
+  "schema": "pgop1.run004.rev004.source-bindings.v1",
+  "baseline_commit": "c1ec85e337f93952c7aa82ce4adaaef1e739e7d3",
+  "baseline_tree": "0235e212ff569f5e5849050b60cb0555c70ff370",
+  "branch": "experimental/pgop1-runs",
+  "initial_status": "CLEAN",
+  "main_ref_before": "NO_LOCAL_MAIN_OR_ORIGIN_MAIN_REF",
+  "inputs": [
+    {
+      "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\Active_Candidate\\repo\\experiments\\runs\\run-004\\contracts\\revision-003\\RUN_CONTRACT.md",
+      "sha256": "dea6f86b07e71635fdc76be605aa42a35e3b0eb5f3b0928317d77f5b52e24cce",
+      "bytes": 10669
+    },
+    {
+      "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\Active_Candidate\\repo\\experiments\\runs\\run-004\\RUN004_SOURCE_MANIFEST.json",
+      "sha256": "1b7d9c8f7b77f4c5354e4d57b279a7eeabb60c79eaa830755fe09849d623ca76",
+      "bytes": 19726
+    },
+    {
+      "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\FINAL_HANDOFF.md",
+      "sha256": "6e6d7809302a3209a2b03e8ff097882663a548a56df8eb4c047d7de8827ea878",
+      "bytes": 10046
+    },
+    {
+      "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\RUN004_READINESS_MATRIX.json",
+      "sha256": "e9b81980bd1812fbdfbe0b98ed1824f278522f00c60137a9d3d516a41301dddb",
+      "bytes": 10826
+    },
+    {
+      "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_FULL_MULTIBENCHMARK_CORPUS_001\\OFFICIAL_POPULATION_MANIFEST.json",
+      "sha256": "7a155399cd1d11678bf3c0fca411ca2480c3b18a9341f983b1d98ecf8bddfe73",
+      "bytes": 493914
+    },
+    {
+      "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_FULL_MULTIBENCHMARK_CORPUS_001\\FULL_TASK_INVENTORY.json",
+      "sha256": "217ea0e6dddb8fce056c3db758c3f5c193758e1e055fb3db49177dfabfc83a65",
+      "bytes": 14739506
+    }
+  ],
+  "source_body_scan": "NOT_PERFORMED; only population/inventory manifest bytes rehashed",
+  "owner_authority": "Current request PGOP1 RUN004 EXPERIMENTAL PURPOSE AND CONTRACT REV004; conceptual approach only, document engineering, audits, local commit and ZIP; execution not authorized"
+}

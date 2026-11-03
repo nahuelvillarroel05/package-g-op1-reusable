@@ -1,0 +1,136 @@
+{
+  "schema": "pgop1.run004.readiness.v4",
+  "contract": "pgop1.run004.multibenchmark.contract.rev004",
+  "approach_approval": "OWNER_APPROVED_CONCEPT_ONLY",
+  "contract_status": "NOT_APPROVED",
+  "final_freeze": "NOT_ISSUED",
+  "execution": "NOT_EXECUTED",
+  "A_start": "NOT_AUTHORIZED_PENDING_EXECUTION_GATES",
+  "A_complete": "NOT_MEASURED_NOT_EXECUTED",
+  "B_universal_gate_for_A": false,
+  "gates": [
+    {
+      "gate": "CANDIDATE_FREEZE",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "POPULATION_FREEZE",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "HASH_REVISION_VERIFICATION",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "SIX_ADAPTER_VALIDATION",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "PROCESSING_PLAN_VALIDATION",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "CHECKPOINT_RECOVERY_QUALIFICATION",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "STOP_AND_BUDGET_BINDING",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "RESOURCE_CHECK_A_AND_B_SEPARATE",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "EXCLUSIONS_CONTAMINATION_FREEZE",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "EXECUTION_TECHNICAL_AUDIT",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    },
+    {
+      "gate": "OWNER_EXPLICIT_AUTHORIZATION",
+      "status": "NOT_SATISFIED_FOR_EXECUTION",
+      "evidence_required": "New exact execution binding and technical review; existing engineering evidence may be referenced but is not final approval"
+    }
+  ],
+  "hash_check_this_preparation": "SOURCE_PLAN_AND_POPULATION_INVENTORY_BYTES_VERIFIED; no full source body rehash or adapter/evaluator execution",
+  "families": [
+    {
+      "benchmark": "swebench",
+      "version": "full/lite/verified/multilingual",
+      "selected_population": 3642,
+      "unit": "VARIANT_SPLIT_MEMBERSHIP",
+      "A_processing": "PLANNED_FULL_SELECTED_POPULATION_NOT_EXECUTED",
+      "A_semantic_readiness": "PREDICATE_SPECIFIC_INSUFFICIENT_OR_UNVERIFIED",
+      "B_readiness": "SUBMODE_SPECIFIC_DEPENDENCIES_UNRESOLVED",
+      "limitation": "Archived outputs/logs only partially available; attribution and reference gaps. Ingestion != patch test execution."
+    },
+    {
+      "benchmark": "swebench_pro_v2",
+      "version": "V2",
+      "selected_population": 642,
+      "unit": "PUBLIC_TASK_DEFINITION_ROW",
+      "A_processing": "PLANNED_FULL_SELECTED_POPULATION_NOT_EXECUTED",
+      "A_semantic_readiness": "PREDICATE_SPECIFIC_INSUFFICIENT_OR_UNVERIFIED",
+      "B_readiness": "SUBMODE_SPECIFIC_DEPENDENCIES_UNRESOLVED",
+      "limitation": "Compatible authentic V2 agent-output population not verified; definitions cannot support agent semantic assessment."
+    },
+    {
+      "benchmark": "terminal_bench_2",
+      "version": "2.0",
+      "selected_population": 89,
+      "unit": "PUBLIC_TASK_DEFINITION_ROW",
+      "A_processing": "PLANNED_FULL_SELECTED_POPULATION_NOT_EXECUTED",
+      "A_semantic_readiness": "PREDICATE_SPECIFIC_INSUFFICIENT_OR_UNVERIFIED",
+      "B_readiness": "SUBMODE_SPECIFIC_DEPENDENCIES_UNRESOLVED",
+      "limitation": "445 archived trials producer69671f... differs from selected2fd12b...;4changed/85unknown task contracts; no equivalence inferred."
+    },
+    {
+      "benchmark": "mcpmark_verified",
+      "version": "Verified",
+      "selected_population": 127,
+      "unit": "PUBLIC_TASK_DEFINITION_ROW",
+      "A_processing": "PLANNED_FULL_SELECTED_POPULATION_NOT_EXECUTED",
+      "A_semantic_readiness": "PREDICATE_SPECIFIC_INSUFFICIENT_OR_UNVERIFIED",
+      "B_readiness": "SUBMODE_SPECIFIC_DEPENDENCIES_UNRESOLVED",
+      "limitation": "759 trajectory artifacts/762 logical results;3missing/30ambiguous identities; final state and service effects not proven."
+    },
+    {
+      "benchmark": "bfcl_v4",
+      "version": "V4",
+      "selected_population": 4696,
+      "unit": "PUBLIC_TASK_DEFINITION_ROW",
+      "A_processing": "PLANNED_FULL_SELECTED_POPULATION_NOT_EXECUTED",
+      "A_semantic_readiness": "PREDICATE_SPECIFIC_INSUFFICIENT_OR_UNVERIFIED",
+      "B_readiness": "SUBMODE_SPECIFIC_DEPENDENCIES_UNRESOLVED",
+      "limitation": "4696 definitions not response population; reserved evidence/exposure, producer compatibility, category/scorer limitations remain."
+    },
+    {
+      "benchmark": "tau_bench",
+      "version": "2.0.0:text-v1",
+      "selected_population": 900,
+      "unit": "LOCALIZED_VARIANT",
+      "A_processing": "PLANNED_FULL_SELECTED_POPULATION_NOT_EXECUTED",
+      "A_semantic_readiness": "PREDICATE_SPECIFIC_INSUFFICIENT_OR_UNVERIFIED",
+      "B_readiness": "SUBMODE_SPECIFIC_DEPENDENCIES_UNRESOLVED",
+      "limitation": "150base/900localized variants; complete compatible trajectories not identified; state/action and semantic judges separate."
+    }
+  ],
+  "previous_readiness": {
+    "path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001\\RUN004_READINESS_MATRIX.json",
+    "sha256": "e9b81980bd1812fbdfbe0b98ed1824f278522f00c60137a9d3d516a41301dddb",
+    "role": "HISTORICAL_REV003_BOTH_MODALITIES_GATE_NOT_CURRENT_A_UNIVERSAL_GATE"
+  }
+}

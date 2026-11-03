@@ -1,3 +1,9 @@
+# Current RUN004 experimental purpose and contract rev004
+
+[Handoff](experiments/runs/run-004/contracts/revision-004/FINAL_HANDOFF.md). Prospective `pgop1.run004.multibenchmark.contract.rev004`. Conceptual campaign approach approved by Owner; contract NOT_APPROVED, final freeze NOT_ISSUED, execution NOT_EXECUTED. Six selected populations unchanged:10,096 memberships/variants,9,273 logical variants. A mandatory experimental PGOP1 audit; B complementary, no universal A start/completeness gate. Execution completeness requires actual attempts and verifiable dispositions, not semantic success. All six dimensions reported separately. Missing authentic outputs remain non-evaluable; all-abstention populations provide no demonstration of semantic capability. Execution gates remain unfulfilled. No model/evaluator/campaign, runtime/src/main change, push or merge.
+
+Previous intervention below is historical; its rev003 both-modalities completion gate is superseded prospectively only. Prior negative results and limits remain valid within their original scope.
+
 # PGOP1: RUN004 contract and evaluator convergence
 
 Result: `PGOP1_RUN004_CONTRACT_AND_EVALUATOR_PARTIAL_WITH_EXACT_LIMITATIONS`.

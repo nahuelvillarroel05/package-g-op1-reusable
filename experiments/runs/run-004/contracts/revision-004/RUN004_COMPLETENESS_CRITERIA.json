@@ -1,0 +1,98 @@
+{
+  "schema": "pgop1.run004.completeness.v4",
+  "contract": "pgop1.run004.multibenchmark.contract.rev004",
+  "execution_status": "NOT_EXECUTED",
+  "dimensions": [
+    {
+      "name": "CAMPAIGN_EXECUTION_COMPLETENESS",
+      "numerator_definition": "Unique selected memberships with actual attempt and verifiable terminal disposition",
+      "denominator_definition": "All selected memberships in each family/version/split/locale",
+      "unit": "SELECTED_MEMBERSHIP",
+      "rule": "Exact ID set equality; attempts>0 for every member; no inflight/ambiguous receipts; all six families",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "PGOP1_AUDIT_COVERAGE",
+      "numerator_definition": "Unique unit-predicate pairs with performed audit and evidence-backed decision, stratified structural/provenance/semantic",
+      "denominator_definition": "All semantically applicable selected unit-predicate pairs from the complete eight-predicate candidate universe, including unavailable evidence and UNKNOWN_APPLICABILITY; planned allocation cannot prune this denominator",
+      "unit": "UNIT_PREDICATE_PAIR",
+      "rule": "Abstentions/errors do not count as completed evidence-backed semantic verdicts; report audit attempts separately",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "EVIDENCE_SUFFICIENCY",
+      "numerator_definition": "Unit-predicate pairs meeting frozen evidence prerequisites",
+      "denominator_definition": "All semantically applicable selected unit-predicate pairs from the complete eight-predicate candidate universe, including unavailable evidence and UNKNOWN_APPLICABILITY; planned allocation cannot prune this denominator",
+      "unit": "UNIT_PREDICATE_PAIR",
+      "rule": "Authentic output necessary for agent semantic predicates, not sufficient; report missing/ambiguous inputs",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "OFFICIAL_EVALUATOR_COVERAGE",
+      "numerator_definition": "Units with actual valid official evaluator result in named submode",
+      "denominator_definition": "Both full selected population mapping and frozen planned/eligible submode population, reported separately",
+      "unit": "SUBMODE_SPECIFIC_UNIT",
+      "rule": "B complementary; never mix calls/trajectories/tasks or static inspection/fresh execution",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "ENGINEERING_QUALITY",
+      "numerator_definition": "Validated requirements or reproduced defects fixed with matched regression evidence, separately",
+      "denominator_definition": "Frozen technical requirement set or reproduced defect set, respectively",
+      "unit": "REQUIREMENT_OR_DEFECT_SEPARATE",
+      "rule": "Do not invent zero defects; open/nonreproduced/unknown defects visible; no model-performance proxy",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    },
+    {
+      "name": "INDEPENDENT_SEMANTIC_QUALIFICATION",
+      "numerator_definition": "Qualified independent true positives etc. only under separate procedure",
+      "denominator_definition": "Qualified unseen reference denominators only",
+      "unit": "QUALIFIED_CLAIM_OR_CASE",
+      "rule": "NOT_ACHIEVED; precision/recall NOT_COMPUTABLE; no qualified denominator here",
+      "observed_numerator": null,
+      "observed_denominator": null,
+      "state": "NOT_MEASURED_NOT_EXECUTED"
+    }
+  ],
+  "execution_complete_iff": [
+    "All six exact frozen selected ID sets reconciled",
+    "Every selected membership has an actual processing attempt and verifiable terminal receipt",
+    "No duplicate inflation, missing or inflight dispositions",
+    "Receipt/checkpoint integrity and recovery verification passed"
+  ],
+  "execution_complete_does_not_imply": [
+    "Semantic capability",
+    "Sufficient evidence",
+    "Official evaluator completeness",
+    "Contract approval",
+    "Owner acceptance",
+    "Independent qualification"
+  ],
+  "all_abstention_population": "NO_SEMANTIC_CAPABILITY_DEMONSTRATED",
+  "family_without_semantically_auditable_evidence": "MANDATORY_MATERIAL_LIMITATION",
+  "official_evaluators_universally_required_for_A": false,
+  "zero_denominator": "NOT_COMPUTABLE",
+  "unknown_denominator": "NOT_COMPUTABLE_UNKNOWN",
+  "applicability_policy": {
+    "universe": "All selected unit memberships × eight predicate families from the execution plan; retained exact pair ledger",
+    "classification": [
+      "APPLICABLE",
+      "NOT_APPLICABLE",
+      "UNKNOWN_APPLICABILITY"
+    ],
+    "unknown_policy": "Included conservatively in applicable denominator; separately disclosed",
+    "not_applicable_requires": "Versioned semantic domain exclusion, evidence and rationale; never evidence/runtime/output/reference/reserve unavailability",
+    "reconciliation": "Universe = applicable including unknown + genuine not_applicable; exact sets/counts; all applicable pairs remain in audit denominator",
+    "reporting": "Separate structural/provenance/semantic coverage and per-predicate NA/missing/unknown counts"
+  }
+}
