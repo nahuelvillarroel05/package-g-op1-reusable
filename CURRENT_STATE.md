@@ -1,16 +1,28 @@
-# PGOP1: full selected multibenchmark corpus engineering
+# PGOP1: multibenchmark evidence qualification
 
-Result: `PGOP1_FULL_MULTIBENCHMARK_CORPUS_PARTIAL_WITH_EXACT_LIMITATIONS`.
-[Handoff](../../PGOP1_FULL_MULTIBENCHMARK_CORPUS_001/FINAL_HANDOFF.md), [coverage](../../PGOP1_FULL_MULTIBENCHMARK_CORPUS_001/FULL_BENCHMARK_COVERAGE_MATRIX.json), [code](../../PGOP1_FULL_MULTIBENCHMARK_CORPUS_001/CODE_REFERENCE.json), [next](docs/engineering/NEXT_STEP.md).
+Result: `PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_PARTIAL_WITH_EXACT_LIMITATIONS`.
+[Handoff](../../PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001/FINAL_HANDOFF.md), [next](docs/engineering/NEXT_STEP.md).
 
-Central branch `experimental/pgop1-runs`. Validated engineering code `96200b02cf8aaf00462a0415a6170aff76fcce51`, tree `aa71a5b76154c514482b47a9a9ca509121d7cb0c`; later metadata-only release HEAD is recorded in the workspace docs/WORKSPACE_STATE.json and the handoff Git receipt. Exact attempts have distinct code identities; neither this candidate nor pilotf424c86 is a universal historical execution revision. Pilot changes imported selectively at9bac0af8, not wholesale merged.
+Experimental code `d8b1766aff0e5bfa4018ccd61de9642cbb14f92e`, tree `fe9063ed7524846a472904077ec35058435befb4`; metadata release identity is separately recorded in docs/WORKSPACE_STATE.json and GIT_VERIFICATION.json. Final regression 1087PASS/3preexisting skips. V1 remains unchanged. On71identical authentic BFCL development rows, structural results3PASS/3REJECT/65abstentions became12PASS/7REJECT/52abstentions;0newsemanticverdicts. Six BFCL code/driver defects corrected; one derived SWE metric reconciled without changing history.
 
-All selected task definitions inventoried, parsed, ingested and freshly recovered:10,096 variant/split memberships or localized variants, 9,273 distinct logical variants. SWE 3,642 memberships / 2,819 task union, ProV2 642, Terminal 89, MCP 127, BFCL 4,696, tau2text-v1 900 variants / 150 base tasks. BFCL sensitivity200references are existing memberships. Final1,051 candidate tests passed,3preexisting skips. Initial partial/aborted/recovery failures retained;11prospective correction records.
+MCP762logical results/759trajectories,33unproven bindings; Terminal445trials,4materiallydifferent task contracts/85UNKNOWN cross-revision; ProV2/tau2text-v1 have0new compatible outputs in bounded official search. SWE264insufficient/2wrong-instance rejections retained,61claims without comparable evaluator predicate;564roleclassified trajectory source files are distinct from264abstentions. Compatible authentic SWE case countUNKNOWN. Context266metadata observations freshly recovered,5negative controls,0redispatch; no full old corpus rebuild.
 
-Selected BFCL archive:5,203 files / 1,089,354 rows, including776,653 responses; raw objects, external ledgers, counters and all 261 indexes corroborated/recovered. Restricted structural passes are not semanticSUPPORTED. SWE 4,470 source files processed:1,144 parser SUPPORTED,3,313 UNSUPPORTED,13 ERROR;266 audit requests=>264 INSUFFICIENT_EVIDENCE/2 identity-binding INTEGRITY_FAILURE,61 claims insufficient;0source-byte mismatches. Historical3,802 sources / 4,102 attempts preserved, not new model runs.
+RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. Revision002remainsdraft; RUN004_FULL_PREPARATION_BLOCKED_WITH_EXACT_LIMITATIONS. Six-family preparation, no155case cap.2180BFCLreserve records excluded; machine hashes/task-definition parsing are disclosed in access log, no reserve scoring/reference-label lookup. UNKNOWN_PENDING_ACCESS_REVIEW retained.
 
-MCP 762 logical results have duplicate source representations,759 trajectories. Terminal 445 published trials/1,338 files; selected2fd source and producer-declared696 source differ in89 task manifests/1 evaluator, so compatibility remainsUNKNOWN despite exact supplementary bytes. ProV2 has no acquired compatible authentic output bundle; tau2pinned catalog has72 metadata entries, only2 v2.0 templates,0 compatible authentic submissions. Selected result sources are bounded; not all public model outputs worldwide are claimed.
+I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED; OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED; GATE_11=BLOCKED; INDEPENDENT_PRECISION=NOT_COMPUTABLE; INDEPENDENT_RECALL=NOT_COMPUTABLE; INDEPENDENT_CUSTODY=NOT_PROVEN; PHYSICAL_C2=DEFERRED_NOT_WAIVED. OD03, Source025 and OD05 pending.
 
-RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. Prospective draft revision002 and source/evaluator/code/predicate/readiness/exclusion/recovery plans updated. No 155-case cap. Corpus is development material, not independent holdout. Pilot exclusions and BFCL20..39 no-scoring reserve retained; eligibilityUNKNOWN_PENDING_ACCESS_REVIEW. Original source bodies/stores excluded from redistribution; continuity ZIP carries authored code and source-free metadata/commitments only.
+No models/training/privateGOLD, paidAPI, official evaluator, benchmark/workstation task execution, infrastructure, production signing, Windows permission changes, main/src/formal promotion, push or authentication retry.
 
-I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED; OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED; GATE_11=BLOCKED; INDEPENDENT_PRECISION=NOT_COMPUTABLE; INDEPENDENT_RECALL=NOT_COMPUTABLE; INDEPENDENT_CUSTODY=NOT_PROVEN; PHYSICAL_C2=DEFERRED_NOT_WAIVED. OD03, Source025 and OD05 pending. No RUN004, regrade, model/training, privateGOLD, workstation task execution, paidAPI, production signer, permission change, src/main promotion or push. Remote authentication was not retried.
+Historical statuses retained (not new executions):
+
+```text
+RUN_001=FROZEN
+RUN_002_ENGINEERING=COMPLETE_WITH_EXACT_SCOPE
+RUN_002_RESULTS=FROZEN
+WIN206=REPAIRED_WITH_EXACT_SCOPE
+F16=DEFERRED_LINUX_VALIDATION_PENDING
+INDEPENDENT_SEMANTIC_HOLDOUT_NOT_AVAILABLE
+RUN_002_INDEPENDENT_SEMANTIC_QUALIFICATION=NOT_ACHIEVED
+RUN_003_ENGINEERING=COMPLETE
+RUN_003_INDEPENDENT_SEMANTIC_QUALIFICATION=NOT_ACHIEVED
+```

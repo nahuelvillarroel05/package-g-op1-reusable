@@ -192,6 +192,120 @@
       "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
       "PROMOTION_STATUS": "NOT_PROPOSED",
       "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "BFCL-V2-EMPTY-CALLS-VACUOUS-PREDICATES",
+      "DISCOVERED_IN_RUN": "ENGINEERING_QUALIFICATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001\\BFCL_DEFECT_EMPTY_CALLS_REPRODUCER_001.json",
+      "REPRODUCER_SHA256": "cca61f78eb099b190ceec7808bc399c35606af3acf5e78b845d72727cfa7ee11",
+      "ROOT_CAUSE": "Empty native list had vacuous true name/argument predicates; fixed null name/arguments with count false.",
+      "FIX_COMMIT": "466f89e08a27dd02af4d64747d2c82ea081d8846",
+      "VALIDATED_CANDIDATE_COMMIT": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "REGRESSION_RESULTS": {
+        "passed": 1087,
+        "preexisting_skips": 3,
+        "regression_index_sha256": "9c6570a4c62b31a192b83f14188d6188c3ce9caab44ea69f22aebadb353e08a5"
+      },
+      "AUDIT_STATUS": "SCOPED_SOL_ASTRA_TECHNICAL_REVIEWS_COMPLETE",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "BFCL-V2-UNICODE-CATEGORY-DIGITS",
+      "DISCOVERED_IN_RUN": "ENGINEERING_QUALIFICATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001\\BFCL_DEFECT_UNICODE_ID_REPRODUCER_001.json",
+      "REPRODUCER_SHA256": "6daafe16a5db91490b40d671b093a9c129b2812ad67033bd247a57db050bff4b",
+      "ROOT_CAUSE": "Unicode decimal digits entered a supposed original numeric task category; restricted to ASCII.",
+      "FIX_COMMIT": "466f89e08a27dd02af4d64747d2c82ea081d8846",
+      "VALIDATED_CANDIDATE_COMMIT": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "REGRESSION_RESULTS": {
+        "passed": 1087,
+        "preexisting_skips": 3,
+        "regression_index_sha256": "9c6570a4c62b31a192b83f14188d6188c3ce9caab44ea69f22aebadb353e08a5"
+      },
+      "AUDIT_STATUS": "SCOPED_SOL_ASTRA_TECHNICAL_REVIEWS_COMPLETE",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "BFCL-V2-LIVE-ID-GRAMMAR-TOO-NARROW",
+      "DISCOVERED_IN_RUN": "ENGINEERING_QUALIFICATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001\\BFCL_DEFECT_LIVE_ID_GRAMMAR_REPRODUCER_001.json",
+      "REPRODUCER_SHA256": "15bbe126b68c26bb3f8474ef683eefe2ac078be1f74fd3941704e7d5db1fb165",
+      "ROOT_CAUSE": "Original live IDs have three numeric suffix components; supported exact original grammar, no rewriting.",
+      "FIX_COMMIT": "8b8e5eedcebfe39320457e9cbb33159d81c0fbf0",
+      "VALIDATED_CANDIDATE_COMMIT": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "REGRESSION_RESULTS": {
+        "passed": 1087,
+        "preexisting_skips": 3,
+        "regression_index_sha256": "9c6570a4c62b31a192b83f14188d6188c3ce9caab44ea69f22aebadb353e08a5"
+      },
+      "AUDIT_STATUS": "SCOPED_SOL_ASTRA_TECHNICAL_REVIEWS_COMPLETE",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "A-F01",
+      "DISCOVERED_IN_RUN": "ENGINEERING_QUALIFICATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001\\astra_review\\ASTRA_ADVERSARIAL_INITIAL_RESULTS.json",
+      "REPRODUCER_SHA256": "bf0b4e5f206da4d641f8073d4d020b0bcb0a0343b357f222447238ca4217ae13",
+      "ROOT_CAUSE": "Mutable derived provenance could spoof source/model/category/revision or replace task sources; now bound exactly to hashed PLAN before scoring.",
+      "FIX_COMMIT": "8b8e5eedcebfe39320457e9cbb33159d81c0fbf0",
+      "VALIDATED_CANDIDATE_COMMIT": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "REGRESSION_RESULTS": {
+        "passed": 1087,
+        "preexisting_skips": 3,
+        "regression_index_sha256": "9c6570a4c62b31a192b83f14188d6188c3ce9caab44ea69f22aebadb353e08a5"
+      },
+      "AUDIT_STATUS": "SCOPED_SOL_ASTRA_TECHNICAL_REVIEWS_COMPLETE",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "BFCL-V2-NATIVE-STRING-DIALECT-UNPROVEN",
+      "DISCOVERED_IN_RUN": "ENGINEERING_QUALIFICATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001\\BFCL_DEFECT_NATIVE_STRING_DIALECT_REPRODUCER_001.json",
+      "REPRODUCER_SHA256": "4256fa3eed08a5638ec3b21fcb61cac2fad980a32286e1427c20b9bc681a5414",
+      "ROOT_CAUSE": "Unproven native string syntax was treated as a definite format reject; unsupported syntax now abstains without repair.",
+      "FIX_COMMIT": "8b8e5eedcebfe39320457e9cbb33159d81c0fbf0",
+      "VALIDATED_CANDIDATE_COMMIT": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "REGRESSION_RESULTS": {
+        "passed": 1087,
+        "preexisting_skips": 3,
+        "regression_index_sha256": "9c6570a4c62b31a192b83f14188d6188c3ce9caab44ea69f22aebadb353e08a5"
+      },
+      "AUDIT_STATUS": "SCOPED_SOL_ASTRA_TECHNICAL_REVIEWS_COMPLETE",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "BFCL-DRIVER-NORMALIZED-ROW-DUPLICATE",
+      "DISCOVERED_IN_RUN": "ENGINEERING_QUALIFICATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001\\BFCL_DEFECT_NORMALIZED_ROW_ID_REPRODUCER_001.json",
+      "REPRODUCER_SHA256": "20b30e08ff440e632cea45ad68a29c52bfac24f2c1df81c9665a172f206e773d",
+      "ROOT_CAUSE": "Alias spellings could bypass row deduplication; normalized identity duplicates reject; exact nonnegative integer indices enforced.",
+      "FIX_COMMIT": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "VALIDATED_CANDIDATE_COMMIT": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "REGRESSION_RESULTS": {
+        "passed": 1087,
+        "preexisting_skips": 3,
+        "regression_index_sha256": "9c6570a4c62b31a192b83f14188d6188c3ce9caab44ea69f22aebadb353e08a5"
+      },
+      "AUDIT_STATUS": "SCOPED_SOL_ASTRA_TECHNICAL_REVIEWS_COMPLETE",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "QUAL-METRIC-001",
+      "DISCOVERED_IN_RUN": "ENGINEERING_QUALIFICATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001\\SWE_TRAJECTORY_METRIC_RECONCILIATION.json",
+      "REPRODUCER_SHA256": "e25f3d6c619a9fa6ee7311f7b6bdb79788726818fb8aeaba21895a550011a630",
+      "ROOT_CAUSE": "Historical derived SWE trajectory count264 conflated with audit abstentions; current matrix reports564role-classified files separately and compatible authentic outputsUNKNOWN. Historical reports unchanged.",
+      "FIX_COMMIT": "NOT_APPLICABLE_CURRENT_WORKSPACE_REPORT",
+      "VALIDATED_CANDIDATE_COMMIT": null,
+      "REGRESSION_RESULTS": {
+        "passed": 1087,
+        "preexisting_skips": 3,
+        "regression_index_sha256": "9c6570a4c62b31a192b83f14188d6188c3ce9caab44ea69f22aebadb353e08a5"
+      },
+      "AUDIT_STATUS": "SCOPED_SOL_ASTRA_TECHNICAL_REVIEWS_COMPLETE",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED",
+      "FIX_KIND": "CURRENT_REPORT_CORRECTION_NOT_RUNTIME_CODE",
+      "METADATA_RELEASE_REFERENCE": "GIT_VERIFICATION.json"
     }
   ],
   "required_fields": [

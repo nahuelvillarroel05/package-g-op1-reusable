@@ -219,7 +219,10 @@
       "full_corpus_task_memberships": 10096,
       "full_corpus_logical_task_variants": 9273,
       "engineering_coverage_commitment": "2ff9bcde25ddf4e144fe56c78763e72b6820bab9df18a90c403dd3df9a35f451",
-      "final_freeze": "NOT_ISSUED"
+      "final_freeze": "NOT_ISSUED",
+      "evidence_qualification_status": "RUN004_FULL_PREPARATION_BLOCKED_WITH_EXACT_LIMITATIONS",
+      "qualification_candidate_commit": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "qualification_readiness_sha256": "d21ad25b81064e03843ddcb0f2916828501b55f38be76b574ca097cd502e83db"
     }
   ],
   "pilots": [
@@ -273,6 +276,14 @@
       "status": "PARTIAL_WITH_EXACT_LIMITATIONS_TASK_COVERAGE_COMPLETE",
       "run004_execution": "NOT_EXECUTED",
       "coverage_sha256": "2ff9bcde25ddf4e144fe56c78763e72b6820bab9df18a90c403dd3df9a35f451"
+    },
+    {
+      "ID": "PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001",
+      "candidate_commit": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+      "candidate_tree": "fe9063ed7524846a472904077ec35058435befb4",
+      "status": "PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "run004_execution": "NOT_EXECUTED",
+      "coverage_sha256": "7c2492d1ddf3be4b4baee72128397798cd13f018dbb03db367db0352d8eb750a"
     }
   ]
 }

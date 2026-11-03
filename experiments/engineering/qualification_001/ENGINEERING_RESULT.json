@@ -1,0 +1,26 @@
+{
+  "target": "PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_001",
+  "status": "PGOP1_MULTIBENCHMARK_EVIDENCE_QUALIFICATION_PARTIAL_WITH_EXACT_LIMITATIONS",
+  "code_commit": "d8b1766aff0e5bfa4018ccd61de9642cbb14f92e",
+  "code_tree": "fe9063ed7524846a472904077ec35058435befb4",
+  "regressions_passed": 1087,
+  "preexisting_skips": 3,
+  "authentic_bfcl_rows": 71,
+  "structural_before": {
+    "pass": 3,
+    "reject": 3,
+    "abstain": 65
+  },
+  "structural_after": {
+    "pass": 12,
+    "reject": 7,
+    "abstain": 52
+  },
+  "new_semantic_decisive_verdicts": 0,
+  "new_compatible_authentic_output_bundles": 0,
+  "code_driver_defects_fixed": 6,
+  "derived_metric_defects_corrected": 1,
+  "RUN004_CONTRACT": "NOT_APPROVED",
+  "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+  "RUN004_EXECUTION": "NOT_EXECUTED"
+}
