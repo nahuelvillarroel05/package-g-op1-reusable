@@ -1,0 +1,107 @@
+{
+  "schema": "pgop1.run004.full-corpus-readiness.v1",
+  "status": "NOT_READY_WITH_EXACT_LIMITATIONS",
+  "task_population": {
+    "private_manifest_sha256": "217ea0e6dddb8fce056c3db758c3f5c193758e1e055fb3db49177dfabfc83a65"
+  },
+  "families": [
+    {
+      "BENCHMARK_ID": "swebench",
+      "OFFICIAL_TASK_POPULATION": 2819,
+      "UNIT": "DISTINCT_SELECTED_TASK",
+      "task_inventory_ingestion_recovery": "PASS",
+      "authentic_output_comparability": "NOT_COMPLETE",
+      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
+      "producer_authentication": "NOT_ESTABLISHED",
+      "official_regrade_ready": false,
+      "semantic_reference_qualification": "NOT_ACHIEVED",
+      "final_campaign_freeze": "NOT_ISSUED"
+    },
+    {
+      "BENCHMARK_ID": "swebench_pro_v2",
+      "OFFICIAL_TASK_POPULATION": 642,
+      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
+      "task_inventory_ingestion_recovery": "PASS",
+      "authentic_output_comparability": "NOT_COMPLETE",
+      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
+      "producer_authentication": "NOT_ESTABLISHED",
+      "official_regrade_ready": false,
+      "semantic_reference_qualification": "NOT_ACHIEVED",
+      "final_campaign_freeze": "NOT_ISSUED"
+    },
+    {
+      "BENCHMARK_ID": "terminal_bench_2",
+      "OFFICIAL_TASK_POPULATION": 89,
+      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
+      "task_inventory_ingestion_recovery": "PASS",
+      "authentic_output_comparability": "NOT_COMPLETE",
+      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
+      "producer_authentication": "NOT_ESTABLISHED",
+      "official_regrade_ready": false,
+      "semantic_reference_qualification": "NOT_ACHIEVED",
+      "final_campaign_freeze": "NOT_ISSUED"
+    },
+    {
+      "BENCHMARK_ID": "mcpmark_verified",
+      "OFFICIAL_TASK_POPULATION": 127,
+      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
+      "task_inventory_ingestion_recovery": "PASS",
+      "authentic_output_comparability": "NOT_COMPLETE",
+      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
+      "producer_authentication": "NOT_ESTABLISHED",
+      "official_regrade_ready": false,
+      "semantic_reference_qualification": "NOT_ACHIEVED",
+      "final_campaign_freeze": "NOT_ISSUED"
+    },
+    {
+      "BENCHMARK_ID": "bfcl_v4",
+      "OFFICIAL_TASK_POPULATION": 4696,
+      "UNIT": "PUBLIC_TASK_DEFINITION_ROW",
+      "task_inventory_ingestion_recovery": "PASS",
+      "authentic_output_comparability": "NOT_COMPLETE",
+      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
+      "producer_authentication": "NOT_ESTABLISHED",
+      "official_regrade_ready": false,
+      "semantic_reference_qualification": "NOT_ACHIEVED",
+      "final_campaign_freeze": "NOT_ISSUED"
+    },
+    {
+      "BENCHMARK_ID": "tau_bench",
+      "OFFICIAL_TASK_POPULATION": 900,
+      "UNIT": "LOCALIZED_VARIANT",
+      "task_inventory_ingestion_recovery": "PASS",
+      "authentic_output_comparability": "NOT_COMPLETE",
+      "rights_clearance": "UNKNOWN_NOT_INDEPENDENTLY_CLEARED",
+      "producer_authentication": "NOT_ESTABLISHED",
+      "official_regrade_ready": false,
+      "semantic_reference_qualification": "NOT_ACHIEVED",
+      "final_campaign_freeze": "NOT_ISSUED"
+    }
+  ],
+  "engineering_ingestion_is_execution": false,
+  "bfcl_structural_scope_is_semantic_qualification": false,
+  "boundaries": {
+    "I0-I6": "FORMALLY_FROZEN",
+    "I7": "INCOMPLETE",
+    "FORMAL_I7": "NOT_COMPLETED",
+    "OP1_OPERATIONAL_QUALIFICATION": "NOT_ACHIEVED",
+    "GATE_11": "BLOCKED",
+    "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+    "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+    "INDEPENDENT_CUSTODY": "NOT_PROVEN",
+    "PHYSICAL_C2": "DEFERRED_NOT_WAIVED",
+    "OD03": "PENDING",
+    "Source025": "PENDING",
+    "OD05": "PENDING",
+    "RUN004_CONTRACT": "NOT_APPROVED",
+    "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+    "RUN004_EXECUTION": "NOT_EXECUTED",
+    "PRIVATE_GOLD_ACCESS": "NOT_PERFORMED",
+    "MODEL_RUNS": 0,
+    "PAID_API_CALLS": 0,
+    "BENCHMARK_TASK_EXECUTIONS": 0,
+    "OFFICIAL_EVALUATOR_EXECUTIONS": 0,
+    "PUSH": "NOT_PERFORMED",
+    "MAIN_CHANGE": "NOT_PERFORMED"
+  }
+}

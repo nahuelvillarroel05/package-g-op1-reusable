@@ -16,6 +16,182 @@
       },
       "AUDIT_STATUS": "PENDING_EXACT_COMMIT_REVIEW; final local addenda bind actual outcome",
       "PROMOTION_STATUS": "NOT_PROPOSED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-001",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "integration/CONTEXT_RECOVERY_BASELINE_REPRODUCER_CANONICAL_LOG.txt",
+      "REPRODUCER": {
+        "artifact_id": "integration/CONTEXT_RECOVERY_BASELINE_REPRODUCER_CANONICAL_LOG.txt",
+        "sha256": "4bd185fbe566ecd1dc91c4ceeed82187e6aa9e2dd614c1ccd802a6415dff9bf2"
+      },
+      "ROOT_CAUSE": "Existing corrupt-index recovery",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "9bac0af8d6566fd445bb2e45151a090066f961a1",
+      "REGRESSION_RESULTS": "Selective import of previously repaired experimental Engine; original baseline2fail/4pass, imported6pass. No formalI4/I5 change.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-002",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "families/calling/BFCL_PARSER_BASELINE.json",
+      "REPRODUCER": {
+        "artifact_id": "families/calling/BFCL_PARSER_BASELINE.json",
+        "sha256": "44e0d44519c6447a7bdd3c5c05d9e83b811fb2ee5adaf4943dae27836ecf5aaa"
+      },
+      "ROOT_CAUSE": "Legitimate missing-function empty turns",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "d824ffeb79136ed6b93f2b918d8142f2cd6a881d",
+      "REGRESSION_RESULTS": "Source-declared missing-function indexes permit only the corresponding nonfirst empty turns;4496->4696 BFCL definitions.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-003",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "integration/PROSPECTIVE_PARSER_REGRESSION.json",
+      "REPRODUCER": {
+        "artifact_id": "integration/PROSPECTIVE_PARSER_REGRESSION.json",
+        "sha256": "686de67b3cd1b777d793bfcad2ad95919d3ddd02ab3e7efc76cb12effda5c8dc"
+      },
+      "ROOT_CAUSE": "Localized tau task formats",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "d824ffeb79136ed6b93f2b918d8142f2cd6a881d",
+      "REGRESSION_RESULTS": "Strict supported language/path/schema parsing, no inferred canonical aliases; selected50->900 variants.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-004",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "integration/PROSPECTIVE_SOURCE_SESSION_AND_PARSERS.md",
+      "REPRODUCER": {
+        "artifact_id": "integration/PROSPECTIVE_SOURCE_SESSION_AND_PARSERS.md",
+        "sha256": "71afabce4212e0e0059c40a973f2e4b88004d6ee675d587033ee4947a0133d3c"
+      },
+      "ROOT_CAUSE": "Repeated whole-source parsing",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "d824ffeb79136ed6b93f2b918d8142f2cd6a881d",
+      "REGRESSION_RESULTS": "Immutable verified parse session, every source checked before/after parse and at successful exit; strict default API preserved.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-005",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "integration/ROOT_DRIVER_INITIAL_REVIEW.json",
+      "REPRODUCER": {
+        "artifact_id": "integration/ROOT_DRIVER_INITIAL_REVIEW.json",
+        "sha256": "c78ada2e17382afb4b77fb71a96761cf802de7917aadcada6bfeb6c045431c51"
+      },
+      "ROOT_CAUSE": "Truncated recovery falsePASS",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "add68d39e2c4057f3b042e8da90409ea466ff895",
+      "REGRESSION_RESULTS": "Bind plan/start/config/count/membership/Engine head/source receipts; reject empty/truncated population.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-006",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "integration/ROOT_ARCHIVE_DRIVER_FINAL_REVIEW.json",
+      "REPRODUCER": {
+        "artifact_id": "integration/ROOT_ARCHIVE_DRIVER_FINAL_REVIEW.json",
+        "sha256": "cd66a162450d3a65d5edfe30ba2d26bf37df253db9ce946551a7f371e6eefd75"
+      },
+      "ROOT_CAUSE": "Archive task inputs and per-file counters",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "794c3e058ce68a8ea3c2cc04f71cd7cf432f2ea9",
+      "REGRESSION_RESULTS": "Hash-bound auxiliary task schemas; strict duplicate-key rejection; stage counters until full file validation.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-007",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "attempts/attempt-0002/ABORT_RECEIPT.json",
+      "REPRODUCER": {
+        "artifact_id": "attempts/attempt-0002/ABORT_RECEIPT.json",
+        "sha256": "349731313479da1e1ca8144efd48e1f4b3bc70035a42aa4c3f404d742446f939"
+      },
+      "ROOT_CAUSE": "Source instance and response identity",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "05e69acc94f6bf4209e6e0a26ce20d6df5b5c115",
+      "REGRESSION_RESULTS": "Include source instance in response identity; Engine source identity separately repaired at3f3bd9c.99128aborted rows retained;0actualcollisions observed there; synthetic counterexample proved risk.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-008",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "ASTRA_ADVERSARIAL_CHECKS_001.json",
+      "REPRODUCER": {
+        "artifact_id": "ASTRA_ADVERSARIAL_CHECKS_001.json",
+        "sha256": "d42b7058d897b7a8485e89b473db1411be4b6a1d41bd0e209d27908fb84dc717"
+      },
+      "ROOT_CAUSE": "External ledgers/counters not corroborated",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "14181151e9afec09f5cde6b1eea66b2d7e4464db",
+      "REGRESSION_RESULTS": "Prospective producer-bound source/ledger/predicate/count corroborator;13controls and full1089354row corroborationPASS, no historical producer rewrite.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-009",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "integration/TB_DOTTED_ID_REPRODUCER.json",
+      "REPRODUCER": {
+        "artifact_id": "integration/TB_DOTTED_ID_REPRODUCER.json",
+        "sha256": "dd3e7cb78fc76aa6064c9796d77672af9e9dee79072dde8c0e8c1f8fa7d5408d"
+      },
+      "ROOT_CAUSE": "Dotted Terminal task namespace",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "14181151e9afec09f5cde6b1eea66b2d7e4464db",
+      "REGRESSION_RESULTS": "Safe period-separated task IDs; traversal/empty/repeated-dot rejects preserved;89tasks recovered,88prior descriptors unchanged.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-010",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "attempts/attempt-0004/RECOVERY_ATTEMPT_001_ERROR.json",
+      "REPRODUCER": {
+        "artifact_id": "attempts/attempt-0004/RECOVERY_ATTEMPT_001_ERROR.json",
+        "sha256": "d660c6ec757cb292f4b1ec6dc4683a59ec8ada87b576b42018988f213bd66fac"
+      },
+      "ROOT_CAUSE": "Recovery exceeded bounded query cap",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "936d515c159a403052e72039c279a14348f41b7c",
+      "REGRESSION_RESULTS": "Complete read-only nine-column existing-index verification, original source/ledger corroboration, rebuild/rescan and bounded API smoke; cap remains1000.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
+    },
+    {
+      "DEFECT_ID": "CORPUS-DEFECT-011",
+      "DISCOVERED_IN_RUN": "ENGINEERING_PREPARATION_NOT_RUN004",
+      "DISCOVERED_IN_ATTEMPT": "attempts/attempt-0004/RECOVERY_ATTEMPT_002_ERROR.json",
+      "REPRODUCER": {
+        "artifact_id": "attempts/attempt-0004/RECOVERY_ATTEMPT_002_ERROR.json",
+        "sha256": "585af1af91421412c24f759bb0b53519b086e75cda4c812d2acf75337c0ea47e"
+      },
+      "ROOT_CAUSE": "Relative archive store recovery",
+      "AFFECTED_COMPONENT": "Experimental adapters/engineering processing or recovery driver",
+      "FIX_COMMIT": "96200b02cf8aaf00462a0415a6170aff76fcce51",
+      "REGRESSION_RESULTS": "Explicit authorized workspace binding, reparse/traversal rejection, exact attempt/context containment and restoration of invocation cwd;600row/1200observation different-cwd regressionPASS.",
+      "AUDIT_STATUS": "TECHNICAL_REVIEWS_COMPLETED_WITH_EXACT_SCOPE; detached final Git/document checks",
+      "PROMOTION_STATUS": "NOT_PROPOSED",
+      "FORMAL_QUALIFICATION": "NOT_ACHIEVED"
     }
   ],
   "required_fields": [

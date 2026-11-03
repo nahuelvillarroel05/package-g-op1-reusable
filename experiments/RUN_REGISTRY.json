@@ -209,12 +209,17 @@
       ],
       "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
       "formal_qualification": "NOT_ACHIEVED",
-      "status": "RESERVED_PREPARATION_BLOCKED_NOT_EXECUTED",
+      "status": "RESERVED_FULL_CORPUS_PREPARATION_NOT_READY_NOT_EXECUTED",
       "campaign_execution": "NOT_EXECUTED",
-      "contract_status": "DRAFT_NOT_APPROVED",
+      "contract_status": "DRAFT_REVISION_002_NOT_APPROVED",
       "population_quota": null,
       "identity_role": "RESERVED_SERIES_AND_PREPARATION_LOCATOR_NOT_PHYSICAL_EXECUTION",
-      "execution_campaign_id": "NOT_ASSIGNED_REQUIRES_FRESH_ID_AT_AUTHORIZATION"
+      "execution_campaign_id": "NOT_ASSIGNED_REQUIRES_FRESH_ID_AT_AUTHORIZATION",
+      "contract_revision": "contracts/revision-002/RUN_CONTRACT.md",
+      "full_corpus_task_memberships": 10096,
+      "full_corpus_logical_task_variants": 9273,
+      "engineering_coverage_commitment": "2ff9bcde25ddf4e144fe56c78763e72b6820bab9df18a90c403dd3df9a35f451",
+      "final_freeze": "NOT_ISSUED"
     }
   ],
   "pilots": [
@@ -253,12 +258,21 @@
       "status": "HISTORICAL_WITH_EXACT_LIMITATIONS",
       "original_identity": "PGOP1_MULTIBENCHMARK_INDEPENDENT_PILOT_001",
       "relationship": "SEPARATE_FROM_RUN004; development, not independent semantic qualification",
-      "central_integration": "REFERENCE_ONLY; pilot code not merged into central base",
+      "central_integration": "SELECTIVE_CODE_IMPORT_9bac0af8; prospective repairs separate; historical pilot results not rerun or relabeled",
       "validated_candidate_commit": "f424c86fc73b077606f5ca7a092f9f29c42485ee",
       "validated_candidate_tree": "a83c4b7a3da3849d8328a6916d1cf8135f469267",
       "execution_context": "SWE adapter ran while checkout HEAD a4181bb941914f6784d5f2e06a4c9bc1cfc54917. BFCL isolated module was executed before later byte-identical import into validated candidate. No claim that the full f424c86 checkout executed.",
       "execution_identity_evidence": "PILOT-001-001 private CODE_REFERENCE commitment; supporting driver hashes remain separately bound"
     }
   ],
-  "identifier_policy": "RUN IDs unique across revisions. PILOT-001 is a new locator alias for its original identity, not a new execution. No historical attempt IDs minted."
+  "identifier_policy": "RUN IDs unique across revisions. PILOT-001 is a new locator alias for its original identity, not a new execution. No historical attempt IDs minted.",
+  "engineering_interventions": [
+    {
+      "ID": "PGOP1_FULL_MULTIBENCHMARK_CORPUS_INTEGRATION_001",
+      "candidate_commit": "96200b02cf8aaf00462a0415a6170aff76fcce51",
+      "status": "PARTIAL_WITH_EXACT_LIMITATIONS_TASK_COVERAGE_COMPLETE",
+      "run004_execution": "NOT_EXECUTED",
+      "coverage_sha256": "2ff9bcde25ddf4e144fe56c78763e72b6820bab9df18a90c403dd3df9a35f451"
+    }
+  ]
 }

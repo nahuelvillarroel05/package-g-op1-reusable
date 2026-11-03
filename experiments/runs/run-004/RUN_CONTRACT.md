@@ -95,3 +95,6 @@ RIGHTS_AND_PRIVACY_REVIEW: REQUIRED
 COMPARABILITY_AND_EXCLUSIONS: REQUIRED
 
 POPULATION debe enumerar todas las unidades seleccionadas mediante manifiesto/hash, revisión exacta, exclusiones, solapamientos y regla de exhaustividad. DATASET_REVISIONS fija todas las familias y fuentes. EVIDENCE_REQUIREMENTS debe vincular tarea, output auténtico, productor/evaluador y referencias verificables; ausencia => UNKNOWN/ABSTAIN, no autenticidad inferida. METRICS fija unidades y denominadores. STOP_CRITERIA incluye alteración de hashes, derechos no resueltos, corrupción, incompatibilidad y límites contractuales. RECOVERY_POLICY fija checkpoints seguros y bloqueo ante ambigüedad. FORMAL_QUALIFICATION_SCOPE debe indicar NONE salvo autorización formal separada; esta plantilla no otorga esa autorización.
+
+
+Prospective full-corpus preparation: [revision002](contracts/revision-002/RUN_CONTRACT.md), DRAFT_NOT_APPROVED. Original revision above retained; no execution/freeze issued.

@@ -1,0 +1,17 @@
+# RUN-004: prospective full selected corpus plan
+
+This is engineering preparation, not campaign execution or approval. RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. The physical campaign identity remains unassigned until a later explicit authorization.
+
+The selected snapshots contain 10,096 variant/split memberships or localized task variants: SWE 3,642 memberships (2,819 distinct tasks), SWE Pro V2 642, Terminal-Bench2.0 89, MCPMark Verified 127, BFCL V4 4,696 ID-bearing definitions, and tau2 text-v1 900 localized variants of 150 base tasks. The resulting union has 9,273 task identities when localized variants remain distinct. These totals are inventories, not executed benchmark cases. Full revision/split/row/hash bindings are in FULL_TASK_INVENTORY.json and OFFICIAL_POPULATION_MANIFEST.json.
+
+SWE test and dev memberships remain separate, including Full/Lite/Verified overlap. A newer Full train split is outside the selected historical snapshot. BFCL format-sensitivity's 200 selections reference existing tasks and add no new task denominator; backend-expanded memory output IDs remain separately bound or unresolved. Tau2's 18 manifest cells retain language, domain, canonical mapping, source, policy/state and pack references. Unselected raw domain rows are source context, not extra text-v1 cases.
+
+The future selection must include every selected task in its disposition ledger. It must distinguish TASK_INVENTORIED, TASK_INGESTED, AUTHENTIC_OUTPUT_AVAILABLE, OFFICIAL_RESULT_AVAILABLE, PGOP1_AUDITABLE, OFFICIAL_REGRADE_READY and NOT_EVALUABLE_WITH_CURRENT_EVIDENCE. No error, unsupported format or abstention may be removed to improve coverage. Missing outputs do not turn definitions into agent executions.
+
+Before approval, bind exact candidate commit/tree, all task/output/reference/evaluator hashes and configurations, source rights, generation revision compatibility, predicates, expected limitations, recovery policy and exclusion ledger. Public producer declarations and publisher reports do not authenticate execution or establish semantic truth. Full official regrade readiness must be demonstrated independently of static ingestion. No paid API, model acquisition, task execution on Windows or infrastructure diagnosis is authorized here.
+
+Development contamination remains explicit. Preserve all 55 pilot cases and the MCP/TB pilot-only cases in the prospective exclusion ledger. BFCL simple_python_20 through simple_python_39 remain excluded from scoring, with eligibility UNKNOWN_PENDING_ACCESS_REVIEW. Technical inventory and byte handling do not establish a blind holdout. Prior RUN001/002/003 and all pilot results remain historical and cannot count as RUN004 results.
+
+Recovery must use immutable receipts, exact source objects and a frozen plan from another process. Reject altered sources, missing shards, membership changes, forged ledger totals and altered audit rows. Rebuild disposable indexes without redispatch; never silently restart an ambiguous physical identity. Freeze a new campaign identity only after the required later Owner decision.
+
+I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED; OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED; GATE_11=BLOCKED; INDEPENDENT_PRECISION=NOT_COMPUTABLE; INDEPENDENT_RECALL=NOT_COMPUTABLE; INDEPENDENT_CUSTODY=NOT_PROVEN; PHYSICAL_C2=DEFERRED_NOT_WAIVED. OD03, Source025 and OD05 remain pending. Agent reviews here are technical checks, not formal GATE11 independence.

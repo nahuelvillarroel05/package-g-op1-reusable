@@ -13,6 +13,24 @@
       "branch": "feat/pgop1-independent-pilot-001",
       "role": "PRESERVED_PILOT_CANDIDATE",
       "integration": "REFERENCE_ONLY_NOT_MERGED"
+    },
+    {
+      "commit": "96200b02cf8aaf00462a0415a6170aff76fcce51",
+      "tree": "aa71a5b76154c514482b47a9a9ca509121d7cb0c",
+      "branch": "experimental/pgop1-runs",
+      "role": "FULL_MULTIBENCHMARK_ENGINEERING_CANDIDATE",
+      "integration": "SELECTIVE_PILOT_IMPORT_AND_PROSPECTIVE_REPAIRS",
+      "engineering_validation": "1051PASS_3PREEXISTING_SKIPS; all selected task definitions recovered; output limitations retained",
+      "technical_audit_status": "SOL_XHIGH_AND_ASTRA_TECHNICAL_REVIEWS_COMPLETE; final Git/doc release gate detached",
+      "formal_qualification": "NOT_ACHIEVED",
+      "run004_execution": "NOT_EXECUTED",
+      "technical_audit_commitments": {
+        "SOL_XHIGH_AUDIT.md": "0beb08c1478ff291ff82b343d69c831d2991c07dc588f71e47402c149d418f95",
+        "ASTRA_INDEPENDENT_AUDIT.md": "0f5256ea4e70fac2d506297c263396b948e07d7f2ba41b0d2ca8fc6871c66e72"
+      },
+      "promotion": "NOT_PROPOSED",
+      "run004_contract": "NOT_APPROVED",
+      "run004_final_freeze": "NOT_ISSUED"
     }
   ]
 }

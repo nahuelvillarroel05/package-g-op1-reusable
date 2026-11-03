@@ -1,0 +1,31 @@
+{
+  "schema": "pgop1.run004.exclusions-plan.v2",
+  "status": "DRAFT_WITH_PRESERVED_HISTORICAL_EXCLUSIONS",
+  "permanent_pilot_cases": 55,
+  "private_exclusion_index_sha256": "a28a13f72cbc4adfbd1f1f62c1266efbbdc8d6927ffae0925bd06c73765d8476",
+  "bfcl_reserved_task_ids": [
+    "simple_python_20",
+    "simple_python_21",
+    "simple_python_22",
+    "simple_python_23",
+    "simple_python_24",
+    "simple_python_25",
+    "simple_python_26",
+    "simple_python_27",
+    "simple_python_28",
+    "simple_python_29",
+    "simple_python_30",
+    "simple_python_31",
+    "simple_python_32",
+    "simple_python_33",
+    "simple_python_34",
+    "simple_python_35",
+    "simple_python_36",
+    "simple_python_37",
+    "simple_python_38",
+    "simple_python_39"
+  ],
+  "reserve_eligibility": "UNKNOWN_PENDING_ACCESS_REVIEW",
+  "engineering_is_blind_holdout": false,
+  "error_or_abstention_based_exclusions": false
+}
