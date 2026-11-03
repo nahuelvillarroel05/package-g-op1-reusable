@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import sqlite3
 import subprocess
+import datetime
 from contextlib import closing
 import sys
 
@@ -23,9 +24,19 @@ def require(value,message):
     if not value:raise ValueError(message)
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
+def resolve_store(raw,attempt,workspace):
+    path=Path(raw)
+    require('..' not in path.parts,'UNSAFE_RELATIVE_STORE')
+    candidate=path if path.is_absolute() else workspace/path
+    for component in (candidate,*candidate.parents):
+        require(not component.is_symlink() and not getattr(component,'is_junction',lambda:False)(),'STORE_REPARSE_POINT')
+    resolved=candidate.resolve(strict=True)
+    require(resolved.parent==(attempt/'context').resolve(strict=True),'STORE_OUTSIDE_EXACT_ATTEMPT_CONTEXT')
+    return resolved
+
 def index_fingerprint(root):
     """Capture all indexed columns before any auto-recovery-capable Engine call."""
-    root=Path(root);count=0;digest=hashlib.sha256()
+    root=Path(root).resolve(strict=True);count=0;digest=hashlib.sha256()
     uri=(root/'index.sqlite').as_uri()+'?mode=ro'
     with closing(sqlite3.connect(uri,uri=True)) as db:
         columns=[row[1] for row in db.execute('PRAGMA table_info(observations)')]
@@ -64,14 +75,27 @@ def recover(attempt,repo,output):
     load=lambda p:strict_json_loads(Path(p).read_bytes())
     start=load(attempt/'START_RECEIPT.json');result=load(attempt/'RESULTS.json')
     require(os.getpid()!=start['process_id'],'FRESH_PROCESS_REQUIRED')
+    workspace=repo.parents[2];invocation_cwd=Path.cwd().resolve()
+    require(attempt.is_relative_to(workspace),'ATTEMPT_OUTSIDE_BOUND_WORKSPACE')
+    stores={s['store']:resolve_store(s['store'],attempt,workspace) for s in result['shards']}
+    start_path=output.with_name(output.name+'.START.json')
+    with start_path.open('x',encoding='utf-8') as f:
+        json.dump({'status':'STARTED','process_id':os.getpid(),'code_commit':recovery_commit,'code_tree':recovery_tree,
+            'script_bindings':bindings,'producer_workspace_root':str(workspace),'invocation_cwd':str(invocation_cwd),
+            'plan_sha256':sha((attempt/'PLAN.json').read_bytes()),'result_sha256':sha((attempt/'RESULTS.json').read_bytes()),
+            'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()},f,indent=2)
     # Snapshot all existing index columns before corroboration constructs an
     # Engine (which is allowed to repair a derived index during initialization).
-    before_indexes={s['store']:index_fingerprint(s['store']) for s in result['shards']}
-    proof=corroborate(attempt,repo)
+    before_indexes={raw:index_fingerprint(path) for raw,path in stores.items()}
+    # The frozen producer recorded workspace-relative store paths. Bind that
+    # known root explicitly for the unchanged corroborator, then restore cwd.
+    try:
+        os.chdir(workspace);proof=corroborate(attempt,repo)
+    finally:os.chdir(invocation_cwd)
     require(proof['status']=='PASS','ARCHIVE_CORROBORATION_FAILED')
     checked=[];total=0;all_ids=set()
     for shard in result['shards']:
-        engine=Engine(shard['store']);engine.verify()
+        engine=Engine(stores[shard['store']]);engine.verify()
         expected=expected_fingerprint(engine)
         require(all(before_indexes[shard['store']][k]==v for k,v in expected.items()),'PREEXISTING_INDEX_COLUMNS_OR_POPULATION_DIFFER')
         require(engine._manifest==shard['manifest'],'RECORDED_ENGINE_HEAD_DIFFERS')
@@ -95,7 +119,7 @@ def recover(attempt,repo,output):
             queried=[r for r in engine.query(identifier=receipt['observation_id'],limit=1) if r['id']==receipt['observation_id']]
             require(len(queried)==1 and queried[0]==nodes[receipt['observation_id']],'BOUNDED_API_RETRIEVAL_DIFFERS')
         total+=shard['record_count']
-        checked.append({'store':shard['store'],'records':shard['record_count'],'observations':expected,'index_scan':'PASS','index_rebuild':'PASS',
+        checked.append({'store':shard['store'],'resolved_store':str(stores[shard['store']]),'records':shard['record_count'],'observations':expected,'index_scan':'PASS','index_rebuild':'PASS',
             'all_associations':'PASS','bounded_api_queries':2,'query_limit_raised':False,'pre_constructor_index_fingerprint':before_indexes[shard['store']]})
         print(json.dumps({'recovered_shards':len(checked),'shards':len(result['shards']),'records':total}),flush=True)
     require(total==proof['record_count']==result['record_count'] and len(all_ids)==total,'FINAL_RECOVERY_POPULATION_DIFFERS')
@@ -103,7 +127,8 @@ def recover(attempt,repo,output):
         'shards':checked,'process_id':os.getpid(),'producer_process_id':start['process_id'],'different_process':True,
         'recovery_scope':'COMPLETE_PLANNED_POPULATION_AND_ALL_EXTERNAL_LEDGERS','method':'EXISTING_ENGINE_ORIGINAL_OBJECTS_AND_COMPLETE_READ_ONLY_DERIVED_INDEX_SCAN',
         'producer_commit':start['CODE_COMMIT'],'producer_tree':start['CODE_TREE'],'recovery_code_commit':recovery_commit,'recovery_code_tree':recovery_tree,
-        'recovery_committed_script_bindings':bindings,'previous_recovery_failure':'RECOVERY_ATTEMPT_001_ERROR.json: original final query exceeded unchanged Engine1000 limit',
+        'recovery_committed_script_bindings':bindings,'previous_recovery_attempts':['RECOVERY_ATTEMPT_001_ERROR.json','RECOVERY_ATTEMPT_002_ERROR.json'],
+        'producer_workspace_root':str(workspace),'invocation_cwd':str(invocation_cwd),'cwd_binding_basis':'Owner workspace and recorded workspace-relative Engineering store paths; original producer did not receipt cwd',
         'recovery_script_sha256':sha(Path(__file__).read_bytes()),'corroboration':proof,'redispatches':0,'sources_reacquired':0,
         'new_storage_engines':0,'query_cap_changes':0,'semantic_audits':0}
     with output.open('x',encoding='utf-8') as f:json.dump(report,f,indent=2)
