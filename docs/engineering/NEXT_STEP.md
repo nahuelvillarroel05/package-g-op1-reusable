@@ -1,3 +1,3 @@
-# Next: RUN004 rev004 execution-readiness bindings
+# Next: qualify producer and execution bindings
 
-Read [contract](../../experiments/runs/run-004/contracts/revision-004/RUN_CONTRACT.md) and [next step](../../experiments/runs/run-004/contracts/revision-004/NEXT_STEP.md). Conceptual approach approved only; RUN004 NOT_APPROVED/NOT_ISSUED/NOT_EXECUTED. Separate readiness engineering, technical audit and explicit Owner authorization must precede execution.
+Read [new RUN procedure](../../experiments/PREPARE_NEW_RUN.md) and [handoff](../../../../PGOP1_REUSABLE_RUN_FRAMEWORK_001/FINAL_HANDOFF.md). No RUN004 execution, final freeze or approval. Qualify the pending technical gates before a separate Owner decision.

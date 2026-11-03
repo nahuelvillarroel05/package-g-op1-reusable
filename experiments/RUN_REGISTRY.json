@@ -251,6 +251,13 @@
         "path": "Engineering/PGOP1_RUN004_CONTRACT_REV004_001/RUN004_READINESS_MATRIX.json",
         "sha256": "ac36dddf2f1b00a076795d62ef2ffa34f6db3c2a49158b0530e6499c524ff15d",
         "A_start": "NOT_AUTHORIZED_PENDING_EXECUTION_GATES"
+      },
+      "reusable_readiness_engineering": {
+        "status": "PARTIAL_WITH_EXACT_LIMITATIONS",
+        "preflight_sha256": "9f221bfa5481fef35ac2b860b5e6a3245e24482b515e53185b9e4806ecf5f0b2",
+        "execution": "NOT_EXECUTED",
+        "contract_approval": "NOT_APPROVED",
+        "final_freeze": "NOT_ISSUED"
       }
     }
   ],
@@ -350,6 +357,15 @@
       "contract_sha256": "a1db91f6a6905c5c94abbf0e67dca4a411be5ca7ef1a548e0fec1adac4f8d212",
       "run004_execution": "NOT_EXECUTED",
       "scope": "CONTRACT_ENGINEERING_ONLY"
+    },
+    {
+      "ID": "PGOP1_REUSABLE_RUN_FRAMEWORK_001",
+      "status": "PGOP1_REUSABLE_RUN_FRAMEWORK_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "candidate_commit": "8a06797aaf726e8460548274f20d6f8d8f798ee3",
+      "candidate_tree": "8a71afcd0cbd6d79c8ac327c7be268157f3cdfc7",
+      "run004_execution": "NOT_EXECUTED",
+      "development_configurations": "A6units/B3units; not registered campaigns",
+      "readiness": "PARTIAL_WITH_EXACT_LIMITATIONS"
     }
   ]
 }

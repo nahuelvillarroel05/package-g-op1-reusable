@@ -60,6 +60,27 @@
         "SOL_XHIGH_AUDIT.md": "760d65669ff1f95e4c239aabef5b8b3134e4dd68cc93226ff2c9e9f441f9a96a",
         "ASTRA_INDEPENDENT_AUDIT.md": "d21ac3e05c37d14929c8d5e48af1fd59b025814b43fc1df56b379868c602c574"
       }
+    },
+    {
+      "commit": "8a06797aaf726e8460548274f20d6f8d8f798ee3",
+      "tree": "8a71afcd0cbd6d79c8ac327c7be268157f3cdfc7",
+      "branch": "experimental/pgop1-runs",
+      "role": "REUSABLE_FRAMEWORK_PARTIAL_ENGINEERING_CANDIDATE",
+      "engineering_validation": "311 regressions PASS; two independent authored configs; read-only10096-unit7375-source202-shard preflight",
+      "formal_qualification": "NOT_ACHIEVED",
+      "run004_execution": "NOT_EXECUTED",
+      "run004_contract": "NOT_APPROVED",
+      "run004_final_freeze": "NOT_ISSUED",
+      "limitations": [
+        "Producer provenance/semantic receipt qualification",
+        "Enforceable resources/stops/rights/safety/exclusions",
+        "Owner approval"
+      ],
+      "technical_audit_commitments": {
+        "SOL_XHIGH_FOLLOWUP": "9bbdef89fa908cd6389871d1d59b3bb01bd3655d3f41ed922bb8002cfdce4951",
+        "ASTRA_CORE": "1f4a922a1cd2d864b3e36950b4aea06143c43f588fb699cd2efd0cba0631b1cb",
+        "ASTRA_BRIDGE": "7c59add58f069923e6a0895e3090ea8e723ede346d89ac532f75e8dc11cf132d"
+      }
     }
   ]
 }
