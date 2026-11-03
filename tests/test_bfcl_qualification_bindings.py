@@ -13,7 +13,8 @@ SPEC.loader.exec_module(driver)
 SOURCE={'path':'response.jsonl','sha256':'a'*64,'role':'MODEL_RESPONSE','model_id':'model-a','category':'simple_python','revision':'pinned-revision'}
 TASK_SOURCE={'path':'task.jsonl','sha256':'b'*64,'role':'AUDIT_TASK_DEFINITION'}
 SAMPLE={'source_path':SOURCE['path'],'source_sha256':SOURCE['sha256'],'role':SOURCE['role'],
-        'model_id':SOURCE['model_id'],'category':SOURCE['category'],'source_revision':SOURCE['revision'],'task_id':'simple_python_0'}
+        'model_id':SOURCE['model_id'],'category':SOURCE['category'],'source_revision':SOURCE['revision'],
+        'task_id':'simple_python_0','source_row_index':0}
 
 
 def test_source_tuple_accepts_exact_attribution_only():
@@ -45,3 +46,15 @@ def test_reserved_pointer_rejected_without_source_read():
     for i in range(20,40):
         with pytest.raises(ValueError,match='reserve pointer'):
             driver.check_sample({**SAMPLE,'task_id':f'simple_python_{i}'},sources)
+
+
+@pytest.mark.parametrize('index',[True,False,-1,0.0,'0',None])
+def test_unambiguous_source_row_index(index):
+    sources,_=driver.source_maps({'sources':[SOURCE],'auxiliary_sources':[TASK_SOURCE]})
+    with pytest.raises(ValueError,match='nonnegative exact integer'):
+        driver.check_sample({**SAMPLE,'source_row_index':index},sources)
+
+
+def test_physical_row_identity_normalizes_slashes_case_and_dot_segments():
+    paths=['C:/fixture/response.jsonl','c:\\fixture\\response.jsonl','C:/fixture/./response.jsonl']
+    assert len({(driver.source_key(p),0) for p in paths})==1

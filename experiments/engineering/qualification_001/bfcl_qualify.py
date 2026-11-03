@@ -59,6 +59,8 @@ def source_maps(plan):
 
 
 def check_sample(sample, response_sources):
+    if type(sample['source_row_index']) is not int or sample['source_row_index']<0:
+        raise ValueError('source row index must be a nonnegative exact integer')
     if sample['task_id'] in {f'simple_python_{i}' for i in range(20,40)}:
         raise ValueError('reserve pointer rejected before source read')
     source=response_sources.get(source_key(sample['source_path']))
@@ -114,7 +116,7 @@ def main():
     baseline_v1=subprocess.check_output(['git','-c','safe.directory='+REPO.as_posix(),'-C',str(REPO),
         'show',baseline['baseline_code_commit']+':runtime/candidate/bfcl_structured_audit.py'])
     assert hashlib.sha256(baseline_v1).hexdigest()==digest(REPO/'runtime/candidate/bfcl_structured_audit.py')
-    samples={(r['source_path'], r['source_row_index']):r for r in baseline['sample_pointers']
+    samples={(source_key(r['source_path']), r['source_row_index']):r for r in baseline['sample_pointers']
              if r['structural_status']!='NOT_COMPARABLE_UNRESOLVED_TASK_ID'}
     if len(samples)!=sum(r['structural_status']!='NOT_COMPARABLE_UNRESOLVED_TASK_ID' for r in baseline['sample_pointers']):
         raise ValueError('duplicate baseline sample identity')
@@ -136,7 +138,7 @@ def main():
         seen.add(key)
         tid=row.get('id')
         if tid in {f'simple_python_{i}' for i in range(20,40)}:raise ValueError('reserve selected')
-        samples.setdefault((s['path'],0),{'source_path':s['path'],'source_sha256':s['sha256'],
+        samples.setdefault((source_key(s['path']),0),{'source_path':s['path'],'source_sha256':s['sha256'],
             'role':'MODEL_RESPONSE',
             'source_row_index':0,'task_id':tid,'model_id':s['model_id'],'category':s['category'],
             'source_revision':s['revision'],'row_canonical_sha256':hashlib.sha256(canonical(row)).hexdigest(),
