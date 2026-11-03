@@ -31,7 +31,7 @@ def admit_batch(store,records,sources,roots):
     source_rows=[]
     for source in sources:
         checked_source(source['path'],roots,source['sha256'])
-        sid='corpus-source:'+source['sha256']
+        sid='corpus-source:'+sha(canonical_json({'path':source['path'],'sha256':source['sha256']}))
         admitted=engine.admit_source(source['path'],source['sha256'],'AUTHORIZED_METADATA',source_id=sid)
         source_rows.append({'source_id':sid,'path':source['path'],'sha256':source['sha256'],'bytes':admitted['byte_length'],'role':source.get('role','PRIMARY')})
     document={'schema':'pgop1.full-corpus-derived-index.v1','records':records,'sources':source_rows,
