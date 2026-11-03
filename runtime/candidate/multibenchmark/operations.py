@@ -15,7 +15,7 @@ from typing import Any
 
 UNKNOWN = "UNKNOWN"
 _ID = re.compile(r"^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$")
-_TB_NAME = re.compile(r"^terminal-bench/([a-z0-9]+(?:-[a-z0-9]+)*)$")
+_TB_NAME = re.compile(r"^terminal-bench/([a-z0-9]+(?:[-.][a-z0-9]+)*)$")
 _MCP_SERVICE_ALIASES = {"playwright_webarena": "playwright"}
 
 
@@ -170,7 +170,7 @@ def parse_terminal_bench(path: str | Path) -> list[dict[str, Any]]:
     task, metadata = document["task"], document["metadata"]
     match = _TB_NAME.fullmatch(_required_text(task.get("name"), "task.name"))
     if not match:
-        raise ValueError("task.name must use the terminal-bench/<kebab-case-id> format")
+        raise ValueError("task.name must use a safe terminal-bench/<task-id> component")
     task_id = match.group(1)
     if task_dir.name != task_id:
         raise ValueError(f"task directory name {task_dir.name!r} does not match task.name {task_id!r}")
