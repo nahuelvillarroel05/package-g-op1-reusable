@@ -77,6 +77,12 @@ class CampaignV2(_Campaign):
         self._critical_hashes = {}
 
     def preflight(self):
+        parent_chain = self.config["checkpoint_policy"].get("receipt_parent_chain", False)
+        if type(parent_chain) is not bool:
+            raise FrameworkError("checkpoint_policy.receipt_parent_chain must be boolean")
+        payload_limit = self.config["resource_budget"].get("max_payload_bytes")
+        if payload_limit is not None and (type(payload_limit) is not int or payload_limit <= 0):
+            raise FrameworkError("resource_budget.max_payload_bytes must be a positive integer")
         result = super().preflight()
         critical = [self.config_path, Path(self.config["contract_path"]),
                     Path(self.config["dataset_manifest_path"]),
@@ -258,9 +264,18 @@ class CampaignV2(_Campaign):
                 raise FrameworkError("v2 receipt digest mismatch")
             receipt = _loads(receipt_raw)
             receipt_fields={"schema","run_id","campaign_id","attempt_id","unit_id","phase","disposition","sequence","manifest_sha256","admission","payload"}
+            if self.config["checkpoint_policy"].get("receipt_parent_chain", False):
+                receipt_fields.add("parent_receipt_sha256")
             if (not isinstance(receipt, dict) or set(receipt)!=receipt_fields
                     or canonical(receipt) != receipt_raw or receipt.get("schema") != RECEIPT_SCHEMA):
                 raise FrameworkError("v2 receipt is noncanonical or unsupported")
+            if "parent_receipt_sha256" in receipt_fields:
+                expected_parent = state["receipts"][-1]["sha256"] if state["receipts"] else None
+                if receipt["parent_receipt_sha256"] != expected_parent:
+                    raise FrameworkError("v2 parent receipt chain mismatch")
+            limit = self.config["resource_budget"].get("max_payload_bytes")
+            if limit is not None and len(canonical(receipt.get("payload"))) > limit:
+                raise FrameworkError("v2 recovered payload exceeds configured byte limit")
             if (receipt.get("sequence") != seq or receipt.get("manifest_sha256") != manifest_sha
                     or receipt.get("unit_id") != delta["unit_id"] or receipt.get("phase") != delta["phase"]
                     or receipt.get("disposition") != delta["disposition"]
@@ -282,6 +297,9 @@ class CampaignV2(_Campaign):
                 if not isinstance(delta["disposition"], str) or not delta["disposition"]:
                     raise FrameworkError("invalid v2 terminal disposition")
                 admitted = validate_result(self, unit, receipt.get("payload"))
+                if ("generic_caller" in self.config.get("audit_policy", {})
+                        and delta["disposition"] != receipt["payload"]["result_payload"]["processing_disposition"]):
+                    raise FrameworkError("TYPED_TERMINAL_DISPOSITION_MISMATCH")
                 if admitted["result_id"] in state["result_ids"]:
                     raise FrameworkError("RESULT_ID_ALREADY_ADMITTED")
                 state["result_ids"].add(admitted["result_id"])
@@ -438,9 +456,13 @@ class CampaignV2(_Campaign):
             raise FrameworkError("existing or interrupted run is read-only; fresh RUN_ID required")
         if unit not in self.config["expected_units"] or not isinstance(payload, dict):
             raise FrameworkError("unit/payload invalid")
-        payload_raw = canonical(payload)
         self.output.mkdir(parents=True, exist_ok=True)
         guard = self._guard()
+        try:
+            payload_raw = guard.payload_bytes(payload, self.config["resource_budget"].get("max_payload_bytes"))
+        except ResourceLimitStop as exc:
+            self._write_blocked = True
+            raise FrameworkError(str(exc)) from exc
         if (self.output / ".resource-stop.json").exists():
             raise FrameworkError("campaign has a durable resource stop; read-only recovery only")
         # Pre-admit core's one-time lock, reservations and owner receipt before
@@ -491,6 +513,9 @@ class CampaignV2(_Campaign):
                 if phase == "terminal":
                     try:
                         admission = validate_result(self, unit, payload)
+                        if ("generic_caller" in self.config.get("audit_policy", {})
+                                and kind != payload["result_payload"]["processing_disposition"]):
+                            raise FrameworkError("TYPED_TERMINAL_DISPOSITION_MISMATCH")
                         if admission["result_id"] in state["result_ids"]:
                             raise FrameworkError("RESULT_ID_ALREADY_ADMITTED")
                     except FrameworkError as rejected:
@@ -552,6 +577,8 @@ class CampaignV2(_Campaign):
                    "unit_id": unit, "phase": phase, "disposition": disposition,
                    "sequence": seq, "manifest_sha256": manifest_sha,
                    "admission": admission, "payload": payload}
+        if self.config["checkpoint_policy"].get("receipt_parent_chain", False):
+            receipt["parent_receipt_sha256"] = state["receipts"][-1]["sha256"] if state["receipts"] else None
         receipt_raw = canonical(receipt); receipt_sha = digest(receipt_raw)
         receipt_path = f"receipts/{seq:08d}-{receipt_sha}.json"
         delta = {"schema": DELTA_SCHEMA, "sequence": seq, "previous_delta_sha256": state["head"],
@@ -599,7 +626,8 @@ class CampaignV2(_Campaign):
             self._write_blocked = True
             self._v2_state = None
             try:
-                guard.request_stop("EXTERNAL_INTERRUPTION" if isinstance(interrupted, KeyboardInterrupt) else "INTEGRITY_FAILURE",
+                guard.request_stop("EXTERNAL_INTERRUPTION" if isinstance(interrupted, KeyboardInterrupt) else
+                                   "RESOURCE_LIMIT" if isinstance(interrupted, MemoryError) else "INTEGRITY_FAILURE",
                                    {"sequence": seq, "issue": type(interrupted).__name__})
             except ResourceLimitStop:
                 pass

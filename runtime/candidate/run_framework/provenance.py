@@ -206,6 +206,9 @@ def validate_result(campaign: Any, unit_id: str, payload: Any) -> dict[str, Any]
         raise FrameworkError("RESULT_EVIDENCE_NOT_IN_MANIFEST")
     for pair in seen:
         _read_bound_file(pair[0], pair[1], index["roots"], "result evidence")
+    if "generic_caller" in cfg.get("audit_policy", {}):
+        from .caller import validate_typed_result
+        validate_typed_result(campaign, unit_id, payload)
     return {
         "admission_status": "STRUCTURALLY_ADMITTED",
         "execution_certification": "NOT_EXECUTION_CERTIFIED",

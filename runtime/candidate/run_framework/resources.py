@@ -185,6 +185,59 @@ class ResourceGuard:
         self._reservations += total_projected_bytes
         self._transaction_open = True
 
+    def payload_bytes(self, payload, max_payload_bytes=None) -> bytes:
+        """Bound a framework-owned payload before persistence; never truncate.
+
+        The caller already owns the input object. This limits serialization and
+        admission, not the caller's preexisting heap or any external process.
+        A character-count lower bound rejects oversized containers/strings before
+        creating a potentially huge canonical byte string. Accepted objects use
+        the exact same canonical encoder as immutable receipts.
+        """
+        from .core import canonical, FrameworkError
+        self._ensure_writable()
+        if max_payload_bytes is None:
+            return canonical(payload)
+        limit = self._positive_int(max_payload_bytes, "max_payload_bytes")
+        lower_bound = 0
+
+        def count(value):
+            nonlocal lower_bound
+            if isinstance(value, dict):
+                lower_bound += 2 + max(0, len(value) - 1)
+                for key, child in value.items():
+                    if not isinstance(key, str):
+                        raise FrameworkError("JSON object keys must be strings")
+                    lower_bound += len(key) + 3
+                    check()
+                    count(child)
+            elif isinstance(value, list):
+                lower_bound += 2 + max(0, len(value) - 1)
+                check()
+                for child in value:
+                    count(child)
+            else:
+                lower_bound += len(value) + 2 if isinstance(value, str) else 1
+            check()
+
+        def check():
+            if lower_bound > limit:
+                self.request_stop("PAYLOAD_LIMIT_REACHED", {"max_payload_bytes": limit,
+                                  "observed_minimum_bytes": lower_bound,
+                                  "payload_disposition": "REJECTED_NOT_PERSISTED"})
+
+        try:
+            count(payload)
+            raw = canonical(payload)
+        except (MemoryError, RecursionError) as exc:
+            self.request_stop("RESOURCE_LIMIT", {"operation": "payload_serialization",
+                                                "error": type(exc).__name__})
+        if len(raw) > limit:
+            self.request_stop("PAYLOAD_LIMIT_REACHED", {"max_payload_bytes": limit,
+                              "observed_bytes": len(raw),
+                              "payload_disposition": "REJECTED_NOT_PERSISTED"})
+        return raw
+
     def refresh_usage(self) -> int:
         """Perform a full bounded-root scan, suitable at shard/recovery boundaries."""
         self._actual_bytes = self._scan()
@@ -272,7 +325,7 @@ class ResourceGuard:
             raise ResourceLimitStop("READ_ONLY", "resource guard is in read-only measurement mode")
         allowed = {"EXPLICIT_REQUEST", "BYTE_BUDGET_EXHAUSTED", "DURATION_LIMIT_REACHED",
                    "UNIT_LIMIT_REACHED", "ERROR_LIMIT_REACHED", "INTEGRITY_FAILURE",
-                   "EXTERNAL_INTERRUPTION", "RESOURCE_LIMIT"}
+                   "EXTERNAL_INTERRUPTION", "RESOURCE_LIMIT", "PAYLOAD_LIMIT_REACHED"}
         if reason not in allowed:
             raise ValueError("unsupported stop reason")
         stop_status = ("STOP_REQUESTED" if reason=="EXPLICIT_REQUEST" else
