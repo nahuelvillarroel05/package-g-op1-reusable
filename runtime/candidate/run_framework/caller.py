@@ -159,6 +159,7 @@ class GenericCaller:
         self.campaign, self.adapters, self.auditor = campaign, dict(adapters), auditor
         self.producer_id = producer_id
         self._prestarted = {}
+        self._literal_observer = None
         SourceBindings(campaign)  # validate authoritative complete graph eagerly
 
     def _resolve(self, unit_id):
@@ -190,6 +191,17 @@ class GenericCaller:
         if unit_id not in state["inflight"] or not state["receipts"] or state["receipts"][-1]["sha256"] != started:
             raise FrameworkError("CALLER_START_OWNERSHIP_OR_STATE_CHANGED")
         unit, _key, adapter, refs = self._resolve(unit_id)
+        if "literal_receipt_profile" in self.campaign.config["audit_policy"]["generic_caller"]:
+            if self._literal_observer is None:
+                raise FrameworkError("CALLER_LITERAL_START_ADMISSION_REQUIRED")
+            self._literal_observer.check_start_admission(unit_id, started)
+        # The separate START API must not admit callbacks after a stop or a
+        # failed publication. Recheck at this boundary, not only at TERMINAL.
+        if (not self.campaign._can_write or self.campaign._write_blocked
+                or (self.campaign.output / ".resource-stop.json").exists()):
+            raise FrameworkError("CALLER_STOPPED_BEFORE_CALLBACK")
+        self.campaign._ensure_live()
+        self.campaign._guard().check_limits()
         # A failure remains inflight; there is deliberately no retry path.
         try:
             adapted = adapter(deepcopy(unit), deepcopy(refs))
@@ -209,6 +221,11 @@ class GenericCaller:
 
     def execute(self, unit_id):
         """Publish one typed start, then execute its callbacks exactly once."""
+        if "literal_receipt_profile" in self.campaign.config["audit_policy"]["generic_caller"]:
+            if self._literal_observer is None:
+                from .revision004_observer import Revision004Observer
+                Revision004Observer(self)
+            return self._literal_observer.execute(unit_id)
         self.begin_unit(unit_id)
         return self.execute_started(unit_id)
 

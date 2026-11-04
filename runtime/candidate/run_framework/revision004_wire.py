@@ -9,6 +9,7 @@ from dataclasses import dataclass
 import hashlib
 import json
 from typing import Any, Iterable, Mapping
+import weakref
 
 
 class Rev004WireError(ValueError):
@@ -17,6 +18,40 @@ class Rev004WireError(ValueError):
 
 UNIT_PAYLOAD_SCHEMA = "pgop1.run004.unit-receipt-payload.rev004"
 CHECKPOINT_PAYLOAD_SCHEMA = "pgop1.run004.checkpoint-payload.rev004"
+_CHECKPOINT_CONTEXT_SEAL = object()
+_ISSUED_CHECKPOINT_CONTEXTS: weakref.WeakKeyDictionary = weakref.WeakKeyDictionary()
+
+
+@dataclass(frozen=True)
+class ValidatedCheckpointContext:
+    """In-process context returned only after validating a checkpoint and its chain."""
+    payload_bytes: bytes
+    payload_sha256: str
+    selected_units: tuple[str, ...]
+    ordered_receipt_payload_sha256: tuple[str, ...]
+    completed_units: tuple[str, ...]
+    pending_units: tuple[str, ...]
+    inflight_units: tuple[str, ...]
+    _seal: object
+
+
+def _checkpoint_context_fingerprint(context: ValidatedCheckpointContext) -> tuple[Any, ...]:
+    return (context.payload_bytes, context.payload_sha256, context.selected_units,
+            context.ordered_receipt_payload_sha256, context.completed_units,
+            context.pending_units, context.inflight_units, context._seal)
+
+
+def _selected_unit_tuple(selected_units: Iterable[str]) -> tuple[str, ...]:
+    if isinstance(selected_units, (str, bytes)):
+        raise Rev004WireError("selected units must be an iterable of unique nonempty strings")
+    try:
+        values = tuple(selected_units)
+    except TypeError as exc:
+        raise Rev004WireError("selected units must be an iterable of unique nonempty strings") from exc
+    if (any(type(unit) is not str or not unit for unit in values)
+            or len(values) != len(set(values))):
+        raise Rev004WireError("selected units must be unique nonempty strings")
+    return tuple(sorted(values))
 
 
 def _validate_json(value: Any) -> None:
@@ -151,8 +186,9 @@ def _is_sha(value: Any) -> bool:
     return type(value) is str and len(value) == 64 and all(char in "0123456789abcdef" for char in value)
 
 
-def validate_checkpoint_payload(payload: Mapping[str, Any], selected_units: Iterable[str],
-                                receipt_payloads: Iterable[Mapping[str, Any]] | None = None) -> bytes:
+def _validate_checkpoint_payload(payload: Mapping[str, Any], selected_units: Iterable[str],
+                                 receipt_payloads: Iterable[Mapping[str, Any]] | None,
+                                 predecessor_context: ValidatedCheckpointContext | None) -> bytes:
     """Validate full sets and reconcile every ordered start/terminal receipt."""
     required = {"schema", "campaign_id", "campaign_attempt_id", "parent_checkpoint_sha256",
                 "ordered_receipt_payload_sha256", "completed_units", "pending_units",
@@ -170,7 +206,7 @@ def validate_checkpoint_payload(payload: Mapping[str, Any], selected_units: Iter
         raise Rev004WireError("checkpoint ordered receipt payload hashes are invalid")
     if len(set(receipts)) != len(receipts):
         raise Rev004WireError("checkpoint receipt hashes contain duplicates")
-    selected = set(selected_units)
+    selected = set(_selected_unit_tuple(selected_units))
     groups = []
     for key in ("completed_units", "pending_units", "inflight_units"):
         values = payload[key]
@@ -224,10 +260,97 @@ def validate_checkpoint_payload(payload: Mapping[str, Any], selected_units: Iter
     for value in payload["bindings"].values():
         if not _is_sha(value):
             raise Rev004WireError("checkpoint binding digest is invalid")
-    if identity != (payload["campaign_id"], payload["campaign_attempt_id"],
-                    payload["bindings"]["config_sha256"], payload["bindings"]["contract_sha256"]):
+    checkpoint_identity = (payload["campaign_id"], payload["campaign_attempt_id"],
+                           payload["bindings"]["config_sha256"], payload["bindings"]["contract_sha256"])
+    if identity is not None and identity != checkpoint_identity:
         raise Rev004WireError("checkpoint campaign/config/contract identity differs from receipts")
-    return canonical_payload(payload)
+    raw = canonical_payload(payload)
+    parent_sha = payload["parent_checkpoint_sha256"]
+    if parent_sha is None:
+        if predecessor_context is not None:
+            raise Rev004WireError("genesis checkpoint cannot have a predecessor context")
+        return raw
+    if predecessor_context is None:
+        raise Rev004WireError("non-genesis checkpoint requires validated predecessor context")
+    if (type(predecessor_context) is not ValidatedCheckpointContext
+            or predecessor_context._seal is not _CHECKPOINT_CONTEXT_SEAL):
+        raise Rev004WireError("checkpoint predecessor context was not produced by validation")
+    try:
+        issued_fingerprint = _ISSUED_CHECKPOINT_CONTEXTS.get(predecessor_context)
+    except TypeError:
+        issued_fingerprint = None
+    if (issued_fingerprint is None
+            or issued_fingerprint != _checkpoint_context_fingerprint(predecessor_context)):
+        raise Rev004WireError("checkpoint predecessor context is unissued or has been modified")
+    previous_raw = predecessor_context.payload_bytes
+    previous_sha = hashlib.sha256(previous_raw).hexdigest()
+    if previous_sha != predecessor_context.payload_sha256:
+        raise Rev004WireError("validated predecessor context digest is inconsistent")
+    previous_payload = decode_payload(previous_raw, previous_sha)
+    previous_completed = tuple(previous_payload["completed_units"])
+    previous_pending = tuple(previous_payload["pending_units"])
+    previous_inflight = tuple(previous_payload["inflight_units"])
+    previous_selected = tuple(sorted(set(previous_completed + previous_pending + previous_inflight)))
+    if (predecessor_context.selected_units != previous_selected
+            or predecessor_context.ordered_receipt_payload_sha256 != tuple(previous_payload["ordered_receipt_payload_sha256"])
+            or predecessor_context.completed_units != previous_completed
+            or predecessor_context.pending_units != previous_pending
+            or predecessor_context.inflight_units != previous_inflight):
+        raise Rev004WireError("validated predecessor context metadata is inconsistent")
+    if parent_sha != previous_sha:
+        raise Rev004WireError("checkpoint parent digest does not match validated predecessor")
+    if (payload["campaign_id"] != previous_payload["campaign_id"]
+            or payload["campaign_attempt_id"] != previous_payload["campaign_attempt_id"]
+            or payload["bindings"] != previous_payload["bindings"]):
+        raise Rev004WireError("checkpoint predecessor belongs to a different campaign or binding context")
+    if tuple(sorted(selected)) != predecessor_context.selected_units:
+        raise Rev004WireError("checkpoint predecessor selected-unit context differs")
+    previous_receipts = tuple(previous_payload["ordered_receipt_payload_sha256"])
+    if (len(receipts) <= len(previous_receipts)
+            or tuple(receipts[:len(previous_receipts)]) != previous_receipts):
+        raise Rev004WireError("checkpoint receipt history rollback or non-advancing predecessor")
+    previous_completed = set(previous_completed)
+    previous_pending = set(previous_pending)
+    previous_inflight = set(previous_inflight)
+    current_completed, current_pending, current_inflight = groups
+    if (not previous_completed.issubset(current_completed)
+            or not previous_inflight.issubset(current_inflight | current_completed)
+            or not previous_pending.issubset(current_pending | current_inflight | current_completed)):
+        raise Rev004WireError("checkpoint unit state rollback from validated predecessor")
+    return raw
+
+
+def validate_checkpoint_payload(payload: Mapping[str, Any], selected_units: Iterable[str],
+                                receipt_payloads: Iterable[Mapping[str, Any]] | None = None,
+                                predecessor_context: ValidatedCheckpointContext | None = None) -> bytes:
+    """Validate checkpoint bytes and require explicit context for non-genesis links.
+
+    A parent digest alone is not accepted as trust evidence. The predecessor
+    context must come from :func:`validated_checkpoint_context`.
+    """
+    return _validate_checkpoint_payload(payload, selected_units, receipt_payloads,
+                                        predecessor_context)
+
+
+def validated_checkpoint_context(payload: Mapping[str, Any], selected_units: Iterable[str],
+                                 receipt_payloads: Iterable[Mapping[str, Any]] | None = None,
+                                 predecessor_context: ValidatedCheckpointContext | None = None
+                                 ) -> ValidatedCheckpointContext:
+    """Validate a checkpoint and return reusable explicit context for its child."""
+    selected = _selected_unit_tuple(selected_units)
+    raw = _validate_checkpoint_payload(payload, selected, receipt_payloads, predecessor_context)
+    context = ValidatedCheckpointContext(
+        payload_bytes=raw,
+        payload_sha256=hashlib.sha256(raw).hexdigest(),
+        selected_units=selected,
+        ordered_receipt_payload_sha256=tuple(payload["ordered_receipt_payload_sha256"]),
+        completed_units=tuple(payload["completed_units"]),
+        pending_units=tuple(payload["pending_units"]),
+        inflight_units=tuple(payload["inflight_units"]),
+        _seal=_CHECKPOINT_CONTEXT_SEAL,
+    )
+    _ISSUED_CHECKPOINT_CONTEXTS[context] = _checkpoint_context_fingerprint(context)
+    return context
 
 
 @dataclass(frozen=True)

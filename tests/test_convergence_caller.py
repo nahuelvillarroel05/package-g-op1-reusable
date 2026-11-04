@@ -121,6 +121,41 @@ def test_explicit_start_then_execute_started_preserves_one_start_and_one_termina
     assert state['completed'] == {'u1'} and state['inflight'] == set()
 
 
+@pytest.mark.parametrize('stop_mode', ['explicit_stop', 'elapsed_budget', 'writer_blocked'])
+def test_prestarted_caller_checks_stop_before_any_callback(tmp_path, stop_mode):
+    c = fixture(tmp_path)
+    if stop_mode == 'elapsed_budget':
+        cfg = json.loads(c.config_path.read_bytes())
+        cfg['resource_budget']['max_seconds'] = 3600
+        c.config_path.write_bytes(canonical(cfg))
+        c = reload(c)
+    calls = []
+    def adapter(unit, refs):
+        calls.append(unit['unit_id'])
+        return {'definition': True}
+    def auditor(unit, adapted):
+        return {'audit_result': adapted, 'processing_disposition': 'TASK_DEFINITION_PROCESSED',
+                'audit_disposition': 'NOT_AUDITED_MISSING_AGENT_OUTPUT'}
+    caller = GenericCaller(c, {('inert', '1'): adapter}, auditor, producer_id='fixture-producer')
+    caller.begin_unit('u1')
+    if stop_mode == 'explicit_stop':
+        from runtime.candidate.run_framework.resources import ResourceLimitStop
+        with pytest.raises(ResourceLimitStop):
+            c.request_stop('EXPLICIT_REQUEST', {'stage': 'before_callback'})
+    elif stop_mode == 'elapsed_budget':
+        guard = c._guard()
+        guard._clock = lambda: guard._started + guard.max_seconds + 1
+    else:
+        c._write_blocked = True
+    from runtime.candidate.run_framework.resources import ResourceLimitStop
+    with pytest.raises((FrameworkError, ResourceLimitStop)):
+        caller.execute_started('u1')
+    assert calls == []
+    with pytest.raises(FrameworkError, match='CALLER_STARTED_UNIT_REQUIRED'):
+        caller.execute_started('u1')
+    assert calls == []
+
+
 def test_callbacks_cannot_mutate_authoritative_cached_unit(tmp_path):
     c = fixture(tmp_path)
     def adapter(unit, refs):

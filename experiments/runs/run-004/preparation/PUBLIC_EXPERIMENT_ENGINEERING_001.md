@@ -19,3 +19,13 @@ RUN004_EXECUTION=NOT_EXECUTED
 I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED; OP1_OPERATIONAL_QUALIFICATION=NOT_ACHIEVED; GATE_11=BLOCKED; INDEPENDENT_PRECISION=NOT_COMPUTABLE; INDEPENDENT_RECALL=NOT_COMPUTABLE; INDEPENDENT_CUSTODY=NOT_PROVEN; PHYSICAL_C2=DEFERRED_NOT_WAIVED.
 
 See the [publication policy](../../../PUBLICATION_POLICY.md), [RUN purpose](../../../RUNS_PURPOSE.md), [RUN registry](../../../RUN_REGISTRY.json), and this RUN's [index](../README.md).
+
+## Prospective continuation 002
+
+The next code revision adds explicit validated predecessor context, a read-only sidecar verifier, and an opt-in literal observer over the existing typed V2 caller. The new immutable `pgop1.run004.receipt-index.rev004.v3` control header derives its event index from verified V2 journal bytes; it does not duplicate a full source manifest or maintain another mutable event journal. Content-addressed literal receipts and periodic full checkpoint views remain separate representations from compact V2 checkpoints.
+
+An explicitly selected profile uses the generic-caller policy key `literal_receipt_profile` with `schema=pgop1.run004.receipt-index.rev004.v3`, `directory=REV004_WIRE`, and a positive `checkpoint_every_units`. The SDK caller routes that selected profile through its observer. Literal START bytes are exclusively written, flushed and file-fsynced before callbacks. A failed observer invalidates prestarted admission; neither a direct caller invocation nor observer reconstruction resumes it. Stops and elapsed limits are checked again before callbacks. This is a cooperative boundary check, not callback preemption.
+
+V3 verification compares source and identity metadata to frozen typed-unit bindings, rehashes declared evidence, validates exact file membership and checkpoint predecessors, and binds declared audit/error fields to the corresponding V2 payload. Source-byte agreement does not authenticate a publisher, prove rights, or turn BFCL structural evidence into a semantic verdict. Per-predicate results remain scoped; an uncheckpointed tail is blocked. Legacy V1/V2 sidecar layouts retain explicit limits on descriptive/source-field verification.
+
+These controls use authored synthetic development inputs. They do not replace the required authentic six-family preflight or its eligibility/rights review. Clock values are local observations. Independent latest-head antirollback, external custody, power-loss durability, arbitrary callback RSS/duration isolation and full RUN004 readiness remain unproven. No contract amendment, final freeze or execution authorization is issued by this continuation.
