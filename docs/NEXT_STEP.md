@@ -1,0 +1,3 @@
+# Next: publication and exact RUN004 gates
+
+Continue from the [current engineering scope](../experiments/runs/run-004/preparation/PUBLIC_EXPERIMENT_ENGINEERING_001.md). Verify the exact local candidate, existing authorization, audit and live remote state before publishing experiment. Authentication recovery is an Owner action using the normal configured GitHub workflow; no credentials belong in this repository. Delete historical branches only after verified publication and preservation gates. Complete the remaining literal receipt/checkpoint, authentic-output, rights, applicability/abstention and controlled-resource gates prospectively. RUN004 remains NOT_APPROVED / NOT_ISSUED / NOT_EXECUTED.

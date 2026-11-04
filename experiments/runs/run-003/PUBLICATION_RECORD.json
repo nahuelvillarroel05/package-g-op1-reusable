@@ -1,0 +1,167 @@
+{
+  "schema": "pgop1.experimental.run-publication.v1",
+  "template_only": false,
+  "receipt_id": "HIST-RUN-003-REPRESENTATION-20261104",
+  "record_kind": "HISTORICAL_RECONSTRUCTION",
+  "created_utc": "2026-11-04T18:39:01Z",
+  "RUN_ID": "RUN-003",
+  "RUN_CONTRACT_VERSION": "UNKNOWN_NOT_BOUND_IN_HISTORICAL_REFERENCE",
+  "EXECUTED_CODE_COMMIT": "8b2ccbe68bd5857ac2d3173923670f84eb445457",
+  "EXECUTED_CODE_TREE": "caa847289e63bad5b11bf80577c5fd4c3d579783",
+  "SOURCE_MANIFEST_SHA256": "UNKNOWN_NOT_BOUND_IN_HISTORICAL_REFERENCE",
+  "RESULTS_MANIFEST_SHA256": "UNKNOWN_NOT_BOUND_IN_HISTORICAL_REFERENCE",
+  "EXECUTION_STATUS": "HISTORICAL_WITH_EXACT_LIMITATIONS",
+  "AUDIT_STATUS": "UNKNOWN_NOT_BOUND_TO_THIS_REPRESENTATION",
+  "PUBLICATION_COMMIT": "5d692882bdd625ca57d82f77d62b1ea830fe9c15",
+  "PUBLICATION_BRANCH": "feat/pgop1-run-003-engineering-release",
+  "PUBLIC_FILES": [
+    {
+      "artifact_id": "AGGREGATE_RESULTS.json",
+      "path": "runs/run-003-engineering-public/AGGREGATE_RESULTS.json",
+      "sha256": "561e6c3aef210809ffaa72683fda18d469e7f5089c3e5121983e2e14df040330",
+      "bytes": 1103,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "PUBLICATION_MANIFEST.json",
+      "path": "runs/run-003-engineering-public/PUBLICATION_MANIFEST.json",
+      "sha256": "232205cc422eeefeeb534a974bf8ce22f56fefd863a3df01592a6d3653aede95",
+      "bytes": 6632,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "RUN003_ENGINEERING_SUMMARY.md",
+      "path": "runs/run-003-engineering-public/RUN003_ENGINEERING_SUMMARY.md",
+      "sha256": "1a59755c07af2ba65c8a015475f3482f92b18c4520cc86af07a392347e2d23aa",
+      "bytes": 1525,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    }
+  ],
+  "WITHHELD_FILES": [
+    "PRIVATE_EVIDENCE_COMMITMENTS_EXIST; DETAILS_NOT_REPUBLISHED",
+    "ORIGINAL_PRIVATE_SOURCES_AND_RAW_EVIDENCE_NOT_INCLUDED"
+  ],
+  "REDISTRIBUTION_STATUS": "APPROVED_FOR_CANDIDATE_SCOPE_BY_PRIOR_REVIEW",
+  "REMOTE_VERIFICATION_STATUS": "BLOCKED_AUTHENTICATION_HISTORICAL_CHECK",
+  "CAMPAIGN_LIFECYCLE_STATUS": "UNKNOWN_HISTORICAL_STAGE",
+  "CAMPAIGN_LIFECYCLE_HISTORY": [],
+  "REPRODUCIBILITY_CLASS": "DOCUMENTARY_ONLY",
+  "HISTORICAL_REPRODUCIBILITY_CLASS": "UNKNOWN",
+  "REQUIRED_RESULT_SET": [
+    {
+      "name": "CAMPAIGN_SUMMARY.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "EXECUTION_RESULTS.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "COVERAGE_REPORT.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "FAILURES_AND_ABSTENTIONS.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "DEFECT_AND_FIX_REPORT.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "CODE_REFERENCE.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "SOURCE_MANIFEST.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "RESULTS_INTEGRITY_MANIFEST.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "AUDIT_SUMMARY.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "LIMITATIONS.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "PUBLICATION_RECEIPT.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    }
+  ],
+  "publication": {
+    "status": "PREPARED_LOCAL",
+    "destination": "UNSELECTED_NO_REMOTE_WRITE",
+    "candidate_commit": "5d692882bdd625ca57d82f77d62b1ea830fe9c15",
+    "candidate_tree": "959c40ca08ac875cdca7a2ae27567ed649efd8a5",
+    "historical_publication_status": "BLOCKED_AUTHENTICATION_HISTORICAL_CHECK",
+    "write_receipt": "NOT_APPLICABLE",
+    "remote_verification_receipt": "NOT_APPLICABLE",
+    "source_kind": "EXISTING_TRACKED_PUBLIC_REPRESENTATION",
+    "no_publication_claim": true
+  },
+  "scope": {
+    "included": [
+      "Existing public run files identified by repository-relative path and exact hash."
+    ],
+    "excluded": [
+      "Private originals",
+      "Credentials",
+      "Personal absolute paths",
+      "Raw execution data outside existing public representation"
+    ],
+    "limitations": [
+      "This new record is a documentary index only.",
+      "No historical execution, audit, rights, redistribution, or remote publication status is upgraded.",
+      "RUN-003 reviewed candidate bytes are reused by reference from existing history; the separate continuity ZIP is not included."
+    ]
+  },
+  "lineage": {
+    "previous_receipt_id": "NOT_APPLICABLE",
+    "previous_receipt_sha256": "NOT_APPLICABLE"
+  },
+  "PUBLICATION_LIFECYCLE_STATUS": "PREPARED_LOCAL"
+}

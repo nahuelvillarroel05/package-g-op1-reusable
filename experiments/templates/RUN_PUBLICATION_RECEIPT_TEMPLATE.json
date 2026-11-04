@@ -1,0 +1,68 @@
+{
+  "$comment": "Template only. Intentionally invalid as a receipt until every placeholder is replaced and template_only is false.",
+  "schema": "pgop1.experimental.run-publication.v1",
+  "template_only": true,
+  "receipt_id": "REPLACE_WITH_FRESH_UNIQUE_RECEIPT_ID",
+  "record_kind": "PROSPECTIVE_CAMPAIGN",
+  "created_utc": "YYYY-MM-DDTHH:MM:SSZ",
+  "RUN_ID": "RUN-NNN",
+  "RUN_CONTRACT_VERSION": "REQUIRED_VERSION",
+  "EXECUTED_CODE_COMMIT": "REQUIRED_COMMIT_OR_NOT_EXECUTED",
+  "EXECUTED_CODE_TREE": "REQUIRED_TREE_OR_NOT_EXECUTED",
+  "SOURCE_MANIFEST_SHA256": "REQUIRED_SHA256_OR_EXACT_UNKNOWN_REASON",
+  "RESULTS_MANIFEST_SHA256": "REQUIRED_SHA256_OR_EXACT_UNKNOWN_REASON",
+  "EXECUTION_STATUS": "REQUIRED_STATUS",
+  "AUDIT_STATUS": "REQUIRED_STATUS",
+  "PUBLICATION_COMMIT": "REQUIRED_COMMIT_OR_NOT_PUBLISHED",
+  "PUBLICATION_BRANCH": "REQUIRED_BRANCH_OR_NOT_PUBLISHED",
+  "PUBLIC_FILES": [],
+  "WITHHELD_FILES": [],
+  "REDISTRIBUTION_STATUS": "REQUIRED_STATUS",
+  "REMOTE_VERIFICATION_STATUS": "REQUIRED_STATUS",
+  "CAMPAIGN_LIFECYCLE_STATUS": "RUN_PREPARED",
+  "CAMPAIGN_LIFECYCLE_HISTORY": [],
+  "PUBLICATION_LIFECYCLE_STATUS": "NOT_PREPARED",
+  "REPRODUCIBILITY_CLASS": "REQUIRED_OWNER_CLASS",
+  "REQUIRED_RESULT_SET": [
+    {"name":"CAMPAIGN_SUMMARY.md","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"EXECUTION_RESULTS.json","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"COVERAGE_REPORT.json","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"FAILURES_AND_ABSTENTIONS.json","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"DEFECT_AND_FIX_REPORT.md","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"CODE_REFERENCE.json","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"SOURCE_MANIFEST.json","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"RESULTS_INTEGRITY_MANIFEST.json","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"AUDIT_SUMMARY.md","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"LIMITATIONS.md","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."},
+    {"name":"PUBLICATION_RECEIPT.json","status":"UNKNOWN","path":"","sha256":"","reason":"Replace with evidence-backed disposition."}
+  ],
+  "publication": {
+    "status": "NOT_PREPARED",
+    "destination": "UNKNOWN",
+    "candidate_commit": "UNKNOWN",
+    "candidate_tree": "UNKNOWN",
+    "artifact_manifest": [],
+    "scope_review": {
+      "rights": "UNKNOWN",
+      "privacy": "UNKNOWN",
+      "history_and_diff": "UNKNOWN",
+      "review_evidence": []
+    },
+    "authorization": {
+      "status": "NOT_GRANTED",
+      "authority_reference": "NOT_APPLICABLE",
+      "scope": "NOT_APPLICABLE"
+    },
+    "write_receipt": "NOT_APPLICABLE",
+    "remote_verification_receipt": "NOT_APPLICABLE"
+  },
+  "scope": {
+    "included_classes": [],
+    "excluded_classes": ["private_sources", "raw_logs", "credentials", "personal_paths", "unresolved_rights"],
+    "limitations": []
+  },
+  "lineage": {
+    "previous_receipt_id": "NOT_APPLICABLE",
+    "previous_receipt_sha256": "NOT_APPLICABLE"
+  }
+}

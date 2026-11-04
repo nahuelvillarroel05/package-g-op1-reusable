@@ -100,6 +100,27 @@ def test_generic_caller_publishes_recovers_and_never_redispatches(tmp_path):
     assert calls == ['u1']
 
 
+def test_explicit_start_then_execute_started_preserves_one_start_and_one_terminal(tmp_path):
+    c = fixture(tmp_path)
+    calls = []
+    def adapter(unit, refs):
+        calls.append(unit['unit_id'])
+        return {'definition': True}
+    def auditor(unit, adapted):
+        return {'audit_result': adapted, 'processing_disposition': 'TASK_DEFINITION_PROCESSED',
+                'audit_disposition': 'NOT_AUDITED_MISSING_AGENT_OUTPUT'}
+    caller = GenericCaller(c, {('inert','1'): adapter}, auditor, producer_id='fixture-producer')
+    with pytest.raises(FrameworkError, match='CALLER_STARTED_UNIT_REQUIRED'):
+        caller.execute_started('u1')
+    start = caller.begin_unit('u1')
+    assert start['phase'] == 'start' and start['unit_id'] == 'u1'
+    terminal = caller.execute_started('u1')
+    assert terminal['phase'] == 'terminal'
+    assert calls == ['u1']
+    state = reload(c).recover()
+    assert state['completed'] == {'u1'} and state['inflight'] == set()
+
+
 def test_callbacks_cannot_mutate_authoritative_cached_unit(tmp_path):
     c = fixture(tmp_path)
     def adapter(unit, refs):

@@ -1,0 +1,302 @@
+{
+  "schema": "pgop1.experimental.run-publication.v1",
+  "template_only": false,
+  "receipt_id": "HIST-RUN-002-REPRESENTATION-20261104",
+  "record_kind": "HISTORICAL_RECONSTRUCTION",
+  "created_utc": "2026-11-04T18:39:01Z",
+  "RUN_ID": "RUN-002",
+  "RUN_CONTRACT_VERSION": "UNKNOWN_NOT_BOUND_IN_HISTORICAL_REFERENCE",
+  "EXECUTED_CODE_COMMIT": "d589697b9b5e537a93e67480cb0c1f9970745d88",
+  "EXECUTED_CODE_TREE": "79a2a0300c89a723e5ce43c23ace1902347784a1",
+  "SOURCE_MANIFEST_SHA256": "UNKNOWN_NOT_BOUND_IN_HISTORICAL_REFERENCE",
+  "RESULTS_MANIFEST_SHA256": "UNKNOWN_NOT_BOUND_IN_HISTORICAL_REFERENCE",
+  "EXECUTION_STATUS": "HISTORICAL_WITH_EXACT_LIMITATIONS",
+  "AUDIT_STATUS": "UNKNOWN_NOT_BOUND_TO_THIS_REPRESENTATION",
+  "PUBLICATION_COMMIT": "15887cc4f660661a82beb5f5887a566421328c5d",
+  "PUBLICATION_BRANCH": "UNKNOWN_HISTORICAL_BRANCH",
+  "PUBLIC_FILES": [
+    {
+      "artifact_id": "ASTRA_PUBLIC_AUDIT.md",
+      "path": "runs/run-002-engineering/ASTRA_PUBLIC_AUDIT.md",
+      "sha256": "98844ac89ba5261583b4f37dbf7891bec0a7fb8f7af5e443d017ba775b72f588",
+      "bytes": 4304,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "CODE_REFERENCE.json",
+      "path": "runs/run-002-engineering/CODE_REFERENCE.json",
+      "sha256": "c738b79bb9f9910ecd803a8d6a21a39931c8b5acdc55262959cdf38c291956d0",
+      "bytes": 69696,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "CURRENT_PARSER_UNIT_LEDGER.json",
+      "path": "runs/run-002-engineering/CURRENT_PARSER_UNIT_LEDGER.json",
+      "sha256": "8eb05c1f54a4f63a57b0d0ffa793f14d3cfe8243d44aa20a52472ac31296dbcd",
+      "bytes": 108356,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "DERIVATION_AND_RECOVERY.json",
+      "path": "runs/run-002-engineering/DERIVATION_AND_RECOVERY.json",
+      "sha256": "b7ce9302b92c6e2df77a44ae11644eaab0310a1c7e0f1e6fc8992bd8e3355ed6",
+      "bytes": 589,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "ENGINEERING_PROTOCOL_V1.md",
+      "path": "runs/run-002-engineering/ENGINEERING_PROTOCOL_V1.md",
+      "sha256": "32f2539f9713932b9601b9332782ad2465262f9c31144ce2a29109609e41bfa6",
+      "bytes": 4857,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "EXECUTION_AND_CONTEXT.json",
+      "path": "runs/run-002-engineering/EXECUTION_AND_CONTEXT.json",
+      "sha256": "03276cfb14b30f967e2c258bfce32e238d7d99ac1d900590732e6e07e4d6514a",
+      "bytes": 2834,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "F16_LINUX_STATUS.json",
+      "path": "runs/run-002-engineering/F16_LINUX_STATUS.json",
+      "sha256": "03358ebd219e0af1d4f105b292ccb4b99d2a5f3225ee2d9c09b2a56376660088",
+      "bytes": 362,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "INPUT_COMMITMENTS.json",
+      "path": "runs/run-002-engineering/INPUT_COMMITMENTS.json",
+      "sha256": "d25b86f9c481b93f2836c0b40320a627dbe1e3aff7770dcbc49312215a12dc4f",
+      "bytes": 783678,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "LINUX_REPAIR_COMMITMENTS.json",
+      "path": "runs/run-002-engineering/LINUX_REPAIR_COMMITMENTS.json",
+      "sha256": "23983b5d9e75ee88fe2f032df5b0c20c97cda416daee0f98c8fe69c66f0305a8",
+      "bytes": 1459,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "METRICS.json",
+      "path": "runs/run-002-engineering/METRICS.json",
+      "sha256": "6789e529c700cb968a0b170dff0ad7c43e6998c4b172a1d65c142e395bd499ee",
+      "bytes": 5830,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "PRIVATE_EVIDENCE_COMMITMENTS.json",
+      "path": "runs/run-002-engineering/PRIVATE_EVIDENCE_COMMITMENTS.json",
+      "sha256": "decb1b7618fbf97167b80a7f2358eb55e78aab486ba6dd4245531cf01fe16bf0",
+      "bytes": 449,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "PROSPECTIVE_READBACK_REPAIR.json",
+      "path": "runs/run-002-engineering/PROSPECTIVE_READBACK_REPAIR.json",
+      "sha256": "11d649e357564b313d7161a9810ca8a4a84d8aa94c80ecaaae102495c475f370",
+      "bytes": 3406,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "PUBLIC_ARTIFACT_MANIFEST.json",
+      "path": "runs/run-002-engineering/PUBLIC_ARTIFACT_MANIFEST.json",
+      "sha256": "6273fb0c73ac21ccf4602317a2d47a013ef909893a16995b6fbd017c73e7708f",
+      "bytes": 5332,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "README.md",
+      "path": "runs/run-002-engineering/README.md",
+      "sha256": "ae95c78c2980b7b612dec6ad749d69a1d657c311c30369599ae3140582ad91ef",
+      "bytes": 7642,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "SONNET_PUBLIC_HANDOFF.md",
+      "path": "runs/run-002-engineering/SONNET_PUBLIC_HANDOFF.md",
+      "sha256": "d81255ecbb9cf81e6d2397a8ba53dabda3b6f34d0dfb8ad97c0c703825139c88",
+      "bytes": 2182,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "TEST_RESULTS.json",
+      "path": "runs/run-002-engineering/TEST_RESULTS.json",
+      "sha256": "3084be635235405894a7e82ca3d87f4011ffec3efa7bc246004e6e2f38072276",
+      "bytes": 1707,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "TEST_SELECTION.json",
+      "path": "runs/run-002-engineering/TEST_SELECTION.json",
+      "sha256": "eadb6a1817fdbef37f49e0d7fff08c05c4c27e70329d84c252601ddee86bf1fd",
+      "bytes": 2290,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    },
+    {
+      "artifact_id": "UNIT_LEDGER.json",
+      "path": "runs/run-002-engineering/UNIT_LEDGER.json",
+      "sha256": "6e2933792692aa860c0209d0a990c30e896774d426479b28843bcefe5f44e0c0",
+      "bytes": 1885345,
+      "rights": "EXISTING_PUBLIC_REPRESENTATION",
+      "privacy": "RELATIVE_PATH_HASH_ONLY; DRIVE_PATH_SCAN_CLEAR",
+      "included": true
+    }
+  ],
+  "WITHHELD_FILES": [
+    "PRIVATE_EVIDENCE_COMMITMENTS_EXIST; DETAILS_NOT_REPUBLISHED",
+    "ORIGINAL_PRIVATE_SOURCES_AND_RAW_EVIDENCE_NOT_INCLUDED"
+  ],
+  "REDISTRIBUTION_STATUS": "UNKNOWN_NOT_BOUND_IN_HISTORICAL_REFERENCE",
+  "REMOTE_VERIFICATION_STATUS": "UNKNOWN_NOT_VERIFIED_IN_THIS_INTERVENTION",
+  "CAMPAIGN_LIFECYCLE_STATUS": "UNKNOWN_HISTORICAL_STAGE",
+  "CAMPAIGN_LIFECYCLE_HISTORY": [],
+  "REPRODUCIBILITY_CLASS": "DOCUMENTARY_ONLY",
+  "HISTORICAL_REPRODUCIBILITY_CLASS": "UNKNOWN",
+  "REQUIRED_RESULT_SET": [
+    {
+      "name": "CAMPAIGN_SUMMARY.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "EXECUTION_RESULTS.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "COVERAGE_REPORT.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "FAILURES_AND_ABSTENTIONS.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "DEFECT_AND_FIX_REPORT.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "CODE_REFERENCE.json",
+      "status": "PRESENT",
+      "path": "runs/run-002-engineering/CODE_REFERENCE.json",
+      "sha256": "c738b79bb9f9910ecd803a8d6a21a39931c8b5acdc55262959cdf38c291956d0",
+      "reason": "Exact bytes present in the existing public representation."
+    },
+    {
+      "name": "SOURCE_MANIFEST.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "RESULTS_INTEGRITY_MANIFEST.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "AUDIT_SUMMARY.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "LIMITATIONS.md",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    },
+    {
+      "name": "PUBLICATION_RECEIPT.json",
+      "status": "NOT_PRESENT_IN_HISTORICAL_SCOPE",
+      "path": "",
+      "sha256": "",
+      "reason": "No authorized historical evidence for this required artifact in the selected public representation; not reconstructed retrospectively."
+    }
+  ],
+  "publication": {
+    "status": "PREPARED_LOCAL",
+    "destination": "UNSELECTED_NO_REMOTE_WRITE",
+    "candidate_commit": "15887cc4f660661a82beb5f5887a566421328c5d",
+    "candidate_tree": "UNKNOWN_NOT_BOUND_HERE",
+    "historical_publication_status": "UNKNOWN_NOT_VERIFIED_IN_THIS_INTERVENTION",
+    "write_receipt": "NOT_APPLICABLE",
+    "remote_verification_receipt": "NOT_APPLICABLE",
+    "source_kind": "EXISTING_TRACKED_PUBLIC_REPRESENTATION",
+    "no_publication_claim": true
+  },
+  "scope": {
+    "included": [
+      "Existing public run files identified by repository-relative path and exact hash."
+    ],
+    "excluded": [
+      "Private originals",
+      "Credentials",
+      "Personal absolute paths",
+      "Raw execution data outside existing public representation"
+    ],
+    "limitations": [
+      "This new record is a documentary index only.",
+      "No historical execution, audit, rights, redistribution, or remote publication status is upgraded.",
+      "RUN-003 reviewed candidate bytes are reused by reference from existing history; the separate continuity ZIP is not included."
+    ]
+  },
+  "lineage": {
+    "previous_receipt_id": "NOT_APPLICABLE",
+    "previous_receipt_sha256": "NOT_APPLICABLE"
+  },
+  "PUBLICATION_LIFECYCLE_STATUS": "PREPARED_LOCAL"
+}

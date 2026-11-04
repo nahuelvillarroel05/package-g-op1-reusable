@@ -1,13 +1,30 @@
-# Propósito formal de los RUN — versión 1
+# Experimental RUN purpose
 
-Los RUN son campañas experimentales de evaluación y estrés de PGOP1. Sirven para verificar capacidades implementadas, medir cobertura, evaluar comportamiento con evidencias auténticas, descubrir defectos, reproducir errores, evaluar recuperación e integridad, identificar limitaciones y aportar evidencia para correcciones prospectivas. Permiten comparar candidatos sobre poblaciones compatibles y contratos explícitos.
+> Los RUN de PGOP1 son campañas experimentales destinadas a evaluar sus componentes mediante evidencias verificables, descubrir defectos reproducibles, medir capacidades y limitaciones y producir resultados que puedan auditarse y publicarse para documentar la evolución del proyecto.
 
-Un RUN debe decir qué pregunta responde, qué población observa, con qué evidencia/predicados y qué límites tiene. Resultados negativos, errores y abstenciones son evidencia y se conservan. La evidencia puede apoyar un cambio futuro; no modifica el pasado.
+`RUN-001` onward are prospective experimental campaign identifiers. Each RUN identifies one campaign contract and its evidence lineage. A RUN may have multiple immutable attempts, including failed, stopped, blocked, and successful attempts. A pilot, engineering intervention, preflight, or synthetic validation is not a RUN unless the registry explicitly identifies it as one.
 
-Los RUN no constituyen automáticamente calificación operacional, cierre de GATE_11, OD03, Source025 u OD05 ni autorización de promoción a main. La calificación formal requiere sus propios procedimientos y autorizaciones. Un piloto tiene alcance e identidad propios; no se convierte retrospectivamente en campaña ni holdout independiente.
+The purpose of this series is to produce reproducible, bounded engineering evidence about the selected Package-G candidate and its declared inputs. Reports must preserve the difference between implementation behavior, structural validity, semantic quality, independent qualification, and release authority. A result in one dimension does not imply another.
 
-Leer [política](EXPERIMENTAL_POLICY.md), [registro](RUN_REGISTRY.json) y [plantilla contractual](RUN_CONTRACT_TEMPLATE.md) antes de preparar un RUN. RUN-001/002/003 son HISTORICAL_RECONSTRUCTION; no se les atribuye este protocolo retrospectivamente. RUN-004 está RESERVED_PREPARATION_BLOCKED, NOT_EXECUTED, sin contrato final aprobado. Los futuros contratos serán PROSPECTIVE_FROZEN_CONTRACT sólo tras aprobación y freeze reales.
+This series has two obligations:
 
-## RUN-004 rev004 — prospective Owner-approved approach
+1. **Experimental:** preserve the inputs, configuration, code and versions, results, errors, abstentions, defects, evidence, and audits for every attempt, including failures and incomplete runs.
+2. **Publication:** document the public purpose, method, code, selection, metrics, results, limitations, evidence, non-redistributable references, audit state, and exact Git identity. Missing rights to redistribute a source do not permit inventing or silently omitting its results. Publish only lawful aggregates, commitments, and indexes, together with clear public reproducibility limits.
 
-Primary mandatory modality A evaluates PGOP1 experimentally across every selected membership in all six families. Complementary B validates official evaluators where its own inputs/resources/authorization permit. Execution completeness means actual attempt plus verifiable disposition for every selected unit, not semantic success. Report audit coverage, evidence sufficiency, official coverage, engineering quality and independent qualification separately. All-abstention populations demonstrate no semantic capability. Conceptual approach approval is not contract approval, final freeze or execution authorization. Current prospective contract: `pgop1.run004.multibenchmark.contract.rev004`, `runs/run-004/contracts/revision-004/RUN_CONTRACT.md`; rev001–rev003 remain immutable. RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. The earlier rev003 both-modality integral gate is historical; B is not a universal prerequisite for A.
+Execution is allowed only when the campaign has a complete versioned contract, approved freeze bound to an exact revision and SHA-256, fresh execution identity, and explicit Owner authorization. Registry entries, tests, preparation, documentation, publication, and branch names do not authorize execution. RUN-004 remains a preparation locator and is not approved or executed.
+
+Finishing tests does not close the RUN documentary lifecycle. `RUN_DOCUMENTARY_CLOSED` requires the campaign's complete result set, verified integrity, engineering audit, publication receipt, and exact public Git identity. Closure records evidence completeness; it does not itself mean acceptance, independent qualification, or promotion.
+
+Historical RUN-001, RUN-002, and RUN-003 records are reconstructions from their verified prior records. This purpose statement is prospective and does not retrofit contracts, alter execution results, or relabel historical limitations.
+
+## Required reporting distinctions
+
+- execution code identity, result/release identity, and publication identity are separate fields;
+- declared, attempted, completed, failed, stopped, blocked, and not-run units have separate denominators;
+- structural, semantic, independent-reference, custody, and authority conclusions are reported separately;
+- unknown, missing, and inaccessible evidence remain `UNKNOWN` or the exact blocked state;
+- publication readiness, local artifact preparation, remote publication, and remote verification are separate lifecycle events.
+
+See [publication policy](PUBLICATION_POLICY.md), [policy](EXPERIMENTAL_POLICY.md), and the versioned [run-publication contract](schemas/pgop1.experimental.run-publication.v1.md).
+
+Every prospective campaign includes the Owner-required result set: `CAMPAIGN_SUMMARY.md`, `EXECUTION_RESULTS.json`, `COVERAGE_REPORT.json`, `FAILURES_AND_ABSTENTIONS.json`, `DEFECT_AND_FIX_REPORT.md`, `CODE_REFERENCE.json`, `SOURCE_MANIFEST.json`, `RESULTS_INTEGRITY_MANIFEST.json`, `AUDIT_SUMMARY.md`, `LIMITATIONS.md`, and `PUBLICATION_RECEIPT.json`. Each file is backed by applicable frozen execution, audit, and publication evidence. Historical gaps are listed explicitly and are not filled retrospectively.

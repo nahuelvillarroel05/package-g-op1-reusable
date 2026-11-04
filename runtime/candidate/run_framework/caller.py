@@ -158,16 +158,38 @@ class GenericCaller:
     def __init__(self, campaign, adapters, auditor, *, producer_id):
         self.campaign, self.adapters, self.auditor = campaign, dict(adapters), auditor
         self.producer_id = producer_id
+        self._prestarted = {}
         SourceBindings(campaign)  # validate authoritative complete graph eagerly
 
-    def execute(self, unit_id):
+    def _resolve(self, unit_id):
         unit, _ = _unit(self.campaign, unit_id)
         key = (unit["adapter_id"], unit["adapter_version"])
         adapter = self.adapters.get(key)
         if not callable(adapter) or not callable(self.auditor):
             raise FrameworkError("CALLER_ADAPTER_OR_AUDITOR_UNAVAILABLE")
         refs = SourceBindings(self.campaign).verify_unit(unit_id, unit)
+        return unit, key, adapter, refs
+
+    def begin_unit(self, unit_id):
+        """Publish one typed start and retain same-object intent for execute_started."""
+        unit, key, _adapter, refs = self._resolve(unit_id)
         self.campaign.begin_unit(unit_id, {"adapter_id": key[0], "adapter_version": key[1], "caller_schema": PAYLOAD_SCHEMA})
+        state = self.campaign.recover()
+        summary = state["receipts"][-1]
+        if summary["phase"] != "start" or summary["unit_id"] != unit_id:
+            raise FrameworkError("CALLER_START_RECEIPT_NOT_PUBLISHED")
+        self._prestarted[unit_id] = summary["sha256"]
+        return dict(summary)
+
+    def execute_started(self, unit_id):
+        """Execute only a start published by this caller object in this process."""
+        started = self._prestarted.pop(unit_id, None)
+        if not started:
+            raise FrameworkError("CALLER_STARTED_UNIT_REQUIRED; recovery never redispatches")
+        state = self.campaign.recover()
+        if unit_id not in state["inflight"] or not state["receipts"] or state["receipts"][-1]["sha256"] != started:
+            raise FrameworkError("CALLER_START_OWNERSHIP_OR_STATE_CHANGED")
+        unit, _key, adapter, refs = self._resolve(unit_id)
         # A failure remains inflight; there is deliberately no retry path.
         try:
             adapted = adapter(deepcopy(unit), deepcopy(refs))
@@ -184,6 +206,11 @@ class GenericCaller:
                 raise exc from stopped
             raise
         return self.campaign.complete_unit(unit_id, result["processing_disposition"], envelope)
+
+    def execute(self, unit_id):
+        """Publish one typed start, then execute its callbacks exactly once."""
+        self.begin_unit(unit_id)
+        return self.execute_started(unit_id)
 
     def recover(self):
         # Campaign recovery invokes the same strict typed and source validators.

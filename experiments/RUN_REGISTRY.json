@@ -1,6 +1,6 @@
 {
   "schema": "pgop1.experimental.run-registry.v1",
-  "central_branch": "experimental/pgop1-runs",
+  "central_branch": "experiment",
   "authority": "Owner request PGOP1_EXPERIMENTAL_RUN_ARCHITECTURE_001; index is not execution approval",
   "runs": [
     {
@@ -11,6 +11,11 @@
       "execution_code_tree": "f0ef69faf72beb73ec0e2d73afd3657dd4335bbb",
       "result_or_release_commit": "af95c484813c8e6180f72be8c86896f5aab23305",
       "public_evidence_path": "runs/run-001",
+      "publication_representation": {
+        "status": "PREPARED_LOCAL",
+        "record_path": "experiments/runs/run-001/PUBLICATION_RECORD.json",
+        "remote_state": "UNKNOWN_NOT_VERIFIED_IN_THIS_INTERVENTION"
+      },
       "private_evidence_commitments": [
         {
           "artifact_id": "RUN-001-001",
@@ -70,6 +75,11 @@
       "execution_code_tree": "79a2a0300c89a723e5ce43c23ace1902347784a1",
       "result_or_release_commit": "15887cc4f660661a82beb5f5887a566421328c5d",
       "public_evidence_path": "runs/run-002-engineering",
+      "publication_representation": {
+        "status": "PREPARED_LOCAL",
+        "record_path": "experiments/runs/run-002/PUBLICATION_RECORD.json",
+        "remote_state": "UNKNOWN_NOT_VERIFIED_IN_THIS_INTERVENTION"
+      },
       "private_evidence_commitments": [
         {
           "artifact_id": "RUN-002-001",
@@ -119,6 +129,11 @@
       "execution_code_tree": "caa847289e63bad5b11bf80577c5fd4c3d579783",
       "result_or_release_commit": "5d692882bdd625ca57d82f77d62b1ea830fe9c15",
       "public_evidence_path": "runs/run-003-engineering-public",
+      "publication_representation": {
+        "status": "PREPARED_LOCAL",
+        "record_path": "experiments/runs/run-003/PUBLICATION_RECORD.json",
+        "remote_state": "NO_CURRENT_REMOTE_CLAIM"
+      },
       "private_evidence_commitments": [
         {
           "artifact_id": "RUN-003-001",
@@ -258,6 +273,27 @@
         "execution": "NOT_EXECUTED",
         "contract_approval": "NOT_APPROVED",
         "final_freeze": "NOT_ISSUED"
+      },
+      "current_engineering_preparation": {
+        "intervention": "PGOP1_PUBLIC_EXPERIMENT_BRANCH_AND_RUN004_001",
+        "scope": "PROSPECTIVE_DEVELOPMENT_ENGINEERING_NOT_CAMPAIGN_EXECUTION",
+        "memberships": 10096,
+        "archived_task_id_output_bindings": 25,
+        "output_binding_matrix_sha256": "6a2edfb2fa69d48d47cec433395169ea2ff2dc789e9d2dfa1d423742d7969b68",
+        "compatible_evaluator_or_producer_equivalence": "NOT_PROVEN",
+        "predicate_pairs": 80768,
+        "applicability_plan": {
+          "APPLICABLE": 30288,
+          "UNKNOWN_APPLICABILITY": 50480,
+          "NOT_APPLICABLE": 0
+        },
+        "all_selected_pairs_audit_status": "NOT_EVALUATED",
+        "task_wide_excluded_payload_access": "UNKNOWN_SEE_LOCAL_INCIDENT_AUDIT",
+        "readiness": "ENGINEERING_PARTIAL_WITH_EXACT_LIMITATIONS",
+        "public_preparation_index": "runs/run-004/preparation/PUBLIC_EXPERIMENT_ENGINEERING_001.md",
+        "RUN004_CONTRACT": "NOT_APPROVED",
+        "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+        "RUN004_EXECUTION": "NOT_EXECUTED"
       }
     }
   ],
