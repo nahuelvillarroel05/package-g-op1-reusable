@@ -394,6 +394,27 @@
       "readiness_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001\\RUN004_FINAL_TECHNICAL_READINESS.json",
       "readiness_sha256": "001bf7a036215c12a6961cb39047e06ade6f9a2fffebe7a3a148bd03d14fee1c",
       "registration_scope": "Owner-specified development preflight; continuity registration after observed execution, not retrospective campaign authorization"
+    },
+    {
+      "ID": "PGOP1_RUN004_FINAL_ENGINEERING_CONVERGENCE_001",
+      "status": "PGOP1_RUN004_ENGINEERING_PARTIAL_WITH_EXACT_LIMITATIONS",
+      "candidate_commit": "d0c19e45fa637c040154ba53004863012e563b98",
+      "candidate_tree": "ba018016d24c9a1f55f8ac47ced27803b5b957e6",
+      "readiness_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_FINAL_ENGINEERING_CONVERGENCE_001\\RUN004_FINAL_ENGINEERING_READINESS.json",
+      "readiness_sha256": "3814312b2f96a35408ebd647e64d66a06b3603e53d30a0b02516a67902c97673",
+      "authentic_development_units": 9,
+      "original_dataset_sources": 7375,
+      "normative_companions": 10,
+      "selected_memberships": 10096,
+      "planned_shards": 202,
+      "tests": {
+        "historical_unchanged": 373,
+        "new": 77
+      },
+      "RUN004_CONTRACT": "NOT_APPROVED",
+      "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+      "RUN004_EXECUTION": "NOT_EXECUTED",
+      "scope": "Engineering only; separate development identities; no campaign dispatch"
     }
   ],
   "synthetic_development_validations": [

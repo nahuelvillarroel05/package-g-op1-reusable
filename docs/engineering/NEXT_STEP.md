@@ -1,3 +1,3 @@
-# Next: exact RUN004 readiness blockers
+# Next: remaining RUN004 engineering gates
 
-[Handoff](../../../../PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001/FINAL_HANDOFF.md) and [next step](../../../../PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001/NEXT_STEP.md). RUN004_PREFLIGHT_BLOCKED. No automatic resume, campaign execution, push or promotion.
+[Handoff](../../../../PGOP1_RUN004_FINAL_ENGINEERING_CONVERGENCE_001/FINAL_HANDOFF.md) and [continuation](../../../../PGOP1_RUN004_FINAL_ENGINEERING_CONVERGENCE_001/NEXT_STEP.md). Engineering partial with exact limitations. RUN004 NOT_APPROVED / NOT_ISSUED / NOT_EXECUTED.
