@@ -36,6 +36,9 @@ def fixture(tmp_path, *, output_available=False):
                        'supporting_source_ids': [], 'normative_companion_ids': []} for u in cfg['expected_units']]}
     deps_path = tmp_path / 'dependencies.json'
     deps_path.write_bytes(canonical(deps))
+    predicate_path = Path(cfg['predicate_contracts']['path'])
+    predicate_path.write_bytes(canonical({'schema':'development', 'version':'1'}))
+    cfg['predicate_contracts']['sha256'] = digest(predicate_path.read_bytes())
     for unit in dataset['units']:
         unit.update(benchmark_id='authored', benchmark_version='1', adapter_id='inert', adapter_version='1',
                     predicate_contract={'contract_id': 'development', 'version': '1', 'sha256': cfg['predicate_contracts']['sha256']},

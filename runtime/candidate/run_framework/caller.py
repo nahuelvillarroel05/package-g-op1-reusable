@@ -22,11 +22,16 @@ def _refs(rows):
     return [{"source_id": x["source_id"], "sha256": x["sha256"]} for x in rows]
 
 
-def _unit(campaign, unit_id):
-    index = _manifest_index(campaign)
-    if unit_id not in index["units"]:
-        raise FrameworkError("TYPED_UNIT_NOT_IN_MANIFEST")
-    unit = index["units"][unit_id]
+def _authorities(campaign, index):
+    documents = []
+    for key in ("adapter_registry", "predicate_contracts"):
+        binding = campaign.config[key]
+        _, raw = _read_bound_file(binding["path"], binding["sha256"], index["roots"], key)
+        documents.append(_loads(raw))
+    return documents
+
+
+def _validate_unit(campaign, unit, registry, matrix):
     for field in ("benchmark_id", "benchmark_version", "adapter_id", "adapter_version"):
         if not isinstance(unit.get(field), str) or not unit[field]:
             raise FrameworkError("TYPED_UNIT_BINDING_MISSING:" + field)
@@ -36,15 +41,40 @@ def _unit(campaign, unit_id):
         raise FrameworkError("TYPED_PREDICATE_CONTRACT_MISSING")
     if contract["sha256"] != campaign.config["predicate_contracts"]["sha256"]:
         raise FrameworkError("TYPED_PREDICATE_AUTHORITY_MISMATCH")
-    binding = campaign.config["adapter_registry"]
-    _, raw = _read_bound_file(binding["path"], binding["sha256"], index["roots"], "adapter registry")
-    registry = _loads(raw)
+    if (contract["contract_id"] != matrix.get("contract_id", matrix.get("schema"))
+            or contract["version"] != matrix.get("version")):
+        raise FrameworkError("TYPED_PREDICATE_IDENTITY_MISMATCH")
     registered = registry.get("families", {}).get(unit["benchmark_id"])
     if (not isinstance(registered, dict) or registered.get("adapter_id") != unit["adapter_id"]
             or registered.get("adapter_version") != unit["adapter_version"]
             or unit["benchmark_version"] not in registered.get("versions", [])):
         raise FrameworkError("TYPED_ADAPTER_NOT_IN_REGISTRY")
+
+
+def _unit(campaign, unit_id):
+    index = _manifest_index(campaign)
+    if unit_id not in index["units"]:
+        raise FrameworkError("TYPED_UNIT_NOT_IN_MANIFEST")
+    unit = index["units"][unit_id]
+    _validate_unit(campaign, unit, *_authorities(campaign, index))
     return unit, index
+
+
+def validate_configuration(campaign):
+    """Validate every selected unit against independent registry/matrix authority."""
+    index = _manifest_index(campaign)
+    registry, matrix = _authorities(campaign, index)
+    sources = SourceBindings(campaign)
+    for unit_id, unit in index["units"].items():
+        _validate_unit(campaign, unit, registry, matrix)
+        refs = sources.references(unit_id)
+        if (refs["primary"]["source_id"] != unit["source_id"]
+                or refs["primary"]["sha256"] != unit["source_sha256"]
+                or refs["primary"]["path"] != unit.get("source_path", refs["primary"]["path"])):
+            raise FrameworkError("SOURCE_DEPENDENCY_PRIMARY_MISMATCH")
+    result = sources.verify_all()
+    result["typed_units_validated"] = len(index["units"])
+    return result
 
 
 def validate_typed_result(campaign, unit_id, envelope):
@@ -52,6 +82,8 @@ def validate_typed_result(campaign, unit_id, envelope):
     payload = envelope.get("result_payload")
     if not isinstance(payload, dict) or set(payload) != _FIELDS or payload.get("schema") != PAYLOAD_SCHEMA:
         raise FrameworkError("TYPED_PAYLOAD_REQUIRED")
+    if envelope.get("result_type") != PAYLOAD_SCHEMA:
+        raise FrameworkError("TYPED_RESULT_TYPE_MISMATCH")
     unit, index = _unit(campaign, unit_id)
     refs = SourceBindings(campaign).verify_unit(unit_id, unit)
     for field in ("benchmark_id", "benchmark_version", "adapter_id", "adapter_version", "predicate_contract"):

@@ -16,9 +16,9 @@ def main():
     preflight=campaign.preflight()
     if args.action=="prepare":
         from .core import canonical, digest
-        from .source_bindings import SourceBindings
+        from .caller import validate_configuration
         plan = campaign.shard_plan()
-        sources = (SourceBindings(campaign).verify_all()
+        sources = (validate_configuration(campaign)
                    if "generic_caller" in campaign.config.get("audit_policy", {}) else None)
         result = {"schema":"pgop1.run-preparation.v1", "preflight":preflight,
                   "source_validation":sources, "plan_sha256":digest(canonical(plan)),

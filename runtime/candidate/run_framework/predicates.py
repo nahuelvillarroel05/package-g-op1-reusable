@@ -150,6 +150,8 @@ def validate_audit_payload(unit, audit_result, processing_disposition, audit_dis
         if (not isinstance(source, dict) or set(source) != {"path", "sha256", "task_id"}
                 or (source["path"], source["sha256"]) not in index["evidence"][unit["unit_id"]]):
             raise FrameworkError("PREDICATE_INPUT_NOT_BOUND")
+        if {"path": source["path"], "sha256": source["sha256"]} not in unit.get("authentic_output_references", []):
+            raise FrameworkError("PREDICATE_REPLAY_OUTPUT_REFERENCE_MISMATCH")
         _, raw = _read_bound_file(source["path"], source["sha256"], index["roots"], "predicate input")
         from runtime.candidate.context_engine import strict_json_loads
         records = strict_json_loads(raw)
@@ -184,6 +186,9 @@ def validate_audit_payload(unit, audit_result, processing_disposition, audit_dis
                     *["logs/logs/" + source["task_id"] + "/" + name for name in ("report.json", "patch.diff", "test_output.txt.gz")],
                     *[(RUN_REPO / name).as_posix() for name in ("per_instance_details.json", "results/results.json", "metadata.yaml", "README.md")]]
         evidence = dict(index["evidence"][unit["unit_id"]])
+        trajectory_path = str((Path(source["data_root"]) / ("logs/trajs/" + source["task_id"] + ".traj.json")).resolve())
+        if {"path": trajectory_path, "sha256": evidence.get(trajectory_path)} not in unit.get("authentic_output_references", []):
+            raise FrameworkError("PREDICATE_REPLAY_OUTPUT_REFERENCE_MISMATCH")
         for relative in required:
             path = str((Path(source["data_root"]) / relative).resolve())
             if path not in evidence:

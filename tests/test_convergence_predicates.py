@@ -108,7 +108,8 @@ def test_bfcl_false_decision_rejected_by_replay(tmp_path):
     sha = hashlib.sha256(source.read_bytes()).hexdigest()
     unit = {"unit_id": "d1", "benchmark_id": "bfcl_v4", "benchmark_version": "V4",
             "unit_subtype": "simple_python", "predicate_profile": "BFCL_STRUCTURAL_V2", "task_id": task["id"],
-            "predicate_input": {"path": str(source), "sha256": sha, "task_id": task["id"]}}
+            "predicate_input": {"path": str(source), "sha256": sha, "task_id": task["id"]},
+            "authentic_output_references": [{"path": str(source), "sha256": sha}]}
     from runtime.candidate.run_framework.predicates import build_audit_payload
     payload = build_audit_payload(unit, audit(task, response))["audit_result"]
     index = {"evidence": {"d1": {(str(source), sha)}}, "roots": [tmp_path]}
@@ -128,7 +129,7 @@ def test_swe_unbound_root_rejected_before_adapter_reads(tmp_path):
             "unit_subtype": "archived_explicit_completion_statement", "predicate_profile": "SWE_ARCHIVED_COMPLETION_V1", "task_id": "axios__axios-5892",
             "predicate_input": {"data_root": str(tmp_path / "unavailable"), "task_id": "axios__axios-5892"}}
     payload = {"schema": "pgop1.predicate-evidence.v1", **definition_disposition("swebench", "multilingual", "archived_explicit_completion_statement")}
-    with pytest.raises(FrameworkError, match="UNBOUND_SOURCE"):
+    with pytest.raises(FrameworkError, match="OUTPUT_REFERENCE_MISMATCH"):
         validate_audit_payload(unit, payload, "AGENT_OUTPUT_AUDITED", "AUDITED", {"evidence": {"d1": set()}, "roots": [tmp_path]})
 
 
@@ -141,3 +142,21 @@ def test_definition_forged_crossfield_claims_rejected(field, value):
     payload[field] = value
     with pytest.raises(FrameworkError, match="NOT_EXACT_RECONSTRUCTION"):
         validate_audit_payload(unit, payload, "TASK_DEFINITION_PROCESSED", "NOT_AUDITED_MISSING_AGENT_OUTPUT", {})
+
+
+def test_replayed_bfcl_output_must_be_authentic_output_reference(tmp_path):
+    import json, hashlib
+    from runtime.candidate.run_framework.predicates import validate_audit_payload, build_audit_payload
+    from runtime.candidate.run_framework.core import FrameworkError
+    task, response = fixture()
+    source = tmp_path / "A.json"
+    source.write_text(json.dumps([{"task_id": task["id"], "task": task, "response": response}]))
+    sha = hashlib.sha256(source.read_bytes()).hexdigest()
+    unit = {"unit_id": "d1", "task_id": task["id"], "benchmark_id": "bfcl_v4", "benchmark_version": "V4",
+            "unit_subtype": "simple_python", "predicate_profile": "BFCL_STRUCTURAL_V2",
+            "predicate_input": {"path": str(source), "sha256": sha, "task_id": task["id"]},
+            "authentic_output_references": [{"path": str(tmp_path / "B.json"), "sha256": "0" * 64}]}
+    payload = build_audit_payload(unit, audit(task, response))["audit_result"]
+    index = {"evidence": {"d1": {(str(source), sha)}}, "roots": [tmp_path]}
+    with pytest.raises(FrameworkError, match="OUTPUT_REFERENCE_MISMATCH"):
+        validate_audit_payload(unit, payload, "AGENT_OUTPUT_AUDITED", "AUDITED", index)
