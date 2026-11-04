@@ -377,6 +377,23 @@
       "RUN004_EXECUTION": "NOT_EXECUTED",
       "synthetic_scale": "10096units/202shards/20192events",
       "regressions": "311 historical +62 new; separate denominators"
+    },
+    {
+      "ID": "PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001",
+      "status": "RUN004_PREFLIGHT_BLOCKED",
+      "candidate_commit": "b5777a319581c84adcb8bd99570b7c9730bdfcfd",
+      "RUN004_CONTRACT": "NOT_APPROVED",
+      "RUN004_FINAL_FREEZE": "NOT_ISSUED",
+      "RUN004_EXECUTION": "NOT_EXECUTED",
+      "preflight_id": "PGOP1_RUN004_AUTHENTIC_PREFLIGHT_001",
+      "preflight_attempt_id": "20261104T025825Z-292f7b64",
+      "authentic_metadata_units": 6,
+      "semantic_audits": 0,
+      "original_tasks_executed": 0,
+      "negative_controls": 12,
+      "readiness_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001\\RUN004_FINAL_TECHNICAL_READINESS.json",
+      "readiness_sha256": "001bf7a036215c12a6961cb39047e06ade6f9a2fffebe7a3a148bd03d14fee1c",
+      "registration_scope": "Owner-specified development preflight; continuity registration after observed execution, not retrospective campaign authorization"
     }
   ],
   "synthetic_development_validations": [

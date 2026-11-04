@@ -1,3 +1,3 @@
-# Next: qualify real producers and final campaign bindings
+# Next: exact RUN004 readiness blockers
 
-[Remediation handoff](../../../../PGOP1_REUSABLE_RUN_FRAMEWORK_REMEDIATION_001/FINAL_HANDOFF.md). Use the same reusable framework with new authorized configurations. Synthetic evidence does not authenticate producers or approve RUN004. No automatic resume, execution, push or promotion.
+[Handoff](../../../../PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001/FINAL_HANDOFF.md) and [next step](../../../../PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001/NEXT_STEP.md). RUN004_PREFLIGHT_BLOCKED. No automatic resume, campaign execution, push or promotion.
