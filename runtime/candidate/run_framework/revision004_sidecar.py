@@ -381,6 +381,14 @@ def verify_revision004_sidecar(sidecar_root: str | os.PathLike[str], campaign_v2
     index, _index_sha = _decode(index_raw, "INDEX.json")
     receipts_rows, checkpoint_rows, profile = _index_rows(index)
 
+    required_profile = campaign_v2.config.get("audit_policy", {}).get("generic_caller", {}).get("literal_receipt_profile")
+    if required_profile is not None:
+        if not isinstance(required_profile, dict) or required_profile.get("schema") != profile:
+            raise SidecarVerificationError("CONFIGURED_LITERAL_PROFILE_MISMATCH")
+        if (required_profile.get("directory") != "REV004_WIRE"
+                or root.resolve() != (campaign_v2.output / "REV004_WIRE").resolve()):
+            raise SidecarVerificationError("CONFIGURED_LITERAL_DIRECTORY_MISMATCH")
+
     expected_campaign = campaign_v2.config["campaign_id"]
     expected_attempt = campaign_v2.config["campaign_attempt_id"]
     expected_config = campaign_v2.config_sha256
