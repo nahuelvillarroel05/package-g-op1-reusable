@@ -14,7 +14,7 @@ from pathlib import Path
 import time
 import tomllib
 
-from .core import FrameworkError, canonical, digest, _git_read, _path, _write_immutable
+from .core import FrameworkError, PATH_ID, canonical, digest, _git_read, _path, _write_immutable
 from . import load_config
 from .caller import GenericCaller
 from .predicates import build_audit_payload
@@ -78,7 +78,12 @@ def process_definition(unit, references):
     return {"definition": True}
 
 
-def prepare(workspace, code_root, rights_path, contract_path):
+def prepare(workspace, code_root, rights_path, contract_path, attempt_id=ATTEMPT, prior_attempt=None):
+    for value in (attempt_id, prior_attempt):
+        if value is not None and (not PATH_ID.fullmatch(value) or value in {".", ".."}):
+            raise FrameworkError("E1_UNSAFE_ATTEMPT_ID")
+    if attempt_id == prior_attempt:
+        raise FrameworkError("E1_PRIOR_ATTEMPT_MUST_BE_DISTINCT")
     workspace = _path(workspace, True)
     code_root = _path(code_root, True)
     root = workspace.parents[1]
@@ -101,7 +106,37 @@ def prepare(workspace, code_root, rights_path, contract_path):
     if PRODUCER not in contract.get("producers", {}):
         raise FrameworkError("E1_DECLARED_PRODUCER_REQUIRED")
     code_files = [ref(code_root / p) for p in _git_read(code_root, "ls-files", "runtime/candidate").stdout.splitlines()]
-    attempt = workspace / "attempts" / ATTEMPT
+    prior_completed = {}
+    prior_binding = None
+    if prior_attempt is not None:
+        prior = _path(workspace / "attempts" / prior_attempt, True)
+        prior_plan_path = prior / "ATTEMPT_PLAN.json"
+        prior_plan = read(prior_plan_path)
+        if prior_plan["population"] != ref(population_path):
+            raise FrameworkError("E1_PRIOR_POPULATION_MISMATCH")
+        # Read verification only: instantiate no caller and dispatch no callback.
+        recovered = []
+        for row in prior_plan["batches"]:
+            if row["config"] is None:
+                continue
+            c = campaign_for(prior, row)
+            if not c.output.exists():
+                continue
+            c.preflight()
+            state = c.recover()
+            recovered.append({"batch_id": row["batch_id"], "completed": sorted(state["completed"]),
+                              "pending": sorted(state["pending"]), "inflight": sorted(state["inflight"]), "redispatch": 0})
+            terminals = {r["unit_id"]: r for r in state["receipts"] if r["phase"] == "terminal"}
+            for uid in state["completed"]:
+                if uid in prior_completed:
+                    raise FrameworkError("E1_DUPLICATE_PRIOR_COMPLETED_UNIT")
+                evidence = ref(c.output / terminals[uid]["path"])
+                if evidence["sha256"] != terminals[uid]["sha256"]:
+                    raise FrameworkError("E1_PRIOR_TERMINAL_RECEIPT_CHANGED")
+                prior_completed[uid] = {"prior_attempt_id": prior_attempt, "terminal_receipt": evidence}
+        prior_binding = {"plan": ref(prior_plan_path), "read_recovery": recovered,
+                         "completed_units": len(prior_completed), "redispatch": 0}
+    attempt = workspace / "attempts" / attempt_id
     attempt.mkdir(parents=True, exist_ok=False)
     stores = attempt / "stores"
     stores.mkdir()
@@ -119,6 +154,14 @@ def prepare(workspace, code_root, rights_path, contract_path):
         for uid in members:
             unit = deepcopy(units[uid])
             permission = rights[uid]
+            if uid in prior_completed:
+                disposition_rows.append({"UNIT_ID": uid, "BATCH_ID": batch_id,
+                    "EXECUTION_ATTEMPTED": False, "SOURCE_STATUS": "PRIOR_ATTEMPT_COMPLETED",
+                    "OUTPUT_STATUS": "PRIOR_RESULT_PRESERVED", "PREDICATE_STATUS": "NOT_EVALUATED_THIS_ATTEMPT",
+                    "AUDIT_DISPOSITION": "PRIOR_ATTEMPT_COMPLETED", "ERROR_STATUS": None,
+                    "RECEIPT_SHA256": prior_completed[uid]["terminal_receipt"]["sha256"],
+                    "CHECKPOINT_REFERENCE": None, "prior_evidence": prior_completed[uid]})
+                continue
             allowed = permission.get("allowed_source_references", [])
             exact = {"path": unit["source_path"], "sha256": unit["source_sha256"]}
             reason = permission.get("reason", "RIGHTS_UNRESOLVED")
@@ -166,7 +209,7 @@ def prepare(workspace, code_root, rights_path, contract_path):
             write(batch_dir / "SELECTION.json", {"expected_units": expected, "parent_population": ref(population_path),
                 "original_shard_members": members, "full_population_not_reduced": True})
             cfg = deepcopy(previous)
-            cfg.update(run_id="RUN004-E1-" + batch_id, campaign_id="RUN004-E1", campaign_attempt_id=ATTEMPT,
+            cfg.update(run_id="RUN004-E1-" + batch_id, campaign_id="RUN004-E1", campaign_attempt_id=attempt_id,
                 run_purpose="STRESS_TEST_AND_EVIDENCE_GENERATION", code_root=str(code_root), code_files=code_files,
                 candidate_commit=commit, candidate_tree=tree, allowlisted_roots=[str(root)], expected_units=expected,
                 contract_path=str(Path(contract_path).resolve()), contract_sha256=ref(contract_path)["sha256"],
@@ -188,13 +231,14 @@ def prepare(workspace, code_root, rights_path, contract_path):
         plan.append(record)
     write(attempt / "NO_BODY_DISPOSITIONS.json", {"rows": disposition_rows, "scope": "Planned no-read dispositions; not executed audits or receipts"})
     normative = Path(contract_path).parent / contract.get("normative_text", "RUN_CONTRACT.md")
-    write(attempt / "ATTEMPT_PLAN.json", {"attempt_id": ATTEMPT, "selected_units": 10096,
+    write(attempt / "ATTEMPT_PLAN.json", {"attempt_id": attempt_id, "selected_units": 10096,
         "predicate_pairs": 80768, "planned_shards": 202, "batches": plan, "max_bytes": MAX_BYTES,
         "code_root": str(code_root), "candidate_commit": commit, "candidate_tree": tree,
         "rights": ref(rights_path), "contract": ref(contract_path), "normative_contract": ref(normative), "population": ref(population_path),
-        "created_utc": datetime.now(timezone.utc).isoformat()})
-    write(workspace / "RUN004_E1_OPERATIONAL_FREEZE.json", {"schema": "pgop1.e1.operational-freeze.v1",
-        "attempt_id": ATTEMPT, "plan": ref(attempt / "ATTEMPT_PLAN.json"),
+        "prior_attempt": prior_binding, "created_utc": datetime.now(timezone.utc).isoformat()})
+    freeze_path = workspace / "RUN004_E1_OPERATIONAL_FREEZE.json" if attempt_id == ATTEMPT else attempt / "OPERATIONAL_FREEZE.json"
+    write(freeze_path, {"schema": "pgop1.e1.operational-freeze.v1",
+        "attempt_id": attempt_id, "plan": ref(attempt / "ATTEMPT_PLAN.json"),
         "bindings": [ref(p) for p in sorted(attempt.rglob("*.json"))],
         "formal_qualification": False, "producer": PRODUCER, "maximum_input_file_bytes": MAX_INPUT,
         "stop_conditions": ["integrity", "unauthorized_operation", "budget", "evidence_loss", "historical_corruption"],
@@ -213,17 +257,21 @@ def campaign_for(attempt, row):
     return load_config(binding["path"], [root], output, [root], [stores])
 
 
-def execute(workspace, max_batches=None, recover_only=False):
+def execute(workspace, max_batches=None, recover_only=False, attempt_id=ATTEMPT):
     workspace = _path(workspace, True)
-    attempt = workspace / "attempts" / ATTEMPT
+    attempt = workspace / "attempts" / attempt_id
     plan = read(attempt / "ATTEMPT_PLAN.json")
-    freeze = read(workspace / "RUN004_E1_OPERATIONAL_FREEZE.json")
+    freeze = read(workspace / "RUN004_E1_OPERATIONAL_FREEZE.json" if attempt_id == ATTEMPT else attempt / "OPERATIONAL_FREEZE.json")
     for binding in freeze["bindings"]:
         if ref(binding["path"]) != binding:
             raise FrameworkError("E1_OPERATIONAL_FREEZE_CHANGED")
     for key in ("rights", "contract", "normative_contract", "population"):
         if ref(plan[key]["path"]) != plan[key]:
             raise FrameworkError("E1_FROZEN_AUTHORITY_CHANGED")
+    if plan.get("prior_attempt") is not None:
+        binding = plan["prior_attempt"]["plan"]
+        if ref(binding["path"]) != binding:
+            raise FrameworkError("E1_PRIOR_PLAN_CHANGED")
     results = []
     completed_batches = 0
     for row in plan["batches"]:
@@ -237,7 +285,7 @@ def execute(workspace, max_batches=None, recover_only=False):
             break
         # Scan only this owned attempt; reject reparses instead of following them.
         size = 0
-        for folder, dirs, files in os.walk(attempt, followlinks=False):
+        for folder, dirs, files in os.walk(workspace / "attempts", followlinks=False):
             for name in [*dirs, *files]:
                 p = _path(Path(folder) / name, True)
                 if p.is_file():
@@ -248,6 +296,7 @@ def execute(workspace, max_batches=None, recover_only=False):
         if recover_only:
             if not c.output.exists():
                 continue
+            c.preflight()
             state = c.recover()
             results.append({"batch_id": row["batch_id"], "completed": sorted(state["completed"]),
                 "pending": sorted(state["pending"]), "inflight": sorted(state["inflight"]),
@@ -283,7 +332,7 @@ def execute(workspace, max_batches=None, recover_only=False):
             operations.append({"UNIT_ID": uid, "EXECUTION_ATTEMPTED": True,
                 "SOURCE_STATUS": "PROCESSING_PERMITTED", "OUTPUT_STATUS": "MISSING_AUTHENTIC_AGENT_OUTPUT",
                 "PREDICATE_STATUS": "NOT_EVALUATED", "AUDIT_DISPOSITION": "NOT_AUDITED_MISSING_AGENT_OUTPUT",
-                "ERROR_STATUS": None, "RECEIPT_SHA256": digest(canonical(receipt)), "CHECKPOINT_REFERENCE": str(c.output / "checkpoints")})
+                "ERROR_STATUS": None, "RECEIPT_SHA256": receipt["sha256"], "CHECKPOINT_REFERENCE": str(c.output / "checkpoints")})
         state = c.recover()
         write(writer, {"schema": "pgop1.run004.e1.batch-result.v1", "batch_id": row["batch_id"],
             "pid": os.getpid(), "operations": operations, "completed_units": sorted(state["completed"]),
@@ -307,11 +356,13 @@ def main():
     parser.add_argument("--rights", type=Path)
     parser.add_argument("--contract", type=Path)
     parser.add_argument("--max-batches", type=int)
+    parser.add_argument("--attempt-id", default=ATTEMPT)
+    parser.add_argument("--prior-attempt")
     args = parser.parse_args()
     if args.mode == "prepare":
-        prepare(args.workspace, args.code_root, args.rights, args.contract)
+        prepare(args.workspace, args.code_root, args.rights, args.contract, args.attempt_id, args.prior_attempt)
     else:
-        execute(args.workspace, args.max_batches, args.mode == "recover")
+        execute(args.workspace, args.max_batches, args.mode == "recover", args.attempt_id)
 
 
 if __name__ == "__main__":

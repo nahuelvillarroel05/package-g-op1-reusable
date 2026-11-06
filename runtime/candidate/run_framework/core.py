@@ -5,7 +5,7 @@ Callers must bracket work with begin_unit/complete_unit. Recovery is read-only;
 inflight or interrupted publications are never resumed automatically.
 """
 from __future__ import annotations
-import hashlib, json, os, re, stat, uuid, subprocess
+import hashlib, json, os, re, stat, uuid, subprocess, io, tarfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 if os.name == "nt":
@@ -72,6 +72,34 @@ def _git_read(root: Path, *args, binary=False):
              "-c",f"core.hooksPath={os.devnull}","-C",str(root),*args]
     return subprocess.run(command,check=True,capture_output=True,text=not binary,timeout=10,env=env)
 
+
+def _verify_committed_code(root, commit, bindings):
+    """Verify all pinned file bytes with one in-memory Git archive; never extract.
+
+    Archive export rules can only cause a mismatch/missing-file rejection. Every
+    expected file must appear once as a regular file with its exact SHA256.
+    """
+    expected = {_path(item["path"], True).relative_to(root).as_posix(): item["sha256"] for item in bindings}
+    if len(expected) != len(bindings):
+        raise FrameworkError("duplicate candidate code path")
+    try:
+        raw = _git_read(root, "archive", "--format=tar", commit, "--", *expected, binary=True).stdout
+        found = set()
+        with tarfile.open(fileobj=io.BytesIO(raw), mode="r:") as archive:
+            for member in archive:
+                if member.isdir():
+                    continue
+                if not member.isfile() or member.name not in expected or member.name in found:
+                    raise FrameworkError("candidate archive contains unexpected or nonregular member")
+                stream = archive.extractfile(member)
+                if stream is None or digest(stream.read()) != expected[member.name]:
+                    raise FrameworkError("candidate file hash differs from committed bytes")
+                found.add(member.name)
+        if found != set(expected):
+            raise FrameworkError("candidate code file is not committed at selected commit")
+    except (OSError, subprocess.SubprocessError, tarfile.TarError) as exc:
+        raise FrameworkError("candidate committed code archive could not be verified") from exc
+
 class Campaign:
     def __init__(self, cfg, config_sha256, config_path, config_roots, output, output_roots):
         self.config, self.config_sha256 = cfg, config_sha256
@@ -126,12 +154,7 @@ class Campaign:
         except (OSError,subprocess.SubprocessError) as e: raise FrameworkError("candidate Git identity could not be verified") from e
         if commit!=cfg["candidate_commit"] or tree!=cfg["candidate_tree"]: raise FrameworkError("candidate Git identity mismatch")
         if status.strip() or status_result.stderr.strip(): raise FrameworkError("candidate working tree is dirty or Git inventory emitted warnings")
-        for item in cfg["code_files"]:
-            rel=_path(item["path"],True).relative_to(code_root).as_posix()
-            try:
-                committed=_git_read(code_root,"show",f"HEAD:{rel}",binary=True).stdout
-            except (OSError,subprocess.SubprocessError) as e: raise FrameworkError("candidate code file is not committed at HEAD") from e
-            if digest(committed)!=item["sha256"]: raise FrameworkError("candidate file hash differs from committed bytes")
+        _verify_committed_code(code_root, commit, cfg["code_files"])
         self._preflight={"run_id":self.run_id,"campaign_id":cfg["campaign_id"],"contract_version":cfg["contract_version"],
             "config_sha256":self.config_sha256,"candidate_commit":commit,"candidate_tree":tree,
             "candidate_code_sha256":digest(canonical(sorted(rows,key=lambda x:(x["role"],x["path"])))),
