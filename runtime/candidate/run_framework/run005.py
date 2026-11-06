@@ -20,7 +20,7 @@ from .resources import ResourceGuard, ResourceLimitStop
 PRODUCER = "PGOP1-RUN005-E1"
 MAX_UNITS = 128
 ENGINE_BYTES = 16 * 1024**2
-PROFILES = {"BFCL_STRUCTURAL_V2", "SWE_ARCHIVED_COMPLETION_V1"}
+PROFILES = {"BFCL_STRUCTURAL_V2", "BFCL_ARCHIVED_ROW_PAIR_V1", "SWE_ARCHIVED_COMPLETION_V1"}
 
 
 def adapter_read_references(unit):
@@ -31,6 +31,12 @@ def adapter_read_references(unit):
         required = [source.get("path")]
         if evidence.get(source.get("path")) != source.get("sha256"):
             raise FrameworkError("RUN005_ADAPTER_INPUT_NOT_BOUND")
+    elif unit.get("predicate_profile") == "BFCL_ARCHIVED_ROW_PAIR_V1":
+        refs = [source.get("task"), source.get("response")]
+        if (not all(isinstance(ref, dict) and set(ref) == {"path", "sha256"} for ref in refs)
+                or any(evidence.get(ref["path"]) != ref["sha256"] for ref in refs)):
+            raise FrameworkError("RUN006_ROW_PAIR_INPUT_NOT_BOUND")
+        required = [ref["path"] for ref in refs]
     elif unit.get("predicate_profile") == "SWE_ARCHIVED_COMPLETION_V1":
         from runtime.candidate.swebench_claim_audit.adapter import RUN_REPO, INSTANCE_RE
         task = unit.get("task_id")
@@ -124,6 +130,9 @@ def adapter(unit, references):
     if unit["predicate_profile"] == "SWE_ARCHIVED_COMPLETION_V1":
         from runtime.candidate.swebench_claim_audit.adapter import audit_instance
         return audit_instance(unit["predicate_input"]["data_root"], unit["task_id"])
+    if unit["predicate_profile"] == "BFCL_ARCHIVED_ROW_PAIR_V1":
+        from .run006 import bfcl_row_adapter
+        return bfcl_row_adapter(unit, references)
     from runtime.candidate.bfcl_structured_audit_v2 import audit
     source = unit["predicate_input"]
     records = json.loads(Path(source["path"]).read_text(encoding="utf-8-sig"))
@@ -143,7 +152,8 @@ def _serial(value):
     return value
 
 
-def record_engine_result(engine, guard, unit, result, run_id):
+def record_engine_result(engine, guard, unit, result, run_id, *, producer_id=PRODUCER,
+                         event_kind="RUN005_AUDIT_RESULT"):
     """Persist an own-result observation without changing the auditor payload."""
     path = engine.root / (digest(canonical(unit["unit_id"])) + ".json")
     payload = canonical(result)
@@ -154,17 +164,50 @@ def record_engine_result(engine, guard, unit, result, run_id):
     _write_immutable(path, payload)
     source = engine.admit_source(path, digest(payload), scope="ENGINEERING_RESULT", source_id=unit["unit_id"])
     manifest = engine.ingest([{"id": unit["unit_id"], "task_id": unit["task_id"],
-        "run_id": run_id, "kind": "RUN005_AUDIT_RESULT", "source_id": source["source_id"],
-        "evidence_pointer": ""}], provenance={"declared_actor_identity": PRODUCER})
+        "run_id": run_id, "kind": event_kind, "source_id": source["source_id"],
+        "evidence_pointer": ""}], provenance={"declared_actor_identity": producer_id})
     guard.finish_publication()
     guard.refresh_usage()
     return {"unit_id": unit["unit_id"], "source_sha256": source["sha256"], "manifest": manifest}
 
 
-def run(args):
+def run(args, *, adapter_overrides=None, producer_id=PRODUCER,
+        engine_event_kind="RUN005_AUDIT_RESULT", _run006_context=None):
+    # The legacy CLI remains a RUN005 entrypoint. RUN006 must arrive through
+    # its own rights, Owner-authorization, and freeze dispatcher first.
+    try:
+        runner_config_raw = Path(args.config).read_bytes()
+        runner_config_header = _loads(runner_config_raw)
+    except (OSError, TypeError) as exc:
+        raise FrameworkError("RUNNER_CONFIGURATION_UNAVAILABLE") from exc
+    run_id = runner_config_header.get("run_id") if isinstance(runner_config_header, dict) else None
+    run006_run_id = isinstance(run_id, str) and run_id.upper().startswith("RUN006")
+    if run006_run_id:
+        from .run006 import _ValidatedDispatchContext
+        if (not isinstance(_run006_context, _ValidatedDispatchContext)
+                or _run006_context.config_sha256 != digest(runner_config_raw)
+                or _run006_context.campaign_attempt_id != runner_config_header.get("campaign_attempt_id")
+                or _run006_context.run_id != run_id
+                or _run006_context.candidate_commit != runner_config_header.get("candidate_commit")
+                or _run006_context.candidate_tree != runner_config_header.get("candidate_tree")):
+            raise FrameworkError("RUN006_REQUIRES_DISABLED_AND_OWNER_AUTHORIZED_DISPATCH")
+    elif _run006_context is not None:
+        raise FrameworkError("RUN006_CONTEXT_ON_NON_RUN006_CONFIG")
     campaign = load_config(args.config, args.config_root, args.output,
                            args.trusted_root, args.output_root)
     cfg = campaign.config
+    if not run006_run_id:
+        # Read only the already hash-bound dataset metadata to prevent a
+        # profile rename from exposing the RUN006 row adapter through RUN005.
+        _, dataset_header = _read_bound_file(cfg["dataset_manifest_path"], cfg["input_manifest_sha256"],
+                                             [Path(root) for root in cfg["allowlisted_roots"]],
+                                             "dataset metadata")
+        dataset_index = _loads(dataset_header)
+        if (isinstance(dataset_index, dict) and isinstance(dataset_index.get("units"), list)
+                and any(isinstance(unit, dict)
+                        and unit.get("predicate_profile") == "BFCL_ARCHIVED_ROW_PAIR_V1"
+                        for unit in dataset_index["units"])):
+            raise FrameworkError("RUN006_ROW_PROFILE_REQUIRES_DISABLED_AND_OWNER_AUTHORIZED_DISPATCH")
     # Loading config reads metadata only. Do not call preflight (which rehashes
     # selected bodies) until the admission review has passed.
     admission_path = str(Path(args.admission).resolve(strict=True))
@@ -207,12 +250,25 @@ def run(args):
         result = build_audit_payload(unit, adapted)
         # Store own result, not a second copy of original agent output. This
         # occurs after the auditor and before terminal receipt/checkpoint.
-        engine_events.append(record_engine_result(engine, guard, unit, result, cfg["run_id"]))
+        engine_events.append(record_engine_result(engine, guard, unit, result, cfg["run_id"],
+            producer_id=producer_id, event_kind=engine_event_kind))
         return result
 
     units = json.loads(dataset)["units"]
     adapters = {(u["adapter_id"], u["adapter_version"]): adapter for u in units}
-    caller = GenericCaller(campaign, adapters, auditor, producer_id=PRODUCER)
+    if any(u.get("predicate_profile") == "BFCL_ARCHIVED_ROW_PAIR_V1" for u in units):
+        from .run006 import bfcl_row_adapter
+        row_roots = [Path(r) for r in cfg["allowlisted_roots"]]
+        for unit in units:
+            if unit.get("predicate_profile") == "BFCL_ARCHIVED_ROW_PAIR_V1":
+                key = (unit["adapter_id"], unit["adapter_version"])
+                adapters[key] = lambda row, refs, roots=row_roots: bfcl_row_adapter(row, refs, roots)
+    if adapter_overrides:
+        if any(not isinstance(key, tuple) or len(key) != 2 or not callable(value)
+               for key, value in adapter_overrides.items()):
+            raise FrameworkError("RUN005_ADAPTER_OVERRIDE_INVALID")
+        adapters.update(adapter_overrides)
+    caller = GenericCaller(campaign, adapters, auditor, producer_id=producer_id)
     operations = []
     started = time.monotonic()
     for unit in units:

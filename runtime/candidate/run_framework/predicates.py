@@ -144,26 +144,42 @@ def validate_audit_payload(unit, audit_result, processing_disposition, audit_dis
             unit["benchmark_id"], unit["benchmark_version"], subtype)}
         if canonical(audit_result) != canonical(expected_payload):
             raise FrameworkError("PREDICATE_PAYLOAD_NOT_EXACT_RECONSTRUCTION")
-    elif profile == "BFCL_STRUCTURAL_V2":
+    elif profile in {"BFCL_STRUCTURAL_V2", "BFCL_ARCHIVED_ROW_PAIR_V1"}:
         from runtime.candidate.bfcl_structured_audit_v2 import audit
         source = unit.get("predicate_input")
-        if (not isinstance(source, dict) or set(source) != {"path", "sha256", "task_id"}
-                or (source["path"], source["sha256"]) not in index["evidence"][unit["unit_id"]]):
-            raise FrameworkError("PREDICATE_INPUT_NOT_BOUND")
-        if {"path": source["path"], "sha256": source["sha256"]} not in unit.get("authentic_output_references", []):
-            raise FrameworkError("PREDICATE_REPLAY_OUTPUT_REFERENCE_MISMATCH")
-        _, raw = _read_bound_file(source["path"], source["sha256"], index["roots"], "predicate input")
-        from runtime.candidate.context_engine import strict_json_loads
-        records = strict_json_loads(raw)
-        matches = [r for r in records if r.get("task_id") == source["task_id"]]
-        if len(matches) != 1:
-            raise FrameworkError("PREDICATE_INPUT_IDENTITY_AMBIGUOUS")
-        case = matches[0]
-        if (case.get("task", {}).get("id") != source["task_id"]
-                or case.get("response", {}).get("id") != source["task_id"]
-                or source["task_id"] != unit.get("task_id")):
+        if profile == "BFCL_STRUCTURAL_V2":
+            if (not isinstance(source, dict) or set(source) != {"path", "sha256", "task_id"}
+                    or (source["path"], source["sha256"]) not in index["evidence"][unit["unit_id"]]):
+                raise FrameworkError("PREDICATE_INPUT_NOT_BOUND")
+            if {"path": source["path"], "sha256": source["sha256"]} not in unit.get("authentic_output_references", []):
+                raise FrameworkError("PREDICATE_REPLAY_OUTPUT_REFERENCE_MISMATCH")
+            _, raw = _read_bound_file(source["path"], source["sha256"], index["roots"], "predicate input")
+            from runtime.candidate.context_engine import strict_json_loads
+            records = strict_json_loads(raw)
+            matches = [r for r in records if r.get("task_id") == source["task_id"]]
+            if len(matches) != 1:
+                raise FrameworkError("PREDICATE_INPUT_IDENTITY_AMBIGUOUS")
+            case = matches[0]
+            task, response = case.get("task"), case.get("response")
+            task_id = source["task_id"]
+        else:
+            if (not isinstance(source, dict) or set(source) != {"task", "response"}
+                    or any(not isinstance(source.get(role), dict)
+                           or set(source[role]) != {"path", "sha256"} for role in ("task", "response"))):
+                raise FrameworkError("PREDICATE_ROW_PAIR_INPUT_INVALID")
+            task_id = unit.get("task_id")
+            pairs = {(source[role]["path"], source[role]["sha256"]) for role in ("task", "response")}
+            if not pairs <= index["evidence"][unit["unit_id"]]:
+                raise FrameworkError("PREDICATE_ROW_PAIR_NOT_BOUND")
+            if {"path": source["response"]["path"], "sha256": source["response"]["sha256"]} not in unit.get("authentic_output_references", []):
+                raise FrameworkError("PREDICATE_REPLAY_OUTPUT_REFERENCE_MISMATCH")
+            from .run006 import read_bfcl_row_pair
+            task, response = read_bfcl_row_pair(source, index["roots"], task_id)
+        if (not isinstance(task, dict) or not isinstance(response, dict)
+                or task.get("id") != task_id or response.get("id") != task_id
+                or task_id != unit.get("task_id")):
             raise FrameworkError("PREDICATE_INPUT_IDENTITY_MISMATCH")
-        replay = audit(case["task"], case["response"])
+        replay = audit(task, response)
         if replay.get("category") != subtype:
             raise FrameworkError("PREDICATE_SUBTYPE_NOT_REPRODUCIBLE")
         for predicate, narrow in [("FUNCTION_CALL_STRUCTURE", "FUNCTION_CALL_FORMAT_VALID"),
@@ -234,7 +250,7 @@ def build_audit_payload(unit, adapted=None):
         operation, disposition = "AGENT_OUTPUT_AUDITED", "AUDITED"
         result.update(processing_disposition=operation, audit_disposition=disposition,
                       authentic_output_present=True, semantic_audits_completed=0, missing_evidence=[])
-        if profile == "BFCL_STRUCTURAL_V2":
+        if profile in {"BFCL_STRUCTURAL_V2", "BFCL_ARCHIVED_ROW_PAIR_V1"}:
             from runtime.candidate.bfcl_structured_audit_v2 import CONTRACT
             if (adapted.get("contract") != CONTRACT or adapted.get("status") == "INCOMPATIBLE_ID"
                     or adapted.get("task_id") != unit.get("task_id", adapted.get("task_id"))):
