@@ -24,6 +24,26 @@ ATTEMPT = "RUN004_E1_ATTEMPT_001"
 PRODUCER = "PGOP1-RUN004-E1"
 MAX_INPUT = 4 * 1024**2
 MAX_BYTES = 20 * 1024**3
+BATCH_RESERVE = 16 * 1024**2
+SHARD_MAX_BYTES = 14 * 1024**2
+WRITER_MAX_BYTES = 2 * 1024**2
+
+
+def validate_attempt_id(value):
+    if not isinstance(value, str) or not PATH_ID.fullmatch(value) or value in {".", ".."}:
+        raise FrameworkError("E1_UNSAFE_ATTEMPT_ID")
+
+
+def check_prior_state(state):
+    if state["inflight"]:
+        raise FrameworkError("E1_PRIOR_INFLIGHT_REQUIRES_REVIEW")
+
+
+def write_writer(path, value):
+    raw = canonical(value)
+    if len(raw) > WRITER_MAX_BYTES:
+        raise FrameworkError("E1_WRITER_BYTE_BUDGET_EXHAUSTED")
+    _write_immutable(Path(path), raw)
 
 
 def read(path):
@@ -80,8 +100,8 @@ def process_definition(unit, references):
 
 def prepare(workspace, code_root, rights_path, contract_path, attempt_id=ATTEMPT, prior_attempt=None):
     for value in (attempt_id, prior_attempt):
-        if value is not None and (not PATH_ID.fullmatch(value) or value in {".", ".."}):
-            raise FrameworkError("E1_UNSAFE_ATTEMPT_ID")
+        if value is not None:
+            validate_attempt_id(value)
     if attempt_id == prior_attempt:
         raise FrameworkError("E1_PRIOR_ATTEMPT_MUST_BE_DISTINCT")
     workspace = _path(workspace, True)
@@ -124,6 +144,7 @@ def prepare(workspace, code_root, rights_path, contract_path, attempt_id=ATTEMPT
                 continue
             c.preflight()
             state = c.recover()
+            check_prior_state(state)
             recovered.append({"batch_id": row["batch_id"], "completed": sorted(state["completed"]),
                               "pending": sorted(state["pending"]), "inflight": sorted(state["inflight"]), "redispatch": 0})
             terminals = {r["unit_id"]: r for r in state["receipts"] if r["phase"] == "terminal"}
@@ -219,7 +240,7 @@ def prepare(workspace, code_root, rights_path, contract_path, attempt_id=ATTEMPT
                 adapter_registry=ref(batch_dir / "ADAPTERS.json"), predicate_contracts=matrix_ref,
                 selection_manifest=ref(batch_dir / "SELECTION.json"), exclusion_ledger=ref(exclusions),
                 checkpoint_policy={"schema": "pgop1.reusable-run-checkpoint.v2", "interval": 1, "receipt_parent_chain": True},
-                resource_budget={"max_units_per_shard": 50, "max_bytes": MAX_BYTES, "max_seconds": 28800,
+                resource_budget={"max_units_per_shard": 50, "max_bytes": SHARD_MAX_BYTES, "max_seconds": 28800,
                     "max_units": len(expected), "max_errors": 10096, "max_payload_bytes": 65536},
                 execution_modes=["E1_AUTHENTIC_DEFINITION_PROCESSING"], recovery_policy={"mode": "READ_ONLY_NO_RESUME"},
                 stop_criteria={"integrity": "STOP", "authority": "STOP", "budget": "STOP", "ordinary_parse_error": "ISOLATE_BATCH"},
@@ -233,6 +254,7 @@ def prepare(workspace, code_root, rights_path, contract_path, attempt_id=ATTEMPT
     normative = Path(contract_path).parent / contract.get("normative_text", "RUN_CONTRACT.md")
     write(attempt / "ATTEMPT_PLAN.json", {"attempt_id": attempt_id, "selected_units": 10096,
         "predicate_pairs": 80768, "planned_shards": 202, "batches": plan, "max_bytes": MAX_BYTES,
+        "batch_reserved_bytes": BATCH_RESERVE, "shard_max_bytes": SHARD_MAX_BYTES, "writer_max_bytes": WRITER_MAX_BYTES,
         "code_root": str(code_root), "candidate_commit": commit, "candidate_tree": tree,
         "rights": ref(rights_path), "contract": ref(contract_path), "normative_contract": ref(normative), "population": ref(population_path),
         "prior_attempt": prior_binding, "created_utc": datetime.now(timezone.utc).isoformat()})
@@ -258,6 +280,7 @@ def campaign_for(attempt, row):
 
 
 def execute(workspace, max_batches=None, recover_only=False, attempt_id=ATTEMPT):
+    validate_attempt_id(attempt_id)
     workspace = _path(workspace, True)
     attempt = workspace / "attempts" / attempt_id
     plan = read(attempt / "ATTEMPT_PLAN.json")
@@ -290,7 +313,7 @@ def execute(workspace, max_batches=None, recover_only=False, attempt_id=ATTEMPT)
                 p = _path(Path(folder) / name, True)
                 if p.is_file():
                     size += p.stat().st_size
-        if size + 16 * 1024**2 > MAX_BYTES:
+        if size + BATCH_RESERVE > MAX_BYTES:
             raise FrameworkError("E1_SHARED_OUTPUT_BUDGET_EXHAUSTED")
         c = campaign_for(attempt, row)
         if recover_only:
@@ -334,7 +357,7 @@ def execute(workspace, max_batches=None, recover_only=False, attempt_id=ATTEMPT)
                 "PREDICATE_STATUS": "NOT_EVALUATED", "AUDIT_DISPOSITION": "NOT_AUDITED_MISSING_AGENT_OUTPUT",
                 "ERROR_STATUS": None, "RECEIPT_SHA256": receipt["sha256"], "CHECKPOINT_REFERENCE": str(c.output / "checkpoints")})
         state = c.recover()
-        write(writer, {"schema": "pgop1.run004.e1.batch-result.v1", "batch_id": row["batch_id"],
+        write_writer(writer, {"schema": "pgop1.run004.e1.batch-result.v1", "batch_id": row["batch_id"],
             "pid": os.getpid(), "operations": operations, "completed_units": sorted(state["completed"]),
             "receipts": state["receipts"], "pending": sorted(state["pending"]), "inflight": sorted(state["inflight"]),
             "checkpoint_count": len(state["checkpoints"]), "resources": c.resources_report(),

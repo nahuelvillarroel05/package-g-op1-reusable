@@ -1,3 +1,7 @@
+# Current RUN004 E1 execution started
+
+RUN004_EXECUTION=PARTIAL_EXECUTED. Owner-authorized prospective E1; [modes](experiments/ENGINEERING_MODES.md), [contract](experiments/runs/run-004/contracts/experimental-e1-v1/RUN_CONTRACT.md). Frozen execution code d87a3cc/95a612b, first deterministic batch processing permitted definitions with persistent real terminal receipts. Zero semantic audits claimed. Full10096units/80768pairs/202plannedshards preserved; unresolved/restricted bodies not read. RUN004_REV004_FORMAL_APPROVAL=NOT_APPROVED; RUN004_FORMAL_QUALIFICATION=NOT_ACHIEVED. Formal limits unchanged. Prior entries below are historical.
+
 # Current RUN004 final operational gate
 
 RUN004_NO_GO_WITH_EXACT_BLOCKERS. Runtime candidate `9dea85852425ee6030c241824648e11f2b7c746c` / tree `cfd6adad8635b829f84bc35d7f17e4a47fc70b99` closes configured literal receipt profile and directory bypasses. 49 focused authored tests pass. Separate controlled DEV8 covers six families with16 literal receipts and fresh8-unit read recovery, zero redispatch; two output candidates were rejected for admission, zero semantic audits. This does not qualify the full selected producer.

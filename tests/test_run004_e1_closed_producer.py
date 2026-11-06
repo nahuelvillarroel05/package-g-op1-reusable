@@ -4,6 +4,10 @@ import pytest
 
 from runtime.candidate.run_framework.core import FrameworkError, digest
 from runtime.candidate.run_framework.e1 import bounded, process_definition, MAX_INPUT
+from runtime.candidate.run_framework.e1 import (
+    validate_attempt_id, check_prior_state, write_writer, BATCH_RESERVE,
+    SHARD_MAX_BYTES, WRITER_MAX_BYTES,
+)
 
 
 def unit(tmp_path, family, raw, **extra):
@@ -67,3 +71,39 @@ def test_content_is_inert_and_unknown_family_rejected(tmp_path):
 def test_terminal_toml_parsed_as_data(tmp_path):
     u = unit(tmp_path, "terminal_bench_2", b'[task]\nname="authored"\n')
     assert process_definition(u, {}) == {"definition": True}
+
+
+def test_shard_and_writer_caps_fit_whole_batch_reservation():
+    assert SHARD_MAX_BYTES + WRITER_MAX_BYTES == BATCH_RESERVE
+
+
+def test_oversize_writer_rejected_before_file_publication(tmp_path):
+    p = tmp_path / "WRITER.json"
+    with pytest.raises(FrameworkError, match="WRITER_BYTE_BUDGET"):
+        write_writer(p, {"payload": "x" * WRITER_MAX_BYTES})
+    assert not p.exists()
+    write_writer(p, {"authored": True})
+    assert p.read_text() == '{"authored":true}'
+
+
+def test_prior_inflight_blocks_continuation_without_redispatch():
+    with pytest.raises(FrameworkError, match="PRIOR_INFLIGHT_REQUIRES_REVIEW"):
+        check_prior_state({"inflight": {"authored-unit"}})
+    check_prior_state({"inflight": set()})
+
+
+@pytest.mark.parametrize("value", ["../escape", "a/b", "..", "", "a\\b"])
+def test_unsafe_attempt_names_rejected(value):
+    with pytest.raises(FrameworkError, match="UNSAFE_ATTEMPT_ID"):
+        validate_attempt_id(value)
+
+
+def test_actual_v2_summary_sha256_identifies_persisted_receipt(tmp_path):
+    from test_run_checkpoint_v2 import _campaign, _envelope
+    from runtime.candidate.run_framework.core import canonical
+    c = _campaign(tmp_path)
+    c.begin_unit("u1", {"scope": "authored receipt shape control"})
+    summary = c.complete_unit("u1", "DISPOSITION_RECORDED", _envelope(c, "u1"))
+    assert summary["sha256"] == digest((c.output / summary["path"]).read_bytes())
+    assert summary["sha256"] != digest(canonical(summary))
+    assert summary["phase"] == "terminal"
