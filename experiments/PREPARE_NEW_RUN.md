@@ -1,3 +1,9 @@
+# Current mode-aware preparation policy
+
+First declare [E1, E2, or F](ENGINEERING_MODES.md) and use [RUN_TEMPLATE.md](RUN_TEMPLATE.md). For E1, its operational minimums supersede universal legacy formal-approval/document-package requirements in older preparation material. Existing implementation requirements for trusted roots, exact bindings, authorization, safe producers, budgets, and verifiable recovery remain applicable. Do not repeat complete synthetic development campaigns or general preflight as a universal E1 prerequisite; validate only the changes and concrete operational risks. The commands below are existing framework interfaces, not an instruction to rerun every preparation step. An applicable Owner authorization can already cover execution and progressive batches.
+
+---
+
 # Prepare a new experimental RUN
 
 Start with the current Owner authorization, [experimental policy](EXPERIMENTAL_POLICY.md), [purpose](RUNS_PURPOSE.md) and [registry](RUN_REGISTRY.json). Reserve a new series ID without reusing historical execution identities. A development fixture or preflight never registers itself as a real campaign. Do not infer approval from successful preparation.

@@ -189,7 +189,7 @@
     },
     {
       "ID": "RUN-004",
-      "record_kind": "PROSPECTIVE_PREPARATION_NOT_FROZEN",
+      "record_kind": "PROSPECTIVE_E1_OPERATIONAL_PREPARATION",
       "directory": "runs/run-004",
       "execution_code_commit": "NOT_SELECTED",
       "execution_code_tree": "NOT_SELECTED",
@@ -224,13 +224,13 @@
       ],
       "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
       "formal_qualification": "NOT_ACHIEVED",
-      "status": "RESERVED_EXPERIMENTAL_CONTRACT_REV004_NOT_APPROVED_NOT_EXECUTED",
+      "status": "E1_PREPARED_NOT_EXECUTED",
       "campaign_execution": "NOT_EXECUTED",
-      "contract_status": "DRAFT_REVISION_004_NOT_APPROVED",
+      "contract_status": "E1_OWNER_AUTHORIZED_BOUNDED_OPERATIONS",
       "population_quota": null,
-      "identity_role": "RESERVED_SERIES_AND_PREPARATION_LOCATOR_NOT_PHYSICAL_EXECUTION",
+      "identity_role": "RUN_SERIES_WITH_PROSPECTIVE_E1_ATTEMPTS",
       "execution_campaign_id": "NOT_ASSIGNED_REQUIRES_FRESH_ID_AT_AUTHORIZATION",
-      "contract_revision": "contracts/revision-004/RUN_CONTRACT.md",
+      "contract_revision": "contracts/experimental-e1-v1/RUN_CONTRACT.md",
       "full_corpus_task_memberships": 10096,
       "full_corpus_logical_task_variants": 9273,
       "engineering_coverage_commitment": "2ff9bcde25ddf4e144fe56c78763e72b6820bab9df18a90c403dd3df9a35f451",
@@ -244,8 +244,8 @@
         "status": "SIX_FAMILY_PARTIAL_CAMPAIGN_BLOCKED",
         "offline_and_full_official_separate": true
       },
-      "contract_identity": "pgop1.run004.multibenchmark.contract.rev004",
-      "contract_sha256": "a1db91f6a6905c5c94abbf0e67dca4a411be5ca7ef1a548e0fec1adac4f8d212",
+      "contract_identity": "pgop1.run004.experimental-e1.contract.v1",
+      "contract_sha256": "2d0274e00a70645b1b09fcf08492a2274e15fe2497973ca9240a2ab21cb332ae",
       "preparation_status": "PGOP1_RUN004_EXPERIMENTAL_CONTRACT_REV004_PREPARED",
       "convergence_readiness": {
         "path": "Engineering/PGOP1_RUN004_CONTRACT_AND_EVALUATOR_CONVERGENCE_001/RUN004_READINESS_MATRIX.json",
@@ -259,7 +259,7 @@
           "sha256": "dea6f86b07e71635fdc76be605aa42a35e3b0eb5f3b0928317d77f5b52e24cce"
         }
       ],
-      "approach_approval": "OWNER_APPROVED_CONCEPT_ONLY",
+      "approach_approval": "OWNER_AUTHORIZED_E1_PROGRESSIVE_EXECUTION",
       "modality_A": "PRIMARY_MANDATORY_FULL_SELECTED_POPULATIONS",
       "modality_B": "COMPLEMENTARY_NOT_UNIVERSAL_A_START_OR_COMPLETENESS_GATE",
       "rev004_readiness": {
@@ -294,7 +294,28 @@
         "RUN004_CONTRACT": "NOT_APPROVED",
         "RUN004_FINAL_FREEZE": "NOT_ISSUED",
         "RUN004_EXECUTION": "NOT_EXECUTED"
-      }
+      },
+      "prior_rev004_registry_state": {
+        "record_kind": "PROSPECTIVE_PREPARATION_NOT_FROZEN",
+        "status": "RESERVED_EXPERIMENTAL_CONTRACT_REV004_NOT_APPROVED_NOT_EXECUTED",
+        "campaign_execution": "NOT_EXECUTED",
+        "contract_status": "DRAFT_REVISION_004_NOT_APPROVED",
+        "identity_role": "RESERVED_SERIES_AND_PREPARATION_LOCATOR_NOT_PHYSICAL_EXECUTION",
+        "contract_revision": "contracts/revision-004/RUN_CONTRACT.md",
+        "contract_identity": "pgop1.run004.multibenchmark.contract.rev004",
+        "contract_sha256": "a1db91f6a6905c5c94abbf0e67dca4a411be5ca7ef1a548e0fec1adac4f8d212",
+        "approach_approval": "OWNER_APPROVED_CONCEPT_ONLY",
+        "final_freeze": "NOT_ISSUED"
+      },
+      "ENGINEERING_MODE": "E1",
+      "PURPOSE": "STRESS_TEST_AND_EVIDENCE_GENERATION",
+      "EXECUTION_STRATEGY": "PROGRESSIVE_BATCHES",
+      "RESULT_PUBLICATION": "REQUIRED_WHEN_PERMITTED",
+      "RUN004_REV004_FORMAL_APPROVAL": "NOT_APPROVED",
+      "RUN004_FORMAL_QUALIFICATION": "NOT_ACHIEVED",
+      "SELECTED_UNITS": 10096,
+      "PREDICATE_PAIRS": 80768,
+      "PLANNED_SHARDS": 202
     }
   ],
   "pilots": [

@@ -1,30 +1,21 @@
-# Experimental RUN purpose
+# Experimental RUN purpose - version 2
 
-> Los RUN de PGOP1 son campañas experimentales destinadas a evaluar sus componentes mediante evidencias verificables, descubrir defectos reproducibles, medir capacidades y limitaciones y producir resultados que puedan auditarse y publicarse para documentar la evolución del proyecto.
+PGOP1 RUNs exist to experiment: discover defects, generate authentic evidence, measure behavior, identify limitations, and improve PGOP1. They need not demonstrate beforehand all capabilities they were designed to investigate.
 
-`RUN-001` onward are prospective experimental campaign identifiers. Each RUN identifies one campaign contract and its evidence lineage. A RUN may have multiple immutable attempts, including failed, stopped, blocked, and successful attempts. A pilot, engineering intervention, preflight, or synthetic validation is not a RUN unless the registry explicitly identifies it as one.
+Each RUN declares [E1, E2, or F](ENGINEERING_MODES.md), its purpose, and a versioned contract. E1 prioritizes experimentation and faithful evidence; a correctly executed E1 can expose PGOP1 failure. E2 validates named properties against rigorous criteria. F addresses formal qualification under the unchanged formal contracts. These modes are not agent reasoning levels.
 
-The purpose of this series is to produce reproducible, bounded engineering evidence about the selected Package-G candidate and its declared inputs. Reports must preserve the difference between implementation behavior, structural validity, semantic quality, independent qualification, and release authority. A result in one dimension does not imply another.
+Use the compact [RUN_TEMPLATE.md](RUN_TEMPLATE.md) and [experimental policy](EXPERIMENTAL_POLICY.md). E1 execution requires applicable Owner authorization and the minimum operational controls specified there. A formal qualification freeze, complete semantic coverage, favorable outcomes, and GATE_11 are not universal E1 prerequisites. Tests, registry entries, or branch names alone never authorize execution.
 
-This series has two obligations:
+Every immutable attempt preserves code/inputs/configuration, results, errors, abstentions, dispositions, defects, evidence, recovery, and limitations. A pilot, preflight, engineering intervention, or synthetic validation is not a RUN execution merely because it concerns that RUN. Partial and failed attempts remain in the lineage and denominators.
 
-1. **Experimental:** preserve the inputs, configuration, code and versions, results, errors, abstentions, defects, evidence, and audits for every attempt, including failures and incomplete runs.
-2. **Publication:** document the public purpose, method, code, selection, metrics, results, limitations, evidence, non-redistributable references, audit state, and exact Git identity. Missing rights to redistribute a source do not permit inventing or silently omitting its results. Publish only lawful aggregates, commitments, and indexes, together with clear public reproducibility limits.
+RUN004 prospectively adopts E1 under `PGOP1_ENGINEERING_MODES_AND_RUN004_E1_001`; it retains six families, 10,096 selected units, 80,768 predicate pairs, and 202 planned shards. The new profile does not retroactively approve rev004 or establish formal qualification. Actual execution state belongs to attempt evidence and the current registry, not this purpose statement.
 
-Execution is allowed only when the campaign has a complete versioned contract, approved freeze bound to an exact revision and SHA-256, fresh execution identity, and explicit Owner authorization. Registry entries, tests, preparation, documentation, publication, and branch names do not authorize execution. RUN-004 remains a preparation locator and is not approved or executed.
+## Reporting and publication
 
-Finishing tests does not close the RUN documentary lifecycle. `RUN_DOCUMENTARY_CLOSED` requires the campaign's complete result set, verified integrity, engineering audit, publication receipt, and exact public Git identity. Closure records evidence completeness; it does not itself mean acceptance, independent qualification, or promotion.
+Separate declared, attempted, processed, semantically audited, sufficient-evidence, failed, interrupted, pending, and not-attempted units. Keep task definitions, model responses, agent trajectories, official evaluations, PGOP1 audits, and processing dispositions distinct. Metadata disposition is not semantic audit. Report unknown applicability and unadmitted outputs honestly; do not invent equivalences or precision/recall without qualified references.
 
-Historical RUN-001, RUN-002, and RUN-003 records are reconstructions from their verified prior records. This purpose statement is prospective and does not retrofit contracts, alter execution results, or relabel historical limitations.
+Execution code identity, result/release identity, and publication identity are separate fields. Preparation, local commit, successful push, and fresh remote verification are separate events. Publish permitted methodology, code, results, errors, limitations, audits, and commitments; withhold private/restricted bodies. Missing redistribution rights never justify fabricated or silently omitted outcomes.
 
-## Required reporting distinctions
+Documentary closure follows [publication policy](PUBLICATION_POLICY.md) and the [versioned receipt contract](schemas/pgop1.experimental.run-publication.v1.md). Its canonical result index covers `CAMPAIGN_SUMMARY.md`, `EXECUTION_RESULTS.json`, `COVERAGE_REPORT.json`, `FAILURES_AND_ABSTENTIONS.json`, `DEFECT_AND_FIX_REPORT.md`, `CODE_REFERENCE.json`, `SOURCE_MANIFEST.json`, `RESULTS_INTEGRITY_MANIFEST.json`, `AUDIT_SUMMARY.md`, `LIMITATIONS.md`, and `PUBLICATION_RECEIPT.json`. Reference actual equivalent evidence or record reasoned applicability/missing dispositions; do not require eleven separate documents before an E1 operation can begin. No artifact may claim work that did not occur.
 
-- execution code identity, result/release identity, and publication identity are separate fields;
-- declared, attempted, completed, failed, stopped, blocked, and not-run units have separate denominators;
-- structural, semantic, independent-reference, custody, and authority conclusions are reported separately;
-- unknown, missing, and inaccessible evidence remain `UNKNOWN` or the exact blocked state;
-- publication readiness, local artifact preparation, remote publication, and remote verification are separate lifecycle events.
-
-See [publication policy](PUBLICATION_POLICY.md), [policy](EXPERIMENTAL_POLICY.md), and the versioned [run-publication contract](schemas/pgop1.experimental.run-publication.v1.md).
-
-Every prospective campaign includes the Owner-required result set: `CAMPAIGN_SUMMARY.md`, `EXECUTION_RESULTS.json`, `COVERAGE_REPORT.json`, `FAILURES_AND_ABSTENTIONS.json`, `DEFECT_AND_FIX_REPORT.md`, `CODE_REFERENCE.json`, `SOURCE_MANIFEST.json`, `RESULTS_INTEGRITY_MANIFEST.json`, `AUDIT_SUMMARY.md`, `LIMITATIONS.md`, and `PUBLICATION_RECEIPT.json`. Each file is backed by applicable frozen execution, audit, and publication evidence. Historical gaps are listed explicitly and are not filled retrospectively.
+Historical RUN001/002/003 contracts, results, and publication gaps retain their verified scope. New modes do not retrofit qualification, independence, or historical execution. Passing tests, publishing results, or closing documentation grants no main/src promotion or formal approval.
