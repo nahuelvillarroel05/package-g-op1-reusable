@@ -1,0 +1,14 @@
+{
+  "schema": "pgop1.run005.recovery.v1",
+  "campaign_recovery": "NOT_APPLICABLE_NOT_EXECUTED",
+  "authentic_completed": 0,
+  "authentic_pending_admitted": 0,
+  "authentic_inflight": 0,
+  "authentic_redispatch": 0,
+  "RECOVERY_ERRORS": 0,
+  "synthetic_cli_control": {
+    "sha256": "3a46ad39ad13d7b47ee253331d40d753d02322d8cd4dee6396c14c0d43e67cc2",
+    "bytes": 2006
+  },
+  "distinction": "Fresh actual CLI regression uses authored V2 fixtures with one completed and one pending unit. This is engineering evidence, not RUN005 authentic recovery; historical RUN004 CLI interruption remains unverified."
+}

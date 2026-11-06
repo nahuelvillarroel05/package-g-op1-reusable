@@ -1,0 +1,61 @@
+{
+  "schema": "pgop1.run005.public-source-summary.v1",
+  "selected_tasks": 55,
+  "selected_candidate_outputs": 55,
+  "admitted_outputs": 0,
+  "families": [
+    {
+      "family": "bfcl_v4",
+      "candidate_outputs_selected": 40,
+      "admitted": 0,
+      "disposition": "RIGHTS_UNRESOLVED",
+      "reason": "Separate output publisher license not established; producer identity remains declared; generation revision unknown.",
+      "pinned_result_tree_license_paths_observed": [],
+      "pinned_result_tree_truncated": true,
+      "complete_license_inventory": "UNKNOWN"
+    },
+    {
+      "family": "swebench",
+      "candidate_outputs_selected": 15,
+      "admitted": 0,
+      "disposition": "RIGHTS_UNRESOLVED",
+      "reason": "Archived development outputs are source-hash bound in metadata; separate archive processing terms not established. Original sample is historically balanced; no population accuracy estimate."
+    },
+    {
+      "family": "mcpmark_verified",
+      "candidate_outputs_selected": 0,
+      "admitted": 0,
+      "disposition": "RIGHTS_AND_COMPATIBILITY_UNRESOLVED",
+      "existing_catalog_logical_result_identities": 762,
+      "existing_catalog_trajectories": 759,
+      "reason": "Output repository rights, exact verifier/runtime compatibility unresolved. Published run labels and model declarations are not authenticated production. Duplicate task_results/model_results representations are not extra executions."
+    },
+    {
+      "family": "terminal_bench_2",
+      "candidate_outputs_selected": 0,
+      "admitted": 0,
+      "disposition": "RIGHTS_AND_COMPATIBILITY_UNRESOLVED",
+      "existing_catalog_trials": 445,
+      "reason": "Output rights unresolved; all89 task manifests differ between run commit and local revision; matching IDs or instruction blobs do not establish full verifier compatibility."
+    },
+    {
+      "family": "swebench_pro_v2",
+      "candidate_outputs_selected": 0,
+      "admitted": 0,
+      "disposition": "NO_COMPATIBLE_OUTPUT_AVAILABLE_IN_REVIEWED_CATALOG",
+      "reason": "No task-bound compatible agent output verified in existing catalog; task solutions not substituted."
+    },
+    {
+      "family": "tau_bench",
+      "candidate_outputs_selected": 0,
+      "admitted": 0,
+      "disposition": "NO_COMPATIBLE_2_0_SUBMISSION_IN_REVIEWED_CATALOG",
+      "reason": "Available public results catalog is version1.0.1; no version2.0-compatible authentic submission established."
+    }
+  ],
+  "raw_payloads": "WITHHELD_NO_PROCESSING_OR_REDISTRIBUTION_GRANT",
+  "private_admission_sha256": "872f298482ef861eb9aac0aa5672248db7c565c1b0a2ae2cb700bc418cc35079",
+  "private_selection_sha256": "0a287c2b962a77ab409d379b2a88d9a44ab2bacb97d5feda65d2823cb1edeaf2",
+  "hash_scope": "Private first-party metadata documents only; source bodies not rehashed in RUN005",
+  "producer_authentication": "NOT_PROVEN"
+}

@@ -1,0 +1,311 @@
+{
+  "schema": "pgop1.run005.execution-results.v1",
+  "status": "PGOP1_RUN005_E1_MINIMUM_SAFETY_BLOCKED",
+  "observed_utc": "2026-11-06T20:08:40.356075+00:00",
+  "execution": "NOT_EXECUTED",
+  "blocker": "NO_OUTPUT_PROCESSING_RIGHTS_ESTABLISHED",
+  "blocker_is_formal_qualification": false,
+  "metrics": {
+    "SELECTED_TASKS": 55,
+    "SELECTED_OUTPUTS": 55,
+    "ADMITTED_AUTHENTIC_OUTPUTS": 0,
+    "AUDIT_ATTEMPTS": 0,
+    "SEMANTIC_AUDITS": 0,
+    "SUPPORTED": 0,
+    "CONTRADICTED": 0,
+    "JUSTIFIED_ABSTENTIONS": 0,
+    "UNJUSTIFIED_ABSTENTIONS": 0,
+    "UNKNOWN_ABSTENTIONS": 0,
+    "INSUFFICIENT_EVIDENCE": 0,
+    "NOT_EVALUABLE": 0,
+    "PROCESSING_ERRORS": 0,
+    "RECOVERY_ERRORS": 0,
+    "REPRODUCIBLE_DEFECTS": 0
+  },
+  "no_read_rights_dispositions": 55,
+  "attempts": [],
+  "receipts": [],
+  "checkpoints": [],
+  "output_body_reads": 0,
+  "benchmark_code_executions": 0,
+  "context_engine_operations_in_authentic_campaign": 0,
+  "unit_dispositions": [
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_0",
+      "TASK_ID": "simple_python_0",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_1",
+      "TASK_ID": "simple_python_1",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_10",
+      "TASK_ID": "simple_python_10",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_11",
+      "TASK_ID": "simple_python_11",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_12",
+      "TASK_ID": "simple_python_12",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_13",
+      "TASK_ID": "simple_python_13",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_14",
+      "TASK_ID": "simple_python_14",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_15",
+      "TASK_ID": "simple_python_15",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_16",
+      "TASK_ID": "simple_python_16",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_17",
+      "TASK_ID": "simple_python_17",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_18",
+      "TASK_ID": "simple_python_18",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_19",
+      "TASK_ID": "simple_python_19",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_2",
+      "TASK_ID": "simple_python_2",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_3",
+      "TASK_ID": "simple_python_3",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_4",
+      "TASK_ID": "simple_python_4",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_40",
+      "TASK_ID": "simple_python_40",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_41",
+      "TASK_ID": "simple_python_41",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_42",
+      "TASK_ID": "simple_python_42",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_43",
+      "TASK_ID": "simple_python_43",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_44",
+      "TASK_ID": "simple_python_44",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_45",
+      "TASK_ID": "simple_python_45",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_46",
+      "TASK_ID": "simple_python_46",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_47",
+      "TASK_ID": "simple_python_47",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_48",
+      "TASK_ID": "simple_python_48",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_49",
+      "TASK_ID": "simple_python_49",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_5",
+      "TASK_ID": "simple_python_5",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_50",
+      "TASK_ID": "simple_python_50",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_51",
+      "TASK_ID": "simple_python_51",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_52",
+      "TASK_ID": "simple_python_52",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_53",
+      "TASK_ID": "simple_python_53",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_54",
+      "TASK_ID": "simple_python_54",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_55",
+      "TASK_ID": "simple_python_55",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_56",
+      "TASK_ID": "simple_python_56",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_57",
+      "TASK_ID": "simple_python_57",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_58",
+      "TASK_ID": "simple_python_58",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_59",
+      "TASK_ID": "simple_python_59",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_6",
+      "TASK_ID": "simple_python_6",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_7",
+      "TASK_ID": "simple_python_7",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_8",
+      "TASK_ID": "simple_python_8",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "BFCL_ARCHIVED_FALCON3:simple_python_9",
+      "TASK_ID": "simple_python_9",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:apache__druid-13704",
+      "TASK_ID": "apache__druid-13704",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:apache__druid-14092",
+      "TASK_ID": "apache__druid-14092",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:apache__druid-14136",
+      "TASK_ID": "apache__druid-14136",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:axios__axios-5892",
+      "TASK_ID": "axios__axios-5892",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:axios__axios-6539",
+      "TASK_ID": "axios__axios-6539",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:briannesbitt__carbon-2762",
+      "TASK_ID": "briannesbitt__carbon-2762",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:briannesbitt__carbon-3005",
+      "TASK_ID": "briannesbitt__carbon-3005",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:fluent__fluentd-3328",
+      "TASK_ID": "fluent__fluentd-3328",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:fluent__fluentd-4311",
+      "TASK_ID": "fluent__fluentd-4311",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:fmtlib__fmt-3158",
+      "TASK_ID": "fmtlib__fmt-3158",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:fmtlib__fmt-3272",
+      "TASK_ID": "fmtlib__fmt-3272",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:gin-gonic__gin-1957",
+      "TASK_ID": "gin-gonic__gin-1957",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:gin-gonic__gin-2755",
+      "TASK_ID": "gin-gonic__gin-2755",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:google__gson-1093",
+      "TASK_ID": "google__gson-1093",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    },
+    {
+      "OUTPUT_ID": "SWE_ARCHIVED_MINI_20260902:google__gson-2311",
+      "TASK_ID": "google__gson-2311",
+      "AUDIT_DISPOSITION": "NOT_ATTEMPTED_RIGHTS_UNRESOLVED"
+    }
+  ],
+  "engineering_controls_are_campaign_results": false,
+  "scope": "55 candidates reviewed through governance metadata. No output passed permission admission. Zero verdicts/abstentions/errors reflect no auditor invocation, not auditor success."
+}

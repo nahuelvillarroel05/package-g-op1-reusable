@@ -1,0 +1,32 @@
+{
+  "schema": "pgop1.run005.final-engineering-validation.v1",
+  "candidate_commit": "70d1e663b8ec41b249d29613e069053bb0d1f464",
+  "candidate_tree": "a22b5d7856a33d205249e7cdbd89c58343cc0904",
+  "remediation_final_suite": {
+    "tests": 79,
+    "result": "PASS",
+    "run": "RUN005-remediation-001"
+  },
+  "runner_final_suite": {
+    "tests": 17,
+    "result": "PASS",
+    "run": "RUN005_ADMISSION_TRANSITIVE_004",
+    "evidence": "engineering/RUN005_RUNNER_TRANSITIVE_READ_REGRESSION.json"
+  },
+  "independent_sol_focused_recheck": {
+    "tests": 21,
+    "result": "PASS",
+    "evidence": "audits/sol/FOCUSED_TESTS_001.junit.xml",
+    "overlaps_prior_tests": true
+  },
+  "earlier_runner_suites": "9,10,15 PASS retained as historical engineering snapshots; do not sum repeated suites",
+  "initial_findings": [
+    "Incomplete auxiliary and transitive input read-permission closure, reproduced and corrected prospectively before candidate identification",
+    "Duplicate selected unit IDs accepted by initial gate, reproduced and corrected before candidate identification"
+  ],
+  "authentic_campaign_operations": 0,
+  "full_caller_synthetic_integration": "NOT_PERFORMED",
+  "authentic_end_to_end": "NOT_PERFORMED",
+  "code_frozen_during_authentic_run": "NOT_APPLICABLE_NO_AUTHENTIC_ATTEMPT",
+  "scope": "Append-only final binding supplements initial engineering reports and their parent-to-bind placeholder. Historical validation snapshots and negative evidence are preserved."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "pgop1.run005.resources.v1",
+  "observed_utc": "2026-11-06T20:11:46.925710+00:00",
+  "max_output_bytes": 21474836480,
+  "observed_workspace_logical_bytes": 594317,
+  "observed_files": 343,
+  "disk_available_bytes_observed": 326383611904,
+  "measurement_scope": "Owned RUN005 workspace before final publication/documentary reports/ZIP. Packaging report measures its own projected peak.",
+  "authentic_execution_duration_ms": 0,
+  "authentic_processed_outputs": 0,
+  "authentic_semantic_audits": 0,
+  "preparation_duration_ms": "UNKNOWN_NOT_SEPARATELY_INSTRUMENTED",
+  "correction_effort_duration_ms": "UNKNOWN_NOT_SEPARATELY_INSTRUMENTED",
+  "inherited_component_measurement": "engineering/GIT_VERIFICATION_PERFORMANCE.json",
+  "runner_admission_limit_units": 128,
+  "authentic_resource_guard_exercised": false,
+  "hard_RSS_or_untrusted_code_isolation": "NOT_QUALIFIED_NOT_ALLOCATED",
+  "benchmark_code_executions": 0,
+  "models_training_paid_API_operations": 0,
+  "scope": "Engineering fixture timings and storage observations do not establish campaign throughput or global isolation."
+}

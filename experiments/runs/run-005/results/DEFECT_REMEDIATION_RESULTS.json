@@ -1,0 +1,52 @@
+{
+    "schema":  "pgop1.run005.inherited-defect-remediation.v1",
+    "scope":  "Prospective RUN005 engineering. RUN004 historical attempts and results unchanged. Authored regression controls are not campaign semantic audits.",
+    "tests":  {
+                  "status":  "PASS",
+                  "passed":  79,
+                  "duration_seconds":  "66.37"
+              },
+    "defects":  [
+                    {
+                        "id":  "E1-D01",
+                        "status":  "CURRENT_FIX_VERIFIED_AND_HARDENED",
+                        "baseline":  "Current e1.py already uses returned receipt sha256, unlike original historical attempt001.",
+                        "change":  "New verified_receipt_reference binds physical receipt bytes and run/campaign/attempt/unit/phase; writer uses it.",
+                        "verification":  [
+                                             "Physical receipt digest differs from erroneous summary digest.",
+                                             "Fresh V2 read recovery preserves completed identity.",
+                                             "Wrong summary hash, wrong unit, physical receipt substitution rejected.",
+                                             "Existing V2 chain/checkpoint tampering regressions pass."
+                                         ]
+                    },
+                    {
+                        "id":  "E1-D02",
+                        "status":  "CURRENT_PREFLIGHT_VERIFIED_READER_OVERHEAD_FIXED",
+                        "baseline":  "Both generic recovery CLI and current e1.py already call preflight. Historical first-attempt omission preserved.",
+                        "change":  "Read-only E1 recovery no longer repeats global writer-budget traversal per batch. No budget weakening on execution path.",
+                        "verification":  [
+                                             "Omitted preflight reproduced FrameworkError: preflight required.",
+                                             "Actual fresh subprocess generic CLI recovered CampaignV2: completed u1, pending u2, inflight empty, checkpoint1.",
+                                             "Producer PID20508 differs from reader PID20764.",
+                                             "Reader store hashes unchanged, zero redispatch.",
+                                             "Actual CLI rejects tampered checkpoint."
+                                         ],
+                        "limitation":  "Authored regression and CLI path evidence. Historical interrupted RUN004 CLI remains INTERRUPTED_NOT_VERIFIED; no historical API result relabeled CLI."
+                    },
+                    {
+                        "id":  "E1-D03",
+                        "status":  "IMMUTABLE_COMMITTED_COMPARISON_REUSED_LIVE_CHECKS_PRESERVED",
+                        "baseline":  "Current RUN004-derived code already batches committed-file verification in one Git archive.",
+                        "change":  "Campaign-local cache keyed by root,commit,tree,canonical exact code bindings avoids repeated immutable archive comparison. Every preflight retains live byte hashes, paths, HEAD/tree and dirty/warning checks; source bodies never cached.",
+                        "verification":  [
+                                             "Same-size code change with restored mtime rejected.",
+                                             "Same-size source change with restored mtime rejected.",
+                                             "Auxiliary source mutation admission/recovery adversarial checks pass."
+                                         ],
+                        "limitation":  "Single ordered component measurement on 111 identical authored files x4; excludes common Git identity/status work and semantic throughput. Not a campaign speed/accuracy improvement estimate."
+                    }
+                ],
+    "code_frozen_during_run":  "NOT_APPLICABLE_NO_AUTHENTIC_ATTEMPT",
+    "formal_states_changed":  false,
+    "commits_created_by_this_subtask":  0
+}

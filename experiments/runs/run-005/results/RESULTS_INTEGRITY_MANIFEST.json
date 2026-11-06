@@ -1,0 +1,106 @@
+{
+  "schema": "pgop1.run005.public-results-integrity.v1",
+  "files": [
+    {
+      "path": "experiments/runs/run-005/audits/ASTRA_AUDIT.md",
+      "sha256": "3f8a30350fa59c94e2bbf51f7988a944d86cdbb1fd983e780a051c156f8a493f",
+      "bytes": 1336
+    },
+    {
+      "path": "experiments/runs/run-005/audits/SOL_XHIGH_AUDIT.md",
+      "sha256": "343b11644f5c9e28c0e7f0cbe30eb74d6cf860106edbe99fcde002be00a6f6c4",
+      "bytes": 1340
+    },
+    {
+      "path": "experiments/runs/run-005/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "sha256": "f2a20785fe3336121bca83a745913bed333f805686c94fdcebf9fe6c8bf0cac7",
+      "bytes": 4818
+    },
+    {
+      "path": "experiments/runs/run-005/publication/PUBLICATION_RECEIPT.json",
+      "sha256": "feaa9288b1b9e9831c1162d497be021c390a9133498e944bd049d3b324612964",
+      "bytes": 546
+    },
+    {
+      "path": "experiments/runs/run-005/README.md",
+      "sha256": "dfe4f738176fcd7ea51d0695e7942301914307393189f95d6520151bceb57da5",
+      "bytes": 827
+    },
+    {
+      "path": "experiments/runs/run-005/results/AUDIT_SUMMARY.md",
+      "sha256": "818ff718a4023a77eea5e543858a3cc723cd2442e2b92de82e6caff392b1ecdf",
+      "bytes": 389
+    },
+    {
+      "path": "experiments/runs/run-005/results/CAMPAIGN_SUMMARY.md",
+      "sha256": "dfe4f738176fcd7ea51d0695e7942301914307393189f95d6520151bceb57da5",
+      "bytes": 827
+    },
+    {
+      "path": "experiments/runs/run-005/results/CODE_REFERENCE.json",
+      "sha256": "919f7cdac617f240c8eb8f14cdf6191b57261795c1e50caadce4aef77338c4c3",
+      "bytes": 1691
+    },
+    {
+      "path": "experiments/runs/run-005/results/COVERAGE_REPORT.json",
+      "sha256": "73077d02e2ff8a65ae46de213b10e01fdfd90459e4f9ffd75e6777190ca4e0dd",
+      "bytes": 3448
+    },
+    {
+      "path": "experiments/runs/run-005/results/DEFECT_AND_FIX_REPORT.md",
+      "sha256": "c985d1f14e2060f23d22ccc582ffda2807765ea8115f1fbc46630d7bbd3e935e",
+      "bytes": 1621
+    },
+    {
+      "path": "experiments/runs/run-005/results/DEFECT_REMEDIATION_RESULTS.json",
+      "sha256": "df4145cdeeb79ca8c96c6adb3de73d5f7f81b79e09cd962ceae4e932431d36ba",
+      "bytes": 4122
+    },
+    {
+      "path": "experiments/runs/run-005/results/EXECUTION_RESULTS.json",
+      "sha256": "3365be9f007b9635974ec2bdf01d4c108e00585b10b6a89febbdaffc7e6edbd9",
+      "bytes": 11131
+    },
+    {
+      "path": "experiments/runs/run-005/results/FAILURES_AND_ABSTENTIONS.json",
+      "sha256": "5393f31424c184000feee4af48c948c9ae8982cab381b643a85f5da3fc30b37c",
+      "bytes": 213
+    },
+    {
+      "path": "experiments/runs/run-005/results/FINAL_ENGINEERING_VALIDATION.json",
+      "sha256": "89b67d1477f5924a7d643e4dff39f674188e58143bf04d8f35e373a38be60e5e",
+      "bytes": 1478
+    },
+    {
+      "path": "experiments/runs/run-005/results/LIMITATIONS.md",
+      "sha256": "5a49ae48e025ca5b7294253724964bfa5245267a6480ba19bb0d281c03c2eb69",
+      "bytes": 882
+    },
+    {
+      "path": "experiments/runs/run-005/results/RECOVERY_RESULTS.json",
+      "sha256": "7ac0663ff3053bf5f904cdc07ad95771a35ae4aa19fc6b7b05de139d4a4fbb3b",
+      "bytes": 619
+    },
+    {
+      "path": "experiments/runs/run-005/results/RESOURCE_REPORT.json",
+      "sha256": "32670f35fc2f6d645b5b298319631862c6f1264ff28c953d5547e7609c799e36",
+      "bytes": 1102
+    },
+    {
+      "path": "experiments/runs/run-005/results/RUN004_RUN005_COMPARISON.md",
+      "sha256": "cc6c3ee4bfcba63b511c962e059f317848bd210c89b23bb436a0bc20c006e408",
+      "bytes": 2169
+    },
+    {
+      "path": "experiments/runs/run-005/results/SEMANTIC_AUDIT_RESULTS.json",
+      "sha256": "2406c2daca047b38678a16c5926e6c01b03b681786d5a5e12e84de7fa8a186c1",
+      "bytes": 614
+    },
+    {
+      "path": "experiments/runs/run-005/results/SOURCE_MANIFEST.json",
+      "sha256": "7c2ecf63bffcceb086ee06e3eaf186b37e6b3da877c232170fc7927907cfad68",
+      "bytes": 2926
+    }
+  ],
+  "scope": "Source-free final prepared set, self excluded; pre-final commitments preserved privately"
+}

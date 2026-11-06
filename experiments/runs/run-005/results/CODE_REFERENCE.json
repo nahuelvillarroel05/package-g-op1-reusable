@@ -1,0 +1,41 @@
+{
+  "schema": "pgop1.run005.code-reference.v1",
+  "candidate_commit": "70d1e663b8ec41b249d29613e069053bb0d1f464",
+  "candidate_tree": "a22b5d7856a33d205249e7cdbd89c58343cc0904",
+  "branch": "experiment",
+  "identified_utc": "2026-11-06T20:11:19.476490+00:00",
+  "execution_code_commit": "NOT_EXECUTED",
+  "operational_execution_freeze": "NOT_ISSUED_NO_ADMISSIBLE_OUTPUTS",
+  "code_changes_inside_attempt": "NOT_APPLICABLE_NO_ATTEMPT",
+  "files": [
+    {
+      "path": "runtime/candidate/run_framework/core.py",
+      "sha256": "dd97ec4c66d9a859f99292c7f5d81465a55fb1188619df9c1fb1de8fc9933d63"
+    },
+    {
+      "path": "runtime/candidate/run_framework/e1.py",
+      "sha256": "4b8701166250710033481314be854ed15172ef97daa71c40743d179edde67c12"
+    },
+    {
+      "path": "runtime/candidate/run_framework/run005.py",
+      "sha256": "acc5be12e478601e5280f3fcfa437b4ca212059b7c8fd2e482e5379d2f729bde"
+    },
+    {
+      "path": "tests/test_run005_remediation.py",
+      "sha256": "c8b4f6e9fbe87c4173c3443a8a71596c114a53fbc8dfe89b3a8f3985fae198cb"
+    },
+    {
+      "path": "tests/test_run005_admission_gate.py",
+      "sha256": "5d34da1c7ff87b2262bcd6ba870cde65b21ce04e391c2b10718fc36fe259bf54"
+    },
+    {
+      "path": "experiments/runs/run-005/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "sha256": "f2a20785fe3336121bca83a745913bed333f805686c94fdcebf9fe6c8bf0cac7"
+    }
+  ],
+  "protected_src_changes": "",
+  "RUN004_historical_result_changes": "",
+  "validation": "79 focused remediation tests;17 final runner tests; authored controls only",
+  "authentic_flow": "NOT_EXERCISED",
+  "full_caller_synthetic_integration": "NOT_PERFORMED"
+}

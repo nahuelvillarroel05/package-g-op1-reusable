@@ -377,6 +377,23 @@
         "record_path": "experiments/runs/run-004/publication/E1_PREPARED_RECORD.json",
         "remote_state": "NOT_CLAIMED_PENDING_WRITE_AND_VERIFICATION"
       }
+    },
+    {
+      "ID": "RUN-005",
+      "record_kind": "PROSPECTIVE_E1_CAMPAIGN",
+      "directory": "experiments/runs/run-005",
+      "status": "PGOP1_RUN005_E1_MINIMUM_SAFETY_BLOCKED",
+      "campaign_execution": "NOT_EXECUTED",
+      "engineering_mode": "E1",
+      "contract_revision": "contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "SELECTED_TASKS": 55,
+      "SELECTED_OUTPUTS": 55,
+      "ADMITTED_AUTHENTIC_OUTPUTS": 0,
+      "AUDIT_ATTEMPTS": 0,
+      "SEMANTIC_AUDITS": 0,
+      "formal_qualification": "NOT_ACHIEVED",
+      "publication_status": "NOT_PUBLISHED_LOCAL_PREPARATION",
+      "blocking_reason": "NO_OUTPUT_PROCESSING_RIGHTS_ESTABLISHED"
     }
   ],
   "pilots": [

@@ -1,0 +1,17 @@
+{
+  "schema": "pgop1.run005.semantic-results.v1",
+  "status": "NOT_EXECUTED_NO_ADMISSIBLE_OUTPUTS",
+  "AUDIT_ATTEMPTS": 0,
+  "SEMANTIC_AUDITS": 0,
+  "verdicts": [],
+  "abstentions": [],
+  "structural_audits": 0,
+  "independent_precision": "NOT_COMPUTABLE",
+  "independent_recall": "NOT_COMPUTABLE",
+  "official_benchmark_scores": "NOT_PRODUCED",
+  "context_engine_authentic_path": "NOT_EXERCISED",
+  "INSUFFICIENT_EVIDENCE": 0,
+  "NOT_EVALUABLE": 0,
+  "no_read_permission_dispositions": 55,
+  "scope": "Admission rejection is neither an auditor abstention nor a semantic not-evaluable verdict."
+}

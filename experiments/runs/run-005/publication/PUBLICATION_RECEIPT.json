@@ -1,0 +1,12 @@
+{
+  "schema": "pgop1.run005.publication-prepared.v1",
+  "status": "PREPARED_LOCAL",
+  "destination": "refs/heads/experiment",
+  "candidate_commit": "70d1e663b8ec41b249d29613e069053bb0d1f464",
+  "candidate_tree": "a22b5d7856a33d205249e7cdbd89c58343cc0904",
+  "execution": "NOT_EXECUTED",
+  "campaign_status": "PGOP1_RUN005_E1_MINIMUM_SAFETY_BLOCKED",
+  "reproducibility_class": "PUBLIC_CODE_AND_HASH_REFERENCES",
+  "private_payloads_included": 0,
+  "remote_publication": "NOT_CLAIMED_REQUIRES_SUCCESSFUL_PUSH_AND_FRESH_VERIFICATION"
+}
