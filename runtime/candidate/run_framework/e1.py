@@ -54,15 +54,21 @@ def bounded(path, expected=None):
 
 def process_definition(unit, references):
     """Parse one exact selected identity; never interpret content as code."""
+    from runtime.candidate.multibenchmark.calling import _strict_json_loads
     raw = bounded(unit["source_path"], unit["source_sha256"])
     family = unit["benchmark_id"]
     if family == "bfcl_v4":
-        rows = [json.loads(line) for line in raw.decode("utf-8-sig").splitlines() if line.strip()]
+        text = raw.decode("utf-8-sig")
+        try:
+            rows = _strict_json_loads(text)
+        except json.JSONDecodeError:
+            rows = [_strict_json_loads(line) for line in text.splitlines() if line.strip()]
         index = unit["source_row_index"]
-        if type(index) is not int or not 0 <= index < len(rows) or rows[index].get("id") != unit["task_id"]:
+        if (not isinstance(rows, list) or type(index) is not int or not 0 <= index < len(rows)
+                or not isinstance(rows[index], dict) or rows[index].get("id") != unit["task_id"]):
             raise ValueError("BFCL_SELECTED_ROW_ID_MISMATCH")
     elif family == "mcpmark_verified":
-        if not isinstance(json.loads(raw), dict):
+        if not isinstance(_strict_json_loads(raw.decode("utf-8-sig")), dict):
             raise ValueError("MCP_METADATA_NOT_OBJECT")
     elif family == "terminal_bench_2":
         if not isinstance(tomllib.loads(raw.decode("utf-8-sig")), dict):

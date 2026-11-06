@@ -24,6 +24,18 @@ def test_bfcl_mismatched_row_cannot_be_processed(tmp_path):
         process_definition(u, {})
 
 
+def test_bfcl_json_array_processes_selected_row(tmp_path):
+    u = unit(tmp_path, "bfcl_v4", b'[{"id":"example_0"},{"id":"example_1"}]',
+             source_row_index=1, task_id="example_1")
+    assert process_definition(u, {}) == {"definition": True}
+
+
+def test_duplicate_json_keys_are_processing_error(tmp_path):
+    u = unit(tmp_path, "mcpmark_verified", b'{"id":"first","id":"second"}')
+    with pytest.raises(ValueError, match="duplicate JSON"):
+        process_definition(u, {})
+
+
 def test_hash_change_is_integrity_failure(tmp_path):
     u = unit(tmp_path, "mcpmark_verified", b'{}')
     u["source_sha256"] = "0" * 64
