@@ -1,0 +1,62 @@
+{
+  "RUN_ID": "RUN004",
+  "ENGINEERING_MODE": "E1",
+  "RUN004_EXECUTION": "COMPLETED_WITH_EXACT_DISPOSITIONS",
+  "metrics": {
+    "SELECTED_UNITS": 10096,
+    "ATTEMPTED_UNITS": 4510,
+    "PROCESSED_UNITS": 4510,
+    "NOT_ATTEMPTED_UNITS": 5586,
+    "SEMANTICALLY_AUDITED_UNITS": 0,
+    "SUPPORTED": 0,
+    "CONTRADICTED": 0,
+    "ABSTENTIONS": 0,
+    "INSUFFICIENT_EVIDENCE": 0,
+    "INSUFFICIENT_EVIDENCE_NOTE": "No semantic auditor event. Missing authentic outputs recorded separately for processed definitions.",
+    "UNKNOWN_APPLICABILITY": 22550,
+    "UNKNOWN_APPLICABILITY_SCOPE": "Observed domain annotations in actual missing-output processing records, not semantic verdicts",
+    "PLANNED_UNKNOWN_APPLICABILITY_BASELINE": 50480,
+    "ERRORS": 0,
+    "ERRORS_SCOPE": "Processor ERROR events; wrapper defects reported separately",
+    "REPRODUCIBLE_DEFECTS": 3,
+    "RECOVERY_RESULTS": "See independently generated RUN004_E1_RECOVERY_REPORT.json",
+    "INTERRUPTIONS": 0,
+    "STORAGE_USAGE": 402319189,
+    "STORAGE_USAGE_SCOPE": "Logical file bytes at benchmark aggregation; before final provenance stage and ZIP",
+    "EXECUTION_DURATION_MS": 13242863,
+    "EXECUTION_DURATION": {
+      "value": 13242863,
+      "unit": "milliseconds",
+      "scope": "Sum of measured batch durations; not total wall time"
+    },
+    "PREDICATE_PAIRS": 80768,
+    "PLANNED_SHARDS": 202,
+    "MISSING_AUTHENTIC_OUTPUT_PROCESSED_UNITS": 4510,
+    "INTERRUPTIONS_SCOPE": "Benchmark processor unit interruptions; recovery reader interruptions are separately preserved in the recovery report"
+  },
+  "attempts": [
+    {
+      "attempt_id": "RUN004_E1_ATTEMPT_001",
+      "code_commit": "d87a3ccec467e57fb78da594138c521ab1632c25",
+      "code_tree": "95a612b52ddb6fc0f951ddd7b8f0c752c5ec06f0",
+      "attempted_units": 45,
+      "processed_units": 45,
+      "semantic_audits": 0,
+      "plan_sha256": "e22c4b7c43f36d591f81bb80e9eb712db16c140e74173ab0de622e1d07ce94bf",
+      "contract_sha256": "62fa727b4ceb93980d4ce7c6fe106bd4a1881d21f627e76fac492412e2ab4a5c"
+    },
+    {
+      "attempt_id": "RUN004_E1_ATTEMPT_002",
+      "code_commit": "225474a81411002d326aa48a4db26bf030cbfe67",
+      "code_tree": "e18a827ac44c62284c492b7080107466071dbbd6",
+      "attempted_units": 4465,
+      "processed_units": 4465,
+      "semantic_audits": 0,
+      "plan_sha256": "6658d48a67ea904e9011f9501e56b7464454ca3a22c9a7fa020c08271d046a45",
+      "contract_sha256": "62fa727b4ceb93980d4ce7c6fe106bd4a1881d21f627e76fac492412e2ab4a5c"
+    }
+  ],
+  "raw_evidence": "PRIVATE_SOURCE_DEPENDENCIES",
+  "unique_executed_units": 4510,
+  "duplicate_executed_unit_ids": 0
+}

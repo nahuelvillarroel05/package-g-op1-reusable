@@ -1,0 +1,5 @@
+# Exact limitations
+
+Primary task definition processing only. No semantic audits, model responses generated, agent trajectories, official evaluations or independent semantic qualification. Processing permission and redistribution permission are separate. Unresolved/restricted sources, reserves and pilot/shared-file exclusions receive no-body dispositions and count as not attempted. All original denominators remain.
+
+Producers are declared rather than independently authenticated; hashes verify bytes and bindings, not semantic truth. Read recovery never dispatches. Context Engine generated I4-NEXT/I5-NEXT records afterward from verified terminal-receipt projections; this does not retroactively integrate it into original callbacks or add benchmark audits. Private source dependencies prevent public self-contained replay. E1 results are not E2 guarantees or F qualification. I0-I6 remain formally frozen, I7 incomplete, GATE_11 blocked, independent precision/recall not computable, independent custody not proven, Physical C2 deferred not waived.

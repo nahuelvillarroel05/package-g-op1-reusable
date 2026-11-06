@@ -1,0 +1,15 @@
+{
+  "ordinary_processing_errors": 0,
+  "auditor_abstentions": 0,
+  "supported": 0,
+  "contradicted": 0,
+  "semantic_audits": 0,
+  "missing_authentic_output_processed_units": 4510,
+  "not_attempted_units": 5586,
+  "wrapper_defects": [
+    "E1-D01",
+    "E1-D02",
+    "E1-D03"
+  ],
+  "details_commitment": "c611fe09b3b543d98ab218ba0f1b79f4e24f0ab47f344dbe2bde0b788c9cfa37"
+}

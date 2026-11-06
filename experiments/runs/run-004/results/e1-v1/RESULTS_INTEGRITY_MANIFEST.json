@@ -1,0 +1,57 @@
+{
+  "schema": "pgop1.e1.public-results-integrity.v1",
+  "files": [
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/AUDIT_SUMMARY.md",
+      "sha256": "5f7561609b7514329d9e40f0382f2e79464ba6c2c5e6a21c364c556c153fdd84",
+      "bytes": 508
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/CAMPAIGN_SUMMARY.md",
+      "sha256": "168ee25025201f0f14ee610b59c2c3ceeddea494e478ca2d7b4963a9c12a61c5",
+      "bytes": 825
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/CODE_REFERENCE.json",
+      "sha256": "ffcbef75efa760c8699a4b4bf259fca3b741bce2bafd258fa434075f78791e8d",
+      "bytes": 2576
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/COVERAGE_REPORT.json",
+      "sha256": "d6fc9b13d46895f607985509a0eaa1275fbfe8080f0bbb948decc98028fbdb65",
+      "bytes": 1795
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/DEFECT_AND_FIX_REPORT.md",
+      "sha256": "9e41a52b09a4bf08488639390d78db7305561ebf5e0f80dc07e1864ac0a6f8f2",
+      "bytes": 719
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/EXECUTION_RESULTS.json",
+      "sha256": "5418b09663edf005f982ef9214e95ad60d57df2d4e8ed92b56e7970ace3a8b70",
+      "bytes": 2636
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/FAILURES_AND_ABSTENTIONS.json",
+      "sha256": "249351dc3bdff0a7c052ff302c8441a0342cdf652c09077645c0b60e07224fdb",
+      "bytes": 373
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/LIMITATIONS.md",
+      "sha256": "2390dfbc3cfce0661d50623023f1767d89abe8d9c7a94e7e3c815811ebbe4e2c",
+      "bytes": 1054
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/PUBLICATION_RECEIPT.json",
+      "sha256": "ca3eba658cc8b3b33db0c6a5eaf706c28bfbb07d341ee40c95f19f5d7751c0a2",
+      "bytes": 505
+    },
+    {
+      "path": "experiments/runs/run-004/results/e1-v1/SOURCE_MANIFEST.json",
+      "sha256": "561be4f51d7b6c5634d45c103e32300986fcc77a198afd6eb7a49c1119cd1a1a",
+      "bytes": 738
+    }
+  ],
+  "self_excluded": true,
+  "source_bodies": 0
+}

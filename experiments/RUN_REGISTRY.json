@@ -191,10 +191,10 @@
       "ID": "RUN-004",
       "record_kind": "PROSPECTIVE_E1_CAMPAIGN",
       "directory": "runs/run-004",
-      "execution_code_commit": "d87a3ccec467e57fb78da594138c521ab1632c25",
-      "execution_code_tree": "95a612b52ddb6fc0f951ddd7b8f0c752c5ec06f0",
+      "execution_code_commit": "225474a81411002d326aa48a4db26bf030cbfe67",
+      "execution_code_tree": "e18a827ac44c62284c492b7080107466071dbbd6",
       "result_or_release_commit": "NOT_PUBLISHED",
-      "public_evidence_path": "NONE",
+      "public_evidence_path": "experiments/runs/run-004/results/e1-v1",
       "private_evidence_commitments": [
         {
           "artifact_id": "RUN-004-001",
@@ -224,8 +224,8 @@
       ],
       "original_attempt_protocol": "ORIGINAL_ONLY_NOT_RETROFITTED",
       "formal_qualification": "NOT_ACHIEVED",
-      "status": "E1_PARTIAL_EXECUTED_WITH_AUTHENTIC_DEFINITION_RESULTS",
-      "campaign_execution": "PARTIAL_EXECUTED",
+      "status": "PGOP1_RUN004_E1_COMPLETED_WITH_EXACT_LIMITATIONS",
+      "campaign_execution": "COMPLETED_WITH_EXACT_DISPOSITIONS",
       "contract_status": "E1_OWNER_AUTHORIZED_BOUNDED_OPERATIONS",
       "population_quota": null,
       "identity_role": "RUN_SERIES_WITH_AUTHENTIC_E1_EXECUTION",
@@ -315,7 +315,68 @@
       "RUN004_FORMAL_QUALIFICATION": "NOT_ACHIEVED",
       "SELECTED_UNITS": 10096,
       "PREDICATE_PAIRS": 80768,
-      "PLANNED_SHARDS": 202
+      "PLANNED_SHARDS": 202,
+      "prior_live_execution_observation": {
+        "active_attempt_id": "RUN004_E1_ATTEMPT_002",
+        "active_execution_code_commit": "225474a81411002d326aa48a4db26bf030cbfe67",
+        "active_execution_code_tree": "e18a827ac44c62284c492b7080107466071dbbd6",
+        "state": "RUNNING_AS_LAST_PROCESS_VERIFIED",
+        "verified_first_attempt_completed_units": 45,
+        "full_execution_metrics": "NOT_YET_CONSOLIDATED",
+        "operation_scope": "Permitted primary-definition processing; no semantic audits",
+        "authority": "Owner PGOP1_ENGINEERING_MODES_AND_RUN004_E1_001"
+      },
+      "e1_metrics": {
+        "SELECTED_UNITS": 10096,
+        "ATTEMPTED_UNITS": 4510,
+        "PROCESSED_UNITS": 4510,
+        "NOT_ATTEMPTED_UNITS": 5586,
+        "SEMANTICALLY_AUDITED_UNITS": 0,
+        "SUPPORTED": 0,
+        "CONTRADICTED": 0,
+        "ABSTENTIONS": 0,
+        "INSUFFICIENT_EVIDENCE": 0,
+        "INSUFFICIENT_EVIDENCE_NOTE": "No semantic auditor event. Missing authentic outputs recorded separately for processed definitions.",
+        "UNKNOWN_APPLICABILITY": 22550,
+        "UNKNOWN_APPLICABILITY_SCOPE": "Observed domain annotations in actual missing-output processing records, not semantic verdicts",
+        "PLANNED_UNKNOWN_APPLICABILITY_BASELINE": 50480,
+        "ERRORS": 0,
+        "ERRORS_SCOPE": "Processor ERROR events; wrapper defects reported separately",
+        "REPRODUCIBLE_DEFECTS": 3,
+        "RECOVERY_RESULTS": "See independently generated RUN004_E1_RECOVERY_REPORT.json",
+        "INTERRUPTIONS": 0,
+        "STORAGE_USAGE": 402319189,
+        "STORAGE_USAGE_SCOPE": "Logical file bytes at benchmark aggregation; before final provenance stage and ZIP",
+        "EXECUTION_DURATION_MS": 13242863,
+        "EXECUTION_DURATION": {
+          "value": 13242863,
+          "unit": "milliseconds",
+          "scope": "Sum of measured batch durations; not total wall time"
+        },
+        "PREDICATE_PAIRS": 80768,
+        "PLANNED_SHARDS": 202,
+        "MISSING_AUTHENTIC_OUTPUT_PROCESSED_UNITS": 4510,
+        "INTERRUPTIONS_SCOPE": "Benchmark processor unit interruptions; recovery reader interruptions are separately preserved in the recovery report"
+      },
+      "e1_attempts": [
+        {
+          "attempt_id": "RUN004_E1_ATTEMPT_001",
+          "code_commit": "d87a3ccec467e57fb78da594138c521ab1632c25",
+          "code_tree": "95a612b52ddb6fc0f951ddd7b8f0c752c5ec06f0",
+          "processed_units": 45
+        },
+        {
+          "attempt_id": "RUN004_E1_ATTEMPT_002",
+          "code_commit": "225474a81411002d326aa48a4db26bf030cbfe67",
+          "code_tree": "e18a827ac44c62284c492b7080107466071dbbd6",
+          "processed_units": 4465
+        }
+      ],
+      "publication_representation": {
+        "status": "PREPARED_LOCAL",
+        "record_path": "experiments/runs/run-004/publication/E1_PREPARED_RECORD.json",
+        "remote_state": "NOT_CLAIMED_PENDING_WRITE_AND_VERIFICATION"
+      }
     }
   ],
   "pilots": [

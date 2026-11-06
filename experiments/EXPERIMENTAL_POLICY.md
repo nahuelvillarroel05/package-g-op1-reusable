@@ -41,3 +41,7 @@ The authorized public branch is `experiment`; no force push, main change, merge,
 [PUBLICATION_POLICY.md](PUBLICATION_POLICY.md) and its [receipt contract](schemas/pgop1.experimental.run-publication.v1.md) govern publication records and documentary closure. Their document set may reference equivalent evidence or give reasoned applicability dispositions; it is not an E1 execution-entry checklist. Publication state, result validity, formal qualification, and promotion remain distinct. This policy does not authorize branch deletions or relax any separately applicable deletion controls.
 
 I0-I6/I7, GATE_11, independent evidence/custody, and Physical C2 retain the explicit states in ENGINEERING_MODES.md. E1 evidence is not retroactively independent or formally qualified.
+
+## Documentary read scope
+
+Documentary validation follows the same operation-specific read permissions as execution. A verifier does not grant permission to open benchmark bodies, responses, patches, logs, or their archived aliases. When a legacy verifier traverses mixed archives, restrict reads to explicitly authorized first-party documents, code, governance metadata and tooling. Preserve its actual nonzero status and all denied-read findings; record withheld payload checks as `NOT_PERFORMED_READ_NOT_GRANTED`. Completed current-document checks and historical payload integrity are separate conclusions. Never report a broad integrity PASS for deferred bodies. This clarification creates no universal E1 preflight and does not reduce formal requirements.

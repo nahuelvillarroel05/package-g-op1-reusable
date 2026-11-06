@@ -1,0 +1,14 @@
+{
+  "schema": "pgop1.run004.e1.public-source-commitments.v1",
+  "selected_units": 10096,
+  "attempt_plan_sha256": "e22c4b7c43f36d591f81bb80e9eb712db16c140e74173ab0de622e1d07ce94bf",
+  "population_sha256": "06f318e1d85d3c56db27a096a073c02e53cc60b07115c671f73d6e9e662a6049",
+  "population_commitment_note": "Attempt plan binds exact original population; originals remain private",
+  "rights_map_sha256": "27b32ec3ee41524c36c68f0b2768223c55ae5d796ec7a82a43af09b75d67c02a",
+  "sources": "Original source bodies and all private absolute paths withheld",
+  "processing_operations": [
+    "Inert permitted primary definition parse",
+    "First-party receipts and recovery"
+  ],
+  "redistribution": "FIRST_PARTY_SUMMARIES_AND_COMMITMENTS_ONLY"
+}

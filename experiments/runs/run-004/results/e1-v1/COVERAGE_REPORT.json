@@ -1,0 +1,67 @@
+{
+  "selected_units": 10096,
+  "predicate_pairs": 80768,
+  "planned_shards": 202,
+  "by_family": {
+    "bfcl_v4": {
+      "selected_units": 4696,
+      "attempted_units": 4296,
+      "processed_units": 4296,
+      "not_attempted_units": 400,
+      "semantic_audits": 0,
+      "sufficient_authentic_output_units": 0,
+      "predicate_pairs": 37568
+    },
+    "mcpmark_verified": {
+      "selected_units": 127,
+      "attempted_units": 126,
+      "processed_units": 126,
+      "not_attempted_units": 1,
+      "semantic_audits": 0,
+      "sufficient_authentic_output_units": 0,
+      "predicate_pairs": 1016
+    },
+    "swebench": {
+      "selected_units": 3642,
+      "attempted_units": 0,
+      "processed_units": 0,
+      "not_attempted_units": 3642,
+      "semantic_audits": 0,
+      "sufficient_authentic_output_units": 0,
+      "predicate_pairs": 29136
+    },
+    "swebench_pro_v2": {
+      "selected_units": 642,
+      "attempted_units": 0,
+      "processed_units": 0,
+      "not_attempted_units": 642,
+      "semantic_audits": 0,
+      "sufficient_authentic_output_units": 0,
+      "predicate_pairs": 5136
+    },
+    "tau_bench": {
+      "selected_units": 900,
+      "attempted_units": 0,
+      "processed_units": 0,
+      "not_attempted_units": 900,
+      "semantic_audits": 0,
+      "sufficient_authentic_output_units": 0,
+      "predicate_pairs": 7200
+    },
+    "terminal_bench_2": {
+      "selected_units": 89,
+      "attempted_units": 88,
+      "processed_units": 88,
+      "not_attempted_units": 1,
+      "semantic_audits": 0,
+      "sufficient_authentic_output_units": 0,
+      "predicate_pairs": 712
+    }
+  },
+  "rights_summary": {
+    "RIGHTS_UNRESOLVED": 4884,
+    "PROCESSING_RESTRICTED": 702,
+    "PROCESSING_PERMITTED": 4510
+  },
+  "processing_not_semantic_coverage": true
+}

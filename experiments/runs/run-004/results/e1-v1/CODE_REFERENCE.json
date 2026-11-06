@@ -1,0 +1,61 @@
+{
+  "attempts": [
+    {
+      "attempt_id": "RUN004_E1_ATTEMPT_001",
+      "code_commit": "d87a3ccec467e57fb78da594138c521ab1632c25",
+      "code_tree": "95a612b52ddb6fc0f951ddd7b8f0c752c5ec06f0",
+      "attempted_units": 45,
+      "processed_units": 45,
+      "semantic_audits": 0,
+      "plan_sha256": "e22c4b7c43f36d591f81bb80e9eb712db16c140e74173ab0de622e1d07ce94bf",
+      "contract_sha256": "62fa727b4ceb93980d4ce7c6fe106bd4a1881d21f627e76fac492412e2ab4a5c"
+    },
+    {
+      "attempt_id": "RUN004_E1_ATTEMPT_002",
+      "code_commit": "225474a81411002d326aa48a4db26bf030cbfe67",
+      "code_tree": "e18a827ac44c62284c492b7080107466071dbbd6",
+      "attempted_units": 4465,
+      "processed_units": 4465,
+      "semantic_audits": 0,
+      "plan_sha256": "6658d48a67ea904e9011f9501e56b7464454ca3a22c9a7fa020c08271d046a45",
+      "contract_sha256": "62fa727b4ceb93980d4ce7c6fe106bd4a1881d21f627e76fac492412e2ab4a5c"
+    }
+  ],
+  "public_branch": "experiment",
+  "main_modified": false,
+  "protected_runtime_promoted": false,
+  "post_execution_provenance_stages": [
+    {
+      "stage_id": "RUN004_E1_RESULT_PROVENANCE_001",
+      "units_added": 45,
+      "code_commit": "a7fb4ff968d646cd1d125bade7faeabce517c5b8",
+      "code_tree": "36b68abbf917b2b5a7b81216f6df770ec60c283f",
+      "graph_schema": "I4-NEXT-v0.1",
+      "provenance_schema": "I5-NEXT-v0.1",
+      "manifest": {
+        "graph_sha256": "ea1faf914e7e290f685746e426437fc7cefd20b247a5d175f422f486adb97a4f",
+        "parent_sha256": null,
+        "provenance_sha256": "f74d5cccbc714e382e232b8dad1aadbf0a7719cb55cbd6571ee367c1c3dd29d5",
+        "version": 1
+      },
+      "derived_source_sha256": "e0d9611c36b3210bf763d4c00d4afd81129a8dcaa42f64364cb732cc88a4c7fd"
+    },
+    {
+      "stage_id": "RUN004_E1_RESULT_PROVENANCE_002",
+      "units_added": 4465,
+      "code_commit": "a7fb4ff968d646cd1d125bade7faeabce517c5b8",
+      "code_tree": "36b68abbf917b2b5a7b81216f6df770ec60c283f",
+      "graph_schema": "I4-NEXT-v0.1",
+      "provenance_schema": "I5-NEXT-v0.1",
+      "manifest": {
+        "graph_sha256": "ef11bee01c59b258a2f5d32c0883c63f7f9a33a1ab3135e6060a1153af7c42eb",
+        "parent_sha256": "ea1faf914e7e290f685746e426437fc7cefd20b247a5d175f422f486adb97a4f",
+        "provenance_sha256": "5155cb6b553500629978d8e4688046d1568cb7be9aaa97c411a6b004e79146b9",
+        "version": 2
+      },
+      "derived_source_sha256": "6103f357a283b63d8a5a34f37e240c37847d4ab6adb59f2047cde4bf2bd52ab2"
+    }
+  ],
+  "context_engine_during_original_callbacks": false,
+  "post_execution_context_engine_reused": true
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PREPARED_LOCAL",
+  "remote_publication": "NOT_CLAIMED",
+  "destination": "experiment",
+  "authorization": "Owner PGOP1_ENGINEERING_MODES_AND_RUN004_E1_001",
+  "private_evidence_commitments": {
+    "SOL_XHIGH_AUDIT.md": "7e13f3f1bcb5b060d297b97f815d9a09c60343b58c9819c0f175af5b14c96250",
+    "ASTRA_AUDIT.md": "d54f3df82ca1eba9699cd05a6fe447eb9f1a80d518243e92a3180facf9a2dc7e"
+  },
+  "remote_write_and_verification": "Separate append-only local publication receipt records actual attempt"
+}
