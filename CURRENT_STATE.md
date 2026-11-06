@@ -1,3 +1,9 @@
+# Current RUN004 final operational gate
+
+RUN004_NO_GO_WITH_EXACT_BLOCKERS. Runtime candidate `9dea85852425ee6030c241824648e11f2b7c746c` / tree `cfd6adad8635b829f84bc35d7f17e4a47fc70b99` closes configured literal receipt profile and directory bypasses. 49 focused authored tests pass. Separate controlled DEV8 covers six families with16 literal receipts and fresh8-unit read recovery, zero redispatch; two output candidates were rejected for admission, zero semantic audits. This does not qualify the full selected producer.
+
+Remaining technical gates: exact selected local-processing rights and the actual full-population closed producer/configuration/per-pair disposition preflight. Preserve10096 units/202shards/80768pairs; UNKNOWN applicability remains in denominator. Missing outputs, unavailable complementary B and future Owner approval are not standalone technical blockers. Private detailed evidence and source bodies are not published here. RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. Earlier entries retain their historical scope.
+
 # Current public experimental branch and RUN004 engineering
 
 The Owner designates experiment as the experimental public branch. [Engineering scope](experiments/runs/run-004/preparation/PUBLIC_EXPERIMENT_ENGINEERING_001.md). Historical RUN results remain unchanged; publication is a separate obligation and requires fresh remote verification. Local engineering is partial: literal rev004/compact V2 compatibility, complete authentic output bindings, applicability/abstention qualification, selected rights and resource scope remain gated. No remote publication is inferred from this commit. RUN004_CONTRACT=NOT_APPROVED; RUN004_FINAL_FREEZE=NOT_ISSUED; RUN004_EXECUTION=NOT_EXECUTED. Earlier entries retain historical scope.
