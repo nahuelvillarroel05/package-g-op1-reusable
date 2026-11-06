@@ -1,3 +1,14 @@
+# Current prospective RUN lifecycle
+
+Owner decision PGOP1_RUN005_ENGINEERING_EVOLUTION_001 establishes the permanent
+method: RUN -> RESULTS -> DEFECTS -> IMPROVEMENTS -> NEXT RUN. Each campaign binds
+its own identifiable system version, selection, attempts and authentic results.
+RUN004 is closed; never rerun or rewrite it to improve historical results.
+RUN005 is independent E1, with explicit source-rights and safety requirements;
+no GATE_11 prerequisite or favorable verdict quota. Later improvements belong to
+the following campaign. Earlier RUN004-specific authority below is historical
+within its original scope, not authorization to redispatch RUN004.
+
 # PGOP1 experimental policy - version 2
 
 Authority: Owner decision `PGOP1_ENGINEERING_MODES_AND_RUN004_E1_001`. This prospective policy adopts [E1/E2/F engineering modes](ENGINEERING_MODES.md). The current Owner instruction authorizes RUN004 E1 bounded execution and progressive continuation within its permitted operations, resources, and stop conditions. Earlier preparation-only restrictions remain historical within their original scope; they do not override this authorization. Historical contracts, including RUN004 rev004, are not edited or retroactively approved.

@@ -116,6 +116,7 @@ class Campaign:
         self._registered=False
         self.run_id = cfg["run_id"]
         self._preflight = None
+        self._committed_code_verified = None
 
     def preflight(self):
         if canonical(self.config)!=self._config_snapshot:
@@ -154,7 +155,14 @@ class Campaign:
         except (OSError,subprocess.SubprocessError) as e: raise FrameworkError("candidate Git identity could not be verified") from e
         if commit!=cfg["candidate_commit"] or tree!=cfg["candidate_tree"]: raise FrameworkError("candidate Git identity mismatch")
         if status.strip() or status_result.stderr.strip(): raise FrameworkError("candidate working tree is dirty or Git inventory emitted warnings")
-        _verify_committed_code(code_root, commit, cfg["code_files"])
+        # Only the immutable committed-object comparison is reusable. All live
+        # file bytes, paths, HEAD/tree and Git dirtiness were checked above on
+        # this invocation. Never cache source bodies or working-tree checks.
+        committed_key = (str(code_root), commit, tree,
+                         canonical(cfg["code_files"]))
+        if self._committed_code_verified != committed_key:
+            _verify_committed_code(code_root, commit, cfg["code_files"])
+            self._committed_code_verified = committed_key
         self._preflight={"run_id":self.run_id,"campaign_id":cfg["campaign_id"],"contract_version":cfg["contract_version"],
             "config_sha256":self.config_sha256,"candidate_commit":commit,"candidate_tree":tree,
             "candidate_code_sha256":digest(canonical(sorted(rows,key=lambda x:(x["role"],x["path"])))),

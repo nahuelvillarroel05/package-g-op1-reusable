@@ -1,3 +1,14 @@
+# Current prospective RUN lifecycle
+
+Owner decision PGOP1_RUN005_ENGINEERING_EVOLUTION_001 establishes the permanent
+method: RUN -> RESULTS -> DEFECTS -> IMPROVEMENTS -> NEXT RUN. Each campaign binds
+its own identifiable system version, selection, attempts and authentic results.
+RUN004 is closed; never rerun or rewrite it to improve historical results.
+RUN005 is independent E1, with explicit source-rights and safety requirements;
+no GATE_11 prerequisite or favorable verdict quota. Later improvements belong to
+the following campaign. Earlier RUN004-specific authority below is historical
+within its original scope, not authorization to redispatch RUN004.
+
 # Experimental RUN purpose - version 2
 
 PGOP1 RUNs exist to experiment: discover defects, generate authentic evidence, measure behavior, identify limitations, and improve PGOP1. They need not demonstrate beforehand all capabilities they were designed to investigate.

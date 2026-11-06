@@ -55,6 +55,23 @@ def ref(path):
     return {"path": str(path), "sha256": digest(path.read_bytes())}
 
 
+def verified_receipt_reference(campaign, summary, unit_id, phase="terminal"):
+    """Bind derived references to persisted receipt bytes, never a summary hash."""
+    relative = Path(summary["path"])
+    if relative.is_absolute() or len(relative.parts) != 2 or relative.parts[0] != "receipts":
+        raise FrameworkError("E1_RECEIPT_REFERENCE_PATH_INVALID")
+    actual = ref(campaign.output / relative)
+    receipt = read(actual["path"])
+    if (actual["sha256"] != summary["sha256"] or summary.get("unit_id") != unit_id
+            or summary.get("phase") != phase or receipt.get("unit_id") != unit_id
+            or receipt.get("phase") != phase or receipt.get("run_id") != campaign.run_id
+            or receipt.get("campaign_id") != campaign.config["campaign_id"]
+            or not receipt.get("attempt_id", "").startswith(
+                f"{campaign.config['campaign_id']}:{campaign.run_id}:{campaign.config['campaign_attempt_id']}:{unit_id}:")):
+        raise FrameworkError("E1_RECEIPT_REFERENCE_IDENTITY_OR_HASH_MISMATCH")
+    return actual
+
+
 def write(path, value):
     _write_immutable(Path(path), canonical(value))
 
@@ -306,14 +323,15 @@ def execute(workspace, max_batches=None, recover_only=False, attempt_id=ATTEMPT)
             continue
         if not recover_only and max_batches is not None and completed_batches >= max_batches:
             break
-        # Scan only this owned attempt; reject reparses instead of following them.
+        # A read-only recovery allocates no batch output and needs no repeated
+        # global writer-budget scan. Journal recovery verifies its own artifacts.
         size = 0
-        for folder, dirs, files in os.walk(workspace / "attempts", followlinks=False):
+        for folder, dirs, files in (() if recover_only else os.walk(workspace / "attempts", followlinks=False)):
             for name in [*dirs, *files]:
                 p = _path(Path(folder) / name, True)
                 if p.is_file():
                     size += p.stat().st_size
-        if size + BATCH_RESERVE > MAX_BYTES:
+        if not recover_only and size + BATCH_RESERVE > MAX_BYTES:
             raise FrameworkError("E1_SHARED_OUTPUT_BUDGET_EXHAUSTED")
         c = campaign_for(attempt, row)
         if recover_only:
@@ -355,7 +373,7 @@ def execute(workspace, max_batches=None, recover_only=False, attempt_id=ATTEMPT)
             operations.append({"UNIT_ID": uid, "EXECUTION_ATTEMPTED": True,
                 "SOURCE_STATUS": "PROCESSING_PERMITTED", "OUTPUT_STATUS": "MISSING_AUTHENTIC_AGENT_OUTPUT",
                 "PREDICATE_STATUS": "NOT_EVALUATED", "AUDIT_DISPOSITION": "NOT_AUDITED_MISSING_AGENT_OUTPUT",
-                "ERROR_STATUS": None, "RECEIPT_SHA256": receipt["sha256"], "CHECKPOINT_REFERENCE": str(c.output / "checkpoints")})
+                "ERROR_STATUS": None, "RECEIPT_SHA256": verified_receipt_reference(c, receipt, uid)["sha256"], "CHECKPOINT_REFERENCE": str(c.output / "checkpoints")})
         state = c.recover()
         write_writer(writer, {"schema": "pgop1.run004.e1.batch-result.v1", "batch_id": row["batch_id"],
             "pid": os.getpid(), "operations": operations, "completed_units": sorted(state["completed"]),
