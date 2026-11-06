@@ -394,6 +394,23 @@
       "formal_qualification": "NOT_ACHIEVED",
       "publication_status": "NOT_PUBLISHED_LOCAL_PREPARATION",
       "blocking_reason": "NO_OUTPUT_PROCESSING_RIGHTS_ESTABLISHED"
+    },
+    {
+      "ID": "RUN-006",
+      "record_kind": "PROSPECTIVE_E1_PREPARATION",
+      "directory": "experiments/runs/run-006",
+      "ENGINEERING_MODE": "E1",
+      "status": "PREPARED_NOT_EXECUTED",
+      "preparation_outcome": "PGOP1_RUN006_PREPARED_FOR_OWNER_EXECUTION",
+      "candidate_commit": "cc3f2b88bc31ff2c6e18dcdae482088ba71b9260",
+      "candidate_tree": "52719e085a3f3d821548fe6edd45ff73c279fa35",
+      "execution_code_commit": "NOT_EXECUTED",
+      "execution_code_tree": "NOT_EXECUTED",
+      "owner_launch_authorization": "NOT_GRANTED",
+      "operational_execution_freeze": "NOT_ISSUED",
+      "attempts": [],
+      "public_evidence_path": "experiments/runs/run-006",
+      "publication_status": "PREPARED_LOCAL_NOT_REMOTE_VERIFIED"
     }
   ],
   "pilots": [

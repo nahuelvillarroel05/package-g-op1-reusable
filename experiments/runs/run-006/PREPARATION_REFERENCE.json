@@ -1,0 +1,49 @@
+{
+  "schema": "pgop1.run006.public-preparation-reference.v1",
+  "RUN_ID": "RUN-006",
+  "ENGINEERING_MODE": "E1",
+  "status": "PREPARED_NOT_EXECUTED",
+  "preparation_outcome": "PGOP1_RUN006_PREPARED_FOR_OWNER_EXECUTION",
+  "execution": "NOT_EXECUTED",
+  "owner_launch_authorization": "NOT_GRANTED",
+  "operational_execution_freeze": "NOT_ISSUED",
+  "candidate_commit": "cc3f2b88bc31ff2c6e18dcdae482088ba71b9260",
+  "candidate_tree": "52719e085a3f3d821548fe6edd45ff73c279fa35",
+  "provenance_status": "PUBLISHER_DECLARED_NOT_AUTHENTICATED",
+  "reproducibility_class": "PRIVATE_SOURCE_DEPENDENCIES",
+  "artifacts": [
+    {
+      "artifact": "BFCL_RESULT_LICENSE_VERIFICATION.json",
+      "sha256": "00c740da628ecf0930df6944feae62f96a73d39e840543da797c278ab74cfdd6",
+      "bytes": 93326
+    },
+    {
+      "artifact": "BFCL_OUTPUT_INTEGRITY_VERIFICATION.json",
+      "sha256": "0a3fa81f64a96b9b18ccf0c7dc63cdf205a826b525be990f8cc88d308922d767",
+      "bytes": 83398
+    },
+    {
+      "artifact": "RUN006_AUTHENTIC_OUTPUT_ADMISSION.json",
+      "sha256": "0693ce1135dcc1c260ca3d3a6a9aabedeec6f3e0082a1a834aa6f3e85bb7d4ad",
+      "bytes": 70685
+    },
+    {
+      "artifact": "RUN006_SELECTION_MANIFEST.json",
+      "sha256": "2f80822689eee30ab927ba8dc2018747f2e9738c5019c5496e5e87f878bddcbd",
+      "bytes": 156210
+    },
+    {
+      "artifact": "RUN006_E1_CONTRACT.md",
+      "sha256": "356bc86c329987b68a0ae4c5acfa6331943b97b558fdd3257ffdfd68d7ac5e4f",
+      "bytes": 6982
+    },
+    {
+      "artifact": "RUN006_ENGINEERING_TEST_RESULTS.json",
+      "sha256": "b05fb51c8b430db852e4d26907cc3d49d9865c628024b3afa56520e013bdc5a9",
+      "bytes": 2713
+    }
+  ],
+  "original_bodies_published": 0,
+  "authentic_attempts": 0,
+  "semantic_audits": 0
+}
