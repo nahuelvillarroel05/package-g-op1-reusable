@@ -1,0 +1,64 @@
+{
+  "defects": [
+    {
+      "ID": "F01",
+      "SOURCE_RUN": "RUN-006",
+      "CLASS": "AUDIT_DEFECT",
+      "COMPONENT": "runtime/candidate/run_framework/predicates.py::build_audit_payload",
+      "SYMPTOM": "120 unmapped NOT_EVALUATED reasons claim missing authentic output despite bound output present",
+      "EVIDENCE": "runs/run-006/RUN_EXECUTION_SUMMARY.json and actual Engine own-result payloads",
+      "REPRODUCER": "tests/test_predicate_audit_reason_regression.py",
+      "CAUSE": "definition_disposition missing-output reasons retained when changing to audited output profile",
+      "SEVERITY": "MEDIUM",
+      "CORRECTION": "Reason-only correction for unmapped audited predicates; keep decisions/applicability and DEFINITION_ONLY unchanged",
+      "STATUS": "PATCH_VERIFIED_IMPROVEMENT_OBSERVED_RUN007",
+      "PATCH_COMMIT": "1c0953fe4b813c4fc7987dd1da806582bbed02e2"
+    },
+    {
+      "ID": "F02",
+      "SOURCE_RUN": "RUN-006",
+      "CLASS": "CONTRACT_DEFECT",
+      "COMPONENT": "runtime/candidate/run_framework/run005.py::run",
+      "SYMPTOM": "Configured maximum5 per shard did not produce four actual bounded execution batches; direct loop over20",
+      "EVIDENCE": "audits/sol-xhigh/RUN006_INDEPENDENT_TECHNICAL_AUDIT.md",
+      "REPRODUCER": "Source inspection plus tests/test_evolution_batch_boundaries.py; baseline fails absent batch controller",
+      "CAUSE": "Planner metadata not used by execution loop",
+      "SEVERITY": "HIGH_CONTRACT_FIDELITY",
+      "CORRECTION": "Selection-order chunks with immutable guarded start/terminal observations before next batch; one shared V2 campaign budget",
+      "STATUS": "PATCH_VERIFIED_IMPROVEMENT_OBSERVED_RUN007",
+      "PATCH_COMMIT": "1c0953fe4b813c4fc7987dd1da806582bbed02e2"
+    },
+    {
+      "ID": "C01",
+      "SOURCE_RUN": "RUN-006_PRELAUNCH",
+      "CLASS": "OBSERVABILITY_LIMITATION",
+      "COMPONENT": "campaign orchestration",
+      "SYMPTOM": "Driver freeze preceded worker completion; supervisor rejected hash drift before child creation",
+      "EVIDENCE": "runs/run-006/operational/LAUNCH_REJECTION.json",
+      "REPRODUCER": "Observed rejected launch; no replay",
+      "CAUSE": "Parent concurrency sequencing mistake",
+      "SEVERITY": "LOW_CONTAINED",
+      "CORRECTION": "Wait for worker stop; preserve rejected freeze; create operational-002 fresh ID and exact final binding check",
+      "STATUS": "CONTAINED_NO_PRODUCT_PATCH"
+    },
+    {
+      "ID": "F03",
+      "SOURCE_RUN": "RUN-008",
+      "CLASS": "FUNCTIONAL_DEFECT",
+      "COMPONENT": "runtime/candidate/run_framework/read_scope.py::_audit",
+      "SYMPTOM": "Integer captured Git pipe descriptors treated as unclassifiable file paths; preflight fails before units",
+      "EVIDENCE": "audits/sol-xhigh/RUN008_INDEPENDENT_TECHNICAL_AUDIT.md",
+      "REPRODUCER": "engineering/regressions/read-scope-fd/RED_LOG.txt",
+      "CAUSE": "Non-path open target denial includes subprocess pipe fdopen; fstat independently identifies FIFO",
+      "SEVERITY": "HIGH_LAUNCH_BLOCKER",
+      "CORRECTION": "Permit only fstat-proven IPC descriptors; regular/unknown descriptors and unselected named paths remain denied",
+      "STATUS": "PATCH_VERIFIED_RUN009_INTEGRATION_OBSERVED",
+      "REGRESSION": "10scope testsPASS;36related testsPASS; actual RUN0094definitions/3syntheticdenials/4freshrecovered; independentSolresultaudit complete",
+      "PATCH_COMMIT": "d2771bf226814582ef5a8aa18fac31bafdbabbbb"
+    }
+  ],
+  "integration_requirement": "RUN007 exact identity extension is prospective integration, not RUN006 product failure",
+  "incidents": [
+    "integrity/INCIDENT_DOC_READ_001.json"
+  ]
+}

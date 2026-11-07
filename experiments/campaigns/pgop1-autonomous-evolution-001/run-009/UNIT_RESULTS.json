@@ -1,0 +1,269 @@
+{
+  "units": [
+    {
+      "unit_id": "mcpmark_verified:029800afe7e3a0c574d2b0988b5891201a83f7ac387c85e1add3a66a34675730",
+      "own_result_sha256": "63f8909bcac514168102ce0eeef91ca64e1ab2e982d5e8d3f3e28f062bf5e91a",
+      "audit_result": {
+        "abstentions": [],
+        "audit_disposition": "NOT_AUDITED_MISSING_AGENT_OUTPUT",
+        "authentic_output_present": false,
+        "missing_evidence": [
+          "authentic_output"
+        ],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "No authentic output is bound"
+          }
+        ],
+        "processing_disposition": "TASK_DEFINITION_PROCESSED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Missing-output disposition; not a justified semantic abstention by default",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "mcpmark_verified:02f6432ba47c4b55adf787dffabac479e4800abef69211a650bac5e35b442ddb",
+      "own_result_sha256": "63f8909bcac514168102ce0eeef91ca64e1ab2e982d5e8d3f3e28f062bf5e91a",
+      "audit_result": {
+        "abstentions": [],
+        "audit_disposition": "NOT_AUDITED_MISSING_AGENT_OUTPUT",
+        "authentic_output_present": false,
+        "missing_evidence": [
+          "authentic_output"
+        ],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "No authentic output is bound"
+          }
+        ],
+        "processing_disposition": "TASK_DEFINITION_PROCESSED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Missing-output disposition; not a justified semantic abstention by default",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "terminal_bench_2:05057709b531b6904e17f49f9115d123944dd41f93fdcf7b3e161b50a9f39b4d",
+      "own_result_sha256": "63f8909bcac514168102ce0eeef91ca64e1ab2e982d5e8d3f3e28f062bf5e91a",
+      "audit_result": {
+        "abstentions": [],
+        "audit_disposition": "NOT_AUDITED_MISSING_AGENT_OUTPUT",
+        "authentic_output_present": false,
+        "missing_evidence": [
+          "authentic_output"
+        ],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "No authentic output is bound"
+          }
+        ],
+        "processing_disposition": "TASK_DEFINITION_PROCESSED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Missing-output disposition; not a justified semantic abstention by default",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "terminal_bench_2:070b82555096248f45280e0f575c1b39e24f1268d4704dd2a993380714f30cd9",
+      "own_result_sha256": "63f8909bcac514168102ce0eeef91ca64e1ab2e982d5e8d3f3e28f062bf5e91a",
+      "audit_result": {
+        "abstentions": [],
+        "audit_disposition": "NOT_AUDITED_MISSING_AGENT_OUTPUT",
+        "authentic_output_present": false,
+        "missing_evidence": [
+          "authentic_output"
+        ],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "No authentic output is bound"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "No authentic output is bound"
+          }
+        ],
+        "processing_disposition": "TASK_DEFINITION_PROCESSED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Missing-output disposition; not a justified semantic abstention by default",
+        "semantic_audits_completed": 0
+      }
+    }
+  ],
+  "scope": "Own source-free structural observations; original task/output bodies withheld"
+}

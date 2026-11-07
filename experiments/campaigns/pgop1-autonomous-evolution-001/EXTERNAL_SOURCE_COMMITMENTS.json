@@ -1,0 +1,450 @@
+{
+  "BFCL_source_rows": [
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_0",
+      "task_id": "simple_python_0",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "9208f93fb0939c43255773e90d5f15a6362f5701891cbcb917a505195d89c5e4"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_0",
+      "task_id": "simple_python_0",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "21d4f1ee2c1aac57eb65c0939e86353d6dce2cc525ed914ee64b4e1bb7f15662"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_1",
+      "task_id": "simple_python_1",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "739960564ff69baf466c8cf9179ae8d5b7600764594e1e50d61e54b75507b7eb"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_1",
+      "task_id": "simple_python_1",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "4a5a9c41ea7aae43251ffcb3998ff4a5f27794d4b32bfb92dd0a195c13be958b"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_2",
+      "task_id": "simple_python_2",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "40d7d60298df0c9d9ab8efb6d55912192f439ae587bfd963b892ab6a42a07e88"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_2",
+      "task_id": "simple_python_2",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "4b8721a96d18495e5260c71415a5344913c96d957aa95461ed026257b5ade0c4"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_3",
+      "task_id": "simple_python_3",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "8c87664b51d7e84011f2b4110fe7ac727950853517640ca831aa3d148ccee8ad"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_3",
+      "task_id": "simple_python_3",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "66b80bae7356f6a2f442e720e8b6ef7d59491b633e12f72e99fca5529d54cab4"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_4",
+      "task_id": "simple_python_4",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "f84639696e2a4502c752111240d2a4779cdedd6cc42444a70cc9558f4e15ca04"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_4",
+      "task_id": "simple_python_4",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "6c998e6c414a5ceb8939e423f2501e2c180e426ff2b8cc4490cdcc6902f1773d"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_5",
+      "task_id": "simple_python_5",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "1dd20f093cc838692b758ea6d5d789ecbf36daa8ee7c5a224e4309673ca71342"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_5",
+      "task_id": "simple_python_5",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "1d4f40785a85cb3f757556a97daffbc5e4f44bc48f2ba795210e21848d477425"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_6",
+      "task_id": "simple_python_6",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "67b9068637377002699f4e147f06046450fd99e46e1c4bfe0a7e7e233d9e1fa2"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_6",
+      "task_id": "simple_python_6",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "a3c28fb033fcbab823ab8ce5401a02fdd5bdf66dff8e34098068ba9ed0fb6eca"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_7",
+      "task_id": "simple_python_7",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "6ab7d42c2fef23dd1978e7582c700cc17a79c297ce84f976834382701d9882ae"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_7",
+      "task_id": "simple_python_7",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "a6cf5b0f5a1b61ecc561d7585538445107e38735334b80f56c26af19ef3368cf"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_8",
+      "task_id": "simple_python_8",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "b5f465bff196156af5bba76120df5ba76ddf28e406cef0581526a5475a0e9f07"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_8",
+      "task_id": "simple_python_8",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "c4eafe7ad71328c30f7a2cde1204e7b6bd7fec9c1f62bb6f16898e201ecae24f"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_9",
+      "task_id": "simple_python_9",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "9d94d02498d097aae6b2361d0c7ff87acfd6552a9b90242855c899cf2d56e3f6"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_9",
+      "task_id": "simple_python_9",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "eeed9482d6fb2a8c2a1430f50bb5ecfbbb1e01cb8307ae56384ea9ed5b462259"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_10",
+      "task_id": "simple_python_10",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "a326b3b0e3224f3b863db7182930a21d7f25a39db379c1ccd58a4e4bf3bef3ac"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_10",
+      "task_id": "simple_python_10",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "4ea6c33c3fbc95cc0657b5e09264994a5ea2cbc287886612a105a63db86eceee"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_11",
+      "task_id": "simple_python_11",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "07f775f95825cd042729c5e19947487ea9f79493573a8c923ff94524552d5e80"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_11",
+      "task_id": "simple_python_11",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "ec2da87994535dc482849ab1e3cbf9c3928bd7725806cb3f2bf97f93cf7e2d7c"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_12",
+      "task_id": "simple_python_12",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "309a721a941dc5a2fd1107fccf1e25de3bb611db9ee298be7ff5d64c24dc11ac"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_12",
+      "task_id": "simple_python_12",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "56e27c1ec75ffd5723b0f843cf3f1b4a4eb11d739a7d339e18facfa0f33871f0"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_13",
+      "task_id": "simple_python_13",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "48627602d2cc8a0aa655d7461d3a191efc9c4a4585e663d32f328a1eaca6a0d8"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_13",
+      "task_id": "simple_python_13",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "5ca542b5502468dd5b5eeec65c2968f371147e0358ae24e985ee10d41b845f0f"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_14",
+      "task_id": "simple_python_14",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "0cb6d3f4ee66310401dfeff97e6970307efdf75e930031fcac83ecbc68dbd54a"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_14",
+      "task_id": "simple_python_14",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "26174d014e6e7460cc0fb98fde8daedb4ef890da1a74985d132cae3c9593de2c"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_15",
+      "task_id": "simple_python_15",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "9473a755de56dc587f6649cfd9561bbcd5728724ace6adb3688c094c9d80100d"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_15",
+      "task_id": "simple_python_15",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "af7bae7fda80ad61921278dba82ab984a102910308478fb309aef7ab3df266b2"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_16",
+      "task_id": "simple_python_16",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "f252bebf4a28e853140837fdca51e51b4629c0ab1dcec2cd1f00a6ea1309ab3e"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_16",
+      "task_id": "simple_python_16",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "96eeee41ad95899c000dc5145d9c9d6ef310097b18ab9e263d6592536f76c7cf"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_17",
+      "task_id": "simple_python_17",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "b9a90522a80270f3c1cc8517b512b5133de656d3f71c6d8143c1c87b2b035d39"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_17",
+      "task_id": "simple_python_17",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "bfb9f1e2695fe30a4bacc098937c19a54c0cbbd949ee2027a6fb035bb754c842"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_18",
+      "task_id": "simple_python_18",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "654652b647f8d86f7e419d0084141ccd8bc6963064fdcd4da184f28f8a679854"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_18",
+      "task_id": "simple_python_18",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "fafcdabd6f7700ab72f2d6b210bc0c28effebc1dd950e8df07f5e95397cc2222"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_19",
+      "task_id": "simple_python_19",
+      "role": "task",
+      "repository": "ShishirPatil/gorilla",
+      "commit": "58f57e9124ea981403792dd51e00a6577e621fae",
+      "repo_path": "berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v4_simple_python.json",
+      "source_blob_sha1": "356a0db61e54eb1d92d8e10d014463cf2eb513cc",
+      "row_sha256": "36a2c802dc34408acebb342088bb7fa428bc61be4eb47018e4041cf39a1378d6"
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_19",
+      "task_id": "simple_python_19",
+      "role": "response",
+      "repository": "HuanzhiMao/BFCL-Result",
+      "commit": "cadd76a8dc62984e7bf15ecaf358f070bae745cc",
+      "repo_path": "2025-12-16/result/tiiuae_Falcon3-1B-Instruct-FC/non_live/BFCL_v4_simple_python_result.json",
+      "source_blob_sha1": "85081634726fbbf939df3dc6f20ff61612b66da1",
+      "row_sha256": "4616d282a53e43b3f28482e173288741dd42e3d0b9dd5316935e96c2df510b98"
+    }
+  ],
+  "nonBFCL_primary_definitions": [
+    {
+      "unit_id": "mcpmark_verified:029800afe7e3a0c574d2b0988b5891201a83f7ac387c85e1add3a66a34675730",
+      "task_id": "github/standard/claude-code/claude_collaboration_analysis",
+      "family": "mcpmark_verified",
+      "source_revision": "cd45b7f57923b9b3985467f5139927575f83141c",
+      "repository_relative_locator": "mcpmark/tasks/github/standard/claude-code/claude_collaboration_analysis/meta.json",
+      "source_sha256": "c3982844a6d8555a0a075c138ee8ea914c0451549bfaa2373b93262f7818c4aa",
+      "source_kind": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+      "redistribution": "ORIGINAL_BODY_WITHHELD"
+    },
+    {
+      "unit_id": "mcpmark_verified:02f6432ba47c4b55adf787dffabac479e4800abef69211a650bac5e35b442ddb",
+      "task_id": "postgres/standard/dvdrental/film_inventory_management",
+      "family": "mcpmark_verified",
+      "source_revision": "cd45b7f57923b9b3985467f5139927575f83141c",
+      "repository_relative_locator": "mcpmark/tasks/postgres/standard/dvdrental/film_inventory_management/meta.json",
+      "source_sha256": "d15c1b72cfa15530c8ca7e3fcc1a2ade42cfb7f88fa0192c7641150f4beeb141",
+      "source_kind": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+      "redistribution": "ORIGINAL_BODY_WITHHELD"
+    },
+    {
+      "unit_id": "terminal_bench_2:05057709b531b6904e17f49f9115d123944dd41f93fdcf7b3e161b50a9f39b4d",
+      "task_id": "filter-js-from-html",
+      "family": "terminal_bench_2",
+      "source_revision": "2fd12b88aafdd04a52c298e3940bcb189f9766d6",
+      "repository_relative_locator": "terminal-bench-2/filter-js-from-html/task.toml",
+      "source_sha256": "61ce21be4baa704e4b667235cf70789bdd4f794ec647175bf573cb68b84dd415",
+      "source_kind": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+      "redistribution": "ORIGINAL_BODY_WITHHELD"
+    },
+    {
+      "unit_id": "terminal_bench_2:070b82555096248f45280e0f575c1b39e24f1268d4704dd2a993380714f30cd9",
+      "task_id": "fix-code-vulnerability",
+      "family": "terminal_bench_2",
+      "source_revision": "2fd12b88aafdd04a52c298e3940bcb189f9766d6",
+      "repository_relative_locator": "terminal-bench-2/fix-code-vulnerability/task.toml",
+      "source_sha256": "9aa2bd14ce9408289d199d0608bc3fa65b8b5e23374c9641020de62197dbf1e2",
+      "source_kind": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+      "redistribution": "ORIGINAL_BODY_WITHHELD"
+    }
+  ],
+  "bodies_included": false,
+  "independent_custody": "NOT_PROVEN",
+  "producer": "PUBLISHER_DECLARED_NOT_AUTHENTICATED",
+  "reproduction": "Acquire exact covered external revisions subject to applicable rights, reconstruct selected row bytes, and validate hashes. This package is not standalone public replay."
+}

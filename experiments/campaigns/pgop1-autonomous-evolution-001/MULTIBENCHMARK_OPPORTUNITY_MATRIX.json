@@ -1,0 +1,88 @@
+{
+  "schema": "pgop1.campaign.multibenchmark-opportunity-matrix.v1",
+  "campaign_id": "PGOP1_AUTONOMOUS_EVOLUTION_CAMPAIGN_001",
+  "mode": "REVIEW_ONLY_METADATA",
+  "decision_scope": "Prospective six-family opportunity analysis; no new RUN, source-body read, original task execution, output admission, or verifier invocation",
+  "global_deadline_utc": "2026-11-07T13:48:10Z",
+  "no_new_run_after_utc": "2026-11-07T11:48:10Z",
+  "current_admission": "RUN005 selected 55 candidate outputs across BFCL and SWE-bench but admitted 0; none of four other families had a selected output. Subsequent RUN006/RUN007 BFCL authority is exact-scope and does not grant other-family rights.",
+  "authentic_admissible_non_bfcl_outputs_established": 0,
+  "capability_matrix_reference": "Engineering/Active_Candidate/repo/experiments/CAPABILITY_EVALUATION_MATRIX.json",
+  "shared_evidence_references": [
+    "Engineering/PGOP1_RUN005_ENGINEERING_EVOLUTION_001/RUN005_AUTHENTIC_OUTPUT_ADMISSION.json",
+    "Engineering/PGOP1_RUN005_ENGINEERING_EVOLUTION_001/selection/ADMISSION_VALIDATION.json",
+    "Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/RUN004_EXECUTION_READINESS_BY_FAMILY.json",
+    "Engineering/PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001/SIX_FAMILY_BEFORE_AFTER_MATRIX.json"
+  ],
+  "families": [
+    {
+      "family": "BFCL",
+      "historical_population_metadata": "4696 selected task definitions; prior full-scale catalog includes 776653 archived model-response rows, with reserve exclusions and binding limitations",
+      "current_output_permission": "RUN006/RUN007 exact 20-pair BFCL prefix admitted under their own frozen rights and attempts; no broader BFCL grant inferred",
+      "compatibility": "RUN006/RUN007 selected simple_python_0..19 structurally comparable only within their exact contracts; wider categories and producer revisions not qualified by that comparison",
+      "candidate_capabilities": ["IDENTITY_BINDING", "SOURCE_PROVENANCE", "EVIDENCE_INTEGRITY", "OPERATIONAL_GATE", "PERSIST_RECOVER"],
+      "candidate_question": "Can exact metadata bindings and persisted receipt membership be rejected on controlled mismatch without any new authentic row read?",
+      "suggested_next_experiment": "Distinct disposable metadata/fixture E1 test only if a specific untested failure mode and independent comparator are preregistered; RUN007 already covers the current BFCL defect comparison.",
+      "limitations": ["No new semantic label or official BFCL score", "Published model identity and original generation revision remain unverified", "No broad source-body permission from this matrix"],
+      "evidence_references": ["Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/BFCL_BINDING_RESULTS.json", "Engineering/PGOP1_AUTONOMOUS_EVOLUTION_CAMPAIGN_001/runs/run-006/RUN_EXECUTION_SUMMARY.json"]
+    },
+    {
+      "family": "SWE-bench",
+      "historical_population_metadata": "2819 distinct tasks across overlapping splits; RUN005 selected 15 archived development outputs, admitted 0",
+      "current_output_permission": "RIGHTS_UNRESOLVED for separate trajectory/report/patch/test-log archive; dataset and harness MIT terms do not grant archive processing rights",
+      "compatibility": "260 historical prediction observations and 266 reconstructible audit requests do not establish compatible authentic claim/evaluator pairs; 61 statement occurrences had 0 comparable semantic claims in prior full-scale analysis",
+      "candidate_capabilities": ["CLAIM_RECORD_AUDIT", "SUFFICIENCY_ABSTENTION", "IDENTITY_BINDING", "SOURCE_PROVENANCE", "EVIDENCE_INTEGRITY"],
+      "candidate_question": "Can a metadata-only gate reject a mismatched instance, missing claim, or unlicensed output before any archive body read, while preserving UNKNOWN?",
+      "suggested_next_experiment": "Use independently authored disposable claim/evaluator fixtures and existing first-party selection metadata for a denied-admission/identity control. Authentic claim-record auditing waits for separately established archive rights and exact claim-to-evaluator compatibility.",
+      "limitations": ["No authentic SWE output currently admitted", "Parser SUPPORTED is not semantic correctness", "No fresh official evaluator or resolved-issue claim"],
+      "evidence_references": ["Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/SWE_EVIDENCE_ANALYSIS.json", "Engineering/PGOP1_RUN005_ENGINEERING_EVOLUTION_001/RUN005_AUTHENTIC_OUTPUT_ADMISSION.json"]
+    },
+    {
+      "family": "MCPMark",
+      "historical_population_metadata": "127 tasks; 762 logical result identities and 759 trajectory references; 729 path bindings without known missing/run-label issue, 3 missing trajectories and 30 ambiguous second-run bindings",
+      "current_output_permission": "RIGHTS_AND_COMPATIBILITY_UNRESOLVED; RUN005 selected and admitted 0",
+      "compatibility": "No authenticated task/run/evaluator binding or immutable final service state; multiple artifact representations are not extra executions",
+      "candidate_capabilities": ["IDENTITY_BINDING", "SOURCE_PROVENANCE", "EVIDENCE_INTEGRITY", "OPERATIONAL_GATE", "PERSIST_RECOVER"],
+      "candidate_question": "Does a metadata-only binding comparator detect missing trajectory links, run-label ambiguity and duplicate representations without treating them as independent results?",
+      "suggested_next_experiment": "Prospective inert metadata/fixture identity and membership control using frozen expected mappings, after exact rights/read-scope review. No trajectory payload or service execution until output rights and verifier compatibility are established.",
+      "limitations": ["Published path is not authenticated execution", "No service-state semantic outcome", "Current catalog provides structural metadata opportunities only"],
+      "evidence_references": ["Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/MCPMARK_BINDING_RESULTS.json", "Engineering/PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001/mcpmark/MCPMARK_STRUCTURAL_RESULTS.json"]
+    },
+    {
+      "family": "Terminal-Bench",
+      "historical_population_metadata": "89 tasks, 445 published trials and 1802 catalog artifacts; producer and selected task revisions differ",
+      "current_output_permission": "RIGHTS_AND_COMPATIBILITY_UNRESOLVED; RUN005 selected and admitted 0",
+      "compatibility": "All 89 task manifests differ across revisions; 4 materially changed contracts and 85 cross-revision equivalences UNKNOWN; compatible Harbor runtime unavailable",
+      "candidate_capabilities": ["IDENTITY_BINDING", "SOURCE_PROVENANCE", "EVIDENCE_INTEGRITY", "OPERATIONAL_GATE"],
+      "candidate_question": "Can a version-binding gate retain all 85 UNKNOWN equivalences and reject the 4 known contract changes without inferring trial validity from matching IDs?",
+      "suggested_next_experiment": "Preregister a metadata-only cross-revision identity/UNKNOWN-preservation test with exact manifest commitments and synthetic mismatch cases; authentic trial auditing waits for output rights and compatible producer-task/runtime evidence.",
+      "limitations": ["No task/container/evaluator execution", "Matching IDs or some identical blobs cannot prove cross-revision equivalence", "No authentic trial output admitted"],
+      "evidence_references": ["Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/TERMINAL_VERSION_ANALYSIS.json", "Engineering/PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001/terminal_bench/TERMINAL_FULL_SCALE_RESULTS.json"]
+    },
+    {
+      "family": "SWE-bench Pro V2",
+      "historical_population_metadata": "642 public V2 task descriptors; prior source metadata hash-verified 6427 release files",
+      "current_output_permission": "No compatible authentic V2 agent output verified in reviewed catalog; RUN005 selected and admitted 0",
+      "compatibility": "Exact V2 run membership, compatible per-task evaluator records and isolated official runtime are missing",
+      "candidate_capabilities": ["SOURCE_PROVENANCE", "IDENTITY_BINDING", "EVIDENCE_INTEGRITY", "OPERATIONAL_GATE"],
+      "candidate_question": "Can a metadata gate prove task-definition membership and refuse a version-mismatched or absent output without inventing an agent audit?",
+      "suggested_next_experiment": "Only a distinct first-party metadata or disposable-fixture gate is currently plausible; wait for a lawful compatible V2 output and run manifest before authentic auditing.",
+      "limitations": ["0 compatible outputs found within verified scope is not a universal absence claim", "Task solutions must not substitute for agent outputs", "No semantic verdict"],
+      "evidence_references": ["Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/SWEBENCH_PRO_V2_SOURCE_RESEARCH.json", "Engineering/PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001/swebench_pro_v2/SWEBENCH_PRO_V2_RESULTS.json"]
+    },
+    {
+      "family": "tau2-bench",
+      "historical_population_metadata": "150 base tasks and 900 localized variants in 2.0.0:text-v1; English metadata view overlaps, not an additional 150 tasks",
+      "current_output_permission": "No compatible 2.0.0:text-v1 authentic submission established in reviewed catalog; RUN005 selected and admitted 0",
+      "compatibility": "Available older public results are version 1.0.1; required initial/final state, action, communication and judge dependencies are not bound for 2.0.0:text-v1",
+      "candidate_capabilities": ["IDENTITY_BINDING", "SOURCE_PROVENANCE", "EVIDENCE_INTEGRITY", "OPERATIONAL_GATE"],
+      "candidate_question": "Can a version/language membership gate reject older or unknown-version trajectories and avoid double-counting the overlapping English view?",
+      "suggested_next_experiment": "Metadata-only, disposable-fixture version and overlap control if exact expected mappings and a meaningful comparator are frozen; no trajectory or judge evaluation until a compatible authorized 2.0.0:text-v1 submission exists.",
+      "limitations": ["No compatible authentic output in reviewed scope", "No judge-service substitute", "No state/action or task-success inference from definitions"],
+      "evidence_references": ["Engineering/PGOP1_SIX_FAMILY_EVIDENCE_CLOSURE_001/TAU2_TRAJECTORY_RESEARCH.json", "Engineering/PGOP1_SIX_FAMILY_NIGHTLY_CONVERGENCE_001/tau2/TAU2_FULL_SCALE_RESULTS.json"]
+    }
+  ],
+  "decision": "Six-family breadth can be pursued through distinct identity/provenance/integrity/gating questions on permitted metadata or disposable fixtures. No currently evidenced non-BFCL authentic-output RUN is admissible. Choose a next experiment only on a named, prospective contract with exact rights, comparator, freeze, fresh attempt, closure time and no new RUN after the fixed cutoff; do not use the interrupted Astra review as findings.",
+  "astra_partial_review": "INTERRUPTED_BEFORE_FINDINGS_INCORPORATED; QUARANTINED_FOR_ENGINEERING_DECISIONS",
+  "preserved_limits": ["RUN006 historical result unchanged", "RUN007 BFCL defect comparison already closed within exact scope", "GENERAL_SEMANTIC_TRUTH not supported", "INDEPENDENT_PRECISION and INDEPENDENT_RECALL NOT_COMPUTABLE", "I0-I6 FORMALLY_FROZEN", "I7 INCOMPLETE", "FORMAL_I7 NOT_COMPLETED", "PHYSICAL_C2 DEFERRED_NOT_WAIVED"]
+}

@@ -1,0 +1,139 @@
+{
+  "population": "Identical20 task/output pairs; no new sources or semantic references",
+  "unit_comparisons": [
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_0",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_1",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_10",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_11",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_12",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_13",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_14",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_15",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_16",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_17",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_18",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_19",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_2",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_3",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_4",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_5",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_6",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_7",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_8",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_9",
+      "same_structural_status_decisions_applicability_abstentions": true,
+      "old_stale_reasons": 6,
+      "new_stale_reasons": 0
+    }
+  ],
+  "unchanged_decision_slots": 160,
+  "stale_reasons_before": 120,
+  "stale_reasons_after": 0,
+  "explicit_closed_batches_before": 0,
+  "explicit_closed_batches_after": 4,
+  "performance": {
+    "run006_seconds": 27.51431430000048,
+    "run007_seconds": 34.931999299999006,
+    "conclusion": "RUN007 longer in these observations; uncontrolled workload/host observations, no performance improvement established"
+  },
+  "DIRECTLY_COMPARABLE_IMPROVEMENT": "Truthful explanations on120 unchanged NOT_EVALUATED slots",
+  "NEW_CAPABILITY_OBSERVATION": "Four guarded closed execution batches with8 separately hash-bound observations",
+  "SEMANTIC_CAPABILITY_IMPROVEMENT": "NOT_DEMONSTRATED",
+  "BASIC_VERIFIER_ADDED_VALUE": "NOT_ESTABLISHED"
+}

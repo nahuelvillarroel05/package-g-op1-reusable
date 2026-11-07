@@ -1,0 +1,171 @@
+{
+  "permanent_matrix_entries": 16,
+  "families_considered": 6,
+  "families_with_authentic_source_processing": [
+    "BFCL_V4",
+    "MCPMark_Verified_primary_definitions",
+    "Terminal_Bench2_primary_definitions"
+  ],
+  "semantic_audits": 0,
+  "coverage_percentage": "NOT_COMPUTED_MIXED_CAPABILITY_SCOPE",
+  "capabilities": [
+    {
+      "CAPABILITY_ID": "IDENTITY_BINDING",
+      "name": "Exact unit/source identity",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007",
+        "RUN-009"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "SOURCE_PROVENANCE",
+      "name": "Byte-bound source and graph attribution",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007",
+        "RUN-009"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "EVIDENCE_INTEGRITY",
+      "name": "Tamper and membership verification",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007",
+        "RUN-009"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "OPERATIONAL_GATE",
+      "name": "Disabled dispatch and scoped launch gating",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007",
+        "RUN-009"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "CAUSAL_RECORD_GRAPH",
+      "name": "Recorded causal edges and reconstruction",
+      "layer": "FROZEN_CORE",
+      "campaign_observation": "NOT_EXERCISED_BY_AUTHENTIC_CAMPAIGN_UNITS",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "PERSIST_RECOVER",
+      "name": "Immutable evidence and disposable-index recovery",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007",
+        "RUN-009"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "BFCL_STRUCTURE",
+      "name": "Task-relative function-call structural validation",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "CLAIM_RECORD_AUDIT",
+      "name": "Explicit completion claim versus local evaluator record",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "NOT_EXERCISED_BY_AUTHENTIC_CAMPAIGN_UNITS",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "SUFFICIENCY_ABSTENTION",
+      "name": "Insufficiency and unsupported-predicate handling",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "COMPONENT_COMPOSITION",
+      "name": "Adapter/caller/predicate/Engine/checkpoint integration",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "OBSERVED_WITH_EXACT_SCOPE",
+      "runs": [
+        "RUN-006",
+        "RUN-007",
+        "RUN-009"
+      ],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "ADVERSARIAL_RESILIENCE",
+      "name": "Bounded manipulation and untrusted-input resistance",
+      "layer": "EXPERIMENTAL",
+      "campaign_observation": "SYNTHETIC_PATH_DENIAL_CONTROLS_ONLY_NOT_GENERAL_RESILIENCE",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "FORMAL_IDENTITY_STORE",
+      "name": "Frozen identity, schemas, append-only evidence primitives",
+      "layer": "FROZEN_CORE",
+      "campaign_observation": "NOT_EXERCISED_BY_AUTHENTIC_CAMPAIGN_UNITS",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "FORMAL_SESSION_CONTROL",
+      "name": "Frozen bounded synthetic session lifecycle",
+      "layer": "FROZEN_CORE",
+      "campaign_observation": "NOT_EXERCISED_BY_AUTHENTIC_CAMPAIGN_UNITS",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "GENERAL_SEMANTIC_TRUTH",
+      "name": "General independent claim correctness",
+      "layer": "UNSUPPORTED",
+      "campaign_observation": "NOT_SUPPORTED_NOT_DEMONSTRATED",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "FORMAL_ATTRIBUTION",
+      "name": "Frozen source-bound attribution ledger",
+      "layer": "FROZEN_CORE",
+      "campaign_observation": "NOT_EXERCISED_BY_AUTHENTIC_CAMPAIGN_UNITS",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    },
+    {
+      "CAPABILITY_ID": "DATASET_COMPILATION",
+      "name": "Frozen permission-aware deterministic derived datasets",
+      "layer": "FROZEN_CORE",
+      "campaign_observation": "NOT_EXERCISED_BY_AUTHENTIC_CAMPAIGN_UNITS",
+      "runs": [],
+      "limits": "Source hashes/declared bindings are not producer authentication or independent custody; recovery and controls only in documented scope"
+    }
+  ]
+}

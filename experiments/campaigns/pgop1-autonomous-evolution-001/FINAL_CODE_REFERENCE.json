@@ -1,0 +1,37 @@
+{
+  "FIRST_CANDIDATE": {
+    "commit": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+    "tree": "6c56958efd7d17e61b9fc941058c2688e0ba755e"
+  },
+  "FINAL_CANDIDATE": {
+    "commit": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+    "tree": "6388fec69981db5bbf7af89c72dbc08aa1552c20"
+  },
+  "DOCUMENTARY_BASE": "e2f7d18ea045c2401029767d8c1b735aeb3c08a8",
+  "branch": "experiment",
+  "REMOTE_PUBLICATION": "PENDING_OWNER_MANUAL_PUSH",
+  "formal_core": "UNCHANGED",
+  "sources": "Private exact40 row dependencies external; no standalone public replay",
+  "CANDIDATE_CHAIN": [
+    {
+      "RUN_ID": "RUN-006",
+      "commit": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+      "tree": "6c56958efd7d17e61b9fc941058c2688e0ba755e"
+    },
+    {
+      "RUN_ID": "RUN-007",
+      "commit": "1c0953fe4b813c4fc7987dd1da806582bbed02e2",
+      "tree": "cf35bda4920c5024eca1121bb106e41c386202bb"
+    },
+    {
+      "RUN_ID": "RUN-008",
+      "commit": "96b210ff0473fd91270d5a68a55d7f6ea0cfb775",
+      "tree": "e06c4426ad4dfd67495809329906cd2058800316"
+    },
+    {
+      "RUN_ID": "RUN-009",
+      "commit": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+      "tree": "6388fec69981db5bbf7af89c72dbc08aa1552c20"
+    }
+  ]
+}

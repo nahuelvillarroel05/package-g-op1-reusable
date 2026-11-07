@@ -1,0 +1,1431 @@
+{
+  "units": [
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_0",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_1",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_2",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_3",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_4",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_5",
+      "own_result_sha256": "687ee53f66bbaf24a887d42cd7a49ae202a9f7cb65ea702c9847b2262a30ed89",
+      "audit_result": {
+        "abstentions": [],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_PASS",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "SUPPORTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "SUPPORTED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_6",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_7",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_8",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_9",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_10",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_11",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_12",
+      "own_result_sha256": "f538939fdaf8e74eaca423d3c87866c54675279c75c15562b6258ac0e9fb0ffe",
+      "audit_result": {
+        "abstentions": [],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "SUPPORTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "SUPPORTED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_13",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_14",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_15",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_16",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_17",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_18",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    },
+    {
+      "unit_id": "BFCL_ARCHIVED_FALCON3:simple_python_19",
+      "own_result_sha256": "a21d8aeaedbb0df76f72b578ed2c92ef08b4e253de2c2c1bb7dcaa9f169eaa7c",
+      "audit_result": {
+        "abstentions": [
+          {
+            "classification": "JUSTIFIED",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Verified missing parse/schema prerequisite in exact structural auditor replay",
+            "review_scope": "Bound exact BFCL structural inputs only"
+          }
+        ],
+        "audit_disposition": "AUDITED",
+        "auditor_status": "STRUCTURAL_REJECT",
+        "authentic_output_present": true,
+        "missing_evidence": [],
+        "predicate_results": [
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "SOURCE_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "TASK_BINDING",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "OUTPUT_PROVENANCE",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "CONTRADICTED",
+            "predicate_id": "FUNCTION_CALL_STRUCTURE",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "ABSTAIN",
+            "predicate_id": "FUNCTION_ARGUMENT_VALIDITY",
+            "reason": "Exact existing inert BFCL structural auditor; no natural claim invented"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "PREDICATE_COMPARABILITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "UNKNOWN_APPLICABILITY",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "CLAIM_EVIDENCE_SUPPORT",
+            "reason": "Selected auditor did not evaluate this predicate"
+          },
+          {
+            "applicability": "APPLICABLE",
+            "decision": "NOT_EVALUATED",
+            "predicate_id": "RECOVERY_INTEGRITY",
+            "reason": "Selected auditor did not evaluate this predicate"
+          }
+        ],
+        "processing_disposition": "AGENT_OUTPUT_AUDITED",
+        "schema": "pgop1.predicate-evidence.v1",
+        "scope": "Structural task-relative audit; no independent semantic verdict or official evaluation",
+        "semantic_audits_completed": 0
+      }
+    }
+  ],
+  "scope": "Own source-free structural observations; original task/output bodies withheld"
+}

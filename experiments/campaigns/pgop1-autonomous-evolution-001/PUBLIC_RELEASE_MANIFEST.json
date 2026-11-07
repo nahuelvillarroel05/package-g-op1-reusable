@@ -1,0 +1,276 @@
+{
+  "schema": "pgop1.public-release-manifest.v1",
+  "scope": "Explicit new campaign artifact delta only",
+  "remote_publication": "PENDING_OWNER_MANUAL_PUSH",
+  "source_bodies": "EXCLUDED",
+  "credentials": "EXCLUDED",
+  "historical_reachable_review": "NOT_REPERFORMED; previous publication boundaries retained",
+  "code_candidate": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+  "files": [
+    {
+      "path": "CURRENT_STATE.md",
+      "bytes": 3020,
+      "sha256": "407d791d5c04f680cad0785ba1778655f1d7d760c039807b43e48f67e6b105c3"
+    },
+    {
+      "path": "docs/NEXT_STEP.md",
+      "bytes": 458,
+      "sha256": "f23f4bac4979034b43f122e0982f97d48f59de35759d403da30191b35a723045"
+    },
+    {
+      "path": "experiments/RUN_REGISTRY.json",
+      "bytes": 32575,
+      "sha256": "5269f9d2baefc82dc26fbda4aadf910d06c0bdcf2cb6c29e48410265a1d76ba3"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/ASTRA_GLOBAL_ASSESSMENT.json",
+      "bytes": 13319,
+      "sha256": "ff00cf7d025aec5740ae0c8457ad10931b641b4a4a65f461aec141611ca690d4"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/CAPABILITY_COMPARISON.md",
+      "bytes": 6434,
+      "sha256": "1b5079627806064b385db3efcb0abcdec8f633238b09876d233833dd7a0a6e52"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/CAPABILITY_COVERAGE.json",
+      "bytes": 7215,
+      "sha256": "c0ac366370641295ec8386d8458be7b5103f98a113c6cbd00f43d9352feee1a3"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/DEFECT_REGISTER.json",
+      "bytes": 3712,
+      "sha256": "0d596bb0c88fdaee9df2a173aa503240eb2b993dcfa2516a8354cf1ea7dc919e"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/ENGINEERING_SCORECARD.json",
+      "bytes": 12913,
+      "sha256": "4fb94b58fda4ac7b721eb82e523422cb285887e861a0c28f872c500a6bcdf235"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/EVOLUTION_REGISTRY.json",
+      "bytes": 12121,
+      "sha256": "66f0951e5c3b603946ded03c45bc7abe44c22a0ff0d4fd37f2b7931833eee4e0"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/EXTERNAL_SOURCE_COMMITMENTS.json",
+      "bytes": 23156,
+      "sha256": "8a1a450ead61fe00f46a8c09e38ca68762efc869cf1219fabd22c19f6506d5e6"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/FINAL_CODE_REFERENCE.json",
+      "bytes": 1239,
+      "sha256": "4c87a3306ea8dcba277f9f7905e3ab6efe4824f1b5866f9b74af00f4e25a9b68"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/MULTIBENCHMARK_OPPORTUNITY_MATRIX.json",
+      "bytes": 11256,
+      "sha256": "04db2add4d76d7b60e00bd5e557649075aee89e8dc01bf57949b63836e38bce3"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/PATCH_REGISTER.json",
+      "bytes": 2043,
+      "sha256": "e8847d09ebf1883e54d5cee6f4037f63cd760a3a5ab9997b43bd42dee07edc10"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/README.md",
+      "bytes": 2495,
+      "sha256": "3833e40458d12e464c19ba9186de1b4f0da08c78d59fe346993982b1daa1173d"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/REGRESSION_RESULTS.json",
+      "bytes": 1286,
+      "sha256": "d8ec04b411165dc53cdcf881e94a3807a2e482628605d0b0787c49af5d218372"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/RESTRICTION_COMPLIANCE_INCIDENT.json",
+      "bytes": 703,
+      "sha256": "b376692a7eb2cc3a1d95d2a8e3a8dfbedf7e6e02a4e0997d6a1fa0656eac835e"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/RUN_EXECUTION_SUMMARY.json",
+      "bytes": 9778,
+      "sha256": "57f8f571f493641f54cc2771e963d4aa8e68b0e5216e3879e59fba7962689f73"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/SOL_XHIGH_AUDIT_SUMMARY.md",
+      "bytes": 2814,
+      "sha256": "38830188be30342f90cb320c55086fd96324a756bce56b3a5f76444a8da243d3"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/UNIT_ALIGNED_COMPARISON.json",
+      "bytes": 5083,
+      "sha256": "63517f2b2a07b4e7665a4c01541a69411ab826725b84bdeb55776bcfc6081501"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/astra-final/ASTRA_GLOBAL_EVOLUTION_AUDIT.md",
+      "bytes": 15219,
+      "sha256": "71d58b2bbd0fe5556ce1fd3d48823c7d3b54bafbee8f7c66985be81d9f0a43ef"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/astra-final/ASTRA_RUN_006_FINAL_AUDIT.md",
+      "bytes": 8057,
+      "sha256": "d9daa96f90f04f65f9e83dcbc9acde5b4fe8519280b198c8628d035e3a31aa85"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/astra-final/ASTRA_RUN_007_FINAL_AUDIT.md",
+      "bytes": 7898,
+      "sha256": "4df66bc563e985ed682644ab45f4de6d9d919346a20ff67e0019c3ec97fc70ba"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/astra-final/ASTRA_RUN_008_FINAL_AUDIT.md",
+      "bytes": 8134,
+      "sha256": "627532f32bf9d41585d72d12c276d8fcf05194e99f2ee71224ca58a11dec0eb0"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/astra-final/ASTRA_RUN_009_FINAL_AUDIT.md",
+      "bytes": 8549,
+      "sha256": "259bdec21b1cbd2000d7897efa5c3fe64e9c0989b16d3f72f159155fff33b157"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/PATCH_TECHNICAL_AUDIT.md",
+      "bytes": 5406,
+      "sha256": "2cbd5cfec4d73daa327b4022fdc603757d0acfe19da713290036c0c26f384d51"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/PRELAUNCH_REVIEW_RECORD.md",
+      "bytes": 1031,
+      "sha256": "676e35ad300bc50cf3f75e22288f553f3fd2097a6abf09c6625e1eaf953cd12a"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/RUN006_INDEPENDENT_TECHNICAL_AUDIT.md",
+      "bytes": 10035,
+      "sha256": "6281211c55e9474ef020c5e0f59ee6808a9157bcce8165caf62e5ab5acddefe5"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/RUN007_INDEPENDENT_TECHNICAL_AUDIT.md",
+      "bytes": 7355,
+      "sha256": "c70fa6eb55ddbbe15071ed12505a418cf05f914e3b52904d7dbe3bef38080d84"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/RUN008_INDEPENDENT_TECHNICAL_AUDIT.md",
+      "bytes": 4793,
+      "sha256": "67b211d6cf49b533925e8bfeae8079c725006889ce846e059fdf118eacd23723"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/RUN008_PATCH_TECHNICAL_AUDIT.md",
+      "bytes": 5998,
+      "sha256": "3ecae784f612c7f76d3ee6fa150abe6731b61588ca5aede2589b7a62385bbb79"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/RUN009_INDEPENDENT_TECHNICAL_AUDIT.md",
+      "bytes": 6968,
+      "sha256": "ce737b78b6d26aafea8bf299b45bc8ddd4f052149e87307716f3ad14943cb51f"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/audits/sol-xhigh/RUN009_PATCH_TECHNICAL_AUDIT.md",
+      "bytes": 4881,
+      "sha256": "fa5fb422e779e8990a7268dbfc9dcd2179f1e2e08d7fe30c572181dd7de1f9af"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-006/SUMMARY.json",
+      "bytes": 1450,
+      "sha256": "99e2ff75d9dd0fb1de2da4c819983e8807707ecc1ef34faebfab738874636b7a"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-006/UNIT_RESULTS.json",
+      "bytes": 57095,
+      "sha256": "3bfc3bddb914a2c7023e5d346405a936fc531314b3993ec5577b3b6e58e77354"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-007/SUMMARY.json",
+      "bytes": 2986,
+      "sha256": "5cc736d880ced64f0d8852d8f013037ba7ccd76ae559f997949e13be096ca51b"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-007/UNIT_RESULTS.json",
+      "bytes": 59495,
+      "sha256": "ec4bacbcb70872cc25ddaa23ffd91864d11cdc355d53e88e481fb8e5bea96a00"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-008/PREFLIGHT_FAILURE.json",
+      "bytes": 122,
+      "sha256": "2129cbc744502317a4159aa1b24205f111e0fac1432d99fa024e64b47aa64aed"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-008/SUMMARY.json",
+      "bytes": 1028,
+      "sha256": "e458bbba08ca6ee11b8cc0bc1c5e273b60206389c3c305187bf30d38ac58f473"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-009/SUMMARY.json",
+      "bytes": 2878,
+      "sha256": "345a3320e0eed63871d79158a7999cc3f56e49209c419ca9e519541703ef48ea"
+    },
+    {
+      "path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-009/UNIT_RESULTS.json",
+      "bytes": 10373,
+      "sha256": "5f26b889f499a0f7ff1e9ab50477dc30294d556e44ede7b98f97a05609e8c292"
+    },
+    {
+      "path": "experiments/runs/run-007/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "bytes": 5477,
+      "sha256": "213309d079d0467cd734ed16be60e1927983f788150deceb0f4fb269f8444209"
+    },
+    {
+      "path": "experiments/runs/run-008/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "bytes": 6251,
+      "sha256": "845041250cbdd3fe305d4a04c99bf56635b5ee74ad40f1e536bac938647fd4bd"
+    },
+    {
+      "path": "experiments/runs/run-009/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "bytes": 6873,
+      "sha256": "b1611237cc7ed151533452ec4202208e60786df9fe1360532b0e533edf020729"
+    },
+    {
+      "path": "runtime/candidate/run_framework/definition_e1.py",
+      "bytes": 8404,
+      "sha256": "56a9605670160c51f370e7b83a86bce16a198f91dc77ffcdbc34accd37109c1c"
+    },
+    {
+      "path": "runtime/candidate/run_framework/predicates.py",
+      "bytes": 19818,
+      "sha256": "1c854dca87899cc563e66baa8b6f75bd43ed93e22bfe498989913d858ac58544"
+    },
+    {
+      "path": "runtime/candidate/run_framework/read_scope.py",
+      "bytes": 7438,
+      "sha256": "80ea2a5f43c13b2a60461097fe1ee4e468279fa57861decf22a7f1f9ce3eee92"
+    },
+    {
+      "path": "runtime/candidate/run_framework/run005.py",
+      "bytes": 20274,
+      "sha256": "0ffe4ef6e836b78271b043562ab74210c029f3799b4c289a81ae738b9366a3ed"
+    },
+    {
+      "path": "runtime/candidate/run_framework/run006.py",
+      "bytes": 33476,
+      "sha256": "64d7c39eba2a561db1cb9a1c6ca890113af3991942afc9edf37a8d989f6213ee"
+    },
+    {
+      "path": "tests/test_definition_e1_admission.py",
+      "bytes": 2937,
+      "sha256": "7481b3d59c8c230f9920ba139bd911c2731fdb1a77cb17e3646b4f9a2e42da18"
+    },
+    {
+      "path": "tests/test_evolution_batch_boundaries.py",
+      "bytes": 3947,
+      "sha256": "9a21c4298ad0b410a3a293ed740d24124c5e24d7307fdbd77455986f7fdd62ae"
+    },
+    {
+      "path": "tests/test_exact_read_scope.py",
+      "bytes": 8432,
+      "sha256": "88355cd68772510afb48fbb737392c971ab61e1ad1f99eacef1dedc2b49dfb0e"
+    },
+    {
+      "path": "tests/test_predicate_audit_reason_regression.py",
+      "bytes": 3257,
+      "sha256": "997a5a948d19bb1636356571ac7148b1bd9f778a085e863f5ec24fcc5b9d75a9"
+    },
+    {
+      "path": "tests/test_run006_engineering.py",
+      "bytes": 23748,
+      "sha256": "a45ef58c8dad498ad3c534cdc3c139eea9ce0642c388164104b05f34d93f614d"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "RUN_ID": "RUN-009",
+  "ENGINEERING_MODE": "E1",
+  "STATUS": "COMPLETED_WITH_EXACT_LIMITATIONS",
+  "CANDIDATE_COMMIT": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+  "CANDIDATE_TREE": "6388fec69981db5bbf7af89c72dbc08aa1552c20",
+  "ATTEMPT_ID": "RUN009-E1-20261107T022951Z-11bc0b10",
+  "FAMILIES": [
+    "mcpmark_verified",
+    "terminal_bench_2"
+  ],
+  "EXPERIMENTAL_UNIT_TYPE": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+  "SELECTED_UNITS": 4,
+  "ATTEMPTED_UNITS": 4,
+  "PROCESSED_UNITS": 4,
+  "STRUCTURALLY_AUDITED_UNITS": 0,
+  "SEMANTICALLY_AUDITED_UNITS": 0,
+  "AUTHENTIC_AGENT_OUTPUTS": 0,
+  "SOURCE_INTEGRITY_CHECKS": 4,
+  "ERRORS": 0,
+  "ABSTENTIONS": 0,
+  "PREDICATE_DECISIONS": {
+    "NOT_EVALUATED": 32
+  },
+  "MISSING_OUTPUT_DISPOSITIONS": 4,
+  "SYNTHETIC_DENIAL_CONTROLS": 3,
+  "SYNTHETIC_DENIAL_STATUS": [
+    {
+      "kind": "path_read",
+      "status": "DENIED_BEFORE_BODY_READ",
+      "source_kind": "UNSELECTED_PATH_DENIAL_CONTROL"
+    },
+    {
+      "kind": "os_open",
+      "status": "DENIED_BEFORE_BODY_READ",
+      "source_kind": "UNSELECTED_PATH_DENIAL_CONTROL"
+    },
+    {
+      "kind": "read_write",
+      "status": "DENIED_BEFORE_BODY_READ",
+      "source_kind": "UNSELECTED_PATH_DENIAL_CONTROL"
+    }
+  ],
+  "CLOSED_EXECUTION_BATCHES": [
+    {
+      "batch": 1,
+      "phase": "CLOSED",
+      "member_ids": [
+        "mcpmark_verified:029800afe7e3a0c574d2b0988b5891201a83f7ac387c85e1add3a66a34675730",
+        "mcpmark_verified:02f6432ba47c4b55adf787dffabac479e4800abef69211a650bac5e35b442ddb"
+      ],
+      "attempted_units": 2
+    },
+    {
+      "batch": 2,
+      "phase": "CLOSED",
+      "member_ids": [
+        "terminal_bench_2:05057709b531b6904e17f49f9115d123944dd41f93fdcf7b3e161b50a9f39b4d",
+        "terminal_bench_2:070b82555096248f45280e0f575c1b39e24f1268d4704dd2a993380714f30cd9"
+      ],
+      "attempted_units": 2
+    }
+  ],
+  "RECOVERY": {
+    "fresh_process": true,
+    "execution_pid": 11664,
+    "recovery_pid": 16132,
+    "same_state": true,
+    "recovered_completed": 4,
+    "redispatch": 0,
+    "unexpected_recovery_denials": 0
+  },
+  "ENGINE_VERIFY": {
+    "status": "PASS",
+    "versions": 4,
+    "sources": 4
+  },
+  "DURATION_SECONDS": 5.834645400000227,
+  "CAMPAIGN_GUARD_BYTES": 49519,
+  "CONTEXT_LOGICAL_BYTES": 68507,
+  "LIMITATIONS": [
+    "Process-local CPython named-file gate; not OS sandbox, native or descendant read control",
+    "Synthetic denial wrapper distinct from four authentic primary definitions",
+    "No agent outputs, task effects, claims, causal actions, semantic labels or independent custody demonstrated",
+    "Earlier documentary incident exposure remains UNKNOWN"
+  ],
+  "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+  "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+  "PUBLICATION_STATUS": "PENDING_OWNER_MANUAL_PUSH"
+}

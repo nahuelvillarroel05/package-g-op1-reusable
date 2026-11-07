@@ -498,15 +498,24 @@
     },
     {
       "ID": "RUN-009",
-      "record_kind": "PROSPECTIVE_E1_RESERVED",
+      "record_kind": "OBSERVED_E1_CAMPAIGN_RESULT",
       "directory": "experiments/runs/run-009",
       "ENGINEERING_MODE": "E1",
-      "status": "RESERVED_NOT_EXECUTED",
-      "candidate_commit": "TO_BE_BOUND_BY_NEW_OPERATIONAL_FREEZE",
+      "status": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "candidate_commit": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
       "purpose": "F03 pipe-descriptor compatibility repair; samefour permitted MCP/Terminal definitions, exact read scope and recovery",
       "owner_authority": "Current autonomous campaign plus multibenchmark correction",
       "publication_status": "PENDING_OWNER_MANUAL_PUSH",
-      "attempts": []
+      "attempts": [
+        {
+          "attempt_id": "RUN009-E1-20261107T022951Z-11bc0b10",
+          "processed_units": 4,
+          "semantic_audits": 0
+        }
+      ],
+      "campaign_execution": "COMPLETED_DEFINITION_PROCESSING_ONLY",
+      "candidate_tree": "6388fec69981db5bbf7af89c72dbc08aa1552c20",
+      "public_evidence_path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-009"
     }
   ],
   "pilots": [

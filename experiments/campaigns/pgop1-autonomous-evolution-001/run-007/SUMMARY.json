@@ -1,0 +1,95 @@
+{
+  "RUN_ID": "RUN-007",
+  "ENGINEERING_MODE": "E1",
+  "STATUS": "COMPLETED_WITH_EXACT_LIMITATIONS",
+  "CANDIDATE_COMMIT": "1c0953fe4b813c4fc7987dd1da806582bbed02e2",
+  "CANDIDATE_TREE": "cf35bda4920c5024eca1121bb106e41c386202bb",
+  "ATTEMPT_ID": "RUN007-E1-20261107T020532Z-b803927a",
+  "SELECTED_UNITS": 20,
+  "ATTEMPTED_UNITS": 20,
+  "PROCESSED_UNITS": 20,
+  "STRUCTURALLY_AUDITED_UNITS": 20,
+  "SEMANTICALLY_AUDITED_UNITS": 0,
+  "ERRORS": 0,
+  "ABSTENTIONS": 18,
+  "ABSTENTION_UNITS": 18,
+  "AUDITOR_STATUS_COUNTS": {
+    "STRUCTURAL_REJECT": 19,
+    "STRUCTURAL_PASS": 1
+  },
+  "PREDICATE_DECISIONS": {
+    "NOT_EVALUATED": 120,
+    "CONTRADICTED": 18,
+    "ABSTAIN": 18,
+    "SUPPORTED": 4
+  },
+  "PLANNED_PREDICATE_SLOTS": 160,
+  "STALE_MISSING_OUTPUT_REASONS": 0,
+  "RECOVERY": {
+    "fresh_process": true,
+    "execution_pid": 21116,
+    "recovery_pid": 2872,
+    "recovered_completed": 20,
+    "same_state": true,
+    "redispatch": 0
+  },
+  "CLOSED_EXECUTION_BATCHES": [
+    {
+      "batch": 1,
+      "phase": "CLOSED",
+      "member_ids": [
+        "BFCL_ARCHIVED_FALCON3:simple_python_0",
+        "BFCL_ARCHIVED_FALCON3:simple_python_1",
+        "BFCL_ARCHIVED_FALCON3:simple_python_2",
+        "BFCL_ARCHIVED_FALCON3:simple_python_3",
+        "BFCL_ARCHIVED_FALCON3:simple_python_4"
+      ],
+      "attempted_units": 5
+    },
+    {
+      "batch": 2,
+      "phase": "CLOSED",
+      "member_ids": [
+        "BFCL_ARCHIVED_FALCON3:simple_python_5",
+        "BFCL_ARCHIVED_FALCON3:simple_python_6",
+        "BFCL_ARCHIVED_FALCON3:simple_python_7",
+        "BFCL_ARCHIVED_FALCON3:simple_python_8",
+        "BFCL_ARCHIVED_FALCON3:simple_python_9"
+      ],
+      "attempted_units": 5
+    },
+    {
+      "batch": 3,
+      "phase": "CLOSED",
+      "member_ids": [
+        "BFCL_ARCHIVED_FALCON3:simple_python_10",
+        "BFCL_ARCHIVED_FALCON3:simple_python_11",
+        "BFCL_ARCHIVED_FALCON3:simple_python_12",
+        "BFCL_ARCHIVED_FALCON3:simple_python_13",
+        "BFCL_ARCHIVED_FALCON3:simple_python_14"
+      ],
+      "attempted_units": 5
+    },
+    {
+      "batch": 4,
+      "phase": "CLOSED",
+      "member_ids": [
+        "BFCL_ARCHIVED_FALCON3:simple_python_15",
+        "BFCL_ARCHIVED_FALCON3:simple_python_16",
+        "BFCL_ARCHIVED_FALCON3:simple_python_17",
+        "BFCL_ARCHIVED_FALCON3:simple_python_18",
+        "BFCL_ARCHIVED_FALCON3:simple_python_19"
+      ],
+      "attempted_units": 5
+    }
+  ],
+  "BATCH_LIMITATION": "Batch bytes verified separately; V2 journal recovery alone does not verify these supplemental observations",
+  "DURATION_SECONDS": 34.931999299999006,
+  "CAMPAIGN_GUARD_BYTES": 204167,
+  "CONTEXT_LOGICAL_BYTES": 451392,
+  "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+  "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+  "ADDED_VALUE": "NOT_ESTABLISHED",
+  "RAW_INVOCATION_COUNTS": "NOT_COLLECTED",
+  "PUBLICATION_STATUS": "PENDING_OWNER_MANUAL_PUSH"
+}

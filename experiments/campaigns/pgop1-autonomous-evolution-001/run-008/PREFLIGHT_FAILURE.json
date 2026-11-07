@@ -1,0 +1,5 @@
+{
+  "status": "ERROR",
+  "error_type": "FrameworkError",
+  "error": "candidate Git identity could not be verified"
+}

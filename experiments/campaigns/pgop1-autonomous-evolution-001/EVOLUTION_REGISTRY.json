@@ -1,0 +1,348 @@
+{
+  "schema": "pgop1.evolution-registry.v1",
+  "version": 3,
+  "history_policy": "Frozen attempt evidence unchanged; registry current snapshot, future changes require preserved version",
+  "runs": [
+    {
+      "RUN_ID": "RUN-006",
+      "ENGINEERING_MODE": "E1",
+      "STATUS": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "CANDIDATE_COMMIT": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+      "CANDIDATE_TREE": "6c56958efd7d17e61b9fc941058c2688e0ba755e",
+      "ATTEMPT_ID": "RUN006-E1-20261107T015337Z-3d9ee056",
+      "SELECTED_UNITS": 20,
+      "ATTEMPTED_UNITS": 20,
+      "PROCESSED_UNITS": 20,
+      "STRUCTURALLY_AUDITED_UNITS": 20,
+      "SEMANTICALLY_AUDITED_UNITS": 0,
+      "ERRORS": 0,
+      "ABSTENTIONS": 18,
+      "ABSTENTION_UNITS": 18,
+      "AUDITOR_STATUS_COUNTS": {
+        "STRUCTURAL_REJECT": 19,
+        "STRUCTURAL_PASS": 1
+      },
+      "PREDICATE_DECISIONS": {
+        "NOT_EVALUATED": 120,
+        "CONTRADICTED": 18,
+        "ABSTAIN": 18,
+        "SUPPORTED": 4
+      },
+      "PLANNED_PREDICATE_SLOTS": 160,
+      "STALE_MISSING_OUTPUT_REASONS": 120,
+      "RECOVERY": {
+        "fresh_process": true,
+        "execution_pid": 4876,
+        "recovery_pid": 23000,
+        "recovered_completed": 20,
+        "same_state": true,
+        "redispatch": 0
+      },
+      "CLOSED_EXECUTION_BATCHES": [],
+      "BATCH_LIMITATION": "RUN006 executed sequentially without explicit batch boundaries",
+      "DURATION_SECONDS": 27.51431430000048,
+      "CAMPAIGN_GUARD_BYTES": 188885,
+      "CONTEXT_LOGICAL_BYTES": 448631,
+      "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+      "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+      "ADDED_VALUE": "NOT_ESTABLISHED",
+      "RAW_INVOCATION_COUNTS": "NOT_COLLECTED",
+      "PUBLICATION_STATUS": "PENDING_OWNER_MANUAL_PUSH",
+      "TARGET_CAPABILITIES": [
+        "IDENTITY_BINDING",
+        "SOURCE_PROVENANCE",
+        "EVIDENCE_INTEGRITY",
+        "OPERATIONAL_GATE",
+        "PERSIST_RECOVER",
+        "BFCL_STRUCTURE",
+        "SUFFICIENCY_ABSTENTION",
+        "COMPONENT_COMPOSITION"
+      ],
+      "EXPERIMENTAL_UNITS": 20,
+      "EXECUTED_UNITS": 20,
+      "DISCOVERED_DEFECTS": [
+        "F01",
+        "F02"
+      ],
+      "VERIFIED_DEFECTS": [
+        "F01",
+        "F02"
+      ],
+      "PATCHES_FOR_NEXT_RUN": [
+        "1c0953fe4b813c4fc7987dd1da806582bbed02e2"
+      ],
+      "REGRESSION_RESULTS": "74 PASS; Sol patch review",
+      "COMPARABLE_METRICS": "comparisons/UNIT_ALIGNED_COMPARISON.json",
+      "EVIDENCE_REFERENCES": [
+        "runs/run-006/RUN_EXECUTION_SUMMARY.json"
+      ]
+    },
+    {
+      "RUN_ID": "RUN-007",
+      "ENGINEERING_MODE": "E1",
+      "STATUS": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "CANDIDATE_COMMIT": "1c0953fe4b813c4fc7987dd1da806582bbed02e2",
+      "CANDIDATE_TREE": "cf35bda4920c5024eca1121bb106e41c386202bb",
+      "ATTEMPT_ID": "RUN007-E1-20261107T020532Z-b803927a",
+      "SELECTED_UNITS": 20,
+      "ATTEMPTED_UNITS": 20,
+      "PROCESSED_UNITS": 20,
+      "STRUCTURALLY_AUDITED_UNITS": 20,
+      "SEMANTICALLY_AUDITED_UNITS": 0,
+      "ERRORS": 0,
+      "ABSTENTIONS": 18,
+      "ABSTENTION_UNITS": 18,
+      "AUDITOR_STATUS_COUNTS": {
+        "STRUCTURAL_REJECT": 19,
+        "STRUCTURAL_PASS": 1
+      },
+      "PREDICATE_DECISIONS": {
+        "NOT_EVALUATED": 120,
+        "CONTRADICTED": 18,
+        "ABSTAIN": 18,
+        "SUPPORTED": 4
+      },
+      "PLANNED_PREDICATE_SLOTS": 160,
+      "STALE_MISSING_OUTPUT_REASONS": 0,
+      "RECOVERY": {
+        "fresh_process": true,
+        "execution_pid": 21116,
+        "recovery_pid": 2872,
+        "recovered_completed": 20,
+        "same_state": true,
+        "redispatch": 0
+      },
+      "CLOSED_EXECUTION_BATCHES": [
+        {
+          "batch": 1,
+          "phase": "CLOSED",
+          "member_ids": [
+            "BFCL_ARCHIVED_FALCON3:simple_python_0",
+            "BFCL_ARCHIVED_FALCON3:simple_python_1",
+            "BFCL_ARCHIVED_FALCON3:simple_python_2",
+            "BFCL_ARCHIVED_FALCON3:simple_python_3",
+            "BFCL_ARCHIVED_FALCON3:simple_python_4"
+          ],
+          "attempted_units": 5
+        },
+        {
+          "batch": 2,
+          "phase": "CLOSED",
+          "member_ids": [
+            "BFCL_ARCHIVED_FALCON3:simple_python_5",
+            "BFCL_ARCHIVED_FALCON3:simple_python_6",
+            "BFCL_ARCHIVED_FALCON3:simple_python_7",
+            "BFCL_ARCHIVED_FALCON3:simple_python_8",
+            "BFCL_ARCHIVED_FALCON3:simple_python_9"
+          ],
+          "attempted_units": 5
+        },
+        {
+          "batch": 3,
+          "phase": "CLOSED",
+          "member_ids": [
+            "BFCL_ARCHIVED_FALCON3:simple_python_10",
+            "BFCL_ARCHIVED_FALCON3:simple_python_11",
+            "BFCL_ARCHIVED_FALCON3:simple_python_12",
+            "BFCL_ARCHIVED_FALCON3:simple_python_13",
+            "BFCL_ARCHIVED_FALCON3:simple_python_14"
+          ],
+          "attempted_units": 5
+        },
+        {
+          "batch": 4,
+          "phase": "CLOSED",
+          "member_ids": [
+            "BFCL_ARCHIVED_FALCON3:simple_python_15",
+            "BFCL_ARCHIVED_FALCON3:simple_python_16",
+            "BFCL_ARCHIVED_FALCON3:simple_python_17",
+            "BFCL_ARCHIVED_FALCON3:simple_python_18",
+            "BFCL_ARCHIVED_FALCON3:simple_python_19"
+          ],
+          "attempted_units": 5
+        }
+      ],
+      "BATCH_LIMITATION": "Batch bytes verified separately; V2 journal recovery alone does not verify these supplemental observations",
+      "DURATION_SECONDS": 34.931999299999006,
+      "CAMPAIGN_GUARD_BYTES": 204167,
+      "CONTEXT_LOGICAL_BYTES": 451392,
+      "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+      "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+      "ADDED_VALUE": "NOT_ESTABLISHED",
+      "RAW_INVOCATION_COUNTS": "NOT_COLLECTED",
+      "PUBLICATION_STATUS": "PENDING_OWNER_MANUAL_PUSH",
+      "TARGET_CAPABILITIES": [
+        "IDENTITY_BINDING",
+        "SOURCE_PROVENANCE",
+        "EVIDENCE_INTEGRITY",
+        "OPERATIONAL_GATE",
+        "PERSIST_RECOVER",
+        "BFCL_STRUCTURE",
+        "SUFFICIENCY_ABSTENTION",
+        "COMPONENT_COMPOSITION"
+      ],
+      "EXPERIMENTAL_UNITS": 20,
+      "EXECUTED_UNITS": 20,
+      "DISCOVERED_DEFECTS": [],
+      "VERIFIED_DEFECTS": [],
+      "PATCHES_FOR_NEXT_RUN": [],
+      "REGRESSION_RESULTS": "74 PASS; Sol patch review",
+      "COMPARABLE_METRICS": "comparisons/UNIT_ALIGNED_COMPARISON.json",
+      "EVIDENCE_REFERENCES": [
+        "runs/run-007/RUN_EXECUTION_SUMMARY.json"
+      ]
+    },
+    {
+      "RUN_ID": "RUN-008",
+      "ENGINEERING_MODE": "E1",
+      "STATUS": "NOT_STARTED_PREFLIGHT_BLOCKED",
+      "PROCESS_STARTED": true,
+      "CANDIDATE_COMMIT": "96b210ff0473fd91270d5a68a55d7f6ea0cfb775",
+      "CANDIDATE_TREE": "e06c4426ad4dfd67495809329906cd2058800316",
+      "ATTEMPT_ID": "RUN008-E1-20261107T022418Z-06bdc874",
+      "FAMILIES": [
+        "mcpmark_verified",
+        "terminal_bench_2"
+      ],
+      "EXPERIMENTAL_UNIT_TYPE": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+      "SELECTED_UNITS": 4,
+      "ATTEMPTED_UNITS": 0,
+      "PROCESSED_UNITS": 0,
+      "STRUCTURALLY_AUDITED_UNITS": 0,
+      "SEMANTICALLY_AUDITED_UNITS": 0,
+      "AUTHENTIC_AGENT_OUTPUTS": 0,
+      "ERRORS": 0,
+      "PREFLIGHT_ERRORS": 1,
+      "ERROR": "candidate Git identity could not be verified",
+      "ABSTENTIONS": 0,
+      "DENIAL_CONTROLS_EXECUTED": 0,
+      "CHECKPOINTS": 0,
+      "RECEIPTS": 0,
+      "RECOVERY": "NOT_APPLICABLE_NO_JOURNAL_CREATED",
+      "SOURCE_HASHES_PRELAUNCH_VERIFIED": 4,
+      "runtime_body_read_count": "NOT_COLLECTED",
+      "PUBLICATION_STATUS": "PENDING_OWNER_MANUAL_PUSH",
+      "TARGET_CAPABILITIES": [
+        "OPERATIONAL_GATE",
+        "SOURCE_PROVENANCE",
+        "EVIDENCE_INTEGRITY",
+        "IDENTITY_BINDING",
+        "PERSIST_RECOVER",
+        "COMPONENT_COMPOSITION"
+      ],
+      "DISCOVERED_DEFECTS": [
+        "F03"
+      ],
+      "REGRESSION_RESULTS": "33authored focused testsPASS prior; authentic integration fails in preflight",
+      "EVIDENCE_REFERENCES": [
+        "runs/run-008/operational/EXECUTION_RESULT.json"
+      ]
+    },
+    {
+      "RUN_ID": "RUN-009",
+      "ENGINEERING_MODE": "E1",
+      "STATUS": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "CANDIDATE_COMMIT": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+      "CANDIDATE_TREE": "6388fec69981db5bbf7af89c72dbc08aa1552c20",
+      "ATTEMPT_ID": "RUN009-E1-20261107T022951Z-11bc0b10",
+      "FAMILIES": [
+        "mcpmark_verified",
+        "terminal_bench_2"
+      ],
+      "EXPERIMENTAL_UNIT_TYPE": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+      "SELECTED_UNITS": 4,
+      "ATTEMPTED_UNITS": 4,
+      "PROCESSED_UNITS": 4,
+      "STRUCTURALLY_AUDITED_UNITS": 0,
+      "SEMANTICALLY_AUDITED_UNITS": 0,
+      "AUTHENTIC_AGENT_OUTPUTS": 0,
+      "SOURCE_INTEGRITY_CHECKS": 4,
+      "ERRORS": 0,
+      "ABSTENTIONS": 0,
+      "PREDICATE_DECISIONS": {
+        "NOT_EVALUATED": 32
+      },
+      "MISSING_OUTPUT_DISPOSITIONS": 4,
+      "SYNTHETIC_DENIAL_CONTROLS": 3,
+      "SYNTHETIC_DENIAL_STATUS": [
+        {
+          "kind": "path_read",
+          "status": "DENIED_BEFORE_BODY_READ",
+          "source_kind": "UNSELECTED_PATH_DENIAL_CONTROL"
+        },
+        {
+          "kind": "os_open",
+          "status": "DENIED_BEFORE_BODY_READ",
+          "source_kind": "UNSELECTED_PATH_DENIAL_CONTROL"
+        },
+        {
+          "kind": "read_write",
+          "status": "DENIED_BEFORE_BODY_READ",
+          "source_kind": "UNSELECTED_PATH_DENIAL_CONTROL"
+        }
+      ],
+      "CLOSED_EXECUTION_BATCHES": [
+        {
+          "batch": 1,
+          "phase": "CLOSED",
+          "member_ids": [
+            "mcpmark_verified:029800afe7e3a0c574d2b0988b5891201a83f7ac387c85e1add3a66a34675730",
+            "mcpmark_verified:02f6432ba47c4b55adf787dffabac479e4800abef69211a650bac5e35b442ddb"
+          ],
+          "attempted_units": 2
+        },
+        {
+          "batch": 2,
+          "phase": "CLOSED",
+          "member_ids": [
+            "terminal_bench_2:05057709b531b6904e17f49f9115d123944dd41f93fdcf7b3e161b50a9f39b4d",
+            "terminal_bench_2:070b82555096248f45280e0f575c1b39e24f1268d4704dd2a993380714f30cd9"
+          ],
+          "attempted_units": 2
+        }
+      ],
+      "RECOVERY": {
+        "fresh_process": true,
+        "execution_pid": 11664,
+        "recovery_pid": 16132,
+        "same_state": true,
+        "recovered_completed": 4,
+        "redispatch": 0,
+        "unexpected_recovery_denials": 0
+      },
+      "ENGINE_VERIFY": {
+        "status": "PASS",
+        "versions": 4,
+        "sources": 4
+      },
+      "DURATION_SECONDS": 5.834645400000227,
+      "CAMPAIGN_GUARD_BYTES": 49519,
+      "CONTEXT_LOGICAL_BYTES": 68507,
+      "LIMITATIONS": [
+        "Process-local CPython named-file gate; not OS sandbox, native or descendant read control",
+        "Synthetic denial wrapper distinct from four authentic primary definitions",
+        "No agent outputs, task effects, claims, causal actions, semantic labels or independent custody demonstrated",
+        "Earlier documentary incident exposure remains UNKNOWN"
+      ],
+      "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+      "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+      "PUBLICATION_STATUS": "PENDING_OWNER_MANUAL_PUSH",
+      "TARGET_CAPABILITIES": [
+        "OPERATIONAL_GATE",
+        "SOURCE_PROVENANCE",
+        "EVIDENCE_INTEGRITY",
+        "IDENTITY_BINDING",
+        "PERSIST_RECOVER",
+        "COMPONENT_COMPOSITION"
+      ],
+      "DISCOVERED_DEFECTS": [],
+      "VERIFIED_DEFECTS": [],
+      "PATCHES_FOR_NEXT_RUN": [],
+      "REGRESSION_RESULTS": "36 PASS",
+      "COMPARABLE_METRICS": "Authored F03 Git-pipe reproducer; no semantic comparison with BFCL",
+      "EVIDENCE_REFERENCES": [
+        "runs/run-009/RUN_EXECUTION_SUMMARY.json"
+      ]
+    }
+  ]
+}

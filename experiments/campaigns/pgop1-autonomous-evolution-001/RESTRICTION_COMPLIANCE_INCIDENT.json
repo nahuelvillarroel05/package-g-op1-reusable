@@ -1,0 +1,13 @@
+{
+  "ID": "INCIDENT-DOC-READ-001",
+  "status": "PROCESS_STOPPED_EXPOSURE_UNKNOWN",
+  "actor": "Actual subordinate gpt-6-sol medium /sol_orchestrator",
+  "operation": "python -B docs/verify_documentation.py",
+  "guard_active": false,
+  "observed": "Agent reports Ctrl-C stop, process exited1, no stdout/stderr or verifier result",
+  "files_read_before_stop": "UNKNOWN",
+  "GOLD_access": "UNKNOWN_NOT_ASSERTED_ABSENT",
+  "containment": "Agent instructed stop/no further verification; no new RUN; final verifier will use explicit guard",
+  "score_compensation": "PROHIBITED",
+  "final_auditor_required": "Astra must assess restriction compliance separately from scoped experimental results"
+}

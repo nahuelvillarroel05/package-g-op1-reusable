@@ -1,0 +1,35 @@
+{
+  "final_candidate_suite": {
+    "tests": 74,
+    "status": "PASS",
+    "seconds": 12.33,
+    "reference": "engineering/regressions/CAMPAIGN001_CANDIDATE_FINAL_002/pytest-output.log"
+  },
+  "predicate_reproducer": {
+    "baseline": "3 FAILED /1 PASSED",
+    "after_patch": "59 related tests PASS",
+    "reference": "engineering/regressions/RED_LOG.txt"
+  },
+  "batch_reproducer": {
+    "baseline": "3 FAILED (absent controller and unprotected RUN007 direct route)",
+    "first_patch": "3 FAILED /32 PASSED; output guard initialization defect discovered and corrected before candidate freeze",
+    "corrected": "35 PASSED",
+    "run007_gate": "PASS",
+    "note": "All failed and corrected attempts preserved; no real output execution in tests"
+  },
+  "run008_integration_suite": {
+    "tests": 33,
+    "status": "PASS",
+    "authentic_result": "Failed preflight; missing captured-pipe integration control found"
+  },
+  "F03_reproducer": {
+    "baseline": "1FAILED/9PASSED capturedGit blocked; regular descriptor rejection observed",
+    "after_patch": "10PASSED"
+  },
+  "run009_suite": {
+    "tests": 36,
+    "status": "PASS",
+    "seconds": 10.38,
+    "reference": "engineering/regressions/CAMPAIGN001_RUN009_REGRESSION_001/pytest-output.log"
+  }
+}

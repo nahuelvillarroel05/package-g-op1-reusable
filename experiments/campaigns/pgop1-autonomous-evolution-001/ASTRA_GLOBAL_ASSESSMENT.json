@@ -1,0 +1,259 @@
+{
+  "schema": "pgop1.astra.global-evolution-assessment.v1",
+  "stage": "B_GLOBAL_FINAL_AUDIT_COMPLETE",
+  "created_utc": "2026-11-07T02:44:52.777194+00:00",
+  "reviewer_model": "gpt-6-astra",
+  "reviewer_role": "actual subordinate technical final auditor, not external semantic adjudicator or authenticated identity credential",
+  "FIRST_CANDIDATE": {
+    "commit": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+    "tree": "6c56958efd7d17e61b9fc941058c2688e0ba755e",
+    "run": "RUN-006"
+  },
+  "FINAL_CANDIDATE": {
+    "commit": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+    "tree": "6388fec69981db5bbf7af89c72dbc08aa1552c20",
+    "run": "RUN-009"
+  },
+  "RUN_MATRIX": [
+    {
+      "RUN": "RUN-006",
+      "candidate": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+      "tree": "6c56958efd7d17e61b9fc941058c2688e0ba755e",
+      "capabilities": [
+        "IDENTITY_BINDING",
+        "SOURCE_PROVENANCE",
+        "EVIDENCE_INTEGRITY",
+        "OPERATIONAL_GATE",
+        "PERSIST_RECOVER",
+        "BFCL_STRUCTURE",
+        "SUFFICIENCY_ABSTENTION",
+        "COMPONENT_COMPOSITION"
+      ],
+      "defects": [
+        "F01:120 false missing-output explanations",
+        "F02:four planned batches not enforced"
+      ],
+      "patches": "None in executed runtime; prospective F01/F02 successor1c0953f",
+      "improvement": "Baseline structural/recovery observation; historical contract/reporting defects retained",
+      "regressions": "Successor74-test evidence attributable to F01/F02; not RUN006 patches",
+      "score": {
+        "numerator": 80,
+        "denominator": 100,
+        "normalized_100": 80.0
+      },
+      "actual_outcome": "20 archived pairs structurally audited;19reject/1pass;18predicateabstentions;0semantic"
+    },
+    {
+      "RUN": "RUN-007",
+      "candidate": "1c0953fe4b813c4fc7987dd1da806582bbed02e2",
+      "tree": "cf35bda4920c5024eca1121bb106e41c386202bb",
+      "capabilities": [
+        "COMPONENT_COMPOSITION",
+        "BFCL_STRUCTURE",
+        "PERSIST_RECOVER",
+        "OPERATIONAL_GATE",
+        "EVIDENCE_INTEGRITY"
+      ],
+      "defects": [],
+      "patches": "F01 reason-only repair; F02 explicit bounded batches; fresh protected RUN007 identity",
+      "improvement": "120 false reasons->0;4closed batches5;160decisions/applicabilities and18abstentionobjects unchanged",
+      "regressions": "74 authored selected testsPASS; prefreeze failed iterations preserved",
+      "score": {
+        "numerator": 94,
+        "denominator": 100,
+        "normalized_100": 94.0
+      },
+      "actual_outcome": "Same20 archived pairs;19reject/1pass;fresh20/20recovery;0semantic"
+    },
+    {
+      "RUN": "RUN-008",
+      "candidate": "96b210ff0473fd91270d5a68a55d7f6ea0cfb775",
+      "tree": "e06c4426ad4dfd67495809329906cd2058800316",
+      "capabilities": [
+        "OPERATIONAL_GATE",
+        "SOURCE_PROVENANCE",
+        "EVIDENCE_INTEGRITY",
+        "IDENTITY_BINDING",
+        "PERSIST_RECOVER",
+        "COMPONENT_COMPOSITION"
+      ],
+      "capability_status": "TARGETED_NOT_COMPLETED",
+      "defects": [
+        "F03:new read hook rejects captured Git pipe descriptors"
+      ],
+      "patches": "New nonBFCL definition composition; F03 repair only in prospective RUN009",
+      "improvement": "Defect discovery/fail-stop evidence only;0unitoperations",
+      "regressions": "33 authored testsPASS missed full integration; F03 reproducer1FAIL/9PASS",
+      "score": {
+        "numerator": 67,
+        "denominator": 100,
+        "normalized_100": 67.0
+      },
+      "actual_outcome": "Child processstarted;preflighterror1;selected4/attempted0;no journal/Engine/recovery"
+    },
+    {
+      "RUN": "RUN-009",
+      "candidate": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+      "tree": "6388fec69981db5bbf7af89c72dbc08aa1552c20",
+      "capabilities": [
+        "OPERATIONAL_GATE",
+        "SOURCE_PROVENANCE",
+        "EVIDENCE_INTEGRITY",
+        "IDENTITY_BINDING",
+        "PERSIST_RECOVER",
+        "COMPONENT_COMPOSITION"
+      ],
+      "defects": [],
+      "patches": "F03 fstat-proven IPC compatibility; fresh RUN009 identity/producer/event",
+      "improvement": "Same4definitions complete;3authored wrapper denials;2batches2;fresh4/4recovery/no redispatch",
+      "regressions": "10scopePASS;36relatedPASS; overlapping suites, no summed unique-test claim",
+      "score": {
+        "numerator": 94,
+        "denominator": 100,
+        "normalized_100": 94.0
+      },
+      "actual_outcome": "4definitionprocessings;32NOT_EVALUATED;0auditorabstentions;0agentoutputs;0semantic"
+    }
+  ],
+  "VERIFIED_IMPROVEMENTS": [
+    {
+      "id": "F01",
+      "change": "False missing-output reasons120->0 on identical20BFCL pairs",
+      "evidence": "Independently recomputed160slot equality and18abstentionobject equality;120reason-only differences; minimal code diff and authored red/green evidence",
+      "causal_attribution": "DIRECT_CODE_AND_MATCHED_INPUT_EVIDENCE_WITHIN_SCOPE",
+      "limit": "No increased semantic or predicate decision coverage"
+    },
+    {
+      "id": "F02",
+      "change": "Actual batch boundaries absent->four CLOSED batches of5",
+      "evidence": "Original direct loop versus prospective sequential controller;8supplemental references rehashed and20terminal receipt joins verified",
+      "causal_attribution": "DIRECT_IMPLEMENTATION_AND_EXECUTION_TRACE_WITHIN_SCOPE",
+      "limit": "No retroactive RUN006 compliance; batch records are outside recover() validation and were checked separately"
+    },
+    {
+      "id": "F03",
+      "change": "Captured trusted Git pipes blocked->compatible under narrow IPC classifier",
+      "evidence": "Retained authored identical reproducer fails frozen008 and passes009; code diff and actual009same-source integration agree",
+      "causal_attribution": "STRONG_MECHANISTIC_AUTHORED_CONTROL_EVIDENCE; actual integration supports it but is not a single-variable throughput experiment",
+      "limit": "Current trusted process named-open gate; not OS/native/descendant confinement"
+    },
+    {
+      "id": "NONBFCL_COMPOSITION",
+      "change": "Four permitted primary definitions integrated with gate/Engine/checkpoints/recovery",
+      "evidence": "4unique terminalrecords,2closedbatches,4Engineversions,3syntheticdenials,distinctPID4/4recovery",
+      "causal_attribution": "NEW_CAPABILITY_OBSERVATION_FROM_WHOLE_INTEGRATION",
+      "limit": "No authentic output/agent performance/semantic audit; not first-ever definition processing"
+    }
+  ],
+  "UNVERIFIED_IMPROVEMENTS": [
+    "General semantic correctness or independent precision/recall",
+    "BFCL decision accuracy gain or benchmark-agent performance",
+    "PGOP1 added value over a compatible basic verifier baseline",
+    "First-to-last semantic/performance superiority",
+    "OS/native/descendant read confinement or historical no-GOLD-access",
+    "All six families executed or all16capabilities completed",
+    "General failure/adversarial robustness from successful authentic-prefix observations"
+  ],
+  "REGRESSIONS": {
+    "observed_negative_change": "RUN008 new guard introduced F03 launch-blocking incompatibility; repaired prospectively inRUN009, failed008 retained",
+    "final_selected_regressions": "No new material regression identified within reviewed selected tests/results; no exhaustive no-regression claim",
+    "performance": "RUN00734.9320s vsRUN00627.5143s; observed slower duration, causation/throughput regression not established by controlled experiment",
+    "governance_incident": "Unguarded documentary verifier restriction deviation persists independently of runtime repair",
+    "tests_rerun_by_astra": 0
+  },
+  "UNRESOLVED_DEFECTS": {
+    "new_material_reproducible_final_runtime_defects_identified": [],
+    "historical_unrepaired_attempt_outcomes": [
+      "RUN006 F01/F02 remain in original results",
+      "RUN008 F03 preflight failure remains immutable"
+    ],
+    "unresolved_incident": "INCIDENT-DOC-READ-001 exposure UNKNOWN",
+    "evidence_gaps": [
+      "First rejected RUN006 helper bytes not retained",
+      "Raw auditor invocation counts and unmapped BFCL fields NOT_COLLECTED",
+      "RUN007/RUN008 central JSON registration late",
+      "No authenticated upstream producer or independent custody",
+      "No compatible independent semantic truth or standalone comparator"
+    ]
+  },
+  "CAPABILITY_CHANGES": {
+    "ENGINEERING_PROGRESS": "Prospective reason/batch/IPC repairs and exact new identities with selected authored regressions",
+    "EXPERIMENTAL_EVIDENCE_GAIN": "40BFCL run-unit executions over20unique pairs;4nonBFCL definitionprocessings over4unique sources;distinct fresh recoveries;onefailedpreflight and oneprechild refusal preserved",
+    "COMPARABLE_CAPABILITY_IMPROVEMENT": "006->007 trace fidelity and explicit batch compliance;008->009 authored F03 compatibility control",
+    "semantic_improvement": "NOT_DEMONSTRATED",
+    "permanent_capabilities_considered": 16,
+    "families_considered": 6,
+    "families_with_actual_source_processing": [
+      "BFCL_V4",
+      "MCPMark_Verified_primary_definitions",
+      "Terminal_Bench2_primary_definitions"
+    ],
+    "coverage_percentage": "NOT_COMPUTED_MIXED_SCOPE",
+    "unchanged": "BFCL20statuses/160decisions/applicabilities/18abstentionobjects; recovery was already observed in006; formal boundaries unchanged"
+  },
+  "EVIDENCE_QUALITY": {
+    "scope": "Strong checked internal own-result consistency; bounded code/contract/source identity; no independent semantic truth",
+    "stage_A_freeze_files_matched": 613,
+    "stage_A_source_hash_only_files_matched": 44,
+    "original_source_body_content_decoded_or_displayed_by_astra": 0,
+    "stage_A_report_hashes": {
+      "ASTRA_RUN_006_FINAL_AUDIT.md": "d007b4db9ef2682563ebbc594ddfdcfe13bcdc18eede0eac958d4a3825dfa013",
+      "ASTRA_RUN_007_FINAL_AUDIT.md": "8558e769d3300d8dd4006f238b6f1c853dac499f5ccffd38c737049fbe994022",
+      "ASTRA_RUN_008_FINAL_AUDIT.md": "a123833180359d556d09820945296f47b59311c5f35151c4f4490be9ae42dc61",
+      "ASTRA_RUN_009_FINAL_AUDIT.md": "6924988bbd048636b86642fb71ad28904bfdf2c1d492163c6a67587bde4c025d"
+    },
+    "stage_A_scorecard_sha256": "4fb94b58fda4ac7b721eb82e523422cb285887e861a0c28f872c500a6bcdf235",
+    "score_policy": "As-issued80/94/67/94 with100applicableweightdenominator each, no rescoring after documentary fixes and no campaign aggregate score",
+    "late_registration": "RUN007/RUN008 observed-result reconciliation after attempts; RUN009 prospective; no fabricated earlier approval",
+    "source_distribution": "Original source bodies excluded; public replay not self-contained",
+    "incident_scope": "Known restriction deviation; exact prior reads and potential GOLD exposure UNKNOWN; scores cannot offset it"
+  },
+  "OVERALL_ASSESSMENT": {
+    "engineering": "BOUNDED_ENGINEERING_EVOLUTION_SUPPORTED_WITH_EXACT_LIMITATIONS",
+    "campaign_restriction_compliance": "DEVIATION_OBSERVED_EXPOSURE_UNKNOWN",
+    "unqualified_campaign_PASS": "NOT_ISSUED",
+    "blanket_safety_or_no_GOLD_access": "NOT_ESTABLISHED",
+    "semantic_qualification": "NOT_ACHIEVED",
+    "formal_release_authority": "NOT_GRANTED_BY_AUDIT",
+    "current_final_runtime_new_RUN_justification": "NONE_ESTABLISHED_BY_REVIEW",
+    "publication": "PENDING_OWNER_MANUAL_PUSH",
+    "release_export_ZIP_guarded_documentary_verification": "PENDING_NOT_CERTIFIED_BY_THIS_AUDIT"
+  },
+  "clock_and_closure": {
+    "original_start_utc": "2026-11-07T01:48:10Z",
+    "original_deadline_utc": "2026-11-07T13:48:10Z",
+    "maximum_seconds": 43200,
+    "no_new_run_after_utc": "2026-11-07T11:48:10Z",
+    "deadline_reset": false,
+    "execution_closure_elapsed_seconds_snapshot": 2868.5005801999996,
+    "interpretation": "12hours maximum, not a minimum; early stop after exhausted justified compatible questions/current defects is consistent with policy; final review continues without reopening execution"
+  },
+  "documentary_closure": {
+    "verified_corrections": "Current root/active indices and F03 pending text corrected; stageAaddenda recorded; frozen candidate historicalCURRENT_STATE untouched",
+    "remaining_actual_fix": "Complete current final-handoff/status references and evidence-qualified publication/ZIP/verifier records after they exist; do not predeclare theirPASS",
+    "new_runtime_engineering_required": false,
+    "global_coverage_caveat": "EVIDENCE_INTEGRITY labels do not establish authentic tamper-detection experiments; only hashes/membership plus separately scoped authored controls"
+  },
+  "preserved_limits": [
+    "I0-I6FORMALLY_FROZEN",
+    "I7INCOMPLETE",
+    "FORMAL_I7NOT_COMPLETED",
+    "GATE_11BLOCKED",
+    "INDEPENDENT_PRECISION_NOT_COMPUTABLE",
+    "INDEPENDENT_RECALL_NOT_COMPUTABLE",
+    "INDEPENDENT_CUSTODY_NOT_PROVEN",
+    "PHYSICAL_C2_DEFERRED_NOT_WAIVED"
+  ],
+  "review_actions": {
+    "source_original_reads_stage_B": 0,
+    "new_RUNs": 0,
+    "tests": 0,
+    "verifier_invocations": 0,
+    "code_or_results_modified": false,
+    "remote_writes": 0,
+    "writes": [
+      "ASTRA_GLOBAL_EVOLUTION_AUDIT.md",
+      "ASTRA_GLOBAL_ASSESSMENT.json"
+    ]
+  }
+}

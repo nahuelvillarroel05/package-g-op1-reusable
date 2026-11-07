@@ -1,3 +1,5 @@
-# Next: Owner review of disabled RUN006 option A
+# Next step
 
-Review the [scientific alignment](../experiments/runs/run-006/SCIENTIFIC_ALIGNMENT_REFERENCE.json), [matrix](../experiments/CAPABILITY_EVALUATION_MATRIX.md), and [prospective E1 v2](../experiments/runs/run-006/contracts/experimental-e1-v2/RUN_CONTRACT.md). No launch, authentic preflight, selected-output audit or result is authorized. Future launch needs explicit Owner authority, exact operational freeze, current rights/code/input/config bindings and fresh attempt. Preserve all unknown/error/abstention denominators; report ADDED_VALUE_NOT_ESTABLISHED without a valid comparison. Do not repeat RUN004/RUN005 or promote formal status. Publication instructions remain a separate Owner action in the private handoff.
+Actual Astra individual/global review is complete. The Owner reviews the source-free campaign delta, unknown documentary-read exposure, final limitations and actual integrity receipts, then may publish manually on experiment. Codex performs no push. No new RUN or runtime engineering is justified by this closure. No main/src/formal promotion follows from E1.
+
+[Campaign](../experiments/campaigns/pgop1-autonomous-evolution-001/README.md).

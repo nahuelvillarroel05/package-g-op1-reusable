@@ -1,0 +1,348 @@
+{
+  "schema": "pgop1.astra.stage-a.scorecard.v1",
+  "stage": "A_INDIVIDUAL_RUN_AUDITS_COMPLETE",
+  "reviewer_model": "gpt-6-astra",
+  "reviewer_role": "subordinate technical final auditor, not external semantic adjudicator or identity credential",
+  "review_mode": "REVIEW_ONLY_WITH_AUTHORIZED_REPORT_WRITES",
+  "created_utc": "2026-11-07T02:41:33.684580+00:00",
+  "runtime_commit": "d2771bf226814582ef5a8aa18fac31bafdbabbbb",
+  "runtime_tree": "6388fec69981db5bbf7af89c72dbc08aa1552c20",
+  "weights": {
+    "contract_fidelity": 10,
+    "effective_execution": 15,
+    "integrity_evidence": 20,
+    "conclusions": 15,
+    "diagnosis": 15,
+    "patches_regressions": 15,
+    "valid_comparisons": 5,
+    "documentation_publication": 5
+  },
+  "score_semantics": "Qualitative per-run engineering lifecycle evidence; no semantic correctness, formal qualification, safety or release inference",
+  "runs": [
+    {
+      "RUN_ID": "RUN-006",
+      "numerator": 80,
+      "applicable_weight_denominator": 100,
+      "normalized_score_100": 80.0,
+      "excluded_NA_weights": [],
+      "criteria": [
+        {
+          "category": "contract_fidelity",
+          "earned": 5,
+          "maximum": 10,
+          "applicable": true,
+          "rationale": "F02 violates the four-batch requirement despite all20 selected units completing."
+        },
+        {
+          "category": "effective_execution",
+          "earned": 13,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "20/20 structural records and recovery; authentic negative/error controls were not exercised."
+        },
+        {
+          "category": "integrity_evidence",
+          "earned": 16,
+          "maximum": 20,
+          "applicable": true,
+          "rationale": "Checked evidence matches; rejected helper preimage is unavailable and producer/custody remain unproven."
+        },
+        {
+          "category": "conclusions",
+          "earned": 14,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "Structural limits are explicit; F01 leaves120 false reasons in the historical result."
+        },
+        {
+          "category": "diagnosis",
+          "earned": 14,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "F01/F02 causes fit code and records; raw unmapped rejecting BFCL field remains uncollected."
+        },
+        {
+          "category": "patches_regressions",
+          "earned": 12,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "Successor repair/regressions verified as lineage evidence, not a repair of frozen RUN006."
+        },
+        {
+          "category": "valid_comparisons",
+          "earned": 3,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "Strong later same-unit invariant comparison; no standalone added-value comparator."
+        },
+        {
+          "category": "documentation_publication",
+          "earned": 3,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "Rejected freeze preserved; preparation indices and unavailable helper preimage limit reproducibility."
+        }
+      ],
+      "report": "audits/astra-final/ASTRA_RUN_006_FINAL_AUDIT.md",
+      "restriction_violation_offset": false
+    },
+    {
+      "RUN_ID": "RUN-007",
+      "numerator": 94,
+      "applicable_weight_denominator": 100,
+      "normalized_score_100": 94.0,
+      "excluded_NA_weights": [],
+      "criteria": [
+        {
+          "category": "contract_fidelity",
+          "earned": 10,
+          "maximum": 10,
+          "applicable": true,
+          "rationale": "20 fixed pairs and four selection-order batches of five match the operational contract."
+        },
+        {
+          "category": "effective_execution",
+          "earned": 15,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "All20 units and distinct-process recovery complete without redispatch."
+        },
+        {
+          "category": "integrity_evidence",
+          "earned": 18,
+          "maximum": 20,
+          "applicable": true,
+          "rationale": "Own-result hashes/chains match; canonical registration was late and external custody is unproven."
+        },
+        {
+          "category": "conclusions",
+          "earned": 15,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "120 explanations corrected without any semantic promotion."
+        },
+        {
+          "category": "diagnosis",
+          "earned": 13,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "Reason/batch causes supported; authentic error and interruption paths remain unobserved."
+        },
+        {
+          "category": "patches_regressions",
+          "earned": 14,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "74-test historical log and code support narrow repairs; tests not rerun by Astra."
+        },
+        {
+          "category": "valid_comparisons",
+          "earned": 5,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "20-unit/160-slot comparison independently recomputed exactly."
+        },
+        {
+          "category": "documentation_publication",
+          "earned": 4,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "Clear limits and private dependencies; top-level current-state reconciliation remains pending."
+        }
+      ],
+      "report": "audits/astra-final/ASTRA_RUN_007_FINAL_AUDIT.md",
+      "restriction_violation_offset": false
+    },
+    {
+      "RUN_ID": "RUN-008",
+      "numerator": 67,
+      "applicable_weight_denominator": 100,
+      "normalized_score_100": 67.0,
+      "excluded_NA_weights": [],
+      "criteria": [
+        {
+          "category": "contract_fidelity",
+          "earned": 5,
+          "maximum": 10,
+          "applicable": true,
+          "rationale": "Frozen admission/identity intent is coherent; required operational composition failed before units."
+        },
+        {
+          "category": "effective_execution",
+          "earned": 0,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "0/4 units,0 batch closures,0 Engine observations; process startup is not execution credit."
+        },
+        {
+          "category": "integrity_evidence",
+          "earned": 18,
+          "maximum": 20,
+          "applicable": true,
+          "rationale": "Failed attempt and matching code/config preserved; no journal recovery denominator."
+        },
+        {
+          "category": "conclusions",
+          "earned": 15,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "Zero outcomes and preflight error reported separately without semantic failure claims."
+        },
+        {
+          "category": "diagnosis",
+          "earned": 15,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "F03 traceback, code path and retained authored reproducer identify captured pipe descriptors."
+        },
+        {
+          "category": "patches_regressions",
+          "earned": 8,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "Initial33-test suite missed the decisive composition; prospective F03 repair exists separately in RUN009."
+        },
+        {
+          "category": "valid_comparisons",
+          "earned": 3,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "Matching authored reproducer supports defect causality; no actual processed-unit baseline."
+        },
+        {
+          "category": "documentation_publication",
+          "earned": 3,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "Late central registration and wrong historical supervisor display preserved with correction record."
+        }
+      ],
+      "report": "audits/astra-final/ASTRA_RUN_008_FINAL_AUDIT.md",
+      "restriction_violation_offset": false
+    },
+    {
+      "RUN_ID": "RUN-009",
+      "numerator": 94,
+      "applicable_weight_denominator": 100,
+      "normalized_score_100": 94.0,
+      "excluded_NA_weights": [],
+      "criteria": [
+        {
+          "category": "contract_fidelity",
+          "earned": 10,
+          "maximum": 10,
+          "applicable": true,
+          "rationale": "Same four permitted primary definitions, exact new identity, two two-unit batches."
+        },
+        {
+          "category": "effective_execution",
+          "earned": 15,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "4/4 definition processings,3 authored denials and4/4 fresh recovery observed."
+        },
+        {
+          "category": "integrity_evidence",
+          "earned": 18,
+          "maximum": 20,
+          "applicable": true,
+          "rationale": "Own-result chains/hashes match; process-local gate and unauthenticated custody stay limited."
+        },
+        {
+          "category": "conclusions",
+          "earned": 15,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "32 unevaluated slots and zero output/semantic audits are stated accurately."
+        },
+        {
+          "category": "diagnosis",
+          "earned": 13,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "F03 compatibility cause is supported; broad confinement and failure behavior are not established."
+        },
+        {
+          "category": "patches_regressions",
+          "earned": 14,
+          "maximum": 15,
+          "applicable": true,
+          "rationale": "10 scope and36 related historical tests support narrow patch; suites overlap and are not pooled."
+        },
+        {
+          "category": "valid_comparisons",
+          "earned": 5,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "Same authored F03 reproducer plus same-source prospective integration support narrow improvement."
+        },
+        {
+          "category": "documentation_publication",
+          "earned": 4,
+          "maximum": 5,
+          "applicable": true,
+          "rationale": "Private sources withheld; F03 registry pending text and current indices need documentary reconciliation."
+        }
+      ],
+      "report": "audits/astra-final/ASTRA_RUN_009_FINAL_AUDIT.md",
+      "restriction_violation_offset": false
+    }
+  ],
+  "independent_checks": {
+    "final_entry_freeze_files_matched": 613,
+    "mismatches": 0,
+    "bound_code_file_counts_by_run": {
+      "006": 20,
+      "007": 20,
+      "008": 22,
+      "009": 22
+    },
+    "original_source_hash_only_files": 44,
+    "original_source_content_decoded_or_displayed": 0,
+    "receipt_delta_checkpoint_counts_each": {
+      "006": 40,
+      "007": 40,
+      "008": 0,
+      "009": 8
+    },
+    "engine_sources_and_versions_each": {
+      "006": 20,
+      "007": 20,
+      "008": 0,
+      "009": 4
+    },
+    "same_BFCL_units": 20,
+    "same_BFCL_decisions_applicability": 160,
+    "same_abstention_objects": 18,
+    "changed_reason_strings": 120,
+    "new_tests_or_RUNs_executed": 0,
+    "documentary_verifier_invoked": false
+  },
+  "restriction_compliance": {
+    "incident": "INCIDENT-DOC-READ-001",
+    "deviation_observed": true,
+    "read_exposure": "UNKNOWN",
+    "GOLD_access": "UNKNOWN_NOT_ASSERTED_ABSENT",
+    "score_compensation": "PROHIBITED",
+    "blanket_safety_or_global_integrity_PASS": "NOT_ISSUED"
+  },
+  "remaining_documentary_discrepancies": [
+    "RUN008 historical supervisor cooperative value1800 versus actual300 preserved with correction record",
+    "RUN007/RUN008 central registry late timing explicit, never prospective reservation"
+  ],
+  "stage_b_global_report": "NOT_WRITTEN_NOT_STARTED",
+  "public_release_or_ZIP_certification": "NOT_PERFORMED_IN_STAGE_A",
+  "documentary_corrections_verified_after_initial_review": {
+    "root_and_active_CURRENT_STATE": "CORRECTED_CURRENT_RECORDS_VERIFIED",
+    "F03_REGRESSION_pending_field": "CORRECTED_VERIFIED",
+    "frozen_candidate_states": "PRESERVED_HISTORICAL",
+    "freeze_recheck_matched": 613,
+    "runtime_engineering_reopened": false
+  },
+  "report_hashes": {
+    "ASTRA_RUN_006_FINAL_AUDIT.md": "d007b4db9ef2682563ebbc594ddfdcfe13bcdc18eede0eac958d4a3825dfa013",
+    "ASTRA_RUN_007_FINAL_AUDIT.md": "8558e769d3300d8dd4006f238b6f1c853dac499f5ccffd38c737049fbe994022",
+    "ASTRA_RUN_008_FINAL_AUDIT.md": "a123833180359d556d09820945296f47b59311c5f35151c4f4490be9ae42dc61",
+    "ASTRA_RUN_009_FINAL_AUDIT.md": "6924988bbd048636b86642fb71ad28904bfdf2c1d492163c6a67587bde4c025d"
+  }
+}
