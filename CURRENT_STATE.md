@@ -1,3 +1,22 @@
+# RUN011 semantic remediation E1 - current
+
+RUN011=COMPLETE_WITH_DISPOSITIONS. New 13/13 authentic claims across 5 instances:
+10 SUPPORTED exact TASK_RESOLVED comparisons, 3 TESTS_PASS abstentions without
+applicable references, 0 verification errors/NOT_EVALUABLE. Same 13 claim control:
+1 exact support, 11 verification errors, 1 NOT_EVALUABLE. Task coverage 1/10 -> 10/10.
+All 10 task references positive; no negative-class safety or general improvement
+claim. Independent labels 0; precision/recall NOT_COMPUTABLE; GATE_11 BLOCKED.
+
+Runtime `8760fa683c3da9235bccdefb15219eaedde59c8a` / tree `a6ada8603c5de944ac4d4269ead0c8f62c1aa903`; 255 precommit tests
+passed. Actual frozen execution and native fresh-process recovery 13/13 passed;
+separate same-store observer matched, 138 files unchanged, 0 redispatch.
+Postfreeze pure extraction accepted 4 synthetic non-assertions; 0 auditor calls or
+definitive verdicts. Frozen code unchanged; limitation retained for future work.
+[Public results](experiments/runs/run-011/README.md). NO_PUSH=true; no main/src
+change. I0-I6 frozen; I7/formal I7 incomplete; custody NOT_PROVEN; Physical C2
+DEFERRED_NOT_WAIVED; incident exposure UNKNOWN; global historical integrity DEFERRED.
+Earlier entries retain their historical scope.
+
 # RUN010 archived claim evaluation E1 - current
 
 RUN010=COMPLETE_WITH_DISPOSITIONS. Frozen runtime `73f8d5a8d38ef0598b9fe8502eb76e15d397089b`, tree `a59f445f140c4e29e4aae8fecfc46db838810874`. Selected, attempted and processed: 63 genuine claims. Exact selected-claim semantic comparisons: 15 (10 SUPPORTED / 5 CONTRADICTED); verification errors: 43; NOT_EVALUABLE: 5; epistemic ABSTAIN: 0. The 18 raw task-level decisions have a separate denominator. Archived-relative agreement is 15/15, with decision coverage 15/57. Independently adjudicated claims: 0; independent precision/recall NOT_COMPUTABLE; GATE_11 BLOCKED.

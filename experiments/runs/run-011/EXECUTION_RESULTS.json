@@ -1,0 +1,261 @@
+{
+  "EXECUTION_STATUS": "COMPLETE_WITH_DISPOSITIONS",
+  "run_id": "RUN011",
+  "engineering_mode": "E1",
+  "candidate_commit": "8760fa683c3da9235bccdefb15219eaedde59c8a",
+  "candidate_tree": "a6ada8603c5de944ac4d4269ead0c8f62c1aa903",
+  "selection_sha256": "139db473d5ab7582feb0fbb2c11a26ab72962aed1f4843f0e80f9dbf10f8dc30",
+  "population": {
+    "known_trajectories": 264,
+    "new_trajectories_inspected": 24,
+    "selected_claims": 13,
+    "selected_instances": 5
+  },
+  "selected": 13,
+  "attempted": 13,
+  "processed": 13,
+  "unique_instances": 5,
+  "dispositions": {
+    "SUPPORTED": 10,
+    "ABSTAIN": 3
+  },
+  "exact_semantic_decisions": 10,
+  "by_predicate": {
+    "TASK_RESOLVED": {
+      "selected_attempted_processed": 10,
+      "dispositions": {
+        "SUPPORTED": 10
+      },
+      "archived_comparable_eligible": 10,
+      "archived_positive": 10,
+      "archived_negative": 0,
+      "exact_semantic_decisions": 10,
+      "archived_relative_confusion": {
+        "TP": 10,
+        "FP": 0,
+        "TN": 0,
+        "FN": 0
+      },
+      "decision_coverage": {
+        "numerator": 10,
+        "denominator": 10,
+        "ratio": 1.0
+      },
+      "positive_support_coverage": {
+        "numerator": 10,
+        "denominator": 10,
+        "ratio": 1.0
+      },
+      "negative_decision_coverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "ratio": null
+      },
+      "nondecisions": 0,
+      "extracted_selected_assertions": 10,
+      "association_reasons": {
+        "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE": 10
+      },
+      "parser_reasons": {
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS": 10
+      }
+    },
+    "TESTS_PASS": {
+      "selected_attempted_processed": 3,
+      "dispositions": {
+        "ABSTAIN": 3
+      },
+      "archived_comparable_eligible": 0,
+      "archived_positive": 0,
+      "archived_negative": 0,
+      "exact_semantic_decisions": 0,
+      "archived_relative_confusion": "NOT_APPLICABLE",
+      "decision_coverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "ratio": null
+      },
+      "positive_support_coverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "ratio": null
+      },
+      "negative_decision_coverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "ratio": null
+      },
+      "nondecisions": 3,
+      "extracted_selected_assertions": 3,
+      "association_reasons": {
+        "NO_DEFINITIVE_ADAPTER_RESULT": 3
+      },
+      "parser_reasons": {
+        "NO_APPLICABLE_ARCHIVED_TEST_REFERENCE": 3
+      }
+    }
+  },
+  "scope_denials": 0,
+  "auditor_invocations": 13,
+  "integrity_failures": 0,
+  "reference_independence": "NOT_PROVEN",
+  "independent_labels": 0,
+  "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+  "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+  "GATE_11": "BLOCKED",
+  "limitations": [
+    "EXPOSED_DEVELOPMENT_E1",
+    "CLAIMS_CLUSTERED_IN_FIVE_INSTANCES",
+    "ZERO_NEGATIVE_ARCHIVED_REFERENCES",
+    "NO_INDEPENDENT_LABELS",
+    "TESTS_PASS_REFERENCE_NOT_APPLICABLE",
+    "NO_UNIVERSE_EXTRAPOLATION"
+  ],
+  "NO_PUSH": true,
+  "FORMAL_I7": "NOT_COMPLETED",
+  "I7": "INCOMPLETE",
+  "PHYSICAL_C2": "DEFERRED_NOT_WAIVED",
+  "HISTORICAL_GLOBAL_INTEGRITY": "DEFERRED",
+  "INCIDENT_DOC_READ_001_EXPOSURE": "UNKNOWN",
+  "paired_control": {
+    "commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+    "tree": "a59f445f140c4e29e4aae8fecfc46db838810874",
+    "comparability": "SAME_FROZEN_COHORT_SEPARATE_STORES",
+    "selected": 13,
+    "processed": 13,
+    "dispositions": {
+      "SUPPORTED": 1,
+      "NOT_EVALUABLE": 1,
+      "VERIFICATION_ERROR": 11
+    },
+    "exact_semantic_decisions": 1,
+    "by_predicate": {
+      "TASK_RESOLVED": {
+        "selected_attempted_processed": 10,
+        "dispositions": {
+          "SUPPORTED": 1,
+          "VERIFICATION_ERROR": 9
+        },
+        "archived_comparable_eligible": 10,
+        "archived_positive": 10,
+        "archived_negative": 0,
+        "exact_semantic_decisions": 1,
+        "archived_relative_confusion": {
+          "TP": 1,
+          "FP": 0,
+          "TN": 0,
+          "FN": 0
+        },
+        "decision_coverage": {
+          "numerator": 1,
+          "denominator": 10,
+          "ratio": 0.1
+        },
+        "positive_support_coverage": {
+          "numerator": 1,
+          "denominator": 10,
+          "ratio": 0.1
+        },
+        "negative_decision_coverage": {
+          "numerator": 0,
+          "denominator": 0,
+          "ratio": null
+        },
+        "nondecisions": 9,
+        "extracted_selected_assertions": 1,
+        "association_reasons": {
+          "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE": 1,
+          "ADAPTER_ERROR": 9
+        },
+        "parser_reasons": {
+          "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS": 1,
+          "AMBIGUOUS_AGENT_CLAIM": 9
+        }
+      },
+      "TESTS_PASS": {
+        "selected_attempted_processed": 3,
+        "dispositions": {
+          "NOT_EVALUABLE": 1,
+          "VERIFICATION_ERROR": 2
+        },
+        "archived_comparable_eligible": 0,
+        "archived_positive": 0,
+        "archived_negative": 0,
+        "exact_semantic_decisions": 0,
+        "archived_relative_confusion": "NOT_APPLICABLE",
+        "decision_coverage": {
+          "numerator": 0,
+          "denominator": 0,
+          "ratio": null
+        },
+        "positive_support_coverage": {
+          "numerator": 0,
+          "denominator": 0,
+          "ratio": null
+        },
+        "negative_decision_coverage": {
+          "numerator": 0,
+          "denominator": 0,
+          "ratio": null
+        },
+        "nondecisions": 3,
+        "extracted_selected_assertions": 0,
+        "association_reasons": {
+          "SELECTED_CLAIM_NOT_EXACTLY_AUDITED": 1,
+          "ADAPTER_ERROR": 2
+        },
+        "parser_reasons": {
+          "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS": 1,
+          "AMBIGUOUS_AGENT_CLAIM": 2
+        }
+      }
+    },
+    "exact_decision_delta": 9,
+    "general_semantic_improvement": "NOT_ESTABLISHED_SMALL_CLUSTERED_POSITIVE_ONLY_ARCHIVED_DEVELOPMENT",
+    "legacy_graph_metadata": "UNMODIFIED_OLD_CODE_RECORDS_RUN010_GRAPH_LABELS_IN_SEPARATE_RUN011_CONTROL_DEV_STORE;NOT_HISTORICAL_RUN010_REEXECUTION"
+  },
+  "recovery": {
+    "native_helper": "PASS",
+    "recovered": 13,
+    "framework_receipts": 26,
+    "framework_checkpoints": 26,
+    "observations": 39,
+    "edges": 13,
+    "same_store_separate_observer": "PASS",
+    "unchanged_store_files": 138,
+    "producer_redispatch": false
+  },
+  "regressions": {
+    "passed": 255,
+    "phase": "PRECOMMIT_ON_SUBSEQUENTLY_COMMITTED_CODE",
+    "postcommit_checks": "FROZEN_IDENTITY_PREFLIGHT_ACTUAL_EXECUTION_NATIVE_RECOVERY"
+  },
+  "postfreeze_extractor_finding": {
+    "synthetic_cases": 6,
+    "non_assertions_accepted": 4,
+    "audit_instance_calls": 0,
+    "definitive_verdicts": 0,
+    "status": "KNOWN_LIMITATION_PRESERVED_FOR_FUTURE_AUTHORIZATION"
+  },
+  "raw_versus_exact": {
+    "schema": "pgop1.run011.raw-versus-exact.v1",
+    "new": {
+      "raw_auditor_verdicts": {
+        "SUPPORTED": 10,
+        "INSUFFICIENT_EVIDENCE": 3
+      },
+      "raw_definitive": 10,
+      "exact_selected_definitive": 10,
+      "note": "RAW_DEFINITE_FOR_ANOTHER_PREDICATE_OR_MESSAGE_CANNOT_TRANSFER_TO_SELECTED_CLAIM"
+    },
+    "old_control": {
+      "raw_auditor_verdicts": {
+        "SUPPORTED": 2,
+        "VERIFICATION_ERROR": 11
+      },
+      "raw_definitive": 2,
+      "exact_selected_definitive": 1,
+      "note": "RAW_DEFINITE_FOR_ANOTHER_PREDICATE_OR_MESSAGE_CANNOT_TRANSFER_TO_SELECTED_CLAIM"
+    }
+  }
+}

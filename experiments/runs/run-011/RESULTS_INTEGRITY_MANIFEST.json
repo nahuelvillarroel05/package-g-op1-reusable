@@ -1,0 +1,44 @@
+{
+  "schema": "pgop1.run011.public-integrity.v1",
+  "runtime_commit": "8760fa683c3da9235bccdefb15219eaedde59c8a",
+  "runtime_tree": "a6ada8603c5de944ac4d4269ead0c8f62c1aa903",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "1a4a53199f91266275ad498e67a0e5c19dc9117308daae7f4e4d4458a52dc28e",
+      "bytes": 2539
+    },
+    {
+      "path": "EXECUTION_RESULTS.json",
+      "sha256": "0c6bdf56c3448493ad7dcb10c9e9fda61bfb2ca21e58d10cb61a93b84472e9a2",
+      "bytes": 7566
+    },
+    {
+      "path": "CODE_REFERENCE.json",
+      "sha256": "aaa2d72175d7a92497341fd7ae0a5bd8994f6c6f165527a1db7e411f0c76d572",
+      "bytes": 546
+    },
+    {
+      "path": "FINDINGS.json",
+      "sha256": "0b66ca4fc076cf4e2825bca7a96d9eea07a8c3e9f7a42bd5eef78406aa356838",
+      "bytes": 1587
+    },
+    {
+      "path": "SOL_XHIGH_TECHNICAL_AUDIT.md",
+      "sha256": "de8ea03b7b8272aa28546ef3bc784a18650672e64f743aeee59cdbc5d1e48de0",
+      "bytes": 1746
+    },
+    {
+      "path": "contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "sha256": "31e0adfa22892b95519e23bd77478ba53694d584a9b6d5332feb7f184acc0572",
+      "bytes": 4976
+    },
+    {
+      "path": "contracts/experimental-e1-v1/CONTRACT.json",
+      "sha256": "9653f3b6515c4d2a8445a2d7483aa36bb6dada3bb2b3aa46a6da661615aff365",
+      "bytes": 2979
+    }
+  ],
+  "self_hash": "EXCLUDED_TO_AVOID_CIRCULARITY",
+  "NO_PUSH": true
+}

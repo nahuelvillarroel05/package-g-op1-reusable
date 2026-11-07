@@ -1,0 +1,35 @@
+{
+  "schema": "pgop1.run011.public-findings.v1",
+  "findings": [
+    {
+      "id": "F01",
+      "status": "REPAIRED_PROSPECTIVELY",
+      "finding": "Native recovery compared four-field Engine bindings with two fields and required optional inline values. New native recovery passed13/13."
+    },
+    {
+      "id": "F02",
+      "status": "BOUNDED_COVERAGE_GAIN",
+      "finding": "Exact per-claim associations increased from1 to10 on the same13claims; three test predicates abstained for lack of applicable references."
+    },
+    {
+      "id": "F03",
+      "status": "KNOWN_POSTFREEZE_EXTRACTOR_LIMIT",
+      "finding": "Four of six purely synthetic context probes accepted a non-assertion as positive extraction. No auditor call or definitive verdict was made by those probes. Candidate unchanged."
+    },
+    {
+      "id": "F04",
+      "status": "UNMEASURED_NEGATIVE_CLASS",
+      "finding": "Ten comparable claims have positive archived outcomes; zero negative references. General false-support safety cannot be inferred."
+    },
+    {
+      "id": "F05",
+      "status": "HISTORICAL_SELECTION_DIAGNOSIS",
+      "finding": "RUN010 original63 dispositions preserved. Prospective review identified60direct assertions and3future-intent non-assertions. Two historical extraction misses are correct non-assertion rejections, not defects to accept."
+    },
+    {
+      "id": "F06",
+      "status": "KNOWN_CONSERVATIVE_ABSTENTION",
+      "finding": "Descriptive negation within a bug description can still suppress a direct completion assertion; no broad grammar repair claimed."
+    }
+  ]
+}
