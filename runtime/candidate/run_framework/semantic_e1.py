@@ -59,9 +59,14 @@ def associate(claim, audit):
     if verdict in {'VERIFICATION_ERROR', 'INTEGRITY_FAILURE'}:
         return {'disposition': 'VERIFICATION_ERROR', 'semantic': False,
                 'association': 'ADAPTER_ERROR', 'auditor_verdict': verdict}
-    if audit.get('schema') == 'pgop1.swebench.selected-claim-audit.v2':
+    if audit.get('schema') in {'pgop1.swebench.selected-claim-audit.v2',
+                               'pgop1.swebench.selected-claim-audit.v3'}:
         try:
-            identity_matches = (audit.get('SELECTED_CLAIM_BINDING') == selected_claim_binding(claim)
+            expected_binding = selected_claim_binding(claim)
+            if audit.get('schema') == 'pgop1.swebench.selected-claim-audit.v2':
+                expected_binding.pop('assertion_polarity', None)
+                expected_binding.pop('asserted_value', None)
+            identity_matches = (audit.get('SELECTED_CLAIM_BINDING') == expected_binding
                                 and audit.get('instance_id') == claim['instance_id'])
         except (KeyError, TypeError, AuditError):
             identity_matches = False
@@ -107,6 +112,11 @@ def validate_runtime_policy(policy):
         raise FrameworkError('SEMANTIC_E1_PROTECTION_POLICY_INVALID')
 
 
+def _stop_after_audit(audit):
+    """Integrity failures are terminal for dispatch, distinct from parse errors."""
+    return audit.get('AUDIT_VERDICT') == 'INTEGRITY_FAILURE'
+
+
 def bootstrap(args):
     # Scope is first-party launch metadata, never a reference label/body. Its
     # digest must be supplied out of band by the frozen launch command.
@@ -149,6 +159,7 @@ def execute(args):
         raise FrameworkError('SEMANTIC_E1_FRESH_ENGINE_REQUIRED')
     engine = Engine(engine_root)
     rows = []
+    stop_reason = None
     begun = time.monotonic_ns()
     refs = scope['source_references']
     allowed = set(scope['allowed_sources'])
@@ -202,13 +213,24 @@ def execute(args):
                          'disposition': row['disposition'], 'semantic': row['semantic'],
                          'association': row['association'], 'capsule_path': str(capsule),
                          'capsule_sha256': digest(raw), 'receipt_sha256': receipt['receipt_sha256']})
+            if _stop_after_audit(audit):
+                stop_reason = 'INTEGRITY_FAILURE_STOP_NO_FURTHER_DISPATCH'
+                break
+        if stop_reason:
+            break
         _write(Path(args.output) / 'batches' / f'{offset//10+1:03d}.json',
                {'batch': offset//10+1, 'completed': [r['claim_id'] for r in rows],
                 'producer_redispatch': False})
         print(json.dumps({'completed_claims': len(rows), 'selected': len(claims)}), flush=True)
     _write(Path(args.output) / 'LEDGER.json', {'rows': rows, 'auditor_invocations': len(rows),
+           'selected_claim_count': len(claims), 'attempted_claim_count': len(rows),
+           'remaining_claim_ids': [c['claim_id'] for c in claims[len(rows):]],
+           'execution_status': 'STOPPED_ON_INTEGRITY_FAILURE' if stop_reason else 'COMPLETE',
+           'stop_reason': stop_reason,
            'engine_root': str(engine_root), 'duration_ns': time.monotonic_ns()-begun,
            'scope_denials': len(guard.denied_events)})
+    if stop_reason:
+        raise FrameworkError(stop_reason)
 
 
 def recover(args):

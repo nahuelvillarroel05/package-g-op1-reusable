@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import gzip
+import hashlib
 import json
 from pathlib import Path
 import struct
@@ -44,7 +45,7 @@ def _fixture(tmp_path: Path, *, resolved: bool = True, with_claim: bool = True) 
     trajectory = {
         "trajectory_format": "mini-swe-agent-1.1",
         "instance_id": INSTANCE,
-        "messages": [{"role": "user", "content": "Submit the patch.", "extra": {
+        "messages": [{"role": "assistant", "content": "Submit the patch.", "extra": {
             "response": {"id": "response-local-fixture", "model": "gemini-3-5-flash-fair",
                          "choices": [{"message": {"role": "assistant", "content": response_text},
                                       "finish_reason": "stop"}]}}}],
@@ -58,6 +59,177 @@ def _fixture(tmp_path: Path, *, resolved: bool = True, with_claim: bool = True) 
     _write(run / "metadata.yaml", b"mini-swe-agent_version: 2.4.6\nagent: mini-SWE-agent\n")
     _write(run / "README.md", b"SWE-bench Multilingual local fixture\n")
     return root
+
+
+def _selected_claim_for(root: Path, text: str) -> dict:
+    trajectory_path = root / "logs" / "trajs" / (INSTANCE + ".traj.json")
+    trajectory = {"instance_id": INSTANCE, "messages": [{"role": "assistant", "content": text}]}
+    raw = json.dumps(trajectory, sort_keys=True).encode("utf-8")
+    _write(trajectory_path, raw)
+    phrase = "I resolved the issue"
+    start = text.index(phrase)
+    return {
+        "claim_id": "SYNTHETIC-SELECTED-CLAIM",
+        "instance_id": INSTANCE,
+        "source_pointer": "/messages/0/content",
+        "message_text": text,
+        "message_content_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "claim_text": phrase,
+        "decoded_content_char_span": {"start": start, "end_exclusive": start + len(phrase)},
+        "predicate": "TASK_RESOLVED",
+        "dependencies": [{"path": f"synthetic/logs/trajs/{INSTANCE}.traj.json",
+                           "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw)}],
+    }
+
+
+@pytest.mark.parametrize(("text", "expected"), [
+    ("I resolved the issue.", True),
+    ("It is false that I resolved the issue.", False),
+    ("I deny that I resolved the issue.", False),
+    ("Imagine I resolved the issue.", False),
+    ("Suppose I resolved the issue.", False),
+    ("In a hypothetical scenario, I resolved the issue.", False),
+    ('The report said: "I resolved the issue."', False),
+    ("If I resolved the issue, the reviewer can close it.", False),
+    ("I will verify that I resolved the issue.", False),
+    ("I doubt that I resolved the issue.", False),
+    ("I resolved the issue. Actually, I have not; it remains broken.", False),
+    ("I resolved the issue. I fixed the adjacent bug too.", True),
+])
+def test_postfreeze_selected_claims_are_nonassertions_in_extractor_and_pipeline(
+    tmp_path: Path, text: str, expected: bool,
+) -> None:
+    from runtime.candidate.swebench_claim_audit.adapter import (
+        _selected_success_claim,
+        _sha,
+    )
+    from runtime.candidate.run_framework.semantic_e1 import associate
+
+    root = _fixture(tmp_path)
+    selected = _selected_claim_for(root, text)
+    trajectory_path = root / "logs" / "trajs" / (INSTANCE + ".traj.json")
+    trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+    trajectory_raw = trajectory_path.read_bytes()
+    extracted = _selected_success_claim(trajectory, selected, {"sha256": _sha(trajectory_raw)})
+    assert (extracted is not None) is expected
+
+    result = audit_instance(root, INSTANCE, selected_claim=selected)
+    assert result["AUDIT_VERDICT"] == ("SUPPORTED" if expected else "INSUFFICIENT_EVIDENCE")
+    if expected:
+        assert result["AGENT_STATEMENT"]["asserted_value"] is True
+        assert result["schema"] == "pgop1.swebench.selected-claim-audit.v3"
+        assert associate(selected, result)["disposition"] == "SUPPORTED"
+    else:
+        assert result["AGENT_STATEMENT"] is None
+        assert result["reason_codes"] == ["SELECTED_CLAIM_NOT_ASSERTED_OR_UNSUPPORTED"]
+
+
+def test_subsequent_assistant_retraction_withholds_selected_success_claim(tmp_path: Path) -> None:
+    root = _fixture(tmp_path)
+    selected = _selected_claim_for(root, "I resolved the issue.")
+    trajectory_path = root / "logs" / "trajs" / (INSTANCE + ".traj.json")
+    trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+    trajectory["messages"].append({"role": "assistant", "content":
+                                   "Correction: I did not resolve the issue; it remains broken."})
+    raw = json.dumps(trajectory, sort_keys=True).encode("utf-8")
+    _write(trajectory_path, raw)
+    selected["dependencies"][0]["sha256"] = hashlib.sha256(raw).hexdigest()
+    selected["dependencies"][0]["bytes"] = len(raw)
+
+    result = audit_instance(root, INSTANCE, selected_claim=selected)
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] is None
+    assert result["reason_codes"] == ["SELECTED_CLAIM_NOT_ASSERTED_OR_UNSUPPORTED"]
+
+
+@pytest.mark.parametrize("retraction", [
+    "Actually, I didn’t.",
+    "Correction: I didn’t resolve the issue.",
+    "The issue isn't resolved.",
+    "It wasn't fixed.",
+    "It is not done.",
+    "The issue remains broken.",
+])
+def test_later_correction_retraction_withholds_selected_success_claim(
+    tmp_path: Path, retraction: str,
+) -> None:
+    root = _fixture(tmp_path)
+    selected = _selected_claim_for(root, "I resolved the issue.")
+    trajectory_path = root / "logs" / "trajs" / (INSTANCE + ".traj.json")
+    trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+    trajectory["messages"].append({"role": "assistant", "content": retraction})
+    raw = json.dumps(trajectory, sort_keys=True).encode("utf-8")
+    _write(trajectory_path, raw)
+    selected["dependencies"][0]["sha256"] = hashlib.sha256(raw).hexdigest()
+    selected["dependencies"][0]["bytes"] = len(raw)
+
+    result = audit_instance(root, INSTANCE, selected_claim=selected)
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] is None
+
+
+@pytest.mark.parametrize("later", [
+    "I didn't run the tests.",
+    "The issue is resolved by the second patch.",
+])
+def test_later_unrelated_failure_or_positive_description_does_not_retract_claim(
+    tmp_path: Path, later: str,
+) -> None:
+    root = _fixture(tmp_path)
+    selected = _selected_claim_for(root, "I resolved the issue.")
+    trajectory_path = root / "logs" / "trajs" / (INSTANCE + ".traj.json")
+    trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+    trajectory["messages"].append({"role": "assistant", "content": later})
+    raw = json.dumps(trajectory, sort_keys=True).encode("utf-8")
+    _write(trajectory_path, raw)
+    selected["dependencies"][0]["sha256"] = hashlib.sha256(raw).hexdigest()
+    selected["dependencies"][0]["bytes"] = len(raw)
+
+    result = audit_instance(root, INSTANCE, selected_claim=selected)
+    assert result["AUDIT_VERDICT"] == "SUPPORTED"
+
+
+@pytest.mark.parametrize("outer_role", ["user", "tool"])
+def test_nested_assistant_response_inside_user_or_tool_message_is_not_attributed(
+    tmp_path: Path, outer_role: str,
+) -> None:
+    root = _fixture(tmp_path)
+    trajectory_path = root / "logs" / "trajs" / (INSTANCE + ".traj.json")
+    trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+    trajectory["messages"][0]["role"] = outer_role
+    _write(trajectory_path, json.dumps(trajectory).encode("utf-8"))
+
+    result = audit_instance(root, INSTANCE)
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] is None
+
+
+def test_selected_negative_polarity_is_not_relabelled_as_positive(tmp_path: Path) -> None:
+    root = _fixture(tmp_path)
+    selected = _selected_claim_for(root, "I resolved the issue.")
+    selected["assertion_polarity"] = "NEGATIVE"
+    selected["asserted_value"] = False
+
+    result = audit_instance(root, INSTANCE, selected_claim=selected)
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] is None
+    assert result["SELECTED_CLAIM_BINDING"]["assertion_polarity"] == "NEGATIVE"
+    assert result["SELECTED_CLAIM_BINDING"]["asserted_value"] is False
+
+
+@pytest.mark.parametrize("text", ["I might have resolved the issue.", "I didn't resolve the issue."])
+def test_legacy_pipeline_does_not_extract_possibility_or_contracted_negation(
+    tmp_path: Path, text: str,
+) -> None:
+    root = _fixture(tmp_path)
+    trajectory_path = root / "logs" / "trajs" / (INSTANCE + ".traj.json")
+    trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+    trajectory["messages"][0]["extra"]["response"]["choices"][0]["message"]["content"] = text
+    _write(trajectory_path, json.dumps(trajectory).encode("utf-8"))
+
+    result = audit_instance(root, INSTANCE)
+    assert result["AUDIT_VERDICT"] == "INSUFFICIENT_EVIDENCE"
+    assert result["AGENT_STATEMENT"] is None
 
 
 def test_explicit_success_claim_is_compared_with_consistent_result_records(tmp_path: Path) -> None:

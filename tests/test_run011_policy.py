@@ -21,3 +21,15 @@ def test_run011_policy_is_versioned_and_keeps_reserved_sources_closed():
     assert policy["reserved_data"]["credentials"] == "NEVER_OPEN"
     with pytest.raises(ProtectionPolicyError, match="digest mismatch"):
         load_protection_policy(path, "0" * 64)
+
+
+def test_run012_policy_is_versioned_and_keeps_reserved_sources_closed():
+    path = Path(__file__).parents[1] / "experiments" / "policies" / "run012-read-protection-v1.json"
+    raw = path.read_bytes()
+
+    policy = load_protection_policy(path, hashlib.sha256(raw).hexdigest())
+
+    assert policy["policy_id"] == "RUN012_E1_READ_PROTECTION"
+    assert policy["reserved_data"]["gold"] == "NEVER_OPEN"
+    assert policy["reserved_data"]["credentials"] == "NEVER_OPEN"
+    assert policy["runtime_limits"]["equivalent_to_os_sandbox"] is False

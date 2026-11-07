@@ -571,6 +571,20 @@
       "native_recovery": "13_OF13_PASS",
       "scope_limit": "13_CLAIMS_5_INSTANCES_10_POSITIVE_ARCHIVED_TASK_REFERENCES_3_TESTS_UNREFERENCED",
       "postfreeze_extractor_limit": "4_SYNTHETIC_NONASSERTIONS_ACCEPTED_EXTRACTION_ONLY_NO_DEFINITIVE_VERDICTS"
+    },
+    {
+      "ID": "RUN-012",
+      "record_kind": "PROSPECTIVE_CAMPAIGN",
+      "directory": "experiments/runs/run-012",
+      "ENGINEERING_MODE": "E1",
+      "status": "PREPARED_OWNER_AUTHORIZED_CONDITIONAL_AUTHENTIC_NEGATIVE_ENTRY",
+      "campaign_execution": "NOT_EXECUTED",
+      "authority": "Owner RUN012 order issued 2026-11-07",
+      "contract": "experiments/runs/run-012/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "control_commit": "8760fa683c3da9235bccdefb15219eaedde59c8a",
+      "independent_labels": 0,
+      "GATE_11": "BLOCKED",
+      "NO_PUSH": true
     }
   ],
   "pilots": [
