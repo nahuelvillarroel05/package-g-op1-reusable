@@ -544,6 +544,22 @@
       ],
       "publication_status": "LOCAL_ONLY_NO_PUSH",
       "formal_qualification": "NOT_ACHIEVED"
+    },
+    {
+      "ID": "RUN-011",
+      "record_kind": "OWNER_AUTHORIZED_E1_EXECUTION_PENDING",
+      "directory": "experiments/runs/run-011",
+      "public_evidence_path": "experiments/runs/run-011",
+      "contract_path": "experiments/runs/run-011/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "result_path": "experiments/runs/run-011/EXECUTION_RESULTS.json",
+      "ENGINEERING_MODE": "E1",
+      "status": "AUTHORIZED_EXECUTION_PENDING_FREEZE",
+      "campaign_execution": "NOT_STARTED",
+      "cohort_size": 13,
+      "paired_control_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+      "independently_adjudicated_claims": 0,
+      "publication_status": "LOCAL_ONLY_NO_PUSH",
+      "formal_qualification": "NOT_ACHIEVED"
     }
   ],
   "pilots": [

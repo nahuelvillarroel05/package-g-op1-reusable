@@ -1,0 +1,85 @@
+{
+  "schema": "pgop1.run011.e1-contract.v1",
+  "contract_version": "pgop1.run011.semantic-claim-contract.v1",
+  "run_id": "RUN011",
+  "engineering_mode": "E1",
+  "authority": "OWNER_AUTHORIZED_BOUNDED_RUN011_ONLY",
+  "candidate_freeze": "COMMIT_AND_TREE_BEFORE_ANY_RUN011_OR_PAIRED_OUTPUT",
+  "selection_freeze": "ORDER_AND_BINDINGS_FROZEN_BEFORE_CANDIDATE_OUTPUT",
+  "cohort": {
+    "selected_claims": 13,
+    "instances": 5,
+    "predicates": {
+      "TASK_RESOLVED": 10,
+      "TESTS_PASS": 3
+    },
+    "archived_reference_applicability": {
+      "TASK_RESOLVED": 10,
+      "TESTS_PASS": 0
+    },
+    "archived_negative_references": 0,
+    "independent_adjudications": 0,
+    "independent_holdout": false
+  },
+  "exact_association": {
+    "required_fields": [
+      "instance_id",
+      "message_index",
+      "message_content_sha256",
+      "message_text",
+      "decoded_content_char_span",
+      "predicate",
+      "claim_text",
+      "evidence_binding"
+    ],
+    "task_level_transfer": false
+  },
+  "claim_semantics": {
+    "TASK_RESOLVED": "Compare only the exact selected task-resolution proposition with its bound archived task boolean.",
+    "TESTS_PASS": "Preserve without a definite truth comparison where no matching archived test reference exists.",
+    "non_assertions": [
+      "FUTURE_INTENT",
+      "CONDITIONAL",
+      "HYPOTHETICAL",
+      "QUOTED_OR_THIRD_PARTY",
+      "RETRACTED",
+      "AMBIGUOUS_ATTRIBUTION",
+      "UNSUPPORTED_PREDICATE"
+    ],
+    "explicit_negation": "PRESERVE_POLARITY; DO NOT NORMALIZE TO AFFIRMATIVE",
+    "non_assertion_disposition": "NO_DEFINITE_COMPARISON_UNLESS_CLAIM_AND_REFERENCE_EACH_PASS_APPLICABILITY"
+  },
+  "execution": {
+    "max_units": 100,
+    "batch_size": 10,
+    "logical_results_runs": 1,
+    "campaign_retries": false,
+    "failed_attempt_identity": "PRESERVE; FRESH_NAMESPACE_IF_CONTINUATION_IS_ALLOWED",
+    "paired_control_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+    "paired_denominator": "IDENTICAL_FROZEN_COHORT",
+    "paired_storage": "SEPARATE_DEVELOPMENT_STORE_AND_NAMESPACE",
+    "recovery": "FRESH_PROCESS_READ_ONLY_NO_RESUME_NO_REDISPATCH"
+  },
+  "metrics": {
+    "terminal_classes": [
+      "SUPPORTED",
+      "CONTRADICTED",
+      "ABSTAIN",
+      "VERIFICATION_ERROR",
+      "NOT_EVALUABLE"
+    ],
+    "exact_semantic_decisions": "EXACT_ASSOCIATION_AND_APPLICABLE_REFERENCE_ONLY",
+    "archived_relative_confusion": "TASK_RESOLVED_APPLICABLE_REFERENCE_ONLY",
+    "independent_precision": "NOT_COMPUTABLE",
+    "independent_recall": "NOT_COMPUTABLE",
+    "gate_11": "BLOCKED",
+    "false_support_on_negative_class": "UNMEASURED_NO_ARCHIVED_NEGATIVE_REFERENCES",
+    "false_contradiction": "MEASURABLE_ONLY_AGAINST_10_ARCHIVED_POSITIVE_REFERENCES"
+  },
+  "publication": {
+    "public_content": "AGGREGATES_HASHES_AND_SCOPED_LIMITATIONS_ONLY",
+    "private_content": "NO_TRAJECTORY_BODIES_CLAIM_TEXT_PRIVATE_PATHS_OR_GOLD",
+    "push": false,
+    "main_or_src_mutation": false
+  }
+}

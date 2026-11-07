@@ -1,0 +1,21 @@
+{
+  "schema": "pgop1.read-protection-policy.v1",
+  "classification": "public",
+  "policy_id": "RUN011_E1_READ_PROTECTION",
+  "version": 1,
+  "read_scope": {
+    "protected_root_ids": ["RUN011_PRIVATE_ARCHIVED_SOURCE_ROOTS"],
+    "allowed_source_ids": ["RUN011_FROZEN_SOURCE_SCOPE", "PINNED_PUBLIC_REFERENCE_CATALOGS"]
+  },
+  "reserved_data": {
+    "gold": "NEVER_OPEN",
+    "credentials": "NEVER_OPEN",
+    "protected_directories": "NEVER_OPEN",
+    "classification_separation": "REQUIRED_BEFORE_RESERVED_REFERENCE_ACCESS"
+  },
+  "runtime_limits": {
+    "scope_mechanism": "CONTROLLED_PROCESS_LOCAL_CPYTHON_AUDIT_HOOK",
+    "equivalent_to_os_sandbox": false,
+    "child_process_access": "PROHIBITED_UNLESS_EXPLICITLY_SCOPED"
+  }
+}

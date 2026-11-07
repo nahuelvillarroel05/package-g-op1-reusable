@@ -29,7 +29,7 @@ def load_protection_policy(path, expected_sha256: str) -> dict:
         raise ProtectionPolicyError("unsupported protection policy version")
     if value["classification"] != "public":
         raise ProtectionPolicyError("protection policy must be explicitly classified public")
-    if value["policy_id"] != "RUN010_E1_READ_PROTECTION":
+    if value["policy_id"] not in {"RUN010_E1_READ_PROTECTION", "RUN011_E1_READ_PROTECTION"}:
         raise ProtectionPolicyError("protection policy identity is invalid")
     scope = value["read_scope"]
     if (not isinstance(scope, dict) or set(scope) != {"protected_root_ids", "allowed_source_ids"}

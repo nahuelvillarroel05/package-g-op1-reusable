@@ -246,15 +246,16 @@ def _explicit_success_claim(trajectory: dict[str, object]) -> dict[str, object] 
     return result
 
 
-def _asserted_success_claim(text: str) -> re.Match[str] | None:
+def _asserted_success_claim(text: str, *, start: int | None = None,
+                            pattern: re.Pattern = SUCCESS_CLAIM_RE) -> re.Match[str] | None:
     """Accept direct first-person completion statements only.
 
     Quoted, hedged, negated, and interrogative text is not an attributable
     assertion for this adapter. This deliberately favors missed claims over
     false positives.
     """
-    match = SUCCESS_CLAIM_RE.search(text)
-    if match is None or "?" in text:
+    match = pattern.search(text, start or 0)
+    if match is None or (start is not None and match.start() != start) or "?" in text:
         return None
     if _inside_markdown_fence(text, match.start()):
         return None
@@ -292,6 +293,73 @@ def _asserted_success_claim(text: str) -> re.Match[str] | None:
     if opening >= 0 and closing >= 0:
         return None
     return match
+
+
+TESTS_PASS_CLAIM_RE = re.compile(
+    r"\b(?:all\s+(?:existing\s+|new\s+)?tests?\s+(?:now\s+)?pass(?:ed)?|"
+    r"(?:the\s+)?(?:test\s+suite|tests)\s+(?:now\s+)?pass(?:ed)?\s+successfully)\b", re.I)
+
+
+def selected_claim_binding(claim: dict) -> dict:
+    """Public shape for an exact selected assertion, independent of verdict."""
+    trajectory = [d for d in claim['dependencies']
+                  if str(d['path']).replace('\\', '/').endswith(
+                      '/logs/trajs/' + claim['instance_id'] + '.traj.json')]
+    if len(trajectory) != 1:
+        raise AuditError('SELECTED_CLAIM_IDENTITY_MISMATCH', 'one trajectory commitment is required')
+    return {'claim_id': claim['claim_id'], 'instance_id': claim['instance_id'],
+            'source_pointer': claim['source_pointer'],
+            'message_content_sha256': claim['message_content_sha256'],
+            'span': claim['decoded_content_char_span'], 'predicate': claim['predicate'],
+            'trajectory_sha256': trajectory[0]['sha256']}
+
+
+def _selected_success_claim(trajectory: dict, selected: dict, trajectory_ref: dict) -> dict | None:
+    """Locate one assertion in the original message; retain all context guards.
+
+    Distinct completion messages are no longer ambiguous when the caller binds
+    one exact assertion. No other message/span/predicate can supply its verdict.
+    """
+    try:
+        binding = selected_claim_binding(selected)
+        loc = re.fullmatch(r'/messages/(0|[1-9][0-9]*)/content', selected['source_pointer'])
+        if loc is None:
+            raise ValueError('locator')
+        message = trajectory['messages'][int(loc.group(1))]
+        text = message['content']
+        span = selected['decoded_content_char_span']
+        start, end = span['start'], span['end_exclusive']
+        if (selected['instance_id'] != trajectory['instance_id']
+                or message.get('role') != 'assistant' or text != selected['message_text']
+                or _sha(text.encode()) != binding['message_content_sha256']
+                or binding['trajectory_sha256'] != trajectory_ref['sha256']
+                or type(start) is not int or type(end) is not int
+                or not 0 <= start < end <= len(text)
+                or text[start:end] != selected['claim_text']):
+            raise ValueError('identity')
+    except (KeyError, TypeError, IndexError, ValueError) as exc:
+        raise AuditError('SELECTED_CLAIM_IDENTITY_MISMATCH', 'selected assertion does not bind source') from exc
+    predicate = selected['predicate']
+    pattern = SUCCESS_CLAIM_RE if predicate == 'TASK_RESOLVED' else TESTS_PASS_CLAIM_RE if predicate == 'TESTS_PASS' else None
+    if pattern is None:
+        return None
+    matches = [m for m in pattern.finditer(text) if start <= m.start() < m.end() <= end]
+    if len(matches) != 1:
+        return None
+    match = matches[0]
+    if _asserted_success_claim(text, start=match.start(), pattern=pattern) is None:
+        return None
+    sentence_start = max(text.rfind(mark, 0, match.start()) for mark in ('.', '!', '?', '\n')) + 1
+    prefix = text[sentence_start:match.start()]
+    # Purpose clauses and future intent are not reports of a completed outcome.
+    if re.search(r"\b(?:will|would|should|ensure|ensuring|verify|check|don't|won't|wasn't|hadn't|false|untrue|incorrect|doubt|doubtful)\b", prefix, re.I):
+        return None
+    if re.search(r"\b(?:don't|didn't|haven't|hasn't|isn't|wasn't|not\s+(?:pass|passed|resolved|fixed|complete))\b", text[match.end():], re.I):
+        return None
+    return {'text': text, 'matched_text': match.group(),
+            'match_span': [match.start(), match.end()], 'source_pointer': selected['source_pointer'],
+            'source_pointers': [selected['source_pointer']], 'predicate': predicate,
+            'asserted_value': True, 'response_id': None, 'model': None}
 
 
 def _inside_markdown_fence(text: str, position: int) -> bool:
@@ -441,11 +509,15 @@ def _base(instance_id: str) -> dict[str, object]:
     }
 
 
-def audit_instance(data_root: str | os.PathLike[str], instance_id: str) -> dict[str, object]:
+def audit_instance(data_root: str | os.PathLike[str], instance_id: str, *,
+                   selected_claim: dict | None = None) -> dict[str, object]:
     """Audit one case against the frozen local run bundle and catalog records.
 
     All file paths are resolved beneath ``data_root`` and read-only. The output
     verdict is explicitly scoped to the local trajectory, report and catalog.
+    With ``selected_claim``, v2 binds one message/span/predicate and trajectory
+    hash; TESTS_PASS never borrows the archived task-resolution boolean. Omitting
+    it retains the original trajectory-wide completion contract.
     """
     result = _base(instance_id)
     try:
@@ -491,7 +563,11 @@ def audit_instance(data_root: str | os.PathLike[str], instance_id: str) -> dict[
         trajectory = _json(trajectory_raw, "trajectory")
         if not isinstance(trajectory, dict) or trajectory.get("instance_id") != instance_id:
             raise AuditError("WRONG_INSTANCE_BINDING", "trajectory does not bind to the requested instance")
-        claim = _explicit_success_claim(trajectory)
+        claim = (_explicit_success_claim(trajectory) if selected_claim is None else
+                 _selected_success_claim(trajectory, selected_claim, trajectory_ref))
+        if selected_claim is not None:
+            result['schema'] = 'pgop1.swebench.selected-claim-audit.v2'
+            result['SELECTED_CLAIM_BINDING'] = selected_claim_binding(selected_claim)
 
         test_raw, test_compressed_ref = _read_bytes(root, log_rel / "test_output.txt.gz", MAX_GZIP_BYTES)
         test_output = _gzip_bytes(test_raw)
@@ -548,9 +624,18 @@ def audit_instance(data_root: str | os.PathLike[str], instance_id: str) -> dict[
         result["SOURCE_PROVENANCE"]["claimed_model_name"] = prediction.get("model_name_or_path", "UNKNOWN")
         if claim is None:
             result["AUDIT_VERDICT"] = "INSUFFICIENT_EVIDENCE"
-            result["reason_codes"] = ["NO_EXPLICIT_COMPLETION_CLAIM"]
+            result["reason_codes"] = ['SELECTED_CLAIM_NOT_ASSERTED_OR_UNSUPPORTED'] if selected_claim is not None else ["NO_EXPLICIT_COMPLETION_CLAIM"]
             result["EVALUATOR_RESULT"] = {"reported_resolved": report_resolved,
                                            "result_scope": "LOCAL_REPORT_AND_EXPERIMENT_CATALOG_ONLY"}
+            return result
+
+        if selected_claim is not None and claim['predicate'] == 'TESTS_PASS':
+            result['AGENT_STATEMENT'] = claim
+            result['AUDIT_VERDICT'] = 'INSUFFICIENT_EVIDENCE'
+            result['reason_codes'] = ['NO_APPLICABLE_ARCHIVED_TEST_REFERENCE']
+            result['EVALUATOR_RESULT'] = {'predicate_checked': 'TESTS_PASS',
+                                          'observed_value': 'UNKNOWN',
+                                          'result_scope': 'NO_APPLICABLE_ARCHIVED_TEST_REFERENCE'}
             return result
 
         claim["predicate"] = "TASK_RESOLVED"

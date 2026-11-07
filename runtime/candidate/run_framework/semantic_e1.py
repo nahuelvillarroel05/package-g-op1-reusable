@@ -1,8 +1,8 @@
-"""RUN010 archived-claim measurement; no extractor changes or benchmark execution.
+"""Prospective selected-claim E1 measurement and native read-only recovery.
 
 The caller freezes config, selection, and an explicit exact source scope. The
-existing SWE adapter owns verdicts; this module only associates them with the
-selected claim and persists their unmodified output using Campaign and Engine.
+SWE adapter owns verdicts; this module associates the explicitly bound selected
+claim and persists its output using Campaign and Engine. No benchmark execution.
 """
 from __future__ import annotations
 
@@ -14,8 +14,8 @@ import time
 from .core import canonical, digest, load_config, FrameworkError, _write_immutable
 from .read_scope import install_read_scope, require_read_scope
 from .protection_policy import load_protection_policy
-from runtime.candidate.context_engine import Engine, pointer
-from runtime.candidate.swebench_claim_audit.adapter import audit_instance
+from runtime.candidate.context_engine import Engine, pointer, canonical_json
+from runtime.candidate.swebench_claim_audit.adapter import audit_instance, selected_claim_binding, AuditError
 
 
 def normalize_claim(original, data_root):
@@ -59,6 +59,23 @@ def associate(claim, audit):
     if verdict in {'VERIFICATION_ERROR', 'INTEGRITY_FAILURE'}:
         return {'disposition': 'VERIFICATION_ERROR', 'semantic': False,
                 'association': 'ADAPTER_ERROR', 'auditor_verdict': verdict}
+    if audit.get('schema') == 'pgop1.swebench.selected-claim-audit.v2':
+        try:
+            identity_matches = (audit.get('SELECTED_CLAIM_BINDING') == selected_claim_binding(claim)
+                                and audit.get('instance_id') == claim['instance_id'])
+        except (KeyError, TypeError, AuditError):
+            identity_matches = False
+        if not identity_matches:
+            return {'disposition': 'NOT_EVALUABLE', 'semantic': False,
+                    'association': 'SELECTED_CLAIM_IDENTITY_MISMATCH', 'auditor_verdict': verdict}
+        if 'SELECTED_CLAIM_NOT_ASSERTED_OR_UNSUPPORTED' in audit.get('reason_codes', []):
+            return {'disposition': 'NOT_EVALUABLE', 'semantic': False,
+                    'association': 'SELECTED_CLAIM_NOT_ASSERTED_OR_UNSUPPORTED', 'auditor_verdict': verdict}
+        if (statement.get('predicate') != claim['predicate']
+                or claim['source_pointer'] not in pointers
+                or statement.get('text') != claim['message_text'] or not contained):
+            return {'disposition': 'NOT_EVALUABLE', 'semantic': False,
+                    'association': 'SELECTED_CLAIM_NOT_EXACTLY_AUDITED', 'auditor_verdict': verdict}
     if verdict in {'INSUFFICIENT_EVIDENCE', 'ABSTAIN'}:
         if 'NO_EXPLICIT_COMPLETION_CLAIM' in audit.get('reason_codes', []):
             return {'disposition': 'NOT_EVALUABLE', 'semantic': False,
@@ -131,7 +148,7 @@ def execute(args):
     if engine_root.exists():
         raise FrameworkError('SEMANTIC_E1_FRESH_ENGINE_REQUIRED')
     engine = Engine(engine_root)
-    rows, cache = [], {}
+    rows = []
     begun = time.monotonic_ns()
     refs = scope['source_references']
     allowed = set(scope['allowed_sources'])
@@ -158,9 +175,7 @@ def execute(args):
                 raise FrameworkError('SEMANTIC_E1_CLAIM_TEXT_NOT_SOURCE_BOUND')
             campaign.begin_unit(cid, {'claim_id': cid, 'instance_id': claim['instance_id']})
             iid = claim['instance_id']
-            if iid not in cache:
-                cache[iid] = audit_instance(args.data_root, iid)
-            audit = cache[iid]
+            audit = audit_instance(args.data_root, iid, selected_claim=claim)
             row = {'claim_id': cid, 'instance_id': iid, **associate(claim, audit),
                    'parser_reason_codes': audit.get('reason_codes', []),
                    'audit': audit, 'selected_claim': claim,
@@ -171,8 +186,9 @@ def execute(args):
             capsule = engine.root / 'capsules' / (cid + '.json')
             _write_immutable(capsule, raw)
             source = engine.admit_source(capsule, digest(raw), 'ENGINEERING_RESULT', source_id=cid)
-            nodes = [{'id': cid + ':' + key, 'task_id': cid, 'run_id': 'RUN010',
-                      'kind': 'RUN010_' + key.upper(), 'source_id': source['source_id'],
+            run_id = campaign.config['run_id']
+            nodes = [{'id': cid + ':' + key, 'task_id': cid, 'run_id': run_id,
+                      'kind': run_id + '_' + key.upper(), 'source_id': source['source_id'],
                       'evidence_pointer': '/' + key}
                      for key in ('selected_claim', 'audit', 'disposition')]
             edges = [{'id': cid + ':association', 'from': cid + ':selected_claim',
@@ -190,7 +206,7 @@ def execute(args):
                {'batch': offset//10+1, 'completed': [r['claim_id'] for r in rows],
                 'producer_redispatch': False})
         print(json.dumps({'completed_claims': len(rows), 'selected': len(claims)}), flush=True)
-    _write(Path(args.output) / 'LEDGER.json', {'rows': rows, 'auditor_invocations': len(cache),
+    _write(Path(args.output) / 'LEDGER.json', {'rows': rows, 'auditor_invocations': len(rows),
            'engine_root': str(engine_root), 'duration_ns': time.monotonic_ns()-begun,
            'scope_denials': len(guard.denied_events)})
 
@@ -199,31 +215,72 @@ def recover(args):
     _, _, campaign = bootstrap(args)
     state = campaign.recover()
     ledger = _read(Path(args.output) / 'LEDGER.json')
+    expected_ids = campaign.config['expected_units']
+    row_ids = [row.get('claim_id') for row in ledger.get('rows', [])]
+    if (len(row_ids) != len(set(row_ids)) or row_ids != expected_ids
+            or len(row_ids) != len(expected_ids)):
+        raise FrameworkError('SEMANTIC_E1_RECOVERY_LEDGER_MEMBERSHIP')
+    if (not state['complete'] or set(state['completed']) != set(expected_ids)
+            or state['pending'] or state['inflight']
+            or len(state['receipts']) != 2 * len(expected_ids)
+            or len(state['checkpoints']) != len(state['receipts'])):
+        raise FrameworkError('SEMANTIC_E1_RECOVERY_FRAMEWORK_STATE')
     engine = Engine(ledger['engine_root'])
     verified = engine.verify()
+    if (verified.get('status') != 'PASS' or verified.get('versions') != len(expected_ids)
+            or verified.get('sources') != len(expected_ids)
+            or len((engine._graph or {}).get('edges', [])) != len(expected_ids)):
+        raise FrameworkError('SEMANTIC_E1_RECOVERY_ENGINE_VERIFICATION')
     for row in ledger['rows']:
         raw = Path(row['capsule_path']).read_bytes()
         if digest(raw) != row['capsule_sha256']:
             raise FrameworkError('SEMANTIC_E1_CAPSULE_HASH_MISMATCH')
         expected = json.loads(raw)
+        if not isinstance(expected, dict) or expected.get('claim_id') != row['claim_id']:
+            raise FrameworkError('SEMANTIC_E1_CAPSULE_IDENTITY_MISMATCH')
         observations = engine.query(task_id=row['claim_id'], limit=10)
         keys = ('selected_claim', 'audit', 'disposition')
         if (len(observations) != 3 or {o['id'] for o in observations} !=
                 {row['claim_id'] + ':' + key for key in keys}):
             raise FrameworkError('SEMANTIC_E1_OBSERVATION_MEMBERSHIP')
+        source_raw = engine.read_source(row['claim_id'])
+        if digest(source_raw) != row['capsule_sha256']:
+            raise FrameworkError('SEMANTIC_E1_SOURCE_HASH_MISMATCH')
+        source = json.loads(source_raw)
+        if canonical(source) != raw or source != expected:
+            raise FrameworkError('SEMANTIC_E1_SOURCE_VALUE_MISMATCH')
         for obs in observations:
             binding = obs['evidence_binding']
             key = obs['id'].split(':')[-1]
-            if binding != {'source_id': row['claim_id'], 'pointer': '/' + key}:
+            if (not isinstance(binding, dict)
+                    or set(binding) != {'source_id', 'sha256', 'pointer', 'value_sha256'}
+                    or binding != {'source_id': row['claim_id'],
+                                   'sha256': row['capsule_sha256'],
+                                   'pointer': '/' + key,
+                                   'value_sha256': digest(canonical_json(expected[key]))}):
                 raise FrameworkError('SEMANTIC_E1_OBSERVATION_BINDING_MISMATCH')
-            value = pointer(json.loads(engine.read_source(binding['source_id'])), binding['pointer'])
-            if value != pointer(expected, binding['pointer']) or obs['value'] != value:
+            value = pointer(source, binding['pointer'])
+            if value != pointer(expected, binding['pointer']) or ('value' in obs and obs['value'] != value):
                 raise FrameworkError('SEMANTIC_E1_RECOVERY_VALUE_MISMATCH')
         terminals = [r for r in state['receipts'] if r['unit_id'] == row['claim_id'] and r['phase'] == 'terminal']
         if len(terminals) != 1 or terminals[0]['sha256'] != row['receipt_sha256']:
             raise FrameworkError('SEMANTIC_E1_RECOVERY_RECEIPT_BINDING')
-    if not state['complete'] or set(state['completed']) != {r['claim_id'] for r in ledger['rows']}:
-        raise FrameworkError('SEMANTIC_E1_RECOVERY_INCOMPLETE')
+        receipt = _read(Path(args.output) / terminals[0]['path'])
+        if (row.get('disposition') != expected.get('disposition')
+                or receipt.get('disposition') != expected.get('disposition')
+                or receipt.get('payload', {}).get('capsule_sha256') != row['capsule_sha256']
+                or receipt.get('payload', {}).get('capsule_path') != row['capsule_path']):
+            raise FrameworkError('SEMANTIC_E1_RECOVERY_RECEIPT_PAYLOAD')
+        edges = [e for e in (engine._graph or {}).get('edges', [])
+                 if e.get('id') == row['claim_id'] + ':association']
+        expected_edge_binding = {'source_id': row['claim_id'],
+                                 'sha256': row['capsule_sha256'], 'pointer': '',
+                                 'value_sha256': digest(canonical_json(expected))}
+        if (len(edges) != 1 or edges[0].get('from') != row['claim_id'] + ':selected_claim'
+                or edges[0].get('to') != row['claim_id'] + ':audit'
+                or edges[0].get('relationship') != 'DERIVED_ASSOCIATION'
+                or edges[0].get('evidence_bindings') != [expected_edge_binding]):
+            raise FrameworkError('SEMANTIC_E1_RECOVERY_EDGE_BINDING')
     _write(Path(args.workspace) / 'FRESH_RECOVERY.json', {
         'status': 'PASS', 'recovered': len(ledger['rows']), 'engine_verify': verified,
         'framework_receipts': len(state['receipts']), 'framework_checkpoints': len(state['checkpoints']),
