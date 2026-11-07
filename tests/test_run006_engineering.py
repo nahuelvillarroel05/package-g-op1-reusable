@@ -189,7 +189,8 @@ def test_row_adapter_rejects_duplicate_json_keys(tmp_path):
         bfcl_row_adapter(unit, {"all": [task_ref, response_ref]}, roots=[tmp_path])
 
 
-def test_synthetic_row_pair_uses_caller_engine_checkpoint_and_recovery(tmp_path):
+@pytest.mark.parametrize("run_id", ["RUN006-SYNTHETIC-ROW", "RUN007"])
+def test_synthetic_row_pair_uses_caller_engine_checkpoint_and_recovery(tmp_path, run_id):
     import json
     from types import SimpleNamespace
     from pathlib import Path
@@ -198,8 +199,8 @@ def test_synthetic_row_pair_uses_caller_engine_checkpoint_and_recovery(tmp_path)
     from test_reusable_run_framework import fixture_config
 
     config_path, config = fixture_config(tmp_path)
-    config["run_id"] = "RUN006-SYNTHETIC-ROW"
-    config["campaign_id"] = "RUN006-SYNTHETIC"
+    config["run_id"] = run_id
+    config["campaign_id"] = "PGOP1-RUN007-E1" if run_id == "RUN007" else "RUN006-SYNTHETIC"
     config["campaign_attempt_id"] = "attempt-synthetic-row"
     config["checkpoint_policy"] = {"schema": "pgop1.reusable-run-checkpoint.v2", "interval": 1,
                                    "receipt_parent_chain": True}
@@ -242,7 +243,8 @@ def test_synthetic_row_pair_uses_caller_engine_checkpoint_and_recovery(tmp_path)
         "adapter_version": unit["adapter_version"], "versions": ["V4"]}}}))
     config["adapter_registry"]["sha256"] = digest(registry.read_bytes())
     contract_path = Path(config["contract_path"])
-    contract_path.write_bytes(canonical({"producers": {"PGOP1-RUN006-E1": {"identity_status": "DECLARED"}}}))
+    producer = "PGOP1-RUN007-E1" if run_id == "RUN007" else "PGOP1-RUN006-E1"
+    contract_path.write_bytes(canonical({"producers": {producer: {"identity_status": "DECLARED"}}}))
     config["contract_sha256"] = digest(contract_path.read_bytes())
     exclusion_path = Path(config["exclusion_ledger"]["path"])
     exclusion_path.write_bytes(canonical({"excluded": []}))
@@ -363,6 +365,10 @@ def test_synthetic_row_pair_uses_caller_engine_checkpoint_and_recovery(tmp_path)
                       launch_authorization=authorization, freeze=freeze)
     result = result["runner_result"]
     assert result["state"]["complete"] is True
+    if run_id == "RUN007":
+        assert result["batch_observations"][0]["attempted_units"] == 1
+    else:
+        assert result["batch_observations"] == []
     assert result["state"]["completed"] == [unit_id]
     assert result["engine_events"][0]["manifest"]["version"] == 1
     recovered = load_config(config_path, [tmp_path], output, [tmp_path], [tmp_path])

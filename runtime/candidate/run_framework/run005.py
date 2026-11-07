@@ -181,7 +181,8 @@ def run(args, *, adapter_overrides=None, producer_id=PRODUCER,
     except (OSError, TypeError) as exc:
         raise FrameworkError("RUNNER_CONFIGURATION_UNAVAILABLE") from exc
     run_id = runner_config_header.get("run_id") if isinstance(runner_config_header, dict) else None
-    run006_run_id = isinstance(run_id, str) and run_id.upper().startswith("RUN006")
+    from .run006 import protected_row_run
+    run006_run_id = protected_row_run(run_id)
     if run006_run_id:
         from .run006 import _ValidatedDispatchContext
         if (not isinstance(_run006_context, _ValidatedDispatchContext)
@@ -255,6 +256,8 @@ def run(args, *, adapter_overrides=None, producer_id=PRODUCER,
         return result
 
     units = json.loads(dataset)["units"]
+    if run_id == "RUN007" and [unit["unit_id"] for unit in units] != cfg["expected_units"]:
+        raise FrameworkError("RUN007_SELECTION_ORDER_MISMATCH")
     adapters = {(u["adapter_id"], u["adapter_version"]): adapter for u in units}
     if any(u.get("predicate_profile") == "BFCL_ARCHIVED_ROW_PAIR_V1" for u in units):
         from .run006 import bfcl_row_adapter
@@ -269,24 +272,81 @@ def run(args, *, adapter_overrides=None, producer_id=PRODUCER,
             raise FrameworkError("RUN005_ADAPTER_OVERRIDE_INVALID")
         adapters.update(adapter_overrides)
     caller = GenericCaller(campaign, adapters, auditor, producer_id=producer_id)
-    operations = []
     started = time.monotonic()
-    for unit in units:
-        try:
-            receipt = caller.execute(unit["unit_id"])
-            from .e1 import verified_receipt_reference
-            ref = verified_receipt_reference(campaign, receipt, unit["unit_id"])
-            operations.append({"unit_id": unit["unit_id"], "terminal_receipt": ref, "error": None})
-        except (FrameworkError, ResourceLimitStop, OSError):
-            raise  # material failures stop, preserving journal/Engine bytes
-        except Exception as exc:
-            operations.append({"unit_id": unit["unit_id"], "terminal_receipt": None,
-                               "error": {"type": type(exc).__name__, "message": str(exc)}})
+    operations, batches = [], []
+    if run_id == "RUN007":
+        operations, batches = execute_batches(campaign, caller, units)
+    else:
+        for unit in units:
+            try:
+                receipt = caller.execute(unit["unit_id"])
+                from .e1 import verified_receipt_reference
+                ref = verified_receipt_reference(campaign, receipt, unit["unit_id"])
+                operations.append({"unit_id": unit["unit_id"], "terminal_receipt": ref, "error": None})
+            except (FrameworkError, ResourceLimitStop, OSError):
+                raise
+            except Exception as exc:
+                operations.append({"unit_id": unit["unit_id"], "terminal_receipt": None,
+                                   "error": {"type": type(exc).__name__, "message": str(exc)}})
     state = campaign.recover()
-    return {"pid": os.getpid(), "operations": operations, "state": _serial(state),
+    return {"pid": os.getpid(), "operations": operations, "batch_observations": batches, "state": _serial(state),
             "engine_events": engine_events, "engine_verify": engine.verify(),
             "duration_seconds": time.monotonic() - started, "resources": campaign.resources_report(),
             "engine_scope": "Own auditor result provenance before terminal checkpoint; no upstream producer authentication"}
+
+
+def execute_batches(campaign, caller, units, *, receipt_reference=None):
+    """Preserve selection order, close each bounded batch before the next starts.
+
+    Batch observations supplement the per-unit V2 journal. An open batch after
+    a material stop remains evidence; it never authorizes automatic resumption.
+    """
+    if receipt_reference is None:
+        from .e1 import verified_receipt_reference as receipt_reference
+    maximum = campaign.config["resource_budget"]["max_units_per_shard"]
+    if type(maximum) is not int or maximum < 1:
+        raise FrameworkError("RUN_BATCH_BOUND_INVALID")
+    campaign.output.mkdir(parents=True, exist_ok=True)
+    operations, batches = [], []
+
+    def publish(name, value):
+        raw = canonical(value)
+        guard = campaign._guard()
+        guard.before_publication(len(raw))
+        _write_immutable(campaign.output / "batches" / name, raw)
+        guard.account_write("batches/" + name, len(raw))
+        guard.finish_publication()
+        return {"path": str(campaign.output / "batches" / name), "sha256": digest(raw)}
+
+    for offset in range(0, len(units), maximum):
+        members = units[offset:offset + maximum]
+        number = offset // maximum + 1
+        record = {"schema": "pgop1.e1.batch-observation.v1", "batch": number,
+                  "member_ids": [u["unit_id"] for u in members], "maximum_units": maximum,
+                  "order": "FROZEN_DATASET_SELECTION_ORDER"}
+        start_reference = publish(f"{number:06d}-start.json", {**record, "phase": "STARTED"})
+        batch_operations = []
+        for unit in members:
+            try:
+                receipt = caller.execute(unit["unit_id"])
+                ref = receipt_reference(campaign, receipt, unit["unit_id"])
+                operation = {"unit_id": unit["unit_id"], "terminal_receipt": ref, "error": None}
+            except (FrameworkError, ResourceLimitStop, OSError):
+                raise
+            except Exception as exc:
+                operation = {"unit_id": unit["unit_id"], "terminal_receipt": None,
+                             "error": {"type": type(exc).__name__, "message": str(exc)}}
+            batch_operations.append(operation)
+            operations.append(operation)
+        closed = all(op["terminal_receipt"] is not None for op in batch_operations)
+        terminal = {**record, "phase": "CLOSED" if closed else "INCOMPLETE",
+                    "attempted_units": len(batch_operations),
+                    "operations": batch_operations, "start_reference": start_reference}
+        terminal_reference = publish(f"{number:06d}-{'terminal' if closed else 'incomplete'}.json", terminal)
+        batches.append({**terminal, "terminal_reference": terminal_reference})
+        if not closed:
+            raise FrameworkError("RUN_BATCH_INCOMPLETE_NO_NEXT_BATCH")
+    return operations, batches
 
 
 def main():

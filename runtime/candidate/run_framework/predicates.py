@@ -285,4 +285,7 @@ def build_audit_payload(unit, adapted=None):
             result["scope"] = "Archived record-relative SWE claim; producer authentication, dataset snapshot and independent truth not established"
         else:
             raise ValueError("unqualified predicate profile")
+        for row in result["predicate_results"]:
+            if row["decision"] == "NOT_EVALUATED":
+                row["reason"] = "Selected auditor did not evaluate this predicate"
     return {"audit_result": result, "processing_disposition": operation, "audit_disposition": disposition}

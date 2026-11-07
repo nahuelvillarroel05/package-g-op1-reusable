@@ -18,6 +18,11 @@ RUN006_ASSESSMENT_SCHEMA = "pgop1.run006.rights-assessment.v1"
 _HEX = set("0123456789abcdef")
 
 
+def protected_row_run(run_id):
+    """RUN007 reuses the exact bound row gate; no unrestricted RUN namespace."""
+    return isinstance(run_id, str) and (run_id.upper().startswith("RUN006") or run_id == "RUN007")
+
+
 @dataclass(frozen=True)
 class _ValidatedDispatchContext:
     config_sha256: str
@@ -456,8 +461,8 @@ def dispatch(config, selection, assessment, runner_args, *, launch_authorization
     runner_config = _loads(runner_config_raw)
     attempt_id = launch_authorization["campaign_attempt_id"]
     if (not isinstance(runner_config, dict)
-            or not isinstance(runner_config.get("run_id"), str)
-            or not runner_config["run_id"].upper().startswith("RUN006")
+            or not protected_row_run(runner_config.get("run_id"))
+            or runner_config.get("run_id") == "RUN007" and runner_config.get("campaign_id") != "PGOP1-RUN007-E1"
             or runner_config.get("campaign_attempt_id") != attempt_id
             or runner_config.get("candidate_commit") != config.get("candidate_commit")
             or runner_config.get("candidate_tree") != config.get("candidate_tree")):
@@ -471,9 +476,11 @@ def dispatch(config, selection, assessment, runner_args, *, launch_authorization
         runner_config.get("candidate_tree", ""))
     if runner is None:
         from .run005 import run as runner
+    producer = "PGOP1-RUN007-E1" if runner_config["run_id"] == "RUN007" else "PGOP1-RUN006-E1"
+    event = "RUN007_AUDIT_RESULT" if runner_config["run_id"] == "RUN007" else "RUN006_AUDIT_RESULT"
     return {"gate": gate, "runner_scope": runner_scope, "runner_result": runner(
         runner_args, adapter_overrides=adapter_overrides,
-        producer_id="PGOP1-RUN006-E1", engine_event_kind="RUN006_AUDIT_RESULT",
+        producer_id=producer, engine_event_kind=event,
         _run006_context=context)}
 
 
