@@ -397,42 +397,116 @@
     },
     {
       "ID": "RUN-006",
-      "record_kind": "PROSPECTIVE_E1_PREPARATION",
+      "record_kind": "OBSERVED_E1_CAMPAIGN_RESULT",
       "directory": "experiments/runs/run-006",
       "ENGINEERING_MODE": "E1",
-      "status": "PREPARED_NOT_EXECUTED",
-      "preparation_outcome": "PGOP1_RUN006_PREPARED_FOR_OWNER_EXECUTION",
-      "candidate_commit": "cc3f2b88bc31ff2c6e18dcdae482088ba71b9260",
-      "candidate_tree": "52719e085a3f3d821548fe6edd45ff73c279fa35",
-      "execution_code_commit": "NOT_EXECUTED",
-      "execution_code_tree": "NOT_EXECUTED",
-      "owner_launch_authorization": "NOT_GRANTED",
-      "operational_execution_freeze": "NOT_ISSUED",
-      "attempts": [],
-      "public_evidence_path": "experiments/runs/run-006",
-      "publication_status": "PREPARED_LOCAL_NOT_REMOTE_VERIFIED",
-      "scientific_alignment": {
-        "intervention": "PGOP1_CAPABILITY_EVALUATION_AND_RUN006_ALIGNMENT_001",
-        "option": "A",
-        "prospective_contract": "experiments/runs/run-006/contracts/experimental-e1-v2/RUN_CONTRACT.md",
-        "reference": "experiments/runs/run-006/SCIENTIFIC_ALIGNMENT_REFERENCE.json",
-        "TARGET_CAPABILITIES": [
-          "IDENTITY_BINDING",
-          "SOURCE_PROVENANCE",
-          "EVIDENCE_INTEGRITY",
-          "OPERATIONAL_GATE",
-          "PERSIST_RECOVER",
-          "BFCL_STRUCTURE",
-          "SUFFICIENCY_ABSTENTION",
-          "COMPONENT_COMPOSITION"
-        ],
-        "execution": "NOT_EXECUTED",
-        "execution_enabled": false,
+      "status": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "campaign_execution": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "candidate_commit": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+      "candidate_tree": "6c56958efd7d17e61b9fc941058c2688e0ba755e",
+      "attempts": [
+        {
+          "attempt_id": "RUN006-E1-20261107T015337Z-3d9ee056",
+          "processed_units": 20
+        }
+      ],
+      "owner_authority": "Current autonomous campaign Owner decision",
+      "public_evidence_path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-006",
+      "publication_status": "PENDING_OWNER_MANUAL_PUSH",
+      "formal_qualification": "NOT_ACHIEVED",
+      "prior_preparation_record": {
+        "ID": "RUN-006",
+        "record_kind": "PROSPECTIVE_E1_PREPARATION",
+        "directory": "experiments/runs/run-006",
+        "ENGINEERING_MODE": "E1",
+        "status": "PREPARED_NOT_EXECUTED",
+        "preparation_outcome": "PGOP1_RUN006_PREPARED_FOR_OWNER_EXECUTION",
+        "candidate_commit": "cc3f2b88bc31ff2c6e18dcdae482088ba71b9260",
+        "candidate_tree": "52719e085a3f3d821548fe6edd45ff73c279fa35",
+        "execution_code_commit": "NOT_EXECUTED",
+        "execution_code_tree": "NOT_EXECUTED",
         "owner_launch_authorization": "NOT_GRANTED",
-        "operational_freeze": "NOT_ISSUED",
-        "scientific_claim": "Task-relative structural integration; no independent semantic quality",
-        "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED"
+        "operational_execution_freeze": "NOT_ISSUED",
+        "attempts": [],
+        "public_evidence_path": "experiments/runs/run-006",
+        "publication_status": "PREPARED_LOCAL_NOT_REMOTE_VERIFIED",
+        "scientific_alignment": {
+          "intervention": "PGOP1_CAPABILITY_EVALUATION_AND_RUN006_ALIGNMENT_001",
+          "option": "A",
+          "prospective_contract": "experiments/runs/run-006/contracts/experimental-e1-v2/RUN_CONTRACT.md",
+          "reference": "experiments/runs/run-006/SCIENTIFIC_ALIGNMENT_REFERENCE.json",
+          "TARGET_CAPABILITIES": [
+            "IDENTITY_BINDING",
+            "SOURCE_PROVENANCE",
+            "EVIDENCE_INTEGRITY",
+            "OPERATIONAL_GATE",
+            "PERSIST_RECOVER",
+            "BFCL_STRUCTURE",
+            "SUFFICIENCY_ABSTENTION",
+            "COMPONENT_COMPOSITION"
+          ],
+          "execution": "NOT_EXECUTED",
+          "execution_enabled": false,
+          "owner_launch_authorization": "NOT_GRANTED",
+          "operational_freeze": "NOT_ISSUED",
+          "scientific_claim": "Task-relative structural integration; no independent semantic quality",
+          "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED"
+        }
       }
+    },
+    {
+      "ID": "RUN-007",
+      "record_kind": "OBSERVED_E1_CAMPAIGN_RESULT",
+      "directory": "experiments/runs/run-007",
+      "ENGINEERING_MODE": "E1",
+      "status": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "campaign_execution": "COMPLETED_WITH_EXACT_LIMITATIONS",
+      "candidate_commit": "1c0953fe4b813c4fc7987dd1da806582bbed02e2",
+      "candidate_tree": "cf35bda4920c5024eca1121bb106e41c386202bb",
+      "attempts": [
+        {
+          "attempt_id": "RUN007-E1-20261107T020532Z-b803927a",
+          "processed_units": 20
+        }
+      ],
+      "owner_authority": "Current autonomous campaign Owner decision",
+      "public_evidence_path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-007",
+      "publication_status": "PENDING_OWNER_MANUAL_PUSH",
+      "formal_qualification": "NOT_ACHIEVED",
+      "registration_timing": "Current reconciliation after observed attempt; not a fabricated historical reservation or authorization"
+    },
+    {
+      "ID": "RUN-008",
+      "record_kind": "OBSERVED_E1_CAMPAIGN_RESULT",
+      "directory": "experiments/runs/run-008",
+      "ENGINEERING_MODE": "E1",
+      "status": "NOT_STARTED_PREFLIGHT_BLOCKED",
+      "campaign_execution": "NOT_EXECUTED_UNIT_PROCESSING",
+      "candidate_commit": "96b210ff0473fd91270d5a68a55d7f6ea0cfb775",
+      "candidate_tree": "e06c4426ad4dfd67495809329906cd2058800316",
+      "attempts": [
+        {
+          "attempt_id": "RUN008-E1-20261107T022418Z-06bdc874",
+          "processed_units": 0
+        }
+      ],
+      "owner_authority": "Current autonomous campaign Owner decision",
+      "public_evidence_path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-008",
+      "publication_status": "PENDING_OWNER_MANUAL_PUSH",
+      "formal_qualification": "NOT_ACHIEVED",
+      "registration_timing": "Current reconciliation after observed attempt; not a fabricated historical reservation or authorization"
+    },
+    {
+      "ID": "RUN-009",
+      "record_kind": "PROSPECTIVE_E1_RESERVED",
+      "directory": "experiments/runs/run-009",
+      "ENGINEERING_MODE": "E1",
+      "status": "RESERVED_NOT_EXECUTED",
+      "candidate_commit": "TO_BE_BOUND_BY_NEW_OPERATIONAL_FREEZE",
+      "purpose": "F03 pipe-descriptor compatibility repair; samefour permitted MCP/Terminal definitions, exact read scope and recovery",
+      "owner_authority": "Current autonomous campaign plus multibenchmark correction",
+      "publication_status": "PENDING_OWNER_MANUAL_PUSH",
+      "attempts": []
     }
   ],
   "pilots": [

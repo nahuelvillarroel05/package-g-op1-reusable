@@ -17,7 +17,8 @@ from .provenance import _read_bound_file
 
 
 def validate_admission(config, admission, units):
-    if (config.get('run_id') != 'RUN008' or config.get('campaign_id') != 'PGOP1-RUN008-E1'
+    if (config.get('run_id') not in {'RUN008', 'RUN009'}
+            or config.get('campaign_id') != f"PGOP1-{config.get('run_id')}-E1"
             or admission.get('schema') != 'pgop1.definition-e1.admission.v1'):
         raise FrameworkError('DEFINITION_E1_IDENTITY_OR_ADMISSION_INVALID')
     if [u['unit_id'] for u in units] != config['expected_units']:
@@ -122,15 +123,16 @@ def run(args, *, launch_authorization=None, freeze=None):
     engine = Engine(context)
     engine_guard = ResourceGuard(context, max_bytes=16 * 1024**2)
     events = []
+    producer = f"PGOP1-{cfg['run_id']}-E1"
 
     def auditor(unit, _adapted):
         result = build_audit_payload(unit)
         events.append(record_engine_result(engine, engine_guard, unit, result, cfg['run_id'],
-            producer_id='PGOP1-RUN008-E1', event_kind='RUN008_DEFINITION_RESULT'))
+            producer_id=producer, event_kind=cfg['run_id'] + '_DEFINITION_RESULT'))
         return result
 
     adapters = {(u['adapter_id'], u['adapter_version']): process_definition for u in units}
-    caller = GenericCaller(campaign, adapters, auditor, producer_id='PGOP1-RUN008-E1')
+    caller = GenericCaller(campaign, adapters, auditor, producer_id=producer)
     started = time.monotonic()
     operations, batches = execute_batches(campaign, caller, units)
     state = campaign.recover()

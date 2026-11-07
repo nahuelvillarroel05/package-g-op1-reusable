@@ -1,6 +1,7 @@
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 
@@ -191,3 +192,45 @@ print(json.dumps([event._asdict() for event in guard.denied_events]))
     assert completed.returncode == 0, completed.stderr
     events = json.loads(completed.stdout)
     assert events[0]["reason"] == "reparse path component rejected"
+
+
+def test_captured_trusted_git_version_subprocess_uses_allowed_ipc_descriptors(tmp_path):
+    git = shutil.which("git")
+    if git is None:
+        pytest.skip("git executable unavailable")
+    root, allowed, _ = _fixture_paths(tmp_path)
+    completed = _run_child(_scope_script("""
+import subprocess
+git = __import__('sys').argv[4]
+result = subprocess.run([git, "--version"], capture_output=True, text=True, check=True)
+assert result.stdout.startswith("git version ")
+assert guard.denied_events == ()
+print(json.dumps({"status": "CAPTURED", "stdout": result.stdout.strip()}))
+"""), root, allowed, allowed, git)
+    assert completed.returncode == 0, completed.stderr
+    assert json.loads(completed.stdout)["status"] == "CAPTURED"
+
+
+def test_regular_integer_file_descriptor_remains_denied(tmp_path):
+    root, allowed, _ = _fixture_paths(tmp_path)
+    regular = tmp_path / "regular-outside-protected-root.txt"
+    regular.write_text("synthetic regular descriptor body", encoding="utf-8")
+    completed = _run_child(_scope_script("""
+import os
+fd = os.open(target, os.O_RDONLY)
+try:
+    try:
+        stream = open(fd, "rb")
+    except PermissionError:
+        pass
+    else:
+        stream.close()
+        raise AssertionError("unidentified regular descriptor unexpectedly allowed")
+finally:
+    os.close(fd)
+assert len(guard.denied_events) == 1
+assert guard.denied_events[0].reason == "unresolved or non-IPC file descriptor"
+print(json.dumps({"status": "DENIED", "events": [e._asdict() for e in guard.denied_events]}))
+"""), root, allowed, regular)
+    assert completed.returncode == 0, completed.stderr
+    assert json.loads(completed.stdout)["status"] == "DENIED"

@@ -75,6 +75,18 @@ def _is_read_open(mode, flags) -> bool:
     return True
 
 
+def _is_ipc_descriptor(value) -> bool:
+    """Permit only metadata-proven pipe/socket descriptors used by IPC."""
+    if type(value) is not int:
+        return False
+    try:
+        mode = os.fstat(value).st_mode
+    except OSError:
+        return False
+    is_socket = getattr(stat, "S_ISSOCK", lambda _mode: False)
+    return stat.S_ISFIFO(mode) or is_socket(mode)
+
+
 class ReadScopeGuard:
     """Immutable path metadata plus an append-only denied-event tuple."""
 
@@ -114,6 +126,14 @@ class ReadScopeGuard:
         flags = args[2] if len(args) > 2 and isinstance(args[2], int) else None
         if not _is_read_open(mode, flags):
             return
+
+        if type(target) is int:
+            if _is_ipc_descriptor(target):
+                return
+            shown = f"<fd:{target}>"
+            self._record_denial(DeniedRead(shown, mode, flags,
+                                           "unresolved or non-IPC file descriptor"))
+            raise PermissionError(errno.EACCES, "read scope denied unclassified descriptor", shown)
 
         try:
             lexical_path, path, has_reparse = _normalize_open_path(target)

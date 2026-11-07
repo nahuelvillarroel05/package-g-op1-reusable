@@ -22,8 +22,11 @@ def fixture():
     return config, admission, units
 
 
-def test_exact_definition_scope_admits_without_claiming_outputs():
-    result = validate_admission(*fixture())
+@pytest.mark.parametrize('run_id', ['RUN008', 'RUN009'])
+def test_exact_definition_scope_admits_without_claiming_outputs(run_id):
+    config, admission, units = fixture()
+    config.update(run_id=run_id, campaign_id=f'PGOP1-{run_id}-E1')
+    result = validate_admission(config, admission, units)
     assert result == {'units': 4, 'authentic_agent_outputs': 0, 'rights_granted_by_runner': False}
 
 
