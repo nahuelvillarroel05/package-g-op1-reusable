@@ -49,8 +49,8 @@
     },
     {
       "path": "experiments/campaigns/pgop1-autonomous-evolution-001/EVOLUTION_REGISTRY.json",
-      "bytes": 11773,
-      "sha256": "72177f0d6c52362e411a74e3583c918f507fad2f60e5b63d1d1849bbceecc890"
+      "bytes": 14256,
+      "sha256": "5de0a884fab942b3846c60a5045fed12676e54b0df9db7497554dbb84ff3ada7"
     },
     {
       "path": "experiments/campaigns/pgop1-autonomous-evolution-001/EXTERNAL_SOURCE_COMMITMENTS.json",

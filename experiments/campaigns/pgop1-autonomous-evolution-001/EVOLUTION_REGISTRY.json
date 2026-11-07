@@ -1,6 +1,6 @@
 {
   "schema": "pgop1.evolution-registry.v1",
-  "version": 3,
+  "version": 4,
   "history_policy": "Frozen attempt evidence unchanged; registry current snapshot, future changes require preserved version",
   "runs": [
     {
@@ -75,7 +75,18 @@
       "COMPARABLE_METRICS": "comparisons/UNIT_ALIGNED_COMPARISON.json",
       "EVIDENCE_REFERENCES": [
         "runs/run-006/RUN_EXECUTION_SUMMARY.json"
-      ]
+      ],
+      "OBSERVED_RESULTS": {
+        "status": "COMPLETED_WITH_EXACT_LIMITATIONS",
+        "processed_units": 20,
+        "unit_type": "AUTHENTIC_ARCHIVED_BFCL_TASK_OUTPUT_PAIR",
+        "structurally_audited_units": 20,
+        "semantically_audited_units": 0,
+        "source_report": "runs/run-006/RUN_EXECUTION_SUMMARY.json",
+        "ordinary_errors": 0,
+        "preflight_errors": 0
+      },
+      "verified_defect_scope": "Campaign lifecycle; prospective repairs are recorded separately and do not rewrite originating attempt"
     },
     {
       "RUN_ID": "RUN-007",
@@ -190,7 +201,18 @@
       "COMPARABLE_METRICS": "comparisons/UNIT_ALIGNED_COMPARISON.json",
       "EVIDENCE_REFERENCES": [
         "runs/run-007/RUN_EXECUTION_SUMMARY.json"
-      ]
+      ],
+      "OBSERVED_RESULTS": {
+        "status": "COMPLETED_WITH_EXACT_LIMITATIONS",
+        "processed_units": 20,
+        "unit_type": "AUTHENTIC_ARCHIVED_BFCL_TASK_OUTPUT_PAIR",
+        "structurally_audited_units": 20,
+        "semantically_audited_units": 0,
+        "source_report": "runs/run-007/RUN_EXECUTION_SUMMARY.json",
+        "ordinary_errors": 0,
+        "preflight_errors": 0
+      },
+      "verified_defect_scope": "Campaign lifecycle; prospective repairs are recorded separately and do not rewrite originating attempt"
     },
     {
       "RUN_ID": "RUN-008",
@@ -236,7 +258,27 @@
       "REGRESSION_RESULTS": "33authored focused testsPASS prior; authentic integration fails in preflight",
       "EVIDENCE_REFERENCES": [
         "runs/run-008/operational/EXECUTION_RESULT.json"
-      ]
+      ],
+      "EXPERIMENTAL_UNITS": 4,
+      "EXECUTED_UNITS": 0,
+      "OBSERVED_RESULTS": {
+        "status": "NOT_STARTED_PREFLIGHT_BLOCKED",
+        "processed_units": 0,
+        "unit_type": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+        "structurally_audited_units": 0,
+        "semantically_audited_units": 0,
+        "source_report": "runs/run-008/RUN_EXECUTION_SUMMARY.json",
+        "ordinary_errors": 0,
+        "preflight_errors": 1
+      },
+      "VERIFIED_DEFECTS": [
+        "F03"
+      ],
+      "PATCHES_FOR_NEXT_RUN": [
+        "d2771bf226814582ef5a8aa18fac31bafdbabbbb"
+      ],
+      "COMPARABLE_METRICS": "AuthoredF03capturedGitcontrol; no semantic/performance comparison to BFCL",
+      "verified_defect_scope": "Campaign lifecycle; prospective repairs are recorded separately and do not rewrite originating attempt"
     },
     {
       "RUN_ID": "RUN-009",
@@ -342,7 +384,20 @@
       "COMPARABLE_METRICS": "Authored F03 Git-pipe reproducer; no semantic comparison with BFCL",
       "EVIDENCE_REFERENCES": [
         "runs/run-009/RUN_EXECUTION_SUMMARY.json"
-      ]
+      ],
+      "EXPERIMENTAL_UNITS": 4,
+      "EXECUTED_UNITS": 4,
+      "OBSERVED_RESULTS": {
+        "status": "COMPLETED_WITH_EXACT_LIMITATIONS",
+        "processed_units": 4,
+        "unit_type": "AUTHENTIC_PRIMARY_TASK_DEFINITION",
+        "structurally_audited_units": 0,
+        "semantically_audited_units": 0,
+        "source_report": "runs/run-009/RUN_EXECUTION_SUMMARY.json",
+        "ordinary_errors": 0,
+        "preflight_errors": 0
+      },
+      "verified_defect_scope": "Campaign lifecycle; prospective repairs are recorded separately and do not rewrite originating attempt"
     }
   ]
 }
