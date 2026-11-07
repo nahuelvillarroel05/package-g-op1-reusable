@@ -70,7 +70,8 @@
     {
       "ID": "RUN-002",
       "record_kind": "HISTORICAL_RECONSTRUCTION",
-      "directory": "runs/run-002",
+      "directory": "runs/run-002-engineering",
+      "legacy_directory": "runs/run-002",
       "execution_code_commit": "d589697b9b5e537a93e67480cb0c1f9970745d88",
       "execution_code_tree": "79a2a0300c89a723e5ce43c23ace1902347784a1",
       "result_or_release_commit": "15887cc4f660661a82beb5f5887a566421328c5d",
@@ -124,7 +125,8 @@
     {
       "ID": "RUN-003",
       "record_kind": "HISTORICAL_RECONSTRUCTION",
-      "directory": "runs/run-003",
+      "directory": "runs/run-003-engineering-public",
+      "legacy_directory": "runs/run-003",
       "execution_code_commit": "8b2ccbe68bd5857ac2d3173923670f84eb445457",
       "execution_code_tree": "caa847289e63bad5b11bf80577c5fd4c3d579783",
       "result_or_release_commit": "5d692882bdd625ca57d82f77d62b1ea830fe9c15",
@@ -190,7 +192,8 @@
     {
       "ID": "RUN-004",
       "record_kind": "PROSPECTIVE_E1_CAMPAIGN",
-      "directory": "runs/run-004",
+      "directory": "experiments/runs/run-004",
+      "legacy_directory": "runs/run-004",
       "execution_code_commit": "225474a81411002d326aa48a4db26bf030cbfe67",
       "execution_code_tree": "e18a827ac44c62284c492b7080107466071dbbd6",
       "result_or_release_commit": "NOT_PUBLISHED",

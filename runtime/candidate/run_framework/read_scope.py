@@ -157,29 +157,56 @@ class ReadScopeGuard:
                 raise PermissionError(errno.EACCES, "read scope denied protected path", str(path))
 
 
+_SCOPE_SLOT = "_pgop1_run_framework_read_scope_guard_v1"
+
+
+def _normalize_scope(protected_roots, allowed_sources):
+    if isinstance(protected_roots, (str, bytes, os.PathLike)):
+        raise TypeError("protected_roots must be a nonempty path sequence")
+    if isinstance(allowed_sources, (str, bytes, os.PathLike)):
+        raise TypeError("allowed_sources must be a path sequence")
+    roots = frozenset(_normalize_install_path(value, directory=True)
+                      for value in protected_roots)
+    sources = frozenset(_normalize_install_path(value, directory=False)
+                        for value in allowed_sources)
+    if not roots:
+        raise ValueError("at least one protected root is required")
+    if any(not any(source == root or root in source.parents for root in roots)
+           for source in sources):
+        raise ValueError("every allowed source must be inside a protected root")
+    return roots, sources
+
+
 def install_read_scope(protected_roots, allowed_sources) -> ReadScopeGuard:
     """Install a process-local CPython open gate for exact source files.
 
     Paths are checked as metadata only. This function does not read source
     bodies, verify their hashes, or grant any external processing rights.
     """
-    if isinstance(protected_roots, (str, bytes, os.PathLike)):
-        raise TypeError("protected_roots must be a nonempty path sequence")
-    if isinstance(allowed_sources, (str, bytes, os.PathLike)):
-        raise TypeError("allowed_sources must be a path sequence")
-    try:
-        roots = frozenset(_normalize_install_path(value, directory=True)
-                          for value in protected_roots)
-        sources = frozenset(_normalize_install_path(value, directory=False)
-                            for value in allowed_sources)
-    except TypeError:
-        raise
-    if not roots:
-        raise ValueError("at least one protected root is required")
-    if any(not any(source == root or root in source.parents for root in roots)
-           for source in sources):
-        raise ValueError("every allowed source must be inside a protected root")
-
+    roots, sources = _normalize_scope(protected_roots, allowed_sources)
+    existing = getattr(sys, _SCOPE_SLOT, None)
+    if existing is not None:
+        if (existing.protected_roots, existing.allowed_sources) != (roots, sources):
+            raise RuntimeError("an incompatible read scope is already installed")
+        return existing
     guard = ReadScopeGuard(roots, sources)
+    # CPython audit hooks are append-only; this sentinel prevents a reload from
+    # stacking a second, contradictory hook in the same process.
+    setattr(sys, _SCOPE_SLOT, guard)
     sys.addaudithook(guard._audit)
     return guard
+
+
+def require_read_scope(protected_roots, allowed_sources) -> ReadScopeGuard:
+    """Require the exact approved process-local scope before entrypoint reads.
+
+    This is defense in depth for trusted code, not an OS sandbox or caller
+    authentication mechanism.
+    """
+    roots, sources = _normalize_scope(protected_roots, allowed_sources)
+    existing = getattr(sys, _SCOPE_SLOT, None)
+    if existing is None:
+        raise RuntimeError("approved read scope must be installed before entrypoint access")
+    if (existing.protected_roots, existing.allowed_sources) != (roots, sources):
+        raise RuntimeError("installed read scope does not match entrypoint requirements")
+    return existing

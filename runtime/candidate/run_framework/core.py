@@ -5,9 +5,10 @@ Callers must bracket work with begin_unit/complete_unit. Recovery is read-only;
 inflight or interrupted publications are never resumed automatically.
 """
 from __future__ import annotations
-import hashlib, json, os, re, stat, uuid, subprocess, io, tarfile
+import hashlib, json, os, re, stat, uuid, subprocess, io, tarfile, time
 from pathlib import Path, PurePosixPath
 from typing import Any
+from .preflight_diagnostics import classify_probe_exception, git_inventory_warning
 if os.name == "nt":
     import msvcrt
 else:
@@ -22,6 +23,12 @@ PATH_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}\Z")
 ZERO = "0" * 64
 
 class FrameworkError(ValueError): pass
+
+class PreflightDiagnosticError(FrameworkError):
+    """Framework-compatible failure carrying a sanitized stable diagnostic."""
+    def __init__(self, message: str, diagnostic: dict):
+        super().__init__(message)
+        self.diagnostic = dict(diagnostic)
 
 def canonical(value: Any) -> bytes:
     def valid(x):
@@ -147,14 +154,24 @@ class Campaign:
         selected=_loads(_path(cfg["selection_manifest"]["path"],True).read_bytes())
         if not isinstance(selected,dict) or selected.get("expected_units")!=cfg["expected_units"]:
             raise FrameworkError("expected units do not exactly match frozen selection manifest")
+        git_started = time.monotonic()
         try:
             commit=_git_read(code_root,"rev-parse","HEAD").stdout.strip()
             tree=_git_read(code_root,"rev-parse","HEAD^{tree}").stdout.strip()
             status_result=_git_read(code_root,"status","--porcelain","--untracked-files=normal")
             status=status_result.stdout
-        except (OSError,subprocess.SubprocessError) as e: raise FrameworkError("candidate Git identity could not be verified") from e
+        except (OSError,subprocess.SubprocessError) as e:
+            elapsed_ms = max(0, int((time.monotonic() - git_started) * 1000))
+            raise PreflightDiagnosticError(
+                "candidate Git identity could not be verified",
+                classify_probe_exception(e, elapsed_ms=elapsed_ms)) from None
         if commit!=cfg["candidate_commit"] or tree!=cfg["candidate_tree"]: raise FrameworkError("candidate Git identity mismatch")
-        if status.strip() or status_result.stderr.strip(): raise FrameworkError("candidate working tree is dirty or Git inventory emitted warnings")
+        if status.strip(): raise FrameworkError("candidate working tree is dirty")
+        if status_result.stderr.strip():
+            elapsed_ms = max(0, int((time.monotonic() - git_started) * 1000))
+            raise PreflightDiagnosticError(
+                "candidate Git inventory emitted warnings",
+                git_inventory_warning(elapsed_ms=elapsed_ms))
         # Only the immutable committed-object comparison is reusable. All live
         # file bytes, paths, HEAD/tree and Git dirtiness were checked above on
         # this invocation. Never cache source bodies or working-tree checks.
