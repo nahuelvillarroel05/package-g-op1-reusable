@@ -1,4 +1,4 @@
-# Autonomous experimental evolution campaign001 ? current
+# Autonomous experimental evolution campaign001 - current
 
 Executions and runtime engineering closed. Actual Astra individual/global review complete: BOUNDED_ENGINEERING_EVOLUTION_SUPPORTED_WITH_EXACT_LIMITATIONS, with DEVIATION_OBSERVED_EXPOSURE_UNKNOWN. Scores80/94/67/94 are E1 engineering measures, not semantic/safety/formal acceptance. Documentary/publication/ZIP closure has separate receipts. Current Owner multibenchmark correction considered all six integrated families and the permanent16-capability matrix; source exercise spans BFCL output pairs and MCPMark/Terminal primary definitions with different scopes.
 
