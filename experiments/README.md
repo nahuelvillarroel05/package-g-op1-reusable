@@ -1,5 +1,20 @@
 # PGOP1 experiments
 
+## Published experimental campaigns
+
+| Campaign | Runs | Scope | Result |
+| --- | --- | --- | --- |
+| **[Autonomous evolution 001](campaigns/pgop1-autonomous-evolution-001/CAMPAIGN_OVERVIEW.md)** | RUN-006 → RUN-009 | BFCL structural output audits, MCPMark/Terminal definition processing, provenance and recovery | Bounded engineering improvements; **semantic improvement not demonstrated** |
+
+Read the [campaign evidence](campaigns/pgop1-autonomous-evolution-001/README.md), [Astra global review](campaigns/pgop1-autonomous-evolution-001/audits/astra-final/ASTRA_GLOBAL_EVOLUTION_AUDIT.md) and [post-publication status](campaigns/pgop1-autonomous-evolution-001/PUBLICATION_STATUS.md).
+
+## How experiments are interpreted
+
+- **[Engineering modes](ENGINEERING_MODES.md)**: E1, E2 and F are different evidence standards.
+- **[Capability evaluation matrix](CAPABILITY_EVALUATION_MATRIX.md)**: target capabilities and their demonstrated limits.
+- **[Evidence standards](EXPERIMENTAL_EVIDENCE_STANDARDS.md)**: source integrity is not producer authenticity or semantic truth.
+- **[RUN purpose](RUNS_PURPOSE.md)**: RUN → results → defects → improvements → next RUN.
+
 Start with [E1/E2/F engineering modes](ENGINEERING_MODES.md), [purpose](RUNS_PURPOSE.md), [policy](EXPERIMENTAL_POLICY.md), [compact future RUN template](RUN_TEMPLATE.md), [registry](RUN_REGISTRY.json), [publication policy](PUBLICATION_POLICY.md), [publication receipt](schemas/pgop1.experimental.run-publication.v1.md), and [receipt template](templates/RUN_PUBLICATION_RECEIPT_TEMPLATE.json).
 
 Every RUN declares its mode. E1 supports experiments and recorded failures with minimum safety, integrity, provenance, and recovery controls; E2 validates specific properties; F retains formal qualification. These modes are not agent reasoning levels.

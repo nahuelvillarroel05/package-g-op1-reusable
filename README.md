@@ -26,6 +26,23 @@ Package-G is experimental infrastructure for controlled execution, verifiable ev
 
 This engineering snapshot includes real source for the selected reusable core, a lightweight local I7 runtime, fixed provider registry, Python API and CLI, Evidence Engine, Context Engine v0.1, I4-NEXT/I5-NEXT adapters, a ten-tool stdio MCP server, an independent Ornith MCP client, and synthetic tests/fixtures. Exact included files are listed in `manifests/PUBLIC_TREE_MANIFEST.json`. Original Windows operational helpers and protected evidence stay private; see the selected-core manifest and limitations.
 
+## Experimental engineering & evidence
+
+> **Current scope:** experimental engineering evidence. **I7 remains incomplete; formal operational qualification has not been achieved.**
+
+Package-G OP1 Reusable publishes experimental code and evidence for controlled operations, provenance, integrity, recovery and bounded auditing. Experimental results are not formal qualification or a demonstration of general semantic accuracy.
+
+| Go to | What you will find |
+| --- | --- |
+| **[Experiments index](experiments/README.md)** | E1 / E2 / F modes, run methodology and campaign navigation. |
+| **[Autonomous evolution campaign 001](experiments/campaigns/pgop1-autonomous-evolution-001/CAMPAIGN_OVERVIEW.md)** | RUN-006 to RUN-009: results, engineering fixes and limitations. |
+| **[Astra final audit](experiments/campaigns/pgop1-autonomous-evolution-001/audits/astra-final/ASTRA_GLOBAL_EVOLUTION_AUDIT.md)** | Individual/global assessment and bounded conclusions. |
+| **[Current experimental status](CURRENT_STATE.md)** | Recorded technical state; historical evidence scopes remain distinct. |
+
+**Latest campaign, in brief:** RUN-006/007 compared 20 identical BFCL task/output pairs. RUN-007 corrected **120 incorrect missing-output explanations** and enforced **four batches of five** with unchanged structural decisions. RUN-008 was stopped at preflight; RUN-009 processed **four task definitions** (two MCPMark, two Terminal-Bench). **No semantic improvement was demonstrated.**
+
+**Important limitations:** the documentary read incident remains `EXPOSURE_STATUS=UNKNOWN`; historical global integrity remains `DEFERRED` / not certified PASS; I7 and independent precision/recall remain unqualified. See the campaign overview before interpreting these results.
+
 ## Run the public synthetic path
 
 Use Python 3.14 (publication checks used 3.14.4) on Windows. The runtime includes Windows-specific path/handle checks. Create an isolated environment from this repository root:
