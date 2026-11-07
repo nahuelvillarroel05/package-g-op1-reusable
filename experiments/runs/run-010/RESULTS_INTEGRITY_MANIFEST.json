@@ -1,0 +1,52 @@
+{
+  "schema": "pgop1.run010.public-integrity-manifest.v1",
+  "files": [
+    {
+      "path": "experiments/runs/run-010/CODE_REFERENCE.json",
+      "sha256": "20aa171d450abdcabeeda0734369586eb3c6572cfb40f29158887fab617016e9",
+      "bytes": 1000
+    },
+    {
+      "path": "experiments/runs/run-010/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "sha256": "2d05866d8fe413192d6aeee50491a3ce1e776a3d550881de6c727140d7ee2225",
+      "bytes": 4412
+    },
+    {
+      "path": "experiments/runs/run-010/EXECUTION_RECEIPT.json",
+      "sha256": "b73d374f83959eeebc84273cb722b549e5dc0d9f12dfa75a4ec024a6129a7a70",
+      "bytes": 1534
+    },
+    {
+      "path": "experiments/runs/run-010/EXECUTION_RESULTS.json",
+      "sha256": "6874efa49fa3bf5fec8183c54a2b38c43eff3f10a14ca83e10da973d58430a05",
+      "bytes": 54042
+    },
+    {
+      "path": "experiments/runs/run-010/FINDINGS.json",
+      "sha256": "b97551a216b8d957533af693d281bfd16ce579732fc39ddeabcef453ed2c2e19",
+      "bytes": 735
+    },
+    {
+      "path": "experiments/runs/run-010/METRIC_DEFINITIONS.json",
+      "sha256": "d03af3e3b784fcc3705fd05cac3dd500537cd855f5f5aee32a034402cd4f2d18",
+      "bytes": 865
+    },
+    {
+      "path": "experiments/runs/run-010/README.md",
+      "sha256": "be22591c32cb8b43fe311d66ac51655615b416fa5f8b2f8ccdcf2ab9306a44bf",
+      "bytes": 2841
+    },
+    {
+      "path": "experiments/runs/run-010/SOL_XHIGH_TECHNICAL_AUDIT.md",
+      "sha256": "47430af51218a94f5151d42a2a89c9bfe8484a82a5d1f2a1e8a9824e4bac653b",
+      "bytes": 2638
+    },
+    {
+      "path": "experiments/runs/run-010/SUMMARY.json",
+      "sha256": "9bb0aee5f7d5aa04196f2237fb67b63858f0e626158c79f9990ae334447691ec",
+      "bytes": 473
+    }
+  ],
+  "self_excluded": true,
+  "scope": "Selected public RUN010 files only, no historical global integrity claim"
+}

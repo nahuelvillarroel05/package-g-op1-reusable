@@ -1,0 +1,21 @@
+{
+  "schema": "pgop1.run010.metric-reporting-addendum.v1",
+  "raw_auditor_task_verdicts": {
+    "SUPPORTED": 13,
+    "CONTRADICTED": 5,
+    "INSUFFICIENT_EVIDENCE": 2,
+    "VERIFICATION_ERROR": 43
+  },
+  "raw_task_level_definitive_comparisons": 18,
+  "exact_selected_claim_semantic_comparisons": 15,
+  "selected_claim_extractor_misses": 2,
+  "selected_claim_miss_reference": "UNKNOWN_TESTS_PASS",
+  "independently_adjudicated_claims": 0,
+  "precision_decidida": "NOT_COMPUTABLE_NO_INDEPENDENT_ADJUDICATION",
+  "recall_total_positivo": "NOT_COMPUTABLE_NO_INDEPENDENT_ADJUDICATION",
+  "archived_relative_positive_support_coverage": {
+    "numerator": 10,
+    "denominator": 42
+  },
+  "definition": "Raw task-level support cannot transfer to a different selected message, span or predicate. Structural20 is raw adapter non-error output, not twenty semantic audits."
+}

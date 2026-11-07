@@ -1,0 +1,51 @@
+{
+  "schema": "pgop1.run010.public-execution-receipt.v1",
+  "candidate_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+  "candidate_tree": "a59f445f140c4e29e4aae8fecfc46db838810874",
+  "attempt": "RUN010-E1-20261107T050521Z-745f7409",
+  "preflight": {
+    "mode": "preflight",
+    "returncode": 0,
+    "duration_ns": 1315284900,
+    "process_started": true,
+    "utc_finished": "2026-11-07T05:05:27.016547+00:00"
+  },
+  "execute": {
+    "mode": "execute",
+    "returncode": 0,
+    "duration_ns": 365555897600,
+    "process_started": true,
+    "utc_finished": "2026-11-07T05:11:42.292476+00:00"
+  },
+  "recover": {
+    "mode": "recover",
+    "returncode": 0,
+    "duration_ns": 33599390800,
+    "process_started": true,
+    "utc_finished": "2026-11-07T05:12:37.051742+00:00"
+  },
+  "recovery": {
+    "status": "PASS",
+    "recovered": 63,
+    "engine_verify": {
+      "status": "PASS",
+      "versions": 63,
+      "sources": 63
+    },
+    "python_optimize": 0,
+    "framework_receipts": 126,
+    "framework_checkpoints": 126,
+    "observations": 189,
+    "edges": 63,
+    "pending": [],
+    "inflight": [],
+    "producer_redispatch": false,
+    "mode": "READ_ONLY_NO_RESUME",
+    "observer_sha256": "b8e4c276cc61614e2f2e727ce1098b08b0ed10fde6e5ca0581c0670f3741a9dc",
+    "frozen_recover_helper": "NOT_EXECUTED_STATIC_BINDING_SHAPE_DEFECT",
+    "candidate_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+    "candidate_tree": "a59f445f140c4e29e4aae8fecfc46db838810874"
+  },
+  "producer_redispatch": false,
+  "NO_PUSH": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "pgop1.run010.semantic-summary.v1",
+  "run_id": "RUN010",
+  "counts": {
+    "selected": 63,
+    "attempted": 63,
+    "processed": 63,
+    "structural": 20,
+    "semantic": 15,
+    "abstained": 0,
+    "verification_error": 43,
+    "not_evaluable": 5
+  },
+  "by_provenance_level": {
+    "LOCAL_ARCHIVE_DECLARED_ACTOR_NOT_AUTHENTICATED": 63
+  },
+  "by_reference_type": {
+    "UNAVAILABLE_FOR_SELECTED_PREDICATE": 6,
+    "OFFICIAL_ARCHIVED_TASK_RESULT": 57
+  }
+}

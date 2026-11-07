@@ -1,0 +1,1328 @@
+{
+  "schema": "pgop1.run010.results.v1",
+  "EXECUTION_STATUS": "COMPLETE_WITH_DISPOSITIONS",
+  "SEMANTICALLY_CORRECT": "NOT_ESTABLISHED",
+  "engineering_mode": "E1",
+  "candidate_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+  "candidate_tree": "a59f445f140c4e29e4aae8fecfc46db838810874",
+  "summary": {
+    "schema": "pgop1.run010.semantic-summary.v1",
+    "run_id": "RUN010",
+    "counts": {
+      "selected": 63,
+      "attempted": 63,
+      "processed": 63,
+      "structural": 20,
+      "semantic": 15,
+      "abstained": 0,
+      "verification_error": 43,
+      "not_evaluable": 5
+    },
+    "by_provenance_level": {
+      "LOCAL_ARCHIVE_DECLARED_ACTOR_NOT_AUTHENTICATED": 63
+    },
+    "by_reference_type": {
+      "UNAVAILABLE_FOR_SELECTED_PREDICATE": 6,
+      "OFFICIAL_ARCHIVED_TASK_RESULT": 57
+    }
+  },
+  "dispositions": {
+    "VERIFICATION_ERROR": 43,
+    "CONTRADICTED": 5,
+    "SUPPORTED": 10,
+    "NOT_EVALUABLE": 5
+  },
+  "auditor_invocations": 63,
+  "archived_result_relative": {
+    "scope": "ARCHIVED_RESULT_RELATIVE",
+    "eligible_claims": 57,
+    "positive": 42,
+    "negative": 15,
+    "confusion": {
+      "TP": 10,
+      "FP": 0,
+      "TN": 5,
+      "FN": 0,
+      "ABSTAIN_POSITIVE": 0,
+      "ABSTAIN_NEGATIVE": 0,
+      "MISSED_POSITIVE": 0,
+      "MISSED_NEGATIVE": 0,
+      "ERROR_POSITIVE": 31,
+      "ERROR_NEGATIVE": 10,
+      "NOT_EVALUABLE_POSITIVE": 1,
+      "NOT_EVALUABLE_NEGATIVE": 0
+    },
+    "agreement_on_definitive": {
+      "numerator": 15,
+      "denominator": 15,
+      "value": 1.0,
+      "reason": "ARCHIVED_RESULT_RELATIVE_ONLY"
+    },
+    "decision_coverage": {
+      "numerator": 15,
+      "denominator": 57,
+      "value": 0.2631578947368421,
+      "reason": "ARCHIVED_RESULT_RELATIVE_ONLY"
+    },
+    "positive_support_coverage": {
+      "numerator": 10,
+      "denominator": 42,
+      "value": 0.23809523809523808,
+      "reason": "ARCHIVED_RESULT_RELATIVE_ONLY"
+    },
+    "false_supports": 0,
+    "false_contradictions": 0,
+    "independently_adjudicated": false
+  },
+  "independently_adjudicated_claims": 0,
+  "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+  "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+  "GATE_11": "BLOCKED",
+  "reason_independent_metrics": "NO_INDEPENDENT_ADJUDICATION_OR_DEMONSTRATED_HOLDOUT_SEPARATION",
+  "new_benchmark_tasks_executed": 0,
+  "official_regrades": 0,
+  "models_started": 0,
+  "cost": "NOT_OBSERVABLE_LOCAL_NO_PAID_SERVICE",
+  "execution_duration_ns": 364235998300,
+  "scope_denials": 0,
+  "producer_redispatch": false,
+  "retained_auditor_source_references_checked_against_frozen_scope": 243,
+  "recovery": {
+    "status": "PASS",
+    "recovered": 63,
+    "engine_verify": {
+      "status": "PASS",
+      "versions": 63,
+      "sources": 63
+    },
+    "python_optimize": 0,
+    "framework_receipts": 126,
+    "framework_checkpoints": 126,
+    "observations": 189,
+    "edges": 63,
+    "pending": [],
+    "inflight": [],
+    "producer_redispatch": false,
+    "mode": "READ_ONLY_NO_RESUME",
+    "observer_sha256": "b8e4c276cc61614e2f2e727ce1098b08b0ed10fde6e5ca0581c0670f3741a9dc",
+    "frozen_recover_helper": "NOT_EXECUTED_STATIC_BINDING_SHAPE_DEFECT",
+    "candidate_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+    "candidate_tree": "a59f445f140c4e29e4aae8fecfc46db838810874"
+  },
+  "NO_PUSH": true,
+  "cohort_limits": {
+    "inventoried_memberships": 3642,
+    "unique_task_ids": 2819,
+    "known_trajectories": 264,
+    "inspected_trajectories": 240,
+    "uninspected_trajectories": 24,
+    "inspected_instances_with_matching_usable_report": 232,
+    "total_report_inventory": "UNKNOWN_NOT_EXHAUSTIVELY_INVENTORIED",
+    "preselection_claim_hits": 92,
+    "selected_claims": 63,
+    "additional_distinct_cohort_exclusions": 24,
+    "exact_duplicate_extra_hits": 5,
+    "eligible_claim_occurrences_in_bounded_review": 87,
+    "whole_corpus_claim_denominator": "UNKNOWN"
+  },
+  "candidate_claim_extractions": 18,
+  "units": [
+    {
+      "claim_id": "RUN010-c5491cee144ee017",
+      "predicate": "TESTS_PASS",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "8b37be403e16320801146c0bb1dbab8293a60a60613286cef12af51b10ba351a",
+      "selected_message_sha256": "651b091a98e06e2ef83fb234372cffc89f35ca014ebc5ecc89318d7ea49760a8",
+      "capsule_commitment": {
+        "sha256": "b38ea070338d9ef6286f79ca560da8d51d5de84dcebf9c769c42e699e7c3bbc1",
+        "bytes": 4026
+      },
+      "reference_type": "UNAVAILABLE",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-72842707a7f05879",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "c4c6b203e8c475ff6c4c44f511243b1cd58dd0bd8162e61e0accc41e5139c515",
+      "selected_message_sha256": "a271adfd628112d443ef7bf07910c3fbf3b3b11ad19681b2edffd6a5ac1b39c2",
+      "capsule_commitment": {
+        "sha256": "ddda41522f9942188bd84223374964e9f4bb357746748763cef23bb93c42376b",
+        "bytes": 3893
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-171d6b9524a475b0",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "CONTRADICTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "CONTRADICTED",
+      "reason_codes": [
+        "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "5fae7fc3617803beb748edf5469497019626d8cf127245862e906e6673ff6bf8",
+      "selected_message_sha256": "2b367e8279b837f9ca4dd53157e28c46852b172be6e1cc1197c164087eef1fb3",
+      "capsule_commitment": {
+        "sha256": "dd760ad0ea4b1c48aad7388cf7f7023e17cfee0f1ae64f2b692b29050fa6e486",
+        "bytes": 9049
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-44ebc7ebac00f2c2",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "CONTRADICTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "CONTRADICTED",
+      "reason_codes": [
+        "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "222cc48253d8588fe3c003b91dbc613d74395ab8562d8607c80a2a02799018d4",
+      "selected_message_sha256": "f6b1f2872805973ccf09284dbf9153190b0b62e2657fc6602f65f26286790746",
+      "capsule_commitment": {
+        "sha256": "fc5e6496eed9b3671c2f2138c9aed1b7d64f9941a994d7969b9ef51c66e3c4b8",
+        "bytes": 8693
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-a590f18c6add71bc",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "987b7da797825b439bbd3a731a0f0931b0c202a4ee01c91be1e90b3bcf8ed4af",
+      "selected_message_sha256": "4820929926f53b5c0038e901734981e5283d0926305fe3452e2c076670d681b6",
+      "capsule_commitment": {
+        "sha256": "5ae6833251bc27c0540bb0e8f6920f9cf1325ed0d63d3ffba3860bdaaeb5bc10",
+        "bytes": 3990
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-7b2cab1a0769fef0",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "CONTRADICTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "CONTRADICTED",
+      "reason_codes": [
+        "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "5dcafba0705fdf54e6721590bb5949f0e1ab67060feacf7d23ac55ab53ffaef5",
+      "selected_message_sha256": "f34afe96b2e0f3ca7903a6cc8f20de541387997b954b17dca9ad981aeec69853",
+      "capsule_commitment": {
+        "sha256": "e819cba09ac783d8e529f5d89dc4ee7e954a434418d5d8e30aa135ab0001468b",
+        "bytes": 7974
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-871d5b40900d9613",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "CONTRADICTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "CONTRADICTED",
+      "reason_codes": [
+        "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "2d03897a8846a5e5f3c9096934fe16212f4a7267beed2839b8ac413cc4a13c08",
+      "selected_message_sha256": "269c9e918315b4ca9538a403b297b20d1427bf23e3ef53f2b94186f00bd11f76",
+      "capsule_commitment": {
+        "sha256": "86d16250225a9ab30c7151a49061e60d9b75c4860abe908ea7913e6c4a0cf491",
+        "bytes": 7936
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-f705c8b165211d0a",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "251789310312d4a6517df066bc039317f086a9bb1c04f745f5838c0536f9e473",
+      "selected_message_sha256": "2860ce6ecd9e90e3b4b9e1b4f87aac97f66e13970946f8391ed13099bd2bf667",
+      "capsule_commitment": {
+        "sha256": "571aeac4a8d809bf5652f2d364d8bd1c683435211a42dae66bd2b6e5eee2c219",
+        "bytes": 3860
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-c040837bc9f5c581",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "a4e4a0a85e82ba7194fdee996987502bc821aefd2e87a45bc6dab4c969b5efe2",
+      "selected_message_sha256": "290821d1baedb1215afef0b2fac28b0ef1c620edc33ae5347b2118acde862657",
+      "capsule_commitment": {
+        "sha256": "97b6720257b3a751bf19a277843907fe2bcfea58db4c8b401e0412530ebd8155",
+        "bytes": 4030
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-dc6c0dfd3466399b",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "c288521aa585024cc1076a8554e8b13584615a595e9b7cb162fdf6a8f99ad51a",
+      "selected_message_sha256": "b6b98cac5a85be414acfeff67b9bbe7305925c1cc37167a11b63cf67984669a3",
+      "capsule_commitment": {
+        "sha256": "7f4f11294d516075eff6a56fc5ddaf4602c08c6cf78ed31f0273e29b56bf9893",
+        "bytes": 3985
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-b9265fb7626996de",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "CONTRADICTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "CONTRADICTED",
+      "reason_codes": [
+        "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "2a8e58092e072d20b0a8f17bb93305d4376075c4ea2ccb4a5c5f0197d581b074",
+      "selected_message_sha256": "77046c665c4f3df149fc1acbbc5ad3a22f20edf8a3999bf5ffaa4f3eb1817c41",
+      "capsule_commitment": {
+        "sha256": "8809738b89f08d36fb23d4d7f92076ab3c5568e62d2ed8fff85de3ceb7932f53",
+        "bytes": 7952
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-6e8f77fce41ec0cc",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "92538957b78b68d804ac21c3bc1037682e80aec92746da6569eb908480973634",
+      "selected_message_sha256": "799d3bd4e3a66d4e8c6ae392e1e0c7b242b80d974845898eb416870366e3d67c",
+      "capsule_commitment": {
+        "sha256": "116f4f8e6e9fff09223d451ed57babc8a90c47bc6b88c5b4fbdb83682ecafa4d",
+        "bytes": 3906
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-ba54dbd62060aba1",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "57945e58561b7f0297d633868799af74c9acb6e5c67a04e999ff0e48d3d3cf2b",
+      "selected_message_sha256": "c556420b694dc63b80d4ad1ff9ddb45d76e4f55d9a5dd23e713b98c8ff9481a9",
+      "capsule_commitment": {
+        "sha256": "bea156b58bb17ec328f2f4529c0388d882ee39bc4fa90d5fa69528c4f07b120c",
+        "bytes": 3797
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-875f819bd96b51bf",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "1a8e28d2dc64067bf00eb998bc8d04e80eb588fb3f700b6bda07f363735b5ba7",
+      "selected_message_sha256": "284f37c72dd0a7496566d6ccba4089bc6e29e07cd0d3430548ab90b8bf9b0838",
+      "capsule_commitment": {
+        "sha256": "b9f9660ed077153bfd625685dbfb9d681fd5f7827e6aa8180cb6b2d546a9ef12",
+        "bytes": 3817
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-103b1381e38081de",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "1d4f178556535c3d95f7084ec21f1bea5acd1635fbe50618901be5cd1ee70a3d",
+      "selected_message_sha256": "fa894a3538c137561804fd996160b7b4304545663feb4b830ac4549ad000ff99",
+      "capsule_commitment": {
+        "sha256": "e14336cf8f14fe3981ed936e2b3a7c8823faf0ac64cc76503b7ac0ef26d1a7ee",
+        "bytes": 5275
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-c75145f4e7880ab4",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "dfb809005d1b31e5ca1cce73764bdd67f6d11e76263f78c848994252dad1c55f",
+      "selected_message_sha256": "2e851c58d9a59b14cdf8cf446eb5dbb312cbd570256b13516ca2344e207b9dc8",
+      "capsule_commitment": {
+        "sha256": "546cfa277316f7f9baa56fbc62fdc6d6ef7ae06122eff9925beba8a8e1a512e4",
+        "bytes": 10840
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-97ef6bbeb8b457f4",
+      "predicate": "TESTS_PASS",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "ac92241405d2d58d4543893c6e2181e26a4fa915cccde7d2b56aea661c01ca8c",
+      "selected_message_sha256": "4cc64995023eaccd6edad3f058bbba768b19cd433f81db1b6517e5a375dd89ff",
+      "capsule_commitment": {
+        "sha256": "66a8bd74125712c021616b4d77133fff7845c4930b6ee1f08002f2c20ad3ddc3",
+        "bytes": 4216
+      },
+      "reference_type": "UNAVAILABLE",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-7d814ac17d5f18f6",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "395bdb4b3b012c0f427e738edc33397741fa875543a0ed5b78bc2ac0f049e3b0",
+      "selected_message_sha256": "dd4b63d547661cc87b11c108176e1809646cc293b9e073a85147c74ee0d56151",
+      "capsule_commitment": {
+        "sha256": "37f4969b0280a0844146e29337f54ced18a97aceffc93f3c17da30929c7d2fc2",
+        "bytes": 3830
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-97bbb7b26984ade9",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "5e481d61b60e05f8a6b9f57e4cb73b9b556c08815437cbccf2cddf6ea8053830",
+      "selected_message_sha256": "859bf15ad712697297296b26cebc5dc4e0b5ede61e64e65783e9bc88367f46f1",
+      "capsule_commitment": {
+        "sha256": "63886a4b0f4e4bc30a482dc2e68c457e7a972ca74d7c7554c04eb05a55d22c48",
+        "bytes": 3829
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-401298b7ad775882",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "662a1c65fb1c1a99eb3b387560e1ff350ffb74035ae766c39d125eedd7a6106b",
+      "selected_message_sha256": "1181889c6118fa5d18a1d2fdd5e6447685cf0b161b75d23b04b3be39163037c1",
+      "capsule_commitment": {
+        "sha256": "ade539eb273162a9c745a118768a0d5faeafabe324ff69bf9fdb6ddf1a3e0477",
+        "bytes": 4711
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-276e06644d6ca993",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "e93a72f07ed876bc00454e880f73cfafecaca97ef492152fd2b031330efc480a",
+      "selected_message_sha256": "f39b06ea32825a0a5ca5bf4ddf0f468ea3333e36184bce55ce2c7d3bbe9ed4c4",
+      "capsule_commitment": {
+        "sha256": "e0983cba667e086709bba602e5ca05a914078a4cb29571ce4e977b1474338b88",
+        "bytes": 3873
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-95a1aeb1f5ca4d12",
+      "predicate": "TESTS_PASS",
+      "disposition": "NOT_EVALUABLE",
+      "association": "SELECTED_CLAIM_NOT_EXACTLY_AUDITED",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "a5722be52f56c11a62cc919ba249c25abbc9b06fa823f262aabe77759f7fea9f",
+      "selected_message_sha256": "ff13639f29d2d6661781f35e3837d4c4372c2f8fc941b51f1aee3f625bc69bc3",
+      "capsule_commitment": {
+        "sha256": "b3c03734918eb84458b46ca186cd5fdc105b0c4fc234c260aa9b977a084fee45",
+        "bytes": 8981
+      },
+      "reference_type": "UNAVAILABLE",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-de2921b4b6f9ba8f",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "dfca365c38209161607fc294320512233a1387cd33a4413bfcc8538dafbeea4c",
+      "selected_message_sha256": "3e0df18e7f1e52f05f89d34b25427ecaeba3770d4ea1cebdb375514423f65e4a",
+      "capsule_commitment": {
+        "sha256": "9ac5059e0e31a816a360ee424278ef9673ca3c6ec47acdb5a98947c202850a97",
+        "bytes": 3772
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-bbc894101c316925",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "e49a2502b9afbd9f7873617bc71bfc846cf7185801e45a746d379c3d13cc6f7f",
+      "selected_message_sha256": "1ffb188d2087286dcf6497d6d0c8afc074277139fddcae50a497e32b7575bf09",
+      "capsule_commitment": {
+        "sha256": "0586d40ea72a2c7ffe4837616481b1dd67ae581f1807a265fb55d554250c6398",
+        "bytes": 3877
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-2b5f731306655700",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "2ab6886451e7ec860dcfc525b12702a28de6ecb7aa7ed4958bf9753d003bd3db",
+      "selected_message_sha256": "1ffb188d2087286dcf6497d6d0c8afc074277139fddcae50a497e32b7575bf09",
+      "capsule_commitment": {
+        "sha256": "171cb7ced538e6f7d6e44aff10ac6e87eaae70d063b60335e88bee56cfa51f55",
+        "bytes": 7780
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-a6dd513ae9fc5458",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "2eee52c3bde2b44d357a63141fa04b9885834427b68131bb06b9f60a7bdbab94",
+      "selected_message_sha256": "3424e93cdcd6e6b8a7d6c5c4782e580f7882e385e42a508c96ddca0f82fd63fa",
+      "capsule_commitment": {
+        "sha256": "426cb47c4979bb0bc875771eb2c43262ddf58a77845c2cf4e618967adc7b1a94",
+        "bytes": 4190
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-e7fc85ef41a137b0",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "75bbe86f4f68b9a589ec760222cc36e7da7341b44085201286475efc73690a94",
+      "selected_message_sha256": "0f0f7ee6b3bc1620d452ddd7a1534cb1e97a6cbcf582e8cbe1eb7438631be66d",
+      "capsule_commitment": {
+        "sha256": "4fef5da6ffe117c0b2f6ba8d273bbdfaaecb34d04c8170074e07541ab637d746",
+        "bytes": 3816
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-b17fc909d9efd959",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "f8b1276e642937c99e4746d17e3173ca98a088c16202643f1ee458d9ae996349",
+      "selected_message_sha256": "92c1cf43b0c1835b8a05292d6696eba97f026d698e5ada7c0160464a5df7d49e",
+      "capsule_commitment": {
+        "sha256": "a265fca3ed6f3cd4adf7ed886b35f66f726dd5d089a6084e8152204754b600ca",
+        "bytes": 3950
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-ca6fdac1d274adaf",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "bb81024b71e998040aadfcc6e0ffe453df592b93d0784acdee3bdd7ed059101f",
+      "selected_message_sha256": "623eef0439e1b56982cf5378bdfd404db0fc1fb35a8aef48ad1e8cf3ac2775a0",
+      "capsule_commitment": {
+        "sha256": "2d210ecb6b1fd858ac9f8c6a2cb05a8bcad82ae2c1fd922fbbdc90a0a8480b78",
+        "bytes": 3953
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-bd73db44996c8eb9",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "3a5923276fd2e14129e45fdf41466da8e37ddf1d8d665c22b66668a8f012afc2",
+      "selected_message_sha256": "5d59ff6c6d84fa02c81c88fbe4d95fdcc16286131aabf8cf20dc90940d41b402",
+      "capsule_commitment": {
+        "sha256": "7f5d643b8b1c0dcc5cb03cdccef39c8c0b56a991467defe6acccbf7d83c5037f",
+        "bytes": 3890
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-deff5875d0974fb9",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "2a5a59243507be275a74e35c0186e8362b8f0d5828fb3920ac5967e1f9d0a774",
+      "selected_message_sha256": "4f29afefad0d8af43dce720873cc3fa83d96896ea166edf3a0a31ee7908f86a1",
+      "capsule_commitment": {
+        "sha256": "72a0feb6ada1af7bf770d9db475a69156b6b86dfccc37c46ea66a5242a64b1a0",
+        "bytes": 3869
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-a7be8d1ba64a2d9b",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "cb6633838135252d630f7dbec4e4f053d0f597d17b48282a681e346fca553c21",
+      "selected_message_sha256": "b1d9ae24513daa1ff072fe4b1c36cd45065edd1d508a93f846ace9b26acfb5b5",
+      "capsule_commitment": {
+        "sha256": "1aaa58bfbaed7801c368219db4fcdbb59d6203f4b9622a807973226c4f1d8a00",
+        "bytes": 3886
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-2a715809048315ea",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "92d29119ebd9902f1dc2c08df7c182a755eaacda315d24c3af0c7757fedd2b03",
+      "selected_message_sha256": "2b125eae67b7282b6bc5b5e5bef4af2121f1c508c5409149bf6c3480dae16414",
+      "capsule_commitment": {
+        "sha256": "63ac6eba717b5da0d8dacbcd4dcef0c3dfaeaf074d266d06b5b1d303212edef2",
+        "bytes": 3826
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-aeda90bd7269d471",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "873eec78b96f92aa861b5dfc14104a7f407920719c58d46afd3f0aba2ab0820a",
+      "selected_message_sha256": "35b592026dbc2d5e0105c63c0bf0b78280857500afe45462f883ff21b957db85",
+      "capsule_commitment": {
+        "sha256": "98527ff373173c7aac46a1d908bd1ba28c7c7298809b3fd094f4974ca710d632",
+        "bytes": 7865
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-8d0dbb72fb196743",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "edf2f5b03bd9ec7f252e5ec8408a92c2c87e6d6985204e6bb9a4f5a65c0ceaad",
+      "selected_message_sha256": "655a9faf8739fbc39524f07abb87d15f6329110703480a76e68b93a06142f1be",
+      "capsule_commitment": {
+        "sha256": "d1cec25dbc8a8bd02973e3961751a02efa0210b2b929ccb2ba7e2036b5386074",
+        "bytes": 4109
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-1bce2a5fc1102c45",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "63f08ba1fd7824f0c7d51a4dab7a15c7c2d0db4a6af74d99c00bade8cf5e94ad",
+      "selected_message_sha256": "1af7d9bd8645e55d5092da33c221a20894795609452b2dce6867f177cbc5043d",
+      "capsule_commitment": {
+        "sha256": "bd8939fc3baf83c16076865ab98adc9f976ed869460fe0cf9e94356779fab8d7",
+        "bytes": 3950
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-5c561bc7e4a35063",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "8f517600acf50b7a59d1e0e7cad04b5b0df95763d3ccbd221254a50ede2c2645",
+      "selected_message_sha256": "d73394261299465b98a136e77b105700bc63abc7f1d153f183a3b4dea2daac5b",
+      "capsule_commitment": {
+        "sha256": "8ac2ddcbffcd4fffa511dd85d3166fcac0b341e28c5f9ce4b7b9222f73827ce6",
+        "bytes": 3844
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-84a84bb7ca7d5e9d",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "41930ec61db04f5c39917561304973f4c41f537d7bccc28042c5e6d5d00e1729",
+      "selected_message_sha256": "efc898dfd89573e3266c374906f82270229dc303361ffb048130086706959563",
+      "capsule_commitment": {
+        "sha256": "ec2173050e5235d79847d542f94a97d84ee9c0f3a48b480d650045af0bdc8574",
+        "bytes": 3980
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-927179094010b826",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "93564b3cd6018c18bee06dc42227720fb57556daa72efcc606809df72fb5e4a4",
+      "selected_message_sha256": "b048c633c068edcd718952582a3a41be35c39824faab725c37fd45bcb5af16c9",
+      "capsule_commitment": {
+        "sha256": "ff5385f77599759acc1c04df735dbc90f1752ad39ee9358ed3c5eb49eb2ab275",
+        "bytes": 3904
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-ab47c39304ed16c7",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "d2e3ad0a2f03ba33df69efff0bf47a3d1cf66aab61776cedfe02b8e449485878",
+      "selected_message_sha256": "7bddb2c71de8a693abe822ce310373da12f44059eeb9e57d8f74a525983105e7",
+      "capsule_commitment": {
+        "sha256": "b6c7809107a3ce488da11469ebfc844253b09d96f3061fce6e939ab478768fcb",
+        "bytes": 3835
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-2e3bc553f3020598",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "63aadd813b704c1bc696a56b82f38da46e83943cce4c31f1006df3e3a710fa76",
+      "selected_message_sha256": "6c89750e143f1338341590c6d61b0f6055ae56ecf04d6922001c0e1bbb960b48",
+      "capsule_commitment": {
+        "sha256": "cfe9cb6b95948a60d455ba532235745dec673c3bfeace01578cedb190e07f79e",
+        "bytes": 4263
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-541d078a672f6985",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "574245d21a73e0f3165e9a24b76301ecba2be238959f01edf58a60f9dd59ca47",
+      "selected_message_sha256": "e0a1d4a5cd64d35a6885bbd26050ab8d4fabe4e267073427ad5143814ec13039",
+      "capsule_commitment": {
+        "sha256": "064b58dff8abaee6607d3256fdcf2298265f41f1e955446d64b1c4b182ba5389",
+        "bytes": 8827
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-a17e31846ab8aefa",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "0ea02285b0dfd9450cd7f96f75cc9b2d17d9f8c0363cffc93ae67ae96226d80d",
+      "selected_message_sha256": "b351d82918a416a98df357743ca27574531651885f6ca94df70f6ce595736cbc",
+      "capsule_commitment": {
+        "sha256": "26abf46811ab52cb9f8a4ed4ed1d110b1ea343336f61bb6cd4373a006f1c52d9",
+        "bytes": 7854
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-35f968a5a63596b6",
+      "predicate": "TESTS_PASS",
+      "disposition": "NOT_EVALUABLE",
+      "association": "SELECTED_CLAIM_MISSED_BY_EXTRACTOR",
+      "adapter_verdict": "INSUFFICIENT_EVIDENCE",
+      "reason_codes": [
+        "NO_EXPLICIT_COMPLETION_CLAIM"
+      ],
+      "trajectory_sha256": "826a95b81057adf5612c3fc5a208efd4ff56f5ad81a0200449135a467f3e60ab",
+      "selected_message_sha256": "74b34abc879011cd63c9dba14251ae1cf35be5e0c31ba8c82bc09a573f6b0276",
+      "capsule_commitment": {
+        "sha256": "ccc70651dd2d46eeb46fc25780ffda0c7f26c6fbadf9fd224037b7ae38ead6b7",
+        "bytes": 5966
+      },
+      "reference_type": "UNAVAILABLE",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-c8af40dc851a7661",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "608d11369f335de98eefdc6d26a218e75d5da266597d623ed93c83df143c5588",
+      "selected_message_sha256": "d9fe731dea38cba0248be7a13ae96c10a2870f2e1e409378762e4df13daef3a5",
+      "capsule_commitment": {
+        "sha256": "e50af10bae2e05c2c84734bfe48c0e25e6cb6fb765293a659701d07ab26c50d8",
+        "bytes": 7952
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-871cb65c44878798",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "10dee894a86dbff2828f12b465035e53934de68efacf87a8e08b4c12489b282a",
+      "selected_message_sha256": "8660891fe8423960def333c78df48daca7bdcdc03afe2efada287429149b7fde",
+      "capsule_commitment": {
+        "sha256": "a09582d78bf3e376b0df22817ca4ca2e6592c69acc1443438bd94a14b4de5401",
+        "bytes": 7933
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-84cc65fc2bc5c8d8",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "29d8d56fa70585485d42e9dedb9d9450c3907f064448ebfd8e5b51b125f2bc4c",
+      "selected_message_sha256": "11747e57a0e844dadf2ff169846eaa600b5e0695c1d8c2af40a9357181e19ff6",
+      "capsule_commitment": {
+        "sha256": "5e480fc19142aee4a3984d12246685b9e138804e4e310540df95820433a92d16",
+        "bytes": 3869
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-bdbf73213b3f469e",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "NOT_EVALUABLE",
+      "association": "SELECTED_CLAIM_NOT_EXACTLY_AUDITED",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "95580ea67c26d08a27ee81ecb8c97c3446a49820a1d1415c13f09ba2eec8552d",
+      "selected_message_sha256": "fd6256739a339c52c8e7bb6e616fef18a269a9e6bf6b78e59084233a2991f3f5",
+      "capsule_commitment": {
+        "sha256": "c3a28e9a0889f79e1580eff061e823b25a0ead8b7582919e2fd81b4392ecef0c",
+        "bytes": 8926
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-b5658a5c18b9059d",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "7ced9baa4db99511ae2c9513e3b299ca3911ca92b7a3836f95dcffcd211fa85d",
+      "selected_message_sha256": "4089c4796d4f76882767c2b73b73bb9e9c4fb65926502dcf4c4fb46c0cb40a0f",
+      "capsule_commitment": {
+        "sha256": "1867e22667a2ca165727ff4bb5f4d8feeb54e365bb7bcb8c6788605ba20598d2",
+        "bytes": 7957
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-1011014b91496e57",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "9b1bb88fb27fcabaeb5eed745d9d44a89c6e7ef72499ed1a20d69e472d952b59",
+      "selected_message_sha256": "346ac28abde898713cd3c7ec4f78e5f9ec29c0f28db7236d3143074fe9a3f908",
+      "capsule_commitment": {
+        "sha256": "95e86d2b22f5baebd841b4dba1e97fc19288f5e27a4c14cdba79fba88961cfa9",
+        "bytes": 3853
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-deb74ac2fafe70ad",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "1d379863b5563eaca9620dd0dce053dd600edabcc2cd639d9c57aafbd9a606e1",
+      "selected_message_sha256": "b2f25275e54687453357785ecd996f9701189f29651e73a8a360cbe3e2c4efd1",
+      "capsule_commitment": {
+        "sha256": "49b98d9ce9e5e627550d93679f738a21bcaa2953816269ef2ba0def1310081b1",
+        "bytes": 3850
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-423eb4977c611a54",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "d04d3ae4c11a3050cd5386ba9668f694f900012293a1b1557b6bceae18294d89",
+      "selected_message_sha256": "6aa44c44425b1a1d78122fce0b4f5a35652f3282cae71a2ddbf674e98194e088",
+      "capsule_commitment": {
+        "sha256": "c7f27e9f7da8b8d5604f1d960cc046bb37ddbd4382c4dd4f8db12ed2bd1bcacf",
+        "bytes": 3874
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-f4cf3c8111fd901b",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "160174b8e50d0e2e5f19d36f4a3432743a2a43530e95a011938c7123adc4b7c9",
+      "selected_message_sha256": "deeb3baf531a39bce880ca3f671789ed4e674350db22172231135291220f15bb",
+      "capsule_commitment": {
+        "sha256": "3fe08ea0a2c8df6d827073437290ad291b6406270e431de0b13b83a867a841fe",
+        "bytes": 3872
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-9b63c1d7fef0f4ac",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "cb70d71cb4b77a7cb5ac19a2bd9ba1af464b161a8848ebabdd9430ed3c5ee201",
+      "selected_message_sha256": "583b39192164ce264a6f4013c9cff0c7c7e813ac49189863f761ff931d918ee3",
+      "capsule_commitment": {
+        "sha256": "4da6a312e78b3c5c0b82d54a1a4d4f65a03e5473d8c2cb9044fb1e71e5d604f6",
+        "bytes": 3940
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-4bef4a9924e3e2c2",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "7c6c116a5209c4ecfe32988d701ade936015f527b65297d38629be8616ee0b4b",
+      "selected_message_sha256": "8a070e5d32b959c242f91b4a160e4b35fa244b862a500f8f0a05c8322c601e47",
+      "capsule_commitment": {
+        "sha256": "1a04e27e628224efa02130a82297c7d53cdd05a39fccca74d0e370a1c4576a4f",
+        "bytes": 3801
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-698e2f2ea2b535b8",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "81ecb54a21badec7f7596e55b4cf430ea40ccc0dd7c968ea7fc21ce496704d8d",
+      "selected_message_sha256": "be9de635a54462cba7f13aae7f54ea64774d0c168cdc4a0dba60aa14d7cf0ff2",
+      "capsule_commitment": {
+        "sha256": "3c50c3cd6548a0fe5f590f61c8e39a8750522ab2e8914aa3f07994ce33dd4ce8",
+        "bytes": 7912
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-d9a160b7e8954084",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "da266f6c834c31c4dc78effd16541169d9eecabe2b1b16d3eef68a59f4a84cdc",
+      "selected_message_sha256": "b5353998072ceb629107737a3a0b58cc3daeaeea990748cfca0ec24230041ff1",
+      "capsule_commitment": {
+        "sha256": "8f199f9042ec86343fcd1617d9ab9b81019386f777cf2c63a7b819ac44194320",
+        "bytes": 3834
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-880982bf358be961",
+      "predicate": "TESTS_PASS",
+      "disposition": "NOT_EVALUABLE",
+      "association": "SELECTED_CLAIM_MISSED_BY_EXTRACTOR",
+      "adapter_verdict": "INSUFFICIENT_EVIDENCE",
+      "reason_codes": [
+        "NO_EXPLICIT_COMPLETION_CLAIM"
+      ],
+      "trajectory_sha256": "447abd8a77a544b574747536a3c528174d75e9106a2fc9d87b55232d7610ed91",
+      "selected_message_sha256": "26d1895962aed12ef4022d880fd772516337ce68bea261a8a14399ea5cd770ca",
+      "capsule_commitment": {
+        "sha256": "5e97294831653cd640af6d24278411a7287502faefbf5e3225444db96c587fcd",
+        "bytes": 6121
+      },
+      "reference_type": "UNAVAILABLE",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-25cc3d09f05c59fc",
+      "predicate": "TESTS_PASS",
+      "disposition": "NOT_EVALUABLE",
+      "association": "SELECTED_CLAIM_NOT_EXACTLY_AUDITED",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "612f247efc210c92737515e30fd947ba2a89765413f2870f25113e318eedfe28",
+      "selected_message_sha256": "03a6ee31998977a71d5070bfdc4949178c96a735f45a6ed3eba1b7258e8e644e",
+      "capsule_commitment": {
+        "sha256": "5530c8ea9454abff8c2f33fa4268484302d9a12bc595e37693852a91192684fd",
+        "bytes": 9331
+      },
+      "reference_type": "UNAVAILABLE",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-ab76fb1ce6d8c4c5",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "7dc5e898275c81f2aa86daac80109add521d40cec69dcbb56813fb3a85f786b7",
+      "selected_message_sha256": "bb2ed7a79ee1119dd1eb12ef6daa3259eba893d13dea9c7d560975f1bcbbddd0",
+      "capsule_commitment": {
+        "sha256": "9eac2cbeb8fa29bb6cb08a5a3faee0c1444084615821ca693396065ce4d91ab6",
+        "bytes": 3855
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-da0c4ad2233b6389",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "SUPPORTED",
+      "association": "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE",
+      "adapter_verdict": "SUPPORTED",
+      "reason_codes": [
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS"
+      ],
+      "trajectory_sha256": "ef4d28766eddf0cceca739dc5e6ee3cf376c45a6693a70fa99d60c15f271e14c",
+      "selected_message_sha256": "e740064c33905bc31afaf7a31767b2e5f6c27df131e9017820ce5d9b9e825856",
+      "capsule_commitment": {
+        "sha256": "9fad5b400ace6ed26501c7e3436ef3b382a5678f6471d4e7da6d92583bb34324",
+        "bytes": 7975
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-77c0437b6d74f56a",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "57cd4449c41bdbe43c346a30002a4e986148c361091e953a50ee4807a652e344",
+      "selected_message_sha256": "0c48ddc4da9e0dfeb8fa238091e4c95d0454d55f9320315967020729352871d6",
+      "capsule_commitment": {
+        "sha256": "91fb77f3fe30f5f05ae84e4a9f652bd0b4ca501d11cdcd5a9f5dc576b48b2269",
+        "bytes": 3892
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    },
+    {
+      "claim_id": "RUN010-9a7a40817a38c6c4",
+      "predicate": "TASK_RESOLVED",
+      "disposition": "VERIFICATION_ERROR",
+      "association": "ADAPTER_ERROR",
+      "adapter_verdict": "VERIFICATION_ERROR",
+      "reason_codes": [
+        "AMBIGUOUS_AGENT_CLAIM"
+      ],
+      "trajectory_sha256": "02d1207ed83c40caae670d84274a4fc7e1e4f36f797ca2df046faa64a5b326e6",
+      "selected_message_sha256": "fe5c70488fefcd4b52c4b8715f43d95b7901c22602fb96fe206ab5c4276b2056",
+      "capsule_commitment": {
+        "sha256": "8c3a2fe5691bf0f8fd73140513aa6ff4998e81dcbd5ee65e3d22889356709080",
+        "bytes": 3903
+      },
+      "reference_type": "OFFICIAL_ARCHIVED_TASK_RESULT",
+      "applicability_review": "MODEL_ASSISTED_PROVISIONAL",
+      "independent_adjudicated": false
+    }
+  ]
+}

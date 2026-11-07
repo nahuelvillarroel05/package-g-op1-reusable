@@ -519,6 +519,31 @@
       "campaign_execution": "COMPLETED_DEFINITION_PROCESSING_ONLY",
       "candidate_tree": "6388fec69981db5bbf7af89c72dbc08aa1552c20",
       "public_evidence_path": "experiments/campaigns/pgop1-autonomous-evolution-001/run-009"
+    },
+    {
+      "ID": "RUN-010",
+      "record_kind": "OBSERVED_E1_CAMPAIGN_RESULT",
+      "directory": "experiments/runs/run-010",
+      "public_evidence_path": "experiments/runs/run-010",
+      "contract_path": "experiments/runs/run-010/contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "result_path": "experiments/runs/run-010/EXECUTION_RESULTS.json",
+      "ENGINEERING_MODE": "E1",
+      "status": "COMPLETE_WITH_DISPOSITIONS",
+      "campaign_execution": "ARCHIVED_CLAIM_AUDITOR_EXECUTED",
+      "candidate_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+      "candidate_tree": "a59f445f140c4e29e4aae8fecfc46db838810874",
+      "selected_claims": 63,
+      "processed_claims": 63,
+      "semantic_audits": 15,
+      "independently_adjudicated_claims": 0,
+      "attempts": [
+        {
+          "attempt_id": "RUN010-E1-20261107T050521Z-745f7409",
+          "processed_claims": 63
+        }
+      ],
+      "publication_status": "LOCAL_ONLY_NO_PUSH",
+      "formal_qualification": "NOT_ACHIEVED"
     }
   ],
   "pilots": [

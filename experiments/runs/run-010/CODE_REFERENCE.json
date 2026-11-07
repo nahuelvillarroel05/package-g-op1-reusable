@@ -1,0 +1,16 @@
+{
+  "schema": "pgop1.run010.public-code-reference.v1",
+  "candidate_commit": "73f8d5a8d38ef0598b9fe8502eb76e15d397089b",
+  "candidate_tree": "a59f445f140c4e29e4aae8fecfc46db838810874",
+  "baseline_commit": "3811157883f8f341d7bef99b573883499f59a2d2",
+  "branch": "experiment",
+  "result_commit": "SEPARATE_LOCAL_DOCUMENTATION_COMMIT",
+  "contract_sha256": "2d05866d8fe413192d6aeee50491a3ce1e776a3d550881de6c727140d7ee2225",
+  "policy_sha256": "82565c1ef89013515f55c1fee84b20876b56c7f445d9379f8a7c8bb16da972bb",
+  "private_selection_sha256": "9f1b1341c992ad21a24c865ef513a3e51d056a53f9752a8c6ba51a86fb11ce4d",
+  "normalized_dataset_sha256": "3e24f09ca493ecd57a2ecff8218a234448db10c29d4a455b819132755b809e36",
+  "exact_scope_sha256": "f16261a8875de0cffbeaff0df43738c909b56342a5b7638f99dbb9df464732d3",
+  "config_sha256": "eaa8e44b3e54557760266755bc145d53f56b035c73089b1da67b6ef597450df7",
+  "launch_freeze_sha256": "ea43b71e3e4433296d3ea856701342dae0fdb5bab007cb9b978beeb709129a8c",
+  "NO_PUSH": true
+}
