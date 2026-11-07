@@ -1,0 +1,10 @@
+{
+  "runtime_commit": "f5688ad9832538a91e938c473608fe8027af3fa6",
+  "runtime_tree": "f1837a02ca9cd8f05bd8171694196938af97a642",
+  "parent_result_commit": "db7b7d9b8c272c04ffd22c3cbf6811b263432339",
+  "control_commit": "8760fa683c3da9235bccdefb15219eaedde59c8a",
+  "control_tree": "a6ada8603c5de944ac4d4269ead0c8f62c1aa903",
+  "selection_sha256": "4e69c5f8524d7d195e4804ece2f142ff4caef3594d89b3ab45f1241fdd9947bf",
+  "runtime_modified_after_freeze": false,
+  "REPRODUCIBILITY_CLASS": "PRIVATE_SOURCE_DEPENDENCIES"
+}

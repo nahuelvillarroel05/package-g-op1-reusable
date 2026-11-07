@@ -1,0 +1,406 @@
+{
+  "EXECUTION_STATUS": "COMPLETE_WITH_DISPOSITIONS",
+  "candidate_commit": "f5688ad9832538a91e938c473608fe8027af3fa6",
+  "candidate_tree": "f1837a02ca9cd8f05bd8171694196938af97a642",
+  "selection_sha256": "4e69c5f8524d7d195e4804ece2f142ff4caef3594d89b3ab45f1241fdd9947bf",
+  "selected": 18,
+  "attempted": 18,
+  "processed": 18,
+  "unique_instances": 15,
+  "dispositions": {
+    "SUPPORTED": 15,
+    "CONTRADICTED": 3
+  },
+  "exact_semantic_decisions": 18,
+  "by_predicate": {
+    "TASK_RESOLVED": {
+      "selected_attempted_processed": 18,
+      "dispositions": {
+        "SUPPORTED": 15,
+        "CONTRADICTED": 3
+      },
+      "archived_comparable_eligible": 18,
+      "archived_positive": 15,
+      "archived_negative": 3,
+      "exact_semantic_decisions": 18,
+      "archived_relative_confusion": {
+        "TP": 15,
+        "FP": 0,
+        "TN": 3,
+        "FN": 0
+      },
+      "decision_coverage": {
+        "numerator": 18,
+        "denominator": 18,
+        "ratio": 1.0
+      },
+      "positive_support_coverage": {
+        "numerator": 15,
+        "denominator": 15,
+        "ratio": 1.0
+      },
+      "negative_decision_coverage": {
+        "numerator": 3,
+        "denominator": 3,
+        "ratio": 1.0
+      },
+      "nondecisions": 0,
+      "extracted_selected_assertions": 18,
+      "association_reasons": {
+        "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE": 18
+      },
+      "parser_reasons": {
+        "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS": 15,
+        "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS": 3
+      }
+    }
+  },
+  "independent_labels": 0,
+  "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+  "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+  "GATE_11": "BLOCKED",
+  "run_id": "RUN012",
+  "engineering_mode": "E1",
+  "reference_scope": "EXPOSED_DEVELOPMENT_ARCHIVED_RELATIVE_ONLY",
+  "no_candidate_outputs_used_for_selection": true,
+  "independent_holdout": false,
+  "selection_revision": "V1_OVERLAP_DEFECT_PRESERVED;V2_OVERLAP_EXCLUSION;V3_EXPLICIT_POLARITY;V4_SOURCE_DEPENDENCIES_FROZEN_BEFORE_SCORING",
+  "paired_control": {
+    "PAIRED_COMPARABILITY": "SAME_FROZEN_COHORT_SEPARATE_STORES_SELECTED_CLAIM_API_TRUE_BOTH",
+    "cohort_count": 18,
+    "exact_decision_delta": 0
+  },
+  "control_commit": "8760fa683c3da9235bccdefb15219eaedde59c8a",
+  "control_summary": {
+    "selected": 18,
+    "attempted": 18,
+    "processed": 18,
+    "unique_instances": 15,
+    "dispositions": {
+      "SUPPORTED": 15,
+      "CONTRADICTED": 3
+    },
+    "exact_semantic_decisions": 18,
+    "by_predicate": {
+      "TASK_RESOLVED": {
+        "selected_attempted_processed": 18,
+        "dispositions": {
+          "SUPPORTED": 15,
+          "CONTRADICTED": 3
+        },
+        "archived_comparable_eligible": 18,
+        "archived_positive": 15,
+        "archived_negative": 3,
+        "exact_semantic_decisions": 18,
+        "archived_relative_confusion": {
+          "TP": 15,
+          "FP": 0,
+          "TN": 3,
+          "FN": 0
+        },
+        "decision_coverage": {
+          "numerator": 18,
+          "denominator": 18,
+          "ratio": 1.0
+        },
+        "positive_support_coverage": {
+          "numerator": 15,
+          "denominator": 15,
+          "ratio": 1.0
+        },
+        "negative_decision_coverage": {
+          "numerator": 3,
+          "denominator": 3,
+          "ratio": 1.0
+        },
+        "nondecisions": 0,
+        "extracted_selected_assertions": 18,
+        "association_reasons": {
+          "EXACT_MESSAGE_POINTER_CONTAINED_SPAN_TASK_PREDICATE": 18
+        },
+        "parser_reasons": {
+          "CLAIM_MATCHES_LOCAL_EVALUATOR_RECORDS": 15,
+          "CLAIM_CONTRADICTS_LOCAL_EVALUATOR_RECORDS": 3
+        }
+      }
+    },
+    "integrity_failures": 0,
+    "reference_independence": "NOT_PROVEN",
+    "independent_labels": 0,
+    "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+    "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+    "GATE_11": "BLOCKED"
+  },
+  "recovery": {
+    "status": "PASS",
+    "recovered": 18,
+    "framework_receipts": 36,
+    "framework_checkpoints": 36,
+    "pending": [],
+    "inflight": [],
+    "producer_redispatch": false
+  },
+  "native_store_files_unchanged": 188,
+  "synthetic_validation": {
+    "original_contexts": 6,
+    "false_extraction_contexts_before": 4,
+    "false_extraction_contexts_after": 0,
+    "actual_auditor_calls_per_arm": 12,
+    "invalid_definitive_outcomes_before": 8,
+    "invalid_definitive_outcomes_after": 0,
+    "direct_control_correct_per_arm": 2,
+    "authentic_evaluation": false,
+    "historical_original_probe_auditor_calls": 0
+  },
+  "regression_tests": {
+    "passed": 284,
+    "scope": "FOCUSED_EIGHT_MODULE_SUITE_NOT_FULL_REPOSITORY",
+    "archived_exposed_controls_matched": 15,
+    "archived_exposed_control_count": 15
+  },
+  "technical_audit_disposition": "TECHNICAL_REVIEW_COMPLETE_WITH_EXACT_LIMITATIONS",
+  "publication_status": "PREPARATION_BLOCKED_INHERITED_HISTORY_PRIVATE_PATHS",
+  "local_aggregate_artifacts": "PREPARED_LOCAL",
+  "REMOTE_STATUS": "UNKNOWN",
+  "NO_PUSH": true,
+  "I0_I6": "FORMALLY_FROZEN",
+  "I7": "INCOMPLETE",
+  "FORMAL_I7": "NOT_COMPLETED",
+  "OP1_OPERATIONAL_QUALIFICATION": "NOT_ACHIEVED",
+  "INDEPENDENT_CUSTODY": "NOT_PROVEN",
+  "PHYSICAL_C2": "DEFERRED_NOT_WAIVED",
+  "INCIDENT_DOC_READ_001_EXPOSURE": "UNKNOWN",
+  "HISTORICAL_GLOBAL_INTEGRITY": "DEFERRED",
+  "FALSE_SUPPORTS_ARCHIVED_RELATIVE": 0,
+  "FALSE_CONTRADICTIONS_ARCHIVED_RELATIVE": 0,
+  "CORRECT_CONTRADICTIONS_ON_NEGATIVES": 3,
+  "NEGATIVE_DECISION_COVERAGE": {
+    "numerator": 3,
+    "denominator": 3,
+    "ratio": 1.0
+  },
+  "POSITIVE_DECISION_COVERAGE": {
+    "numerator": 15,
+    "denominator": 15
+  },
+  "clustering": {
+    "claim_count": 18,
+    "unique_instances": 15,
+    "unique_repositories": 11,
+    "instances": [
+      {
+        "group": "instances-01",
+        "claims": 2,
+        "archived_positive": 2,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-02",
+        "claims": 1,
+        "archived_positive": 0,
+        "archived_negative": 1
+      },
+      {
+        "group": "instances-03",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-04",
+        "claims": 1,
+        "archived_positive": 0,
+        "archived_negative": 1
+      },
+      {
+        "group": "instances-05",
+        "claims": 2,
+        "archived_positive": 2,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-06",
+        "claims": 1,
+        "archived_positive": 0,
+        "archived_negative": 1
+      },
+      {
+        "group": "instances-07",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-08",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-09",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-10",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-11",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-12",
+        "claims": 2,
+        "archived_positive": 2,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-13",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-14",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      },
+      {
+        "group": "instances-15",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0
+      }
+    ],
+    "repositories": [
+      {
+        "group": "repositories-01",
+        "claims": 2,
+        "archived_positive": 2,
+        "archived_negative": 0,
+        "instances": 1
+      },
+      {
+        "group": "repositories-02",
+        "claims": 1,
+        "archived_positive": 0,
+        "archived_negative": 1,
+        "instances": 1
+      },
+      {
+        "group": "repositories-03",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0,
+        "instances": 1
+      },
+      {
+        "group": "repositories-04",
+        "claims": 3,
+        "archived_positive": 2,
+        "archived_negative": 1,
+        "instances": 2
+      },
+      {
+        "group": "repositories-05",
+        "claims": 1,
+        "archived_positive": 0,
+        "archived_negative": 1,
+        "instances": 1
+      },
+      {
+        "group": "repositories-06",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0,
+        "instances": 1
+      },
+      {
+        "group": "repositories-07",
+        "claims": 3,
+        "archived_positive": 3,
+        "archived_negative": 0,
+        "instances": 3
+      },
+      {
+        "group": "repositories-08",
+        "claims": 3,
+        "archived_positive": 3,
+        "archived_negative": 0,
+        "instances": 2
+      },
+      {
+        "group": "repositories-09",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0,
+        "instances": 1
+      },
+      {
+        "group": "repositories-10",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0,
+        "instances": 1
+      },
+      {
+        "group": "repositories-11",
+        "claims": 1,
+        "archived_positive": 1,
+        "archived_negative": 0,
+        "instances": 1
+      }
+    ],
+    "interpretation": "CORRELATED_EXPOSED_DEVELOPMENT_CLAIMS_NO_POPULATION_INFERENCE_OR_NAIVE_CONFIDENCE_INTERVAL"
+  },
+  "comparison_interpretation": "AUTHENTIC_CLASS_COUNTS_EQUAL_NO_OBSERVED_PAIRED_GAIN;BOUNDED_SYNTHETIC_CONTEXT_REPAIR",
+  "required_result_dispositions": {
+    "CAMPAIGN_SUMMARY.md": {
+      "status": "NOT_APPLICABLE_WITH_REASON",
+      "reason": "Equivalent bounded summary in README.md"
+    },
+    "EXECUTION_RESULTS.json": {
+      "status": "PRESENT"
+    },
+    "COVERAGE_REPORT.json": {
+      "status": "NOT_APPLICABLE_WITH_REASON",
+      "reason": "Equivalent exact class denominators in EXECUTION_RESULTS.json/by_predicate"
+    },
+    "FAILURES_AND_ABSTENTIONS.json": {
+      "status": "NOT_APPLICABLE_WITH_REASON",
+      "reason": "Equivalent exclusive dispositions and reason counters in EXECUTION_RESULTS.json"
+    },
+    "DEFECT_AND_FIX_REPORT.md": {
+      "status": "NOT_APPLICABLE_WITH_REASON",
+      "reason": "Equivalent prospective repair description in README.md and AUDIT_SUMMARY.md"
+    },
+    "CODE_REFERENCE.json": {
+      "status": "PRESENT"
+    },
+    "SOURCE_MANIFEST.json": {
+      "status": "NOT_APPLICABLE_WITH_REASON",
+      "reason": "Private source manifest withheld; only selection digest is published"
+    },
+    "RESULTS_INTEGRITY_MANIFEST.json": {
+      "status": "PRESENT"
+    },
+    "AUDIT_SUMMARY.md": {
+      "status": "PRESENT"
+    },
+    "LIMITATIONS.md": {
+      "status": "NOT_APPLICABLE_WITH_REASON",
+      "reason": "Equivalent limitations in README.md, AUDIT_SUMMARY.md and EXECUTION_RESULTS.json"
+    },
+    "PUBLICATION_RECEIPT.json": {
+      "status": "NOT_APPLICABLE_WITH_REASON",
+      "reason": "No publication performed; local preparation and remote UNKNOWN only"
+    }
+  }
+}

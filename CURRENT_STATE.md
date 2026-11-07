@@ -1,3 +1,21 @@
+# RUN012 negative semantic resilience E1 - current
+
+RUN012=COMPLETE_WITH_DISPOSITIONS. Actual 18/18 claims across
+15 instances, 15 archived-positive and
+3 archived-negative references; 18
+exact decisions. Same-cohort frozen RUN011 control: 18
+exact decisions. Exposed development only, no independent labels/holdout.
+Runtime `f5688ad9832538a91e938c473608fe8027af3fa6` / tree `f1837a02ca9cd8f05bd8171694196938af97a642`.
+Native fresh-process recovery and unchanged store bytes verified; zero redispatch.
+Review: TECHNICAL_REVIEW_COMPLETE_WITH_EXACT_LIMITATIONS.
+[Results](experiments/runs/run-012/README.md). NO_PUSH=true; remote UNKNOWN;
+publication belongs to Owner and is blocked by inherited private paths in reachable
+history; current derived index redacted prospectively, original commits preserved.
+I0-I6 frozen; I7/formal incomplete; GATE_11 BLOCKED;
+independent precision/recall NOT_COMPUTABLE; custody NOT_PROVEN; Physical C2
+DEFERRED_NOT_WAIVED; exposure UNKNOWN; historical global integrity DEFERRED.
+Earlier sections preserve their historical scope.
+
 # RUN011 semantic remediation E1 - current
 
 RUN011=COMPLETE_WITH_DISPOSITIONS. New 13/13 authentic claims across 5 instances:

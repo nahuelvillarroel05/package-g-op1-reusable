@@ -1,0 +1,32 @@
+{
+  "schema": "pgop1.run012.public-integrity.v1",
+  "files": [
+    {
+      "path": "AUDIT_SUMMARY.md",
+      "sha256": "a3bcd56e8761e245fd656836e2c718bc47f05d447aeab5493d4b1ffe214edd0b",
+      "bytes": 2884
+    },
+    {
+      "path": "CODE_REFERENCE.json",
+      "sha256": "faf1ea1e2bbd6c508af7f533b33a6b46947486a7cdef0ac205fa942274119f02",
+      "bytes": 515
+    },
+    {
+      "path": "contracts/experimental-e1-v1/RUN_CONTRACT.md",
+      "sha256": "28759ec7179334947892e60c6e3e20b55f72e20d333b973c9ededafd68ead8cb",
+      "bytes": 5771
+    },
+    {
+      "path": "EXECUTION_RESULTS.json",
+      "sha256": "f31146513e3dd89a66817844d3a8ae317024faebeb00198ddfb9f80ba2f26c9a",
+      "bytes": 11310
+    },
+    {
+      "path": "README.md",
+      "sha256": "ea62e970a041a8d26a4e3c90b78b3d97b40e6b775bac1968999d64c5c8cb909e",
+      "bytes": 2753
+    }
+  ],
+  "REPRODUCIBILITY_CLASS": "PRIVATE_SOURCE_DEPENDENCIES",
+  "NO_PUSH": true
+}

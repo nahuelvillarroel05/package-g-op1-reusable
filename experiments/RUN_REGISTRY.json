@@ -577,14 +577,24 @@
       "record_kind": "PROSPECTIVE_CAMPAIGN",
       "directory": "experiments/runs/run-012",
       "ENGINEERING_MODE": "E1",
-      "status": "PREPARED_OWNER_AUTHORIZED_CONDITIONAL_AUTHENTIC_NEGATIVE_ENTRY",
-      "campaign_execution": "NOT_EXECUTED",
+      "status": "COMPLETE_WITH_DISPOSITIONS",
+      "campaign_execution": "EXECUTED",
       "authority": "Owner RUN012 order issued 2026-11-07",
       "contract": "experiments/runs/run-012/contracts/experimental-e1-v1/RUN_CONTRACT.md",
       "control_commit": "8760fa683c3da9235bccdefb15219eaedde59c8a",
       "independent_labels": 0,
       "GATE_11": "BLOCKED",
-      "NO_PUSH": true
+      "NO_PUSH": true,
+      "runtime_candidate_commit": "f5688ad9832538a91e938c473608fe8027af3fa6",
+      "runtime_candidate_tree": "f1837a02ca9cd8f05bd8171694196938af97a642",
+      "selected_claims": 18,
+      "processed_claims": 18,
+      "exact_semantic_decisions": 18,
+      "archived_positive": 15,
+      "archived_negative": 3,
+      "scope_limit": "EXPOSED_ARCHIVED_DEVELOPMENT_NO_INDEPENDENT_LABELS",
+      "audit_status": "TECHNICAL_REVIEW_COMPLETE_WITH_EXACT_LIMITATIONS",
+      "publication_status": "PREPARATION_BLOCKED_INHERITED_HISTORY_PRIVATE_PATHS"
     }
   ],
   "pilots": [
@@ -717,16 +727,18 @@
       "semantic_audits": 0,
       "original_tasks_executed": 0,
       "negative_controls": 12,
-      "readiness_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_FINAL_AUTHENTIC_PREFLIGHT_001\\RUN004_FINAL_TECHNICAL_READINESS.json",
+      "readiness_path": "WITHHELD_PRIVATE_EVIDENCE_PATH",
       "readiness_sha256": "001bf7a036215c12a6961cb39047e06ade6f9a2fffebe7a3a148bd03d14fee1c",
-      "registration_scope": "Owner-specified development preflight; continuity registration after observed execution, not retrospective campaign authorization"
+      "registration_scope": "Owner-specified development preflight; continuity registration after observed execution, not retrospective campaign authorization",
+      "readiness_path_privacy": "PROSPECTIVE_PUBLIC_INDEX_REDACTION_ORIGINAL_RETAINED_IN_HISTORY",
+      "readiness_path_original_commitment_sha256": "12d47dbab8acc10269119974835019a020d907f9d69049dbb5b6adcd7f3ceccb"
     },
     {
       "ID": "PGOP1_RUN004_FINAL_ENGINEERING_CONVERGENCE_001",
       "status": "PGOP1_RUN004_ENGINEERING_PARTIAL_WITH_EXACT_LIMITATIONS",
       "candidate_commit": "d0c19e45fa637c040154ba53004863012e563b98",
       "candidate_tree": "ba018016d24c9a1f55f8ac47ced27803b5b957e6",
-      "readiness_path": "D:\\PGOP1_DATA\\PGOP1_BASELINE_001\\Engineering\\PGOP1_RUN004_FINAL_ENGINEERING_CONVERGENCE_001\\RUN004_FINAL_ENGINEERING_READINESS.json",
+      "readiness_path": "WITHHELD_PRIVATE_EVIDENCE_PATH",
       "readiness_sha256": "3814312b2f96a35408ebd647e64d66a06b3603e53d30a0b02516a67902c97673",
       "authentic_development_units": 9,
       "original_dataset_sources": 7375,
@@ -740,7 +752,9 @@
       "RUN004_CONTRACT": "NOT_APPROVED",
       "RUN004_FINAL_FREEZE": "NOT_ISSUED",
       "RUN004_EXECUTION": "NOT_EXECUTED",
-      "scope": "Engineering only; separate development identities; no campaign dispatch"
+      "scope": "Engineering only; separate development identities; no campaign dispatch",
+      "readiness_path_privacy": "PROSPECTIVE_PUBLIC_INDEX_REDACTION_ORIGINAL_RETAINED_IN_HISTORY",
+      "readiness_path_original_commitment_sha256": "35bbf807b6ef390583cb18197f37ec8c704a52beddbc20c0dd04819dba76fa2e"
     },
     {
       "ID": "PGOP1_CAPABILITY_EVALUATION_AND_RUN006_ALIGNMENT_001",
