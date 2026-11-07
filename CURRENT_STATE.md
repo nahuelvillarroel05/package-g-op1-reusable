@@ -1,23 +1,9 @@
-# Current RUN006 engineering preparation
+# Capability evaluation and RUN006 scientific alignment
 
-RUN006=PREPARED_NOT_EXECUTED; RUN006_EXECUTION=NOT_EXECUTED;
-RUN006_EXECUTION_ENABLED=false; RUN006_OWNER_LAUNCH_AUTHORIZATION=NOT_GRANTED.
-No authentic attempt, semantic audit or operational execution freeze issued.
-Prospective source-rights and integrity checks are separate from campaign work.
-RUN004=COMPLETED_WITH_EXACT_LIMITATIONS and RUN005=MINIMUM_SAFETY_BLOCKED
-remain closed with unchanged historical results and admissions.
+PGOP1_CAPABILITY_EVALUATION_FRAMEWORK_VALIDATED; PGOP1_RUN006_SCIENTIFIC_ALIGNMENT_VALIDATED. Scoped engineering methodology/design review complete; option A retained. RUN006=PREPARED_NOT_EXECUTED; RUN006_EXECUTION=NOT_EXECUTED; RUN006_EXECUTION_ENABLED=false; RUN006_OWNER_LAUNCH_AUTHORIZATION=NOT_GRANTED; RUN006_OPERATIONAL_FREEZE=NOT_ISSUED. No authentic preflight/audit/attempt or experimental results are produced. Structural/record consistency never establishes independent semantic truth. Previous preparation and RUN004/RUN005 history are preserved.
 
-[Preparation](experiments/runs/run-006/README.md),
-[code and evidence commitments](experiments/runs/run-006/PREPARATION_REFERENCE.json),
-[E1 contract](experiments/runs/run-006/contracts/experimental-e1-v1/RUN_CONTRACT.md).
-Exact private source dependencies and limitations remain in the Owner handoff.
+[Matrix](experiments/CAPABILITY_EVALUATION_MATRIX.md), [standards](experiments/EXPERIMENTAL_EVIDENCE_STANDARDS.md), [RUN006 v2](experiments/runs/run-006/contracts/experimental-e1-v2/RUN_CONTRACT.md).
 
-I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED;
-GATE_11=BLOCKED; INDEPENDENT_PRECISION=NOT_COMPUTABLE;
-INDEPENDENT_RECALL=NOT_COMPUTABLE; INDEPENDENT_CUSTODY=NOT_PROVEN;
-PHYSICAL_C2=DEFERRED_NOT_WAIVED.
+RUN004=COMPLETED_WITH_EXACT_LIMITATIONS; RUN005=MINIMUM_SAFETY_BLOCKED; RUN006=PREPARED_NOT_EXECUTED; RUN006_EXECUTION=NOT_EXECUTED; RUN006_EXECUTION_ENABLED=False; RUN006_OWNER_LAUNCH_AUTHORIZATION=NOT_GRANTED; RUN006_OPERATIONAL_FREEZE=NOT_ISSUED; I0-I6=FORMALLY_FROZEN; I7=INCOMPLETE; FORMAL_I7=NOT_COMPLETED; GATE_11=BLOCKED; INDEPENDENT_PRECISION=NOT_COMPUTABLE; INDEPENDENT_RECALL=NOT_COMPUTABLE; INDEPENDENT_CUSTODY=NOT_PROVEN; PHYSICAL_C2=DEFERRED_NOT_WAIVED.
 
-Future launch needs explicit Owner authorization and an exact operational freeze.
-No automatic resume, reserve consumption, main/src promotion or formal approval.
-Local documentation does not establish remote publication. Prior current-state
-bytes remain available in the preceding Git commit and private preimage.
+Runtime identity remains203606a413d3f56d02824bcabf35e34119b7c4e7/tree6c56958efd7d17e61b9fc941058c2688e0ba755e, byte-identical to codecc3f2b8. Scientific documentation commit is separate. No main/src promotion or remote publication inferred.

@@ -1,0 +1,31 @@
+{
+  "schema": "pgop1.run006.scientific-alignment-reference.v1",
+  "intervention": "PGOP1_CAPABILITY_EVALUATION_AND_RUN006_ALIGNMENT_001",
+  "option": "A",
+  "private_contract_sha256": "10d1154665ff05bda5ecf2828b5c7a73e12337cbf595176d42f2ae157b8c3620",
+  "private_disabled_configuration_sha256": "a2f80120eac23ddd3732b9b067c2d2804ed9562655b2e8b9db7012529f71d7fb",
+  "previous_private_contract_sha256": "356bc86c329987b68a0ae4c5acfa6331943b97b558fdd3257ffdfd68d7ac5e4f",
+  "capability_matrix": "experiments/CAPABILITY_EVALUATION_MATRIX.json",
+  "evidence_standards": "experiments/EXPERIMENTAL_EVIDENCE_STANDARDS.md",
+  "prospective_contract": "experiments/runs/run-006/contracts/experimental-e1-v2/RUN_CONTRACT.md",
+  "runtime_code_commit": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+  "runtime_code_tree": "6c56958efd7d17e61b9fc941058c2688e0ba755e",
+  "selection_unchanged": true,
+  "states": {
+    "RUN004": "COMPLETED_WITH_EXACT_LIMITATIONS",
+    "RUN005": "MINIMUM_SAFETY_BLOCKED",
+    "RUN006": "PREPARED_NOT_EXECUTED",
+    "RUN006_EXECUTION": "NOT_EXECUTED",
+    "RUN006_EXECUTION_ENABLED": false,
+    "RUN006_OWNER_LAUNCH_AUTHORIZATION": "NOT_GRANTED",
+    "RUN006_OPERATIONAL_FREEZE": "NOT_ISSUED",
+    "I0-I6": "FORMALLY_FROZEN",
+    "I7": "INCOMPLETE",
+    "FORMAL_I7": "NOT_COMPLETED",
+    "GATE_11": "BLOCKED",
+    "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+    "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+    "INDEPENDENT_CUSTODY": "NOT_PROVEN",
+    "PHYSICAL_C2": "DEFERRED_NOT_WAIVED"
+  }
+}

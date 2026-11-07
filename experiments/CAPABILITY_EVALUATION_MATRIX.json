@@ -1,0 +1,688 @@
+{
+  "schema": "pgop1.capability-evaluation-matrix.v1",
+  "authority": "PGOP1_CAPABILITY_EVALUATION_AND_RUN006_ALIGNMENT_001",
+  "role": "Experimental design aid, not an added formal E1 qualification gate",
+  "inspection_baseline": "203606a413d3f56d02824bcabf35e34119b7c4e7",
+  "classification_vocabulary": [
+    "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+    "IMPLEMENTED_PARTIALLY",
+    "EXPERIMENTAL_UNVALIDATED",
+    "DESIGNED_NOT_IMPLEMENTED",
+    "NOT_SUPPORTED",
+    "UNKNOWN"
+  ],
+  "interpretation": "DEMONSTRATED_PROPERTIES are bounded implementation/test-source observations; no current PASS unless linked in focused results. Formal-core inventory is not requalification. No family-level benchmark capability inferred. I3-specific public module not located under src/package_g/op1_reusable; implementation scope UNKNOWN, not an assertion that formal I3 never existed.",
+  "capabilities": [
+    {
+      "CAPABILITY_ID": "IDENTITY_BINDING",
+      "CAPABILITY_NAME": "Exact unit/source identity",
+      "FAMILY": "A",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/run_framework/run006.py::_decode_row/read_bfcl_row_pair; runtime/candidate/context_engine.py::admit_source",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/run_framework/run006.py::_decode_row/read_bfcl_row_pair; runtime/candidate/context_engine.py::admit_source",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_run006_engineering.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Checks row hashes and exact task-response ID equality in authored fixtures",
+      "UNDEMONSTRATED_PROPERTIES": "Real producer identity and genuine execution",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Does a mismatched identity get rejected before audit?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/run_framework/run006.py::_decode_row/read_bfcl_row_pair; runtime/candidate/context_engine.py::admit_source",
+      "INPUT_TYPE": "Bound task/output rows + expected IDs",
+      "EXPECTED_BEHAVIOR": "Reject mismatched IDs/hashes; retain disposition",
+      "FAILURE_CONDITIONS": "Wrong-source acceptance, silent rebinding",
+      "REFERENCE_TYPE": "Preregistered fixture identity commitments",
+      "REFERENCE_INDEPENDENCE": "Independent fixture expectation; hashes are not producer authentication",
+      "MINIMUM_EVIDENCE": "Expected IDs, exact input bytes/hashes, code/contract, rejection receipt",
+      "METRICS": [
+        "mismatches_detected / injected_mismatches",
+        "false_rejects / valid_bindings"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE; future authorized archived pairs"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Exact ID equality and SHA-256"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Identity strings can be copied; same ID does not prove origin."
+    },
+    {
+      "CAPABILITY_ID": "SOURCE_PROVENANCE",
+      "CAPABILITY_NAME": "Byte-bound source and graph attribution",
+      "FAMILY": "B",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/context_engine.py::admit_source/read_source/_validate/verify; runtime/candidate/run_framework/source_bindings.py",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/context_engine.py::admit_source/read_source/_validate/verify; runtime/candidate/run_framework/source_bindings.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_context_corrupt_index_recovery.py",
+          "tests/test_run_adapter_bridge.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Exact path/hash/scope grants, source-bound associations and verified graph assertions",
+      "UNDEMONSTRATED_PROPERTIES": "Independent upstream custody, authenticated producer",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Are wrong-source associations rejected while valid ones survive retrieval?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/context_engine.py::admit_source/read_source/_validate/verify; runtime/candidate/run_framework/source_bindings.py",
+      "INPUT_TYPE": "Source grant + evidence/source links",
+      "EXPECTED_BEHAVIOR": "Verify exact grants and reject inconsistent source bindings",
+      "FAILURE_CONDITIONS": "Accepted swapped source, omitted source silently treated as verified",
+      "REFERENCE_TYPE": "Frozen provenance map plus explicit tamper cases",
+      "REFERENCE_INDEPENDENCE": "Map author independent of candidate decision; upstream truth remains unproven",
+      "MINIMUM_EVIDENCE": "Source identities/roles, original commitments, mutations, returned graph",
+      "METRICS": [
+        "provenance_detection / injected_swaps",
+        "valid_bindings_preserved / valid_bindings"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "Authored source graph; permitted archived metadata"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Path/hash/ID join verifier"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "A source-bound declaration is not a verified real-world event."
+    },
+    {
+      "CAPABILITY_ID": "EVIDENCE_INTEGRITY",
+      "CAPABILITY_NAME": "Tamper and membership verification",
+      "FAMILY": "C",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/context_engine.py::verify; runtime/candidate/run_framework/core.py; runtime/candidate/run_framework/incremental.py",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/context_engine.py::verify; runtime/candidate/run_framework/core.py; runtime/candidate/run_framework/incremental.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_context_corrupt_index_recovery.py",
+          "tests/test_run006_engineering.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Digest, version/chain and checkpoint verification over controlled stored artifacts",
+      "UNDEMONSTRATED_PROPERTIES": "Detection of all omitted unobserved real-world events",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Which stored mutations/substitutions/duplicates are detected?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/context_engine.py::verify; runtime/candidate/run_framework/core.py; runtime/candidate/run_framework/incremental.py",
+      "INPUT_TYPE": "Immutable manifests, receipts, checkpoint, one controlled mutation",
+      "EXPECTED_BEHAVIOR": "Reject changed bytes or incompatible membership; preserve prior attempt",
+      "FAILURE_CONDITIONS": "Mutation accepted, membership changed silently",
+      "REFERENCE_TYPE": "Externally frozen fixture manifest and known mutation ledger",
+      "REFERENCE_INDEPENDENCE": "Independent byte commitments; no semantic truth label",
+      "MINIMUM_EVIDENCE": "Original/mutated bytes, per-case digest and verification receipt",
+      "METRICS": [
+        "integrity_detection / injected_mutations",
+        "false_alarm / unchanged_cases",
+        "membership_missing_and_duplicate_counts"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "Synthetic disposable stores"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "SHA-256 + membership/set comparison"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Cannot discover evidence never captured unless an external denominator exists."
+    },
+    {
+      "CAPABILITY_ID": "OPERATIONAL_GATE",
+      "CAPABILITY_NAME": "Disabled dispatch and scoped launch gating",
+      "FAMILY": "D",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/run_framework/run006.py::validate_dispatch_config/validate_runner_scope/dispatch",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/run_framework/run006.py::validate_dispatch_config/validate_runner_scope/dispatch",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_run006_engineering.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Disabled dispatch rejects before source reads/runner; exact rights/selection/freeze metadata checked in synthetic tests",
+      "UNDEMONSTRATED_PROPERTIES": "Authentic Owner identity, OS containment, live operational qualification",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Does denied operation remain side-effect free?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/run_framework/run006.py::validate_dispatch_config/validate_runner_scope/dispatch",
+      "INPUT_TYPE": "Disabled or incompatible authorization/config metadata",
+      "EXPECTED_BEHAVIOR": "Reject before Campaign/source-body read; never synthesize a grant",
+      "FAILURE_CONDITIONS": "Runner invoked or source opened after denial",
+      "REFERENCE_TYPE": "Independent callback/read counters and denied fixture expectations",
+      "REFERENCE_INDEPENDENCE": "Engineered observables; declaration verification is not Owner cryptographic authentication",
+      "MINIMUM_EVIDENCE": "Configuration hashes, read/runner counters, error code, untouched outputs",
+      "METRICS": [
+        "denied_operations_blocked / denied_cases",
+        "unauthorized_body_reads",
+        "unexpected_runner_calls"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE; actual disabled configuration metadata only"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Boolean/allowlist authorization checker"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Local assertions do not enforce an entire workstation or external service."
+    },
+    {
+      "CAPABILITY_ID": "CAUSAL_RECORD_GRAPH",
+      "CAPABILITY_NAME": "Recorded causal edges and reconstruction",
+      "FAMILY": "E",
+      "ARCHITECTURAL_COMPONENT": "src/package_g/op1_reusable/i4_graph.py; src/package_g/op1_reusable/i4_reconstruction.py; src/package_g/op1_reusable/i4_source.py",
+      "LAYER": "FROZEN_CORE",
+      "IMPLEMENTATION_REFERENCE": "src/package_g/op1_reusable/i4_graph.py; src/package_g/op1_reusable/i4_reconstruction.py; src/package_g/op1_reusable/i4_source.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_PARTIALLY",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Implementation exposes recorded graph validation/reconstruction; frozen status from current authority",
+      "UNDEMONSTRATED_PROPERTIES": "Independent causal inference; proof a declared action occurred; intervention effects",
+      "FORMAL_STATUS": "FROZEN_CORE_SCOPE_ONLY; not newly qualified",
+      "RESEARCH_QUESTION": "Can recorded relationships reconstruct under their exact contracts?",
+      "SYSTEM_UNDER_TEST": "src/package_g/op1_reusable/i4_graph.py; src/package_g/op1_reusable/i4_reconstruction.py; src/package_g/op1_reusable/i4_source.py",
+      "INPUT_TYPE": "Committed event/edge records and source bindings",
+      "EXPECTED_BEHAVIOR": "Validate declared edge structure and reconstruct contract-bound graph",
+      "FAILURE_CONDITIONS": "Incompatible graph accepted or reconstruction loses records",
+      "REFERENCE_TYPE": "Preregistered event graph and expected reconstruction",
+      "REFERENCE_INDEPENDENCE": "Authored record reference; not independent observation of action",
+      "MINIMUM_EVIDENCE": "Frozen contract, event IDs, graph inputs, expected reconstruction",
+      "METRICS": [
+        "reconstructed_records / expected_records",
+        "invalid_edges_rejected / injected_invalid_edges"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE; authorized recorded events"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Graph consistency and topological checks"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Code availability is not proof of world causality; new frozen-core tests are not performed here."
+    },
+    {
+      "CAPABILITY_ID": "PERSIST_RECOVER",
+      "CAPABILITY_NAME": "Immutable evidence and disposable-index recovery",
+      "FAMILY": "F",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/context_engine.py::ingest/verify; runtime/candidate/run_framework/incremental.py",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/context_engine.py::ingest/verify; runtime/candidate/run_framework/incremental.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_context_corrupt_index_recovery.py",
+          "tests/test_run006_engineering.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Authored store/query read-back; existing Engine corrupt-index recovery test launches a fresh child process; RUN006 checkpoint fixture reloads configuration and recovers in the same process",
+      "UNDEMONSTRATED_PROPERTIES": "Complete authentic campaign recovery, durable terminal accounting for arbitrary callback failures; fresh-process RUN006 campaign checkpoint recovery not established by the current focused fixture",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Are completed bytes exactly recovered without redispatch?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/context_engine.py::ingest/verify; runtime/candidate/run_framework/incremental.py",
+      "INPUT_TYPE": "Stored results, journal/checkpoint and disposable index",
+      "EXPECTED_BEHAVIOR": "Recover exact membership/hashes read-only; block ambiguity/inflight",
+      "FAILURE_CONDITIONS": "Missing result silently restarted; duplicate dispatch; authoritative tamper accepted",
+      "REFERENCE_TYPE": "Pre-interruption fixture manifest with exact result hashes",
+      "REFERENCE_INDEPENDENCE": "Independent expected membership; recovery is not new audit",
+      "MINIMUM_EVIDENCE": "Original journal/receipts, corruption/interrupt point, fresh-process recovered index",
+      "METRICS": [
+        "recovered_verified / expected_completed",
+        "missing",
+        "duplicates",
+        "redispatch_count"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "Synthetic disposable persisted evidence"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "File manifest rehash and exact set comparison"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Cooperative timeout; callback error can leave inflight without durable terminal cause."
+    },
+    {
+      "CAPABILITY_ID": "BFCL_STRUCTURE",
+      "CAPABILITY_NAME": "Task-relative function-call structural validation",
+      "FAMILY": "G/H",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/bfcl_structured_audit_v2.py::audit/_calls/_schema_supported/_matches",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/bfcl_structured_audit_v2.py::audit/_calls/_schema_supported/_matches",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_bfcl_structured_audit_v2.py",
+          "tests/test_run006_engineering.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Format/name/count and supported argument schema rules; unsupported representation/schema abstention",
+      "UNDEMONSTRATED_PROPERTIES": "Argument intent, right function choice, execution success, official acceptance",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Which task-relative structural predicates are decidable?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/bfcl_structured_audit_v2.py::audit/_calls/_schema_supported/_matches",
+      "INPUT_TYPE": "BFCL task definition + inert response object",
+      "EXPECTED_BEHAVIOR": "Emit True/False/None per predicate and scoped pass/reject/abstain",
+      "FAILURE_CONDITIONS": "Unsupported schema certified valid; structural pass promoted to semantic support",
+      "REFERENCE_TYPE": "Explicit structural contract; separately authored rule fixtures",
+      "REFERENCE_INDEPENDENCE": "Candidate replay is consistency only; fixture expected outcomes validate specified rules",
+      "MINIMUM_EVIDENCE": "Task/output hash pair, exact auditor version, raw predicate/status, fixture expected labels",
+      "METRICS": [
+        "structural_audited / attempted",
+        "decided_predicate_pairs / considered_pairs",
+        "unknown_predicate_pairs",
+        "fixture_rule_correct / labeled_fixture_pairs"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE; future permitted AUTHENTIC_AGENT_OUTPUT"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "JSON parser, strict schema/name/count checks"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "No independent semantic labels. Three unsupported predicates stay None; no call execution."
+    },
+    {
+      "CAPABILITY_ID": "CLAIM_RECORD_AUDIT",
+      "CAPABILITY_NAME": "Explicit completion claim versus local evaluator record",
+      "FAMILY": "G",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/swebench_claim_audit/adapter.py::audit_instance; runtime/candidate/swebench_claim_audit/generalized.py::audit_file/audit_evidence",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/swebench_claim_audit/adapter.py::audit_instance; runtime/candidate/swebench_claim_audit/generalized.py::audit_file/audit_evidence",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_swebench_claim_audit.py",
+          "tests/test_swebench_generalized.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Explicit TASK_RESOLVED claim extraction and supported/contradicted/insufficient/error handling against bound local records",
+      "UNDEMONSTRATED_PROPERTIES": "General arbitrary-claim truth; independent evaluator execution and reference authenticity",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Does an explicit claim agree with the supplied compatible record?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/swebench_claim_audit/adapter.py::audit_instance; runtime/candidate/swebench_claim_audit/generalized.py::audit_file/audit_evidence",
+      "INPUT_TYPE": "Explicit claim, matching run/instance evaluator record, predictions/patch commitments",
+      "EXPECTED_BEHAVIOR": "Resolve compatible record consistency or abstain/error on missing/conflicting inputs",
+      "FAILURE_CONDITIONS": "Invented agent claim, cross-run attribution, contradiction hidden",
+      "REFERENCE_TYPE": "Frozen local evaluator record for record-consistency; independent adjudication only if actually available",
+      "REFERENCE_INDEPENDENCE": "SUPPLIED_RECORD_CONSISTENCY; same evaluator record as input and label is circular for independent correctness",
+      "MINIMUM_EVIDENCE": "Exact claim span/type, source hashes and run/instance, predicate contract, evaluator provenance",
+      "METRICS": [
+        "record_agreement / comparable_claims",
+        "contradictions",
+        "insufficient",
+        "verification_errors",
+        "false_support only with separately valid labels"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "EXPLICIT_AGENT_CLAIM + AUTHENTIC_EVALUATOR_RESULT; researcher-derived claims clearly labeled"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Exact identity/boolean comparator"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "SWE predicates do not apply to BFCL intent by renaming inputs; unsupported claims remain unassessed."
+    },
+    {
+      "CAPABILITY_ID": "SUFFICIENCY_ABSTENTION",
+      "CAPABILITY_NAME": "Insufficiency and unsupported-predicate handling",
+      "FAMILY": "H",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/bfcl_structured_audit_v2.py::audit; runtime/candidate/swebench_claim_audit/generalized.py::audit_evidence",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/bfcl_structured_audit_v2.py::audit; runtime/candidate/swebench_claim_audit/generalized.py::audit_evidence",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_bfcl_structured_audit_v2.py",
+          "tests/test_swebench_generalized.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Missing/unsupported evidence paths abstain or produce exact insufficiency/error states",
+      "UNDEMONSTRATED_PROPERTIES": "Calibrated uncertainty and real-world false-support rate",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Does evidence removal cause appropriate abstention rather than favorable default?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/bfcl_structured_audit_v2.py::audit; runtime/candidate/swebench_claim_audit/generalized.py::audit_evidence",
+      "INPUT_TYPE": "Labeled sufficient/insufficient development cases",
+      "EXPECTED_BEHAVIOR": "Preserve unknown; distinguish not applicable, error and insufficient",
+      "FAILURE_CONDITIONS": "Missing evidence defaults to support; unsupported parser becomes contradiction",
+      "REFERENCE_TYPE": "Preregistered completeness rubric and labels",
+      "REFERENCE_INDEPENDENCE": "Fixture completeness reference independent of candidate; external validity limited",
+      "MINIMUM_EVIDENCE": "Missingness transform, expected state, observed predicates",
+      "METRICS": [
+        "abstentions / attempted",
+        "appropriate_abstentions / labeled_insufficient",
+        "false_support / labeled_insufficient"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE; SYNTHETIC_ADVERSARIAL_CASE"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Always-abstain; schema validator"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "An abstention count alone is not accuracy or calibrated risk."
+    },
+    {
+      "CAPABILITY_ID": "COMPONENT_COMPOSITION",
+      "CAPABILITY_NAME": "Adapter/caller/predicate/Engine/checkpoint integration",
+      "FAMILY": "I",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/run_framework/caller.py; runtime/candidate/run_framework/predicates.py; runtime/candidate/run_framework/run006.py::bfcl_row_adapter",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/run_framework/caller.py; runtime/candidate/run_framework/predicates.py; runtime/candidate/run_framework/run006.py::bfcl_row_adapter",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_AND_TESTED_WITH_SCOPE",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_run006_engineering.py",
+          "tests/test_convergence_predicates.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Authored row pair integration and exact metadata graph; replays same auditor to validate payload",
+      "UNDEMONSTRATED_PROPERTIES": "Authentic integration; independent verification of semantic correctness",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Does composition retain source/result identity and disposition?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/run_framework/caller.py; runtime/candidate/run_framework/predicates.py; runtime/candidate/run_framework/run006.py::bfcl_row_adapter",
+      "INPUT_TYPE": "One authorized development unit across existing interfaces",
+      "EXPECTED_BEHAVIOR": "Persist exact caller result and bound source/predicate evidence, recover same unit",
+      "FAILURE_CONDITIONS": "Swapped result admitted; disposition lost; repeated unit executed",
+      "REFERENCE_TYPE": "Frozen fixture transition/receipt expectations",
+      "REFERENCE_INDEPENDENCE": "Same auditor replay is reproducibility, not independent correctness",
+      "MINIMUM_EVIDENCE": "Per-stage bindings, raw/final decisions, receipts, recovery hashes",
+      "METRICS": [
+        "complete_bound_units / attempted",
+        "stage_errors",
+        "payload_replay_consistency",
+        "recovery_correctness"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE; future selected archived pairs"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Direct parser + hash manifest + record comparator"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Added scientific value over a simple validator has not been established; integrated traceability can still be useful."
+    },
+    {
+      "CAPABILITY_ID": "ADVERSARIAL_RESILIENCE",
+      "CAPABILITY_NAME": "Bounded manipulation and untrusted-input resistance",
+      "FAMILY": "J",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/bfcl_structured_audit_v2.py::_json/_calls; runtime/candidate/run_framework/provenance.py::_read_bound_file; runtime/candidate/run_framework/run006.py",
+      "LAYER": "EXPERIMENTAL",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/bfcl_structured_audit_v2.py::_json/_calls; runtime/candidate/run_framework/provenance.py::_read_bound_file; runtime/candidate/run_framework/run006.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_PARTIALLY",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/test_run006_engineering.py",
+          "tests/test_run_adapter_bridge.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Selected duplicate-key, mismatch, traversal/reparse and rights-denial tests",
+      "UNDEMONSTRATED_PROPERTIES": "General prompt-injection immunity, arbitrary sandbox escape resistance",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Which explicit attack classes fail closed?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/bfcl_structured_audit_v2.py::_json/_calls; runtime/candidate/run_framework/provenance.py::_read_bound_file; runtime/candidate/run_framework/run006.py",
+      "INPUT_TYPE": "Labeled manipulated inert bytes and metadata",
+      "EXPECTED_BEHAVIOR": "Treat embedded instructions as data; reject known manipulation within scope",
+      "FAILURE_CONDITIONS": "Input executes commands or unauthorized source read, incorrect acceptance",
+      "REFERENCE_TYPE": "Independent authored attack ledger and expected control outcome",
+      "REFERENCE_INDEPENDENCE": "Synthetic attack labels; does not prove exhaustive security",
+      "MINIMUM_EVIDENCE": "Attack transformation, scope, counters, resulting state and preserved failed case",
+      "METRICS": [
+        "detected_attacks / injected_attacks_by_class",
+        "false_alarms / valid_cases"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "SYNTHETIC_ADVERSARIAL_CASE; DEVELOPMENT_FIXTURE"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Strict parser + allowlist + digest checks"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Finite attacks do not establish general adversarial robustness; no LLM injection classifier demonstrated."
+    },
+    {
+      "CAPABILITY_ID": "FORMAL_IDENTITY_STORE",
+      "CAPABILITY_NAME": "Frozen identity, schemas, append-only evidence primitives",
+      "FAMILY": "A/C/F",
+      "ARCHITECTURAL_COMPONENT": "src/package_g/op1_reusable/identity.py; src/package_g/op1_reusable/integrity.py; src/package_g/op1_reusable/evidence_store.py; src/package_g/op1_reusable/registry.py",
+      "LAYER": "FROZEN_CORE",
+      "IMPLEMENTATION_REFERENCE": "src/package_g/op1_reusable/identity.py; src/package_g/op1_reusable/integrity.py; src/package_g/op1_reusable/evidence_store.py; src/package_g/op1_reusable/registry.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_PARTIALLY",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/unit/test_op1_reusable_i0_identity.py",
+          "tests/unit/test_op1_reusable_i0_schemas.py",
+          "tests/unit/test_op1_reusable_i1_storage.py",
+          "tests/unit/test_op1_reusable_i1_verifier.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Existing frozen implementation surfaces; no new qualification or execution here",
+      "UNDEMONSTRATED_PROPERTIES": "Whole-system operational qualification; candidate inherits no formal certification",
+      "FORMAL_STATUS": "FROZEN_CORE_SCOPE_ONLY; not newly qualified",
+      "RESEARCH_QUESTION": "Are formal object identities/storage rules preserved under the frozen contract?",
+      "SYSTEM_UNDER_TEST": "src/package_g/op1_reusable/identity.py; src/package_g/op1_reusable/integrity.py; src/package_g/op1_reusable/evidence_store.py; src/package_g/op1_reusable/registry.py",
+      "INPUT_TYPE": "Contract-valid identity/schema/evidence records",
+      "EXPECTED_BEHAVIOR": "Apply exact frozen contracts without mutation",
+      "FAILURE_CONDITIONS": "Unbound identity or modified evidence accepted",
+      "REFERENCE_TYPE": "Frozen formal contract and existing qualification evidence, not candidate tests",
+      "REFERENCE_INDEPENDENCE": "Formal authority independent of this methodology; no fresh formal audit claimed",
+      "MINIMUM_EVIDENCE": "Exact contract/implementation refs and bounded applicable historical receipt before guarantee",
+      "METRICS": [
+        "contract_validity; exact_byte_preservation where actually measured"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "Frozen specification and independently constructed disposable fixtures"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Schema/hash/append-only verifier"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "This inventory reads code; frozen phase status comes from authority, not a new proof of every module."
+    },
+    {
+      "CAPABILITY_ID": "FORMAL_SESSION_CONTROL",
+      "CAPABILITY_NAME": "Frozen bounded synthetic session lifecycle",
+      "FAMILY": "D",
+      "ARCHITECTURAL_COMPONENT": "src/package_g/op1_reusable/i2_engine.py; src/package_g/op1_reusable/i2_authority.py; src/package_g/op1_reusable/i2_isolation.py",
+      "LAYER": "FROZEN_CORE",
+      "IMPLEMENTATION_REFERENCE": "src/package_g/op1_reusable/i2_engine.py; src/package_g/op1_reusable/i2_authority.py; src/package_g/op1_reusable/i2_isolation.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_PARTIALLY",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [
+          "tests/unit/test_op1_reusable_i2_session_guards.py"
+        ],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Narrow synthetic-only profile with bound reviewed engine/executor hashes; zero workers/external effects",
+      "UNDEMONSTRATED_PROPERTIES": "Production worker dispatch or general-agent operation control",
+      "FORMAL_STATUS": "FROZEN_CORE_SCOPE_ONLY; not newly qualified",
+      "RESEARCH_QUESTION": "Does the exact bounded session reject incompatible authority/state?",
+      "SYSTEM_UNDER_TEST": "src/package_g/op1_reusable/i2_engine.py; src/package_g/op1_reusable/i2_authority.py; src/package_g/op1_reusable/i2_isolation.py",
+      "INPUT_TYPE": "Frozen session/profile and synthetic run records",
+      "EXPECTED_BEHAVIOR": "Enforce named state and reviewed-profile bindings",
+      "FAILURE_CONDITIONS": "Unsupported worker capability inferred from synthetic profile",
+      "REFERENCE_TYPE": "Frozen state/profile rules plus explicit negative fixtures",
+      "REFERENCE_INDEPENDENCE": "Contract consistency; not independent physical execution",
+      "MINIMUM_EVIDENCE": "Profile hashes, authority/state transitions, terminal receipts",
+      "METRICS": [
+        "denied_invalid_transitions / injected_invalid_transitions"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE within existing frozen contract"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Finite state machine validator"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "No I2 dispatch is authorized or executed in this intervention."
+    },
+    {
+      "CAPABILITY_ID": "GENERAL_SEMANTIC_TRUTH",
+      "CAPABILITY_NAME": "General independent claim correctness",
+      "FAMILY": "G/H",
+      "ARCHITECTURAL_COMPONENT": "runtime/candidate/swebench_claim_audit/generalized.py::audit_evidence; runtime/candidate/bfcl_structured_audit_v2.py::audit",
+      "LAYER": "UNSUPPORTED",
+      "IMPLEMENTATION_REFERENCE": "runtime/candidate/swebench_claim_audit/generalized.py::audit_evidence; runtime/candidate/bfcl_structured_audit_v2.py::audit",
+      "IMPLEMENTATION_STATUS": "NOT_SUPPORTED",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Only narrow record and structural predicates inspected",
+      "UNDEMONSTRATED_PROPERTIES": "General factual, operational and causal truth of arbitrary agent claims",
+      "FORMAL_STATUS": "EXPERIMENTAL; no formal I7 authority",
+      "RESEARCH_QUESTION": "Can arbitrary claims be judged independently?",
+      "SYSTEM_UNDER_TEST": "runtime/candidate/swebench_claim_audit/generalized.py::audit_evidence; runtime/candidate/bfcl_structured_audit_v2.py::audit",
+      "INPUT_TYPE": "Arbitrary claim + independently relevant evidence",
+      "EXPECTED_BEHAVIOR": "No general implementation evidenced; do not manufacture verdict",
+      "FAILURE_CONDITIONS": "General capability inferred from narrow parser/record agreement",
+      "REFERENCE_TYPE": "Compatible independent adjudication required for correctness claim",
+      "REFERENCE_INDEPENDENCE": "NOT_AVAILABLE in current RUN006",
+      "MINIMUM_EVIDENCE": "No claimed result without claim/predicate/evidence/reference chain",
+      "METRICS": [
+        "INDEPENDENT_PRECISION=NOT_COMPUTABLE",
+        "INDEPENDENT_RECALL=NOT_COMPUTABLE"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "Future separately authorized adjudicated cases"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Task-specific comparator only where meaningful"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "Unsupported scope does not block an E1 structural experiment."
+    },
+    {
+      "CAPABILITY_ID": "FORMAL_ATTRIBUTION",
+      "CAPABILITY_NAME": "Frozen source-bound attribution ledger",
+      "FAMILY": "B",
+      "ARCHITECTURAL_COMPONENT": "src/package_g/op1_reusable/i5_provenance.py::ProvenanceLedger; src/package_g/op1_reusable/i5_i1.py",
+      "LAYER": "FROZEN_CORE",
+      "IMPLEMENTATION_REFERENCE": "src/package_g/op1_reusable/i5_provenance.py::ProvenanceLedger; src/package_g/op1_reusable/i5_i1.py",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_PARTIALLY",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Digest-bound attribution companions and frozen I4/source/context bindings; SELF_REPORTED retained",
+      "UNDEMONSTRATED_PROPERTIES": "Authenticated actor or real execution; resolution of historical causal findings",
+      "FORMAL_STATUS": "FROZEN_CORE_SCOPE_ONLY; not newly qualified",
+      "RESEARCH_QUESTION": "Does an attribution preserve source certainty and exact frozen context?",
+      "SYSTEM_UNDER_TEST": "src/package_g/op1_reusable/i5_provenance.py::ProvenanceLedger; src/package_g/op1_reusable/i5_i1.py",
+      "INPUT_TYPE": "Typed task/delegation/report/review/tool-invocation records with source evidence",
+      "EXPECTED_BEHAVIOR": "Keep uncertainty and reject incompatible exact attribution",
+      "FAILURE_CONDITIONS": "SELF_REPORTED promoted to observed actor; UNKNOWN erased",
+      "REFERENCE_TYPE": "Frozen attribution contract and independently specified record fixtures",
+      "REFERENCE_INDEPENDENCE": "Source-binding reference only; no independent actor observation established",
+      "MINIMUM_EVIDENCE": "Exact source commitments, identity qualifiers, attribution ledger and validation outcome",
+      "METRICS": [
+        "attribution_binding_errors / injected_errors",
+        "uncertainty_preserved / ambiguous_cases"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE within frozen interfaces"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Typed ID/source join and exact qualifier comparator"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "No direct I5 tests located in this checkout tests tree; external qualification evidence not reread. Not an operation grant."
+    },
+    {
+      "CAPABILITY_ID": "DATASET_COMPILATION",
+      "CAPABILITY_NAME": "Frozen permission-aware deterministic derived datasets",
+      "FAMILY": "K",
+      "ARCHITECTURAL_COMPONENT": "src/package_g/op1_reusable/i6_admission.py; src/package_g/op1_reusable/i6_compiler.py::ImmutableSources/DatasetCompiler",
+      "LAYER": "FROZEN_CORE",
+      "IMPLEMENTATION_REFERENCE": "src/package_g/op1_reusable/i6_admission.py; src/package_g/op1_reusable/i6_compiler.py::ImmutableSources/DatasetCompiler",
+      "IMPLEMENTATION_STATUS": "IMPLEMENTED_PARTIALLY",
+      "EXISTING_TEST_EVIDENCE": {
+        "references": [],
+        "execution_in_this_intervention": "NOT_RUN_UNLESS_LISTED_IN_FOCUSED_TEST_RESULTS",
+        "evidence_kind": "EXISTING_TEST_SOURCE; test assertions are scoped examples, not historical pass claims"
+      },
+      "DEMONSTRATED_PROPERTIES": "Pinned closure/manifest/source validation, deterministic example compilation, permission/split/leakage checks in code",
+      "UNDEMONSTRATED_PROPERTIES": "Training authority, corpus legal clearance, truth of labels or executed evaluation",
+      "FORMAL_STATUS": "FROZEN_CORE_SCOPE_ONLY; not newly qualified",
+      "RESEARCH_QUESTION": "Does compilation retain source/split/permission boundaries?",
+      "SYSTEM_UNDER_TEST": "src/package_g/op1_reusable/i6_admission.py; src/package_g/op1_reusable/i6_compiler.py::ImmutableSources/DatasetCompiler",
+      "INPUT_TYPE": "Frozen typed source closure, field selectors, explicit permissions and compilation config",
+      "EXPECTED_BEHAVIOR": "Reject restricted/unknown/ungranted training use and forbidden export; derive without changing sources",
+      "FAILURE_CONDITIONS": "Leakage/duplicate admitted, restricted field exported, label truth inferred from signature",
+      "REFERENCE_TYPE": "Frozen compilation contract, independent fixture expected membership/splits",
+      "REFERENCE_INDEPENDENCE": "Compilation determinism reference; signatures prove byte/custody binding, not substantive truth",
+      "MINIMUM_EVIDENCE": "Exact config/source/closure and output hashes, explicit grants and split assignment",
+      "METRICS": [
+        "deterministic_output_hash_match",
+        "forbidden_uses_rejected / injected_forbidden_uses",
+        "split_overlap_count"
+      ],
+      "SUITABLE_DATA_SOURCES": [
+        "DEVELOPMENT_FIXTURE only; no private GOLD or training"
+      ],
+      "EXPERIMENTAL_MODE": "E1 exploration; E2 only for a prospectively frozen named guarantee; F separate",
+      "BASELINE_COMPARATORS": [
+        "Deterministic selector + schema/split/duplicate checker"
+      ],
+      "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED",
+      "LIMITATIONS": "No direct I6 tests located in this checkout tests tree; no compilation/training performed. Internal field-use selectors grant no public/training authority."
+    }
+  ],
+  "preserved_states": {
+    "RUN004": "COMPLETED_WITH_EXACT_LIMITATIONS",
+    "RUN005": "MINIMUM_SAFETY_BLOCKED",
+    "RUN006": "PREPARED_NOT_EXECUTED",
+    "RUN006_EXECUTION": "NOT_EXECUTED",
+    "RUN006_EXECUTION_ENABLED": false,
+    "RUN006_OWNER_LAUNCH_AUTHORIZATION": "NOT_GRANTED",
+    "RUN006_OPERATIONAL_FREEZE": "NOT_ISSUED",
+    "I0-I6": "FORMALLY_FROZEN",
+    "I7": "INCOMPLETE",
+    "FORMAL_I7": "NOT_COMPLETED",
+    "GATE_11": "BLOCKED",
+    "INDEPENDENT_PRECISION": "NOT_COMPUTABLE",
+    "INDEPENDENT_RECALL": "NOT_COMPUTABLE",
+    "INDEPENDENT_CUSTODY": "NOT_PROVEN",
+    "PHYSICAL_C2": "DEFERRED_NOT_WAIVED"
+  }
+}

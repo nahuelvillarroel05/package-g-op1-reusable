@@ -23,3 +23,7 @@ E1 may produce errors, abstentions, incomplete evidence, unknown applicability, 
 For E2 add acceptance criteria, frozen comparisons, regressions/adversarial checks, audit and recovery evidence needed for the exact guarantee. For F link the controlling formal contract and all applicable formal approval requirements. Never convert E1 observations automatically into E2 guarantees or F qualification.
 
 See [engineering modes](ENGINEERING_MODES.md) and [policy](EXPERIMENTAL_POLICY.md).
+
+## Capability-first experimental design
+
+Prospectively each RUN declares `TARGET_CAPABILITIES`, `RESEARCH_QUESTIONS`, `SYSTEM_UNDER_TEST`, `DATA_SOURCES`, `EXPERIMENTAL_UNITS`, `REFERENCE_EVIDENCE`, `METRICS`, `BASELINE_COMPARATORS`, `LIMITATIONS`. Use [the capability matrix](CAPABILITY_EVALUATION_MATRIX.md) and [evidence standards](EXPERIMENTAL_EVIDENCE_STANDARDS.md). Select only relevant capabilities. This is experimental design guidance, not an added formal E1 qualification gate or a requirement to resolve GATE_11. Separate structural/record consistency from semantic correctness, independent reference truth and formal status; use separate denominators and state ADDED_VALUE_NOT_ESTABLISHED without a valid comparator. Historical RUNs retain their original contracts and outcomes.

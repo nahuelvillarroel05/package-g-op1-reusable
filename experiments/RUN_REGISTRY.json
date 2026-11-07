@@ -410,7 +410,29 @@
       "operational_execution_freeze": "NOT_ISSUED",
       "attempts": [],
       "public_evidence_path": "experiments/runs/run-006",
-      "publication_status": "PREPARED_LOCAL_NOT_REMOTE_VERIFIED"
+      "publication_status": "PREPARED_LOCAL_NOT_REMOTE_VERIFIED",
+      "scientific_alignment": {
+        "intervention": "PGOP1_CAPABILITY_EVALUATION_AND_RUN006_ALIGNMENT_001",
+        "option": "A",
+        "prospective_contract": "experiments/runs/run-006/contracts/experimental-e1-v2/RUN_CONTRACT.md",
+        "reference": "experiments/runs/run-006/SCIENTIFIC_ALIGNMENT_REFERENCE.json",
+        "TARGET_CAPABILITIES": [
+          "IDENTITY_BINDING",
+          "SOURCE_PROVENANCE",
+          "EVIDENCE_INTEGRITY",
+          "OPERATIONAL_GATE",
+          "PERSIST_RECOVER",
+          "BFCL_STRUCTURE",
+          "SUFFICIENCY_ABSTENTION",
+          "COMPONENT_COMPOSITION"
+        ],
+        "execution": "NOT_EXECUTED",
+        "execution_enabled": false,
+        "owner_launch_authorization": "NOT_GRANTED",
+        "operational_freeze": "NOT_ISSUED",
+        "scientific_claim": "Task-relative structural integration; no independent semantic quality",
+        "ADDED_VALUE": "ADDED_VALUE_NOT_ESTABLISHED"
+      }
     }
   ],
   "pilots": [
@@ -567,6 +589,12 @@
       "RUN004_FINAL_FREEZE": "NOT_ISSUED",
       "RUN004_EXECUTION": "NOT_EXECUTED",
       "scope": "Engineering only; separate development identities; no campaign dispatch"
+    },
+    {
+      "ID": "PGOP1_CAPABILITY_EVALUATION_AND_RUN006_ALIGNMENT_001",
+      "scope": "CAPABILITY_METHODOLOGY_AND_PROSPECTIVE_RUN006_ALIGNMENT_ONLY",
+      "option": "A",
+      "RUN006_EXECUTION": "NOT_EXECUTED"
     }
   ],
   "synthetic_development_validations": [

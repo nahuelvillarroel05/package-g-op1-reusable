@@ -1,0 +1,9 @@
+# Scoped scientific alignment review
+
+Engineering methodology/design validation only. RUN006 option A retained; prospectively revised E1 v2 adds explicit capability questions, unit/reference contracts and reporting limits without a runtime or selection change. The permanent matrix covers16 code-grounded entries, keeping frozen core separate from candidate interfaces.
+
+36 existing development-fixture tests passed. Focused metadata checks verified20 selected units/40 source-row references/14 metadata bindings and disabled rejection before body access or campaign construction. No selected authentic output was processed. Sol technical and Astra scientific reviews retained and corrected an executable contract reference issue plus unique-unit/replay, positive-path/adversarial, recovery-process and persisted-vocabulary reporting issues. Exact private review/test commitments are retained by the Owner; these reviews are not independent semantic adjudication or formal qualification.
+
+The framework persists its eight predicate slots and auditor_status, mapping only BFCL format/arguments directly. Unmapped raw fields and uninstrumented invocation counts are NOT_COLLECTED.160 planned framework slots are not160 audits. Same-process checkpoint fixture recovery is distinct from fresh-child Engine-index recovery. Denial/tamper effectiveness is NOT_MEASURED_ON_AUTHENTIC_PREFIX. Independent precision/recall remain NOT_COMPUTABLE and baseline added value ADDED_VALUE_NOT_ESTABLISHED.
+
+RUN006=PREPARED_NOT_EXECUTED; execution disabled, Owner launch authorization NOT_GRANTED and operational freeze NOT_ISSUED. A separate explicit Owner decision is required before launch. No general semantic capability, official BFCL score, producer authentication, custody or formal I7/C2 status is established. RUN004/RUN005 history and I0-I6 remain unchanged.

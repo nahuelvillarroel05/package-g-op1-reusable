@@ -56,3 +56,7 @@ Publish authorized code, methodology, results, errors, limits, audits, and integ
 Report processing coverage separately from semantic coverage and sufficient evidence. `EXPERIMENTAL_EFFICIENCY` records preparation time, execution time, processed units, audits, errors, reproducible defects, correction time, and evidence produced. It is informative and never a gate.
 
 I0-I6 remain `FORMALLY_FROZEN`; I7 `INCOMPLETE`; FORMAL_I7 `NOT_COMPLETED`; GATE_11 `BLOCKED`; independent precision/recall `NOT_COMPUTABLE`; independent custody `NOT_PROVEN`; PHYSICAL_C2 `DEFERRED_NOT_WAIVED`. Mode policy grants no production signer, main/src promotion, or other unrequested authority.
+
+## Capability-first experimental design
+
+Prospectively each RUN declares `TARGET_CAPABILITIES`, `RESEARCH_QUESTIONS`, `SYSTEM_UNDER_TEST`, `DATA_SOURCES`, `EXPERIMENTAL_UNITS`, `REFERENCE_EVIDENCE`, `METRICS`, `BASELINE_COMPARATORS`, `LIMITATIONS`. Use [the capability matrix](CAPABILITY_EVALUATION_MATRIX.md) and [evidence standards](EXPERIMENTAL_EVIDENCE_STANDARDS.md). Select only relevant capabilities. This is experimental design guidance, not an added formal E1 qualification gate or a requirement to resolve GATE_11. Separate structural/record consistency from semantic correctness, independent reference truth and formal status; use separate denominators and state ADDED_VALUE_NOT_ESTABLISHED without a valid comparator. Historical RUNs retain their original contracts and outcomes.
